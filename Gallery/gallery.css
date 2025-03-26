@@ -1,0 +1,277 @@
+html,
+body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	letter-spacing: 0.4px;
+}
+
+body {
+	background: url("backconclusioness.jpeg");
+	overflow: auto;
+}
+
+.container {
+	background: #222;
+	position: relative;
+	resize: both;
+	overflow: auto;
+	width: 700px;
+	height: 550px;
+}
+
+.browser-frame {
+	position: relative;
+	padding: 132px 0 55px 0;
+	overflow: hidden;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+	border-image-slice: 171 57 57 515 fill;
+	border-image: url('browser.png');
+	border-image-slice: 171 57 57 515 fill;
+	border-image-width: 170px 56px 57px 515px;
+	border-image-outset: 0px 0px 0px 0px;
+	
+}
+
+.browser-frame::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-image: url('browser.png');
+	border-image-slice: 171 57 57 515 fill;
+	border-image-width: 170px 56px 57px 515px;
+	border-image-outset: 0px 0px 0px 0px;
+	
+	pointer-events: none;
+}
+
+.center {
+	position: absolute;
+	top: 30px;
+	left: 50%;
+	transform: translate(-50%, 0);
+}
+
+main {
+	padding: 10px 0;
+	background: #222;
+	text-align: center;
+	color: cadetblue;
+	height: 100%;
+	overflow: auto;
+	text-transform: uppercase;
+}
+
+.the90s {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	img {
+		width: 60px;
+		flex-grow: 0;
+		flex-shrink: 0;
+		margin: 0 auto;
+	}
+}
+
+h1 {
+	margin: 0;
+}
+
+h4 {
+	text-transform: none
+}
+
+img {
+	width: 80%;
+	height: auto;
+}
+
+.series, img {
+	width: 26vh;
+	height: auto;
+}
+
+table,
+td {
+	margin: 20px auto;
+
+	color: rgb(209, 96, 209);
+	padding: 2px;
+}
+td {
+	padding: 2px 10px;
+}
+
+a {
+	color: hotpink;
+}
+
+#drag-handle {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 85px;
+}
+
+.resize-handle {
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	right: 0;
+	bottom: 0;
+	top: auto !important;
+	left: auto !important;
+	margin-top: -22px;
+	margin-left: -22px;
+	width: 20px;
+	height: 20px;
+	cursor: nw-resize !important;
+}
+
+  
+  /* keyframes for rotating animation */
+  @-webkit-keyframes spin {
+	from { transform: rotateY(0); }
+	to   { transform: rotateY(360deg); }
+  }
+  
+  /* scene wrapper */
+  .wrapper{
+	height: 200px;
+	margin-top:10px;
+	position:relative;
+	perspective: 800;
+	perspective-origin: 50% 100px;
+  }
+  
+  /* cube wrapper */
+  .cube{
+	position: relative;
+	margin: 0 auto;
+	width: 200px;
+	transform-style: preserve-3d;
+	animation: spin 13s infinite linear;
+	transition: all 1s linear;
+  }
+  
+  /* outer cube */
+  b{
+	position:absolute;
+	width:200px;
+	height:200px;
+	display:block;
+	background:rgba(255,255,255,0.1);
+	box-shadow:inset 0 0 30px rgba(0,0,0,0.2);
+	font-size:20px;
+	text-align:center;
+	line-height:200px;
+	color:rgba(0,0,0,0.5);
+	font-family:sans-serif;
+	text-transform:uppercase;
+	transition: all 1s linear;
+  }
+  b.back{
+	transform: translateZ(-100px) rotateY(180deg);
+  }
+  b.right{
+	transform:rotateY(-270deg) translateX(100px);
+	transform-origin: top right;
+  }
+  b.left{
+	transform:rotateY(270deg) translateX(-100px);
+	transform-origin: center left;
+  }
+  b.top{
+	transform:rotateX(-90deg) translateY(-100px);
+	transform-origin: top center;
+  }
+  b.bottom{
+	transform:rotateX(90deg) translateY(100px);
+	transform-origin: bottom center;
+  }
+  b.front{
+	transform: translateZ(100px);
+  }
+  
+  /* inner cube */
+  i{
+	position:absolute;
+	top:50px;
+	left:50px;
+	width:100px;
+	height:100px;
+	display:block;
+
+	transition: all 1s linear;
+  }
+  i.front{
+	transform: translateZ(50px);
+  }
+  i.back{
+	transform: translateZ(-50px) rotateY(180deg);
+  }
+  i.bottom{
+	transform:rotateX(-90deg) translateY(50px);
+	transform-origin: left bottom;
+  }
+  i.left{
+	transform:rotateY(270deg) translateX(-50px);
+	transform-origin: center left;
+  }
+  i.right{
+	transform:rotateY(-270deg) translateX(50px);
+	transform-origin: top right;
+  }
+  i.top{
+	transform:rotateX(-270deg) translateY(-50px);
+	transform-origin: left top;
+  }
+  
+  
+
+@media screen and (max-width: 900px) {
+	
+
+	.container {
+	
+		width: 80%;
+	height: 70%;
+	}
+	main {
+
+		height: 100%;
+		width: 95%;
+		overflow: auto;
+	
+	}
+
+	.series, img {
+
+	}
+
+}
+
+
+@media screen and (max-width: 700px) {
+
+	.container {
+	
+		width: 95%;
+	height: 80%;
+	}
+	main {
+
+		height: 100%;
+		width: 96%;
+		overflow: auto;
+	
+	}
+
+
+
+}
