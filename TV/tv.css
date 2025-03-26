@@ -1,0 +1,95 @@
+html,
+body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+background: url(tv-1920.jpg) rgba(0, 0, 0, 0.9);
+background-size: contain;
+background-blend-mode: hard-light;
+background-size: cover;	
+font-family: "Josefin sans", sans-serif;
+}
+
+.outer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+	
+}
+
+
+.photo-frame {
+	background: url('frame.png') rgba(0, 0, 0, 0.07);
+	background-blend-mode: color-burn;
+	background-repeat: no-repeat;
+	background-size: 99.9%;
+	width: 846px;
+	height: 562px;
+	position: relative;
+	justify-items: center;
+	margin: 20% auto;
+	box-shadow: 0 16px 37px rgba(143, 143, 143, 0.6);
+  }
+  
+  .photo-frame > iframe {
+	position: absolute;
+	top: 51.54%;
+    left: 40.39%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+	width: 560px;
+	height: 315px;
+	  
+  }
+  .photo-frame button {
+	position: absolute;
+	cursor: pointer;
+	bottom: 1.54%;
+    right: 21.39%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+	font-size: 0.6em;
+	border: 1px;
+	padding: 10px;
+
+}
+
+button:hover {
+	background-color: rgb(255, 255, 7);
+	border: 0px;
+	
+}
+	  
+  
+
+  
+@media screen and (max-width: 846px) {
+
+	.outer {
+		width: 100vw;
+	}
+}
+
+@media screen and (max-width: 660px) {
+
+	.outer {
+		width: 110vw;
+	}
+}
+
+@media screen and (max-width: 610px) {
+
+	.outer {	
+		width: 117vw;
+	}
+}
+
+@media screen and (max-width: 580px) {
+
+	.outer {		
+		width: 121vw;
+	}
+}
