@@ -1,0 +1,257 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  color: #fff;
+  font-family: "Josefinsans", sans-serif;
+}
+
+body {
+	margin: 15px auto;
+padding-left: 8%;
+	line-height: 1;
+	font-family: "Josefin Sans", sans-serif;
+	font-size: 1.6em;
+	color: #fff;
+	background: #343434;
+	background-image: url(/bio/ETLOcirclelogo-2.png);
+  background-size: 108%;
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-top: 1rem;
+	
+  }
+
+h2 {
+padding: 20px;
+}
+
+h3 {
+  padding: 20px;
+	margin-top: 30px;
+}
+
+h5 {
+	font-weight: 600;
+	line-height: 20px;
+	font-size: 0.9rem;
+	margin: 0 20px;
+	padding: 15px 20px;
+	box-shadow: 0 8px 15px rgba(170, 166, 135, 0.234);
+	background: linear-gradient(90deg, #ffffff -0.8%, #0f0d0d 1%, #040409 100%);
+	width: 80%;
+}
+
+h7{
+  font-size: 10px;
+}
+
+  a:link {
+	color: rgb(243, 241, 133);
+	text-decoration: none;
+  }
+  
+  /* visited link */
+  a:visited {
+	color: oldlace;
+	text-decoration: none;
+  }
+  
+  /* mouse over link */
+  a:hover {
+	color: slategray;
+	text-decoration: none;
+  }
+  
+  /* selected link */
+  a:active {
+	color: azure;
+	text-decoration: none;
+  }
+  
+
+
+main {
+  grid-template-columns: 350px 1fr;
+}
+
+#catalog h1 {
+  font-weight: 600;
+  font-size: 48px;
+}
+#catalog p {
+  font-weight: 500;
+  line-height: 28px;
+  font-size: 16px;
+  margin: 20px 0 35px 0;
+}
+#catalog a {
+  font-weight: 600;
+  line-height: 28px;
+  font-size: 12px;
+  color: #fff;
+  letter-spacing: 0.5px;
+  border-radius: 90px;
+  padding: 15px 20px;
+  box-shadow: 0 10px 15px rgba(53, 29, 136, 0.2);
+  background: linear-gradient(90deg, #9F51E8 0%, #351DB8 100%);
+}
+
+#products {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-rows: 480px;
+  grid-template-columns: repeat(4, 450px);
+  grid-column-gap: 20px;
+  overflow-x: scroll;
+  padding: 20px;
+}
+#products::-webkit-scrollbar {
+  height: 8px;
+}
+#products::-webkit-scrollbar-thumb {
+  border-radius: 90px;
+  background: rgba(0, 0, 0, 0.2);
+}
+#products .card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  transition: 0.4s ease-in-out;
+}
+#products .card:hover {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+#products .card:hover .backdrop {
+  bottom: -79%;
+  left: 51%;
+}
+#products .card .backdrop {
+  width: 600px;
+  height: 600px;
+  position: absolute;
+  left: 50%;
+  bottom: -80%;
+  transform: translate(-60%, -40%);
+  border-radius: 60%;
+  transition: 0.4s ease-in-out;
+}
+#products .card:first-child .backdrop {
+  background: radial-gradient(#000000 60%, #f70505 100%);
+}
+#products .card:nth-child(2) .backdrop {
+  background: radial-gradient(#000000 60%, #0124bf 100%);
+}
+#products .card:nth-child(3) .backdrop {
+  background: radial-gradient(#000000 60%, #590085 100%);
+  }
+#products .card:last-child .backdrop {
+  background: radial-gradient(#000000 60%, #7d7c7c 100%);
+}
+
+#products .card img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#products .card .desc {
+  align-self: flex-end;
+  z-index: 12;
+}
+#products .card .desc span {
+  width: auto;
+  height: 40px;
+  color: #333;
+  background: #fff;
+  display: inline-block;
+  line-height: 40px;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0 10px;
+  margin-right: 10px;
+  margin-bottom: 8px;
+}
+
+#products .card .fav,
+#products .card .cart {
+  background: #515151;
+  position: absolute;
+  padding: 0 8px;
+  top: 10px;
+  right: 10px;
+  line-height: 52px;
+  text-align: center;
+  border-radius: 10px;
+  
+
+}
+#products .card .fav p,
+#products .card .cart p {
+  font-size: 17px;
+  color: #E8E8E8;
+  transition: 0.4s ease-in-out;
+}
+#products .card:hover .fav,
+#products .card .cart:hover {
+  background: #ba1212;
+  border: 0.5px solid transparent;
+}
+
+
+footer {
+  padding: 15px 20px;
+  
+}
+
+h6 {
+	font-weight: 700;
+	font-size: 1.2rem;
+	padding: 0 0 20px 0;
+	margin-top: -30px;
+
+}
+
+
+button {
+	font-size: 0.5em;
+	border: 0px;
+	color: rgb(4, 4, 3);
+	padding: 10px;
+  width: 49%;
+  cursor: inherit;
+}
+
+button:hover {
+	background-color: rgb(255, 255, 7);
+	border: 0px;
+	
+}
+
+
+
+      /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+      @media screen and (max-width: 1198px) {
+     
+        body {
+          padding-left: 9%;
+          
+          }
+        
+      }
+      
+      
