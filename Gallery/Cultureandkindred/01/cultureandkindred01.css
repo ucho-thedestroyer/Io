@@ -1,0 +1,281 @@
+
+  body {
+ 
+
+
+    line-height: 1;
+    font-family: sans-serif;
+    font-size: 1.6em;
+    color: #fff;
+    background: #343434;
+    background-image: url(/bio/ETLOcirclelogo-2.png);
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+    background-size: 100%;
+    background-position: left;
+    
+  padding: 0;
+  margin: 0;
+
+}
+
+#canvas-wrap { position:relative } /* Make this a positioned parent */
+#overlay     { position:absolute; top:0; left:0; }
+
+
+.container11 {
+  padding-top: 9rem;
+  padding-left: 8rem;
+  justify-content: flex-end;
+	position: relative;
+	width: 80vw;
+	height: 60vh;
+	transition: all 400ms;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50vh;
+}
+.gallery .item {
+  flex: 1;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: none;
+  transform: scale(0.95);
+  margin-right: -14px;
+  box-shadow: 0 1px 4px 0 rgba(10,16,34,0.2);
+  border-radius: 0;
+  will-change: flex, transform, box-shadow;
+  transition: flex 700ms ease, transform 700ms ease, box-shadow 700ms ease, border-radius 700ms ease;
+}
+.gallery .item:first-child {
+  border-radius: 5px 0 0 5px;
+  z-index: 5 !important;
+}
+.gallery .item:nth-child(2) {
+  z-index: 4 !important;
+}
+.gallery .item:nth-child(3) {
+  z-index: 3 !important;
+}
+.gallery .item:nth-child(4) {
+  z-index: 2 !important;
+}
+.gallery .item:last-child {
+  border-radius: 0 5px 5px 0;
+  z-index: 1 !important;
+  margin-right: 0 !important;
+}
+
+.gallery:hover .item {
+  filter: grayscale(100%) opacity(24%);
+}
+.gallery .item:hover {
+  flex: 2;
+  border-radius: 5px;
+  z-index: 999 !important;
+  filter: grayscale(0%) opacity(100%);
+  box-shadow: 0 12px 24px 0 rgba(10,16,34,0.3), 0 0 0 transparent;
+  transform: scale(1);
+}
+.item::after {
+	content: attr(data-text);
+	position: absolute;
+	bottom: 20px;
+	background: #000;
+	color: #fff;
+	padding: 10px 10px 10px 14px;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	transform: translateY(60px);
+	opacity: 0;
+	transition: all 400ms;
+}
+
+.item:hover::after {
+	transform: translateY(0);
+	opacity: 1;
+	transition-delay: 400ms;
+}
+.gallery .item-1 {
+  background-image: url("cultureimg1.jpg");
+}
+.gallery .item-2 {
+  background-image: url("cultureimg2.jpg");
+}
+.gallery .item-3 {
+  background-image: url("cultureimg3.jpg");
+}
+.gallery .item-4 {
+  background-image: url("cultureimg4.jpg");
+}
+.gallery .item-5 {
+  background-image: url("cultureimg5.jpg");
+}
+
+
+      a:link {
+        color: rgb(113, 113, 75);
+        text-decoration: none;
+      }
+      
+      /* visited link */
+      a:visited {
+        color: rgb(128, 120, 118);
+        text-decoration: none;
+      }
+      
+      /* mouse over link */
+      a:hover {
+        color: slategray;
+        text-decoration: none;
+      }
+      
+      /* selected link */
+      a:active {
+        color: azure;
+        text-decoration: none;
+      }
+
+ 
+      
+      .button {
+        font-size: 1em;
+        padding: 10px;
+        color: #fff;
+        border: 2px solid #d50000;
+        border-radius: 20px/50px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+      }
+      .button:hover {
+        background: #f7faf7;
+      }
+
+        
+      .button2 {
+        font-size: 1em;
+        padding: 10px;
+        color: #fff;
+        border: 2px solid #d50000;
+        border-radius: 20px/50px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+      }
+      .button2:hover {
+        border: 2px solid #191919;
+        background: #191919;
+      }
+      .overlay {
+        position: relative;
+        width: 90%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+      }
+      .overlay:target {
+        visibility: visible;
+        opacity: 1;
+      }
+      .box{
+        width: 90%;
+      }
+      .popup {
+        margin: 70px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        width: 100%;
+        position: relative;
+        
+      }
+      
+      .popup h2 {
+        margin-top: 0;
+        color: #333;
+        font-family: Tahoma, Arial, sans-serif;
+      }
+      .popup .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+      }
+      .popup .close:hover {
+        color: #d50000;
+      }
+      .popup .content {
+        max-height: 30%;
+        overflow: auto;
+        color: #333;
+      }
+      
+      .work {
+        width: 59vw;
+        height: auto;
+      }
+      @media screen and (max-width: 1100px){
+        .overlay{
+           width: 90%;
+        }
+        .box{
+          width: 90%;
+        }
+        .popup{
+          width: 100%;
+        }
+        .work {
+          width: 74vw;
+          height: auto;
+        }
+      }
+      @media screen and (max-width: 900px) {
+        .work {
+          width: 74vw;
+          height: auto;
+        }
+      }
+      @media screen and (max-width: 700px){
+        .overlay{
+           width: 90%;
+        }
+        .box{
+          width: 90%;
+        }
+        .popup{
+          width: 92%;
+        }
+        .work {
+          width: 72vw;
+          height: auto;
+        }
+      }
+      
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 1198px) 
+      {
+        .container11 {
+          padding-top: 6rem;
+          padding-left: 2rem;
+          justify-content: flex-end;
+          position: relative;
+          width: 90vw;
+          height: 60vh;
+          transition: all 400ms;
+        }
+
+      }
