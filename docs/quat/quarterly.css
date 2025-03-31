@@ -97,13 +97,13 @@ main {
 }
 #catalog a {
   font-weight: 600;
-  line-height: 28px;
+  line-height: 24px;
   font-size: 12px;
   color: #fff;
   letter-spacing: 0.5px;
   border-radius: 90px;
-  padding: 15px 10px;
-  box-shadow: 0 10px 10px rgba(53, 29, 136, 0.2);
+  padding: 5px 10px;
+  box-shadow: 0 5px 10px rgba(53, 29, 136, 0.2);
   background: linear-gradient(90deg, #9F51E8 0%, #351DB8 100%);
 	
 }
@@ -125,7 +125,7 @@ main {
   background: rgba(0, 0, 0, 0.2);
 }
 #products .card {
-  background: #fff;
+  background: #000;
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 10px;
@@ -144,8 +144,8 @@ main {
   left: 51%;
 }
 #products .card .backdrop {
-  width: 600px;
-  height: 600px;
+  width: 700px;
+  height: 700px;
   position: absolute;
   left: 50%;
   bottom: -80%;
