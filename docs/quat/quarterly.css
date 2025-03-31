@@ -93,7 +93,7 @@ main {
   line-height: 28px;
   font-size: 16px;
   margin: 20px 0 35px 0;
-	box-shadow: inset 0px 0px 40px 40px #DBA632;
+	
 }
 #catalog a {
   font-weight: 600;
@@ -102,10 +102,10 @@ main {
   color: #fff;
   letter-spacing: 0.5px;
   border-radius: 90px;
-  padding: 15px 20px;
-  box-shadow: 0 10px 15px rgba(53, 29, 136, 0.2);
+  padding: 15px 10px;
+  box-shadow: 0 10px 10px rgba(53, 29, 136, 0.2);
   background: linear-gradient(90deg, #9F51E8 0%, #351DB8 100%);
-	box-shadow: inset 0px 0px 40px 40px #DBA632;
+	
 }
 
 #products {
