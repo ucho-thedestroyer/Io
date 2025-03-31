@@ -174,8 +174,8 @@ main {
   transform: translate(-50%, -50%);
 	width:80%;
 }
-#products .card:hover .img {
-  z-index: 13;
+#products .card:hover img {
+  z-index: 1;
 	width: 100%;
 }
 #products .card .desc {
