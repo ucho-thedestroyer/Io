@@ -93,6 +93,7 @@ main {
   line-height: 28px;
   font-size: 16px;
   margin: 20px 0 35px 0;
+	box-shadow: inset 0px 0px 40px 40px #DBA632;
 }
 #catalog a {
   font-weight: 600;
@@ -104,6 +105,7 @@ main {
   padding: 15px 20px;
   box-shadow: 0 10px 15px rgba(53, 29, 136, 0.2);
   background: linear-gradient(90deg, #9F51E8 0%, #351DB8 100%);
+	box-shadow: inset 0px 0px 40px 40px #DBA632;
 }
 
 #products {
@@ -132,7 +134,7 @@ main {
   overflow: hidden;
   display: flex;
   transition: 0.4s ease-in-out;
-	box-shadow: inset 0px 0px 40px 40px #DBA632;
+	
 }
 #products .card:hover {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
