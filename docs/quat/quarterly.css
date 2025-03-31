@@ -140,7 +140,7 @@ main {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 #products .card:hover .backdrop {
-  bottom: -79%;
+  bottom: -89%;
   left: 51%;
 }
 #products .card .backdrop {
@@ -180,7 +180,7 @@ main {
 }
 #products .card .desc span {
   width: auto;
-  height: 40px;
+  height: 30px;
   color: #333;
   background: #fff;
   display: inline-block;
