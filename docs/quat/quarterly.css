@@ -176,7 +176,7 @@ main {
 }
 #products .card:hover .img {
   z-index: 13;
-	size: 100%;
+	width: 100%;
 }
 #products .card .desc {
   align-self: flex-end;
