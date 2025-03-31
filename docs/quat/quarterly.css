@@ -132,6 +132,7 @@ main {
   overflow: hidden;
   display: flex;
   transition: 0.4s ease-in-out;
+	box-shadow: inset 0px 0px 40px 40px #DBA632;
 }
 #products .card:hover {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -149,7 +150,7 @@ main {
   transform: translate(-60%, -40%);
   border-radius: 60%;
   transition: 0.4s ease-in-out;
-	box-shadow: inset 0px 0px 40px 40px #DBA632;
+	
 }
 #products .card:first-child .backdrop {
   background: radial-gradient(#000000 60%, #f70505 100%);
