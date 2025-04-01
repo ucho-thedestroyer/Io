@@ -149,6 +149,9 @@ main {
   bottom: -89%;
   left: 51%;
 }
+#products .card:hover .desc {
+  display: hidden;
+}
 #products .card .backdrop {
   width: 700px;
   height: 700px;
@@ -187,7 +190,7 @@ main {
 }
 #products .card .desc span {
   width: auto;
-  height: 32px;
+  height: 34px;
   color: #333;
   background: #fff;
   display: inline-block;
