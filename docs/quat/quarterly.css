@@ -108,6 +108,23 @@ main {
 	
 }
 
+#catalog .bigdesc {
+  align-self: flex-end;
+  z-index: 12;
+}
+#catalog .bigdesc spun {
+  width: auto;
+  height: 34px;
+  color: #333;
+  background: #fff;
+  display: inline-block;
+  line-height: 35px;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-right: 10px;
+  margin-bottom: 6px;
+}
 #products {
   display: grid;
   grid-auto-flow: column;
