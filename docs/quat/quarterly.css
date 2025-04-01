@@ -150,7 +150,7 @@ main {
   left: 51%;
 }
 #products .card:hover .desc {
-  display: hidden;
+  visibility: hidden;
 }
 #products .card .backdrop {
   width: 700px;
