@@ -97,7 +97,7 @@ main {
 }
 #catalog a {
   font-weight: 600;
-  line-height: 26px;
+  line-height: 28px;
   font-size: 12px;
   color: #fff;
   letter-spacing: 0.5px;
@@ -139,6 +139,11 @@ main {
 #products .card:hover {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
+
+#products .card:hover img {
+  z-index: 1;
+	width: 100%;
+}
 #products .card:hover .backdrop {
   bottom: -89%;
   left: 51%;
@@ -155,10 +160,6 @@ main {
 	
 }
 
-#products .card img.hover {
-  z-index: 1;
-	width: 100%;
-}
 #products .card:first-child .backdrop {
   background: radial-gradient(#000000 60%, #f70505 100%);
 }
