@@ -154,6 +154,11 @@ main {
   transition: 0.4s ease-in-out;
 	
 }
+
+#products .card img.hover {
+  z-index: 1;
+	width: 100%;
+}
 #products .card:first-child .backdrop {
   background: radial-gradient(#000000 60%, #f70505 100%);
 }
@@ -173,10 +178,6 @@ main {
   left: 50%;
   transform: translate(-50%, -50%);
 	width:80%;
-}
-#products .card img.hover {
-  z-index: 1;
-	width: 100%;
 }
 #products .card .desc {
   align-self: flex-end;
