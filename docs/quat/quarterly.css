@@ -118,20 +118,7 @@ main {
 	
 }
 
-#catalog .bigdesc {
-  align-self: flex-end;
-  z-index: 12;
-}
-#catalog .bigdesc .spun {
-background: #515151;
-  position: absolute;
-  padding: 0 20px;
-  top: 10px;
-  right: 10px;
-  line-height: 42px;
-  text-align: center;
-  border-radius: 10px;
-}
+
 #products {
   display: grid;
   grid-auto-flow: column;
