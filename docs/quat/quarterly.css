@@ -61,8 +61,8 @@ h8 {
 	margin: 0 20px;
 	padding: 15px 20px;
 	box-shadow: 0 8px 15px rgba(270, 166, 135, 0.234);
-	background: linear-gradient(90deg, #ffffff -0.8%, #ff0000 1%, #040409 100%);
-	width: 60%;
+	background: linear-gradient(90deg, #ff0000 -0.8%, #0f0d0d 1%, #040409 100%);
+	width: 80%;
 }
 
   a:link {
