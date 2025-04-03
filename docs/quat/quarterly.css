@@ -56,11 +56,11 @@ h7{
 }
 h8 {
 	font-weight: 600;
-	line-height: 20px;
+	line-height: 10px;
 	font-size: 0.9rem;
-	margin: 0 20px;
-	padding: 15px 20px;
-	box-shadow: 0 8px 8px rgba(270, 166, 135, 0.434);
+	margin: 0 16px;
+	padding: 8px 20px;
+	box-shadow: 0 8px 8px rgba(170, 166, 135, 0.434);
 	background: linear-gradient(90deg, #ff0000 -0.9%, #0f0d0d 1%, #040409 100%);
 	width: 80%;
 }
