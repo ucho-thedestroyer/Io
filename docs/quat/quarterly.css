@@ -123,7 +123,7 @@ main {
 	width: 90%;
 }
 #catalog .tags .bigdesc {
-  align-self: flex-end;
+  align-self: flex-start;
   z-index: 12;
 }
 #catalog .tags .bigdesc spun {
