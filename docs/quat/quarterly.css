@@ -100,9 +100,9 @@ main {
 }
 #catalog p {
   font-weight: 500;
-  line-height: 28px;
+  line-height: 20px;
   font-size: 16px;
-  margin: 20px 0 35px 0;
+  margin: 20px 0 25px 0;
 	
 }
 #catalog a {
@@ -112,7 +112,7 @@ main {
   color: #fff;
   letter-spacing: 0.5px;
   border-radius: 98px;
-  padding: 5px 8px;
+  padding: 5px 5px;
   box-shadow: 0 5px 10px rgba(53, 29, 136, 0.2);
   background: linear-gradient(90deg, #9F51E8 0%, #351DB8 100%);
 	
