@@ -56,11 +56,11 @@ h7{
 }
 h8 {
 	font-weight: 600;
-	line-height: 20px;
-	font-size: 0.9rem;
+	line-height: 16px;
+	font-size: 0.8rem;
 	margin: 0 20px;
 	padding: 15px 20px;
-	box-shadow: 0 8px 15px rgba(170, 166, 135, 0.234);
+	box-shadow: 0 8px 8px rgba(170, 160, 130, 0.234);
 	background: linear-gradient(90deg, #ff0000 -0.9%, #0f0d0d 1%, #040409 100%);
 	width: 80%;
 }
@@ -118,7 +118,7 @@ main {
 	
 }
 #catalog .tags {
-	margin: 0 20px;
+	margin: 0 18px;
 }
 #catalog .tags .bigdesc {
   align-self: flex-start;
@@ -127,7 +127,7 @@ main {
 #catalog .tags .bigdesc spun {
   width: auto;
   height: 34px;
-  color: #333;
+  color: #B33638;
   background: #FFEC60;
   display: inline-block;
   line-height: 35px;
