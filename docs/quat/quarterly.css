@@ -122,11 +122,11 @@ main {
 	padding: 15px 20px;
 	width: 90%;
 }
-#catalog .bigdesc {
+#catalog .tags .bigdesc {
   align-self: flex-end;
   z-index: 12;
 }
-#catalog .bigdesc spun {
+#catalog .tags .bigdesc spun {
   width: auto;
   height: 34px;
   color: #333;
