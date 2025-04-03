@@ -64,7 +64,9 @@ h8 {
 	background: linear-gradient(90deg, #ff0000 -1%, #0f0d0d 1.1%, #040409 100%);
 	width: 50%;
 }
-
+h9 {
+  font-size: 14px;
+}
   a:link {
 	color: rgb(243, 241, 133);
 	text-decoration: none;
@@ -273,7 +275,7 @@ h6 {
 
 #faq .question {
 	text-align: start;
-
+}
 button {
 	font-size: 0.5em;
 	border: 0px;
