@@ -51,7 +51,7 @@ h5 {
 }
 
 h7{
-	padding: 20px;
+	padding: 8px;
   font-size: 14px;
 }
 h8 {
@@ -107,12 +107,12 @@ main {
 }
 #catalog a {
   font-weight: 600;
-  line-height: 28px;
+  line-height: 24px;
   font-size: 12px;
   color: #fff;
   letter-spacing: 0.5px;
-  border-radius: 90px;
-  padding: 5px 10px;
+  border-radius: 98px;
+  padding: 5px 8px;
   box-shadow: 0 5px 10px rgba(53, 29, 136, 0.2);
   background: linear-gradient(90deg, #9F51E8 0%, #351DB8 100%);
 	
