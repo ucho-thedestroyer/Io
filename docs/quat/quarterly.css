@@ -235,7 +235,7 @@ main {
 #products .card .cart {
   background: #515151;
   position: absolute;
-  padding: 0 8px;
+  padding: 0 6px;
   top: 10px;
   right: 10px;
   line-height: 42px;
