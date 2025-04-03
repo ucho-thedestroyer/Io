@@ -59,7 +59,9 @@ body:after{
 		overflow: auto;
 	
 	}
-
+	.map {
+		width: 100%
+	}
 
 
 }
