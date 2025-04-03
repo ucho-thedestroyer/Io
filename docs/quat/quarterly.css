@@ -119,8 +119,6 @@ main {
 }
 #catalog .tags {
 	margin: 0 20px;
-	padding: 15px 20px;
-	width: 90%;
 }
 #catalog .tags .bigdesc {
   align-self: flex-start;
@@ -136,7 +134,7 @@ main {
   font-size: 14px;
   border-radius: 4px;
   padding: 0 8px;
-  margin-right: 10px;
+  margin-left: 10px;
   margin-bottom: 6px;
 }
 #products {
