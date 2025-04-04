@@ -1,4 +1,4 @@
-
+@import "~compass-mixins/lib/compass/css3";
 
 @import url(https://fonts.googleapis.com/css?family=News+Cycle:400,700);
 html,
@@ -19,6 +19,7 @@ body {
   margin: 0;
 }
 
+
 .starwars section {
   position: absolute;
   top: 45%;
@@ -27,10 +28,9 @@ body {
 }
 .starwars .start {
   font-size: 200%;
-  top: 15%;
-  left: 22%;
   width: 14em;
   margin: -4em 0 0 -7em;
+  text-align: center;
   cursor: pointer;
 }
 .starwars .start span {
@@ -43,13 +43,13 @@ body {
   font-weight: 400;
   color: #4bd5ee;
   opacity: 0;
-  -webkit-animation: intro 4s ease-out 1s;
-          animation: intro 4s ease-out 1s;
+  -webkit-animation: intro 6s ease-out 1s;
+          animation: intro 6s ease-out 1s;
 }
 .starwars .logo {
   opacity: 0;
-  -webkit-animation: logo 5s ease-out 9s;
-          animation: logo 5s ease-out 9s;
+  -webkit-animation: logo 9s ease-out 9s;
+          animation: logo 9s ease-out 9s;
 }
 .starwars .logo svg {
   width: inherit;
@@ -173,23 +173,3 @@ body {
   }
 }
 
-
-  
-@media screen and (max-width: 600px) {
-
-	.container {
-	
-		width: 500px;
-		height: 450px;
-	}
-	main {
-
-		height: 100%;
-		width: 95%;
-		overflow: auto;
-	
-	}
-
-
-
-}
