@@ -172,4 +172,21 @@ body {
     opacity: 0;
   }
 }
+@media screen and (max-width: 700px) {
 
+	.starwars {
+	
+		width: 95%;
+	height: 80%;
+	}
+	main {
+
+		height: 100%;
+		width: 96%;
+		overflow: auto;
+	
+	}
+
+
+
+}
