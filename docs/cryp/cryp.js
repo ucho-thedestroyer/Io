@@ -1,357 +1,316 @@
-const ORANGE = 'ORANGE',
-BLUE = 'BLUE',
-GREEN = 'GREEN',
-GRAY = 'GRAY';
-
-const getCoinIcon = symbol => {
-  return `https://s3-us-west-2.amazonaws.com/s.cdpn.io/1468070/${symbol.toLowerCase()}.svg`;
-};
-
-const getCoinColor = symbol => {
-  switch (symbol) {
-    case 'ETH':
-    case 'XRP':
-    case 'ADA':
-    case 'XLM':
-    case 'XEM':
-    case 'LSK':
-    case 'DASH':
-      return BLUE;
-    case 'BCH':
-    case 'USDT':
-    case 'NEO':
-      return GREEN;
-    case 'BTC':
-    case 'XMR':
-      return ORANGE;
-    case 'TRX':
-    case 'EOS':
-    case 'LTC':
-    default:
-      return GRAY;}
-
-};
-
-const data = [
-{
-  id: 1,
-  name: "Bitcoin",
-  symbol: "BTC",
-  rank: 1,
-  price: "9,159.68",
-  change24hr: "1.3",
-  cap: "168,679,164,784",
-  volume: "18,357,859,654",
-  circulating: "18,415,393",
-  img: getCoinIcon("BTC"),
-  color: getCoinColor("BTC") },
-
-{
-  id: 2,
-  name: "Ethereum",
-  symbol: "ETH",
-  rank: 2,
-  price: "230.47",
-  change24hr: "1.44",
-  cap: "25,699,790,870",
-  volume: "7,122,827,657",
-  circulating: "111,511,971",
-  img: getCoinIcon("ETH"),
-  color: getCoinColor("ETH") },
-
-{
-  id: 3,
-  name: "Tether",
-  symbol: "USDT",
-  rank: 3,
-  price: "1.00",
-  change24hr: "0.35",
-  cap: "9,224,337,233",
-  volume: "22,616,885,934",
-  circulating: "9,187,991,663",
-  img: getCoinIcon("USDT"),
-  color: getCoinColor("USDT") }];
-
-
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.getCoins = this.getCoins.bind(this);
-    this.setIndex = this.setIndex.bind(this);
-    this.state = {
-      coins: [],
-      index: 0,
-      updating: false,
-      isLoading: false,
-      isShowingTooltip: true };
-
-  }
-  componentDidMount() {
-    this.getCoins();
-    particlesJS("particles", particlesConfig);
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.index !== this.state.index) {
-      if (this.state.isShowingTooltip) {
-        this.setState({ isShowingTooltip: false });
-      }
-      this.setState({ updating: true });
-      setTimeout(() => {
-        this.setState({ updating: false });
-      }, 200);
+"use strict";
+var CoinGeckoApi;
+(function (CoinGeckoApi) {
+    CoinGeckoApi["AllCoins"] = "coins/markets?vs_currency=usd&page=1&per_page=7&sparkline=false";
+    CoinGeckoApi["Base"] = "https://api.coingecko.com/api/v3";
+})(CoinGeckoApi || (CoinGeckoApi = {}));
+var RequestStatus;
+(function (RequestStatus) {
+    RequestStatus["Error"] = "Error";
+    RequestStatus["Idle"] = "Idle";
+    RequestStatus["Loading"] = "Loading";
+    RequestStatus["Success"] = "Success";
+})(RequestStatus || (RequestStatus = {}));
+var Color;
+(function (Color) {
+    Color["Green"] = "76, 175, 80";
+    Color["Red"] = "198, 40, 40";
+})(Color || (Color = {}));
+const CryptoUtility = {
+    formatPercent: (value) => {
+        return (value / 100).toLocaleString("en-US", { style: "percent", minimumFractionDigits: 2 });
+    },
+    formatUSD: (value) => {
+        return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    },
+    getByID: (id, cryptos) => {
+        const match = cryptos.find((crypto) => crypto.id === id);
+        return match || null;
+    },
+    map: (data) => {
+        return {
+            change: data.price_change_percentage_24h,
+            id: data.id,
+            image: data.image,
+            marketCap: CryptoUtility.formatUSD(data.market_cap),
+            name: data.name,
+            price: CryptoUtility.formatUSD(data.current_price),
+            rank: data.market_cap_rank,
+            supply: data.circulating_supply.toLocaleString(),
+            symbol: data.symbol,
+            volume: CryptoUtility.formatUSD(data.total_volume)
+        };
+    },
+    mapAll: (data) => {
+        return data.map((item) => CryptoUtility.map(item));
     }
-  }
-  getCoins() {
-    this.setState({ isLoading: true });
-
-    setTimeout(() => {
-      this.setState({ coins: data });
-      this.setState({ isLoading: false });
-    }, 1000);
-  }
-  mapCoins(coins) {
-    return coins.map(coin => ({
-      name: coin.name,
-      symbol: coin.symbol,
-      rank: coin.rank,
-      price: formatNum(coin.price_usd),
-      change24hr: coin.percent_change_24h,
-      cap: formatNum(coin.market_cap_usd),
-      volume: formatNum(coin['24h_volume_usd']),
-      circulating: formatNum(coin.available_supply),
-      img: this.getCoinIcon(coin.symbol.toLowerCase()),
-      color: getCoinColor(coin.symbol) }));
-
-  }
-  setIndex(index) {
-    this.setState({ index });
-  }
-  render() {
-    const {
-      coins,
-      index,
-      updating,
-      isLoading,
-      isShowingTooltip } =
-    this.state;
-    let card = null;
-    if (isLoading) {
-      card = /*#__PURE__*/
-      React.createElement("div", { id: "card-loading" }, /*#__PURE__*/
-      React.createElement("div", { id: "card-loading-spinner" }));
-
-
-    } else
-    if (coins.length > 0) {
-      card = /*#__PURE__*/
-      React.createElement(Card, {
-        coins: coins,
-        index: index,
-        setIndex: this.setIndex });
-
-
-    }
-
-    return /*#__PURE__*/(
-      React.createElement("div", { id: "app", className: updating ? 'updating' : '' }, /*#__PURE__*/
-      React.createElement("div", { id: "particles" }), /*#__PURE__*/
-      React.createElement("div", { id: "help-tooltip", className: isShowingTooltip ? 'showing' : 'hide' }, /*#__PURE__*/
-      React.createElement("i", { className: "fa fa-question-circle-o" }), /*#__PURE__*/
-      React.createElement("h1", null, /*#__PURE__*/React.createElement("span", { className: "text" }, "Hover over the coin icon and scroll."), /*#__PURE__*/React.createElement("span", { className: "triangle" }))),
-
-      card));
-
-
-  }}
-
-
-class Card extends React.Component {
-  determineSign(num) {
-    return parseFloat(num) >= 0 ? 'positive' : 'negative';
-  }
-  render() {
-    const { coins, index } = this.props,
-    coin = coins[index],
-    colorClass = getColorClass(coin.color);
-    return /*#__PURE__*/(
-      React.createElement("div", { id: "card-wrapper", className: colorClass }, /*#__PURE__*/
-      React.createElement("div", { id: "card" }, /*#__PURE__*/
-      React.createElement("div", { id: "card-left", className: "card-half" }, /*#__PURE__*/
-      React.createElement("div", { id: "coin-icon", style: { backgroundImage: `url(${coin.img})` } }), /*#__PURE__*/
-      React.createElement("div", { id: "coin-symbol-vert" }, /*#__PURE__*/
-      React.createElement("h1", null, coin.symbol)), /*#__PURE__*/
-
-      React.createElement(CoinSelection, {
-        coins: coins,
-        index: index,
-        setIndex: this.props.setIndex })), /*#__PURE__*/
-
-
-      React.createElement("div", { id: "card-right", className: "card-half" }, /*#__PURE__*/
-      React.createElement("div", { id: "card-right-contents" }, /*#__PURE__*/
-      React.createElement("div", { id: "coin-header" }, /*#__PURE__*/
-      React.createElement("div", { id: "coin-name" }, /*#__PURE__*/
-      React.createElement("h1", null, coin.name)), /*#__PURE__*/
-
-      React.createElement("div", { id: "coin-symbol" }, /*#__PURE__*/
-      React.createElement("h1", null, coin.symbol)), /*#__PURE__*/
-
-      React.createElement("div", { id: "coin-rank" }, /*#__PURE__*/
-      React.createElement("div", { className: "label" }, /*#__PURE__*/
-      React.createElement("h1", null, "Rank")), /*#__PURE__*/
-
-      React.createElement("div", { className: "value" }, /*#__PURE__*/
-      React.createElement("h1", null, coin.rank)))), /*#__PURE__*/
-
-
-
-      React.createElement("div", { id: "coin-price" }, /*#__PURE__*/
-      React.createElement("div", { className: "value" }, /*#__PURE__*/
-      React.createElement("h1", null, "$", coin.price)), /*#__PURE__*/
-
-      React.createElement("div", { id: "coin-change-24hr", className: this.determineSign(coin.change24hr) }, /*#__PURE__*/
-      React.createElement("h1", null, coin.change24hr, "%"))), /*#__PURE__*/
-
-
-      React.createElement("div", { id: "coin-info" }, /*#__PURE__*/
-      React.createElement(CoinInfoField, { value: `$${coin.cap}`, label: "Market Cap" }), /*#__PURE__*/
-      React.createElement(CoinInfoField, { value: `$${coin.volume}`, label: "Volume" }), /*#__PURE__*/
-      React.createElement(CoinInfoField, { value: `${coin.circulating} ${coin.symbol}`, label: "Circulating Supply" })), /*#__PURE__*/
-
-      React.createElement("div", { id: "card-right-stripes" }))))));
-
-
-
-
-
-  }}
-
-
-const CoinInfoField = ({
-  value,
-  label }) =>
-{
-  return /*#__PURE__*/(
-    React.createElement("div", { className: "coin-info-field" }, /*#__PURE__*/
-    React.createElement("div", { className: "value" }, /*#__PURE__*/
-    React.createElement("h1", null, value)), /*#__PURE__*/
-
-    React.createElement("div", { className: "label" }, /*#__PURE__*/
-    React.createElement("h1", null, label))));
-
-
-
 };
-
-class CoinSelection extends React.Component {
-  constructor(props) {
-    super(props);
-    this.setCurrentScrollTop = this.setCurrentScrollTop.bind(this);
-    this.moveScrollTop = this.moveScrollTop.bind(this);
-    this.onOptionsScroll = this.onOptionsScroll.bind(this);
-    this.state = {
-      currentScrollTop: 0 };
-
-  }
-  setCurrentScrollTop(val) {
-    this.setState({ currentScrollTop: val });
-  }
-  moveScrollTop() {
-    this.refs.coinOptions.scrollTop = this.state.currentScrollTop;
-  }
-  onOptionsScroll() {
-    const option = document.getElementsByClassName('coin-option')[0],
-    topOffset = window.innerHeight / 2,
-    optionHeight = option.clientHeight,
-    scrollTop = this.refs.coinOptions.scrollTop,
-    newScrollTop = this.props.index * (optionHeight + 20),
-    index = Math.max(1, Math.ceil(scrollTop / optionHeight));
-    this.setCurrentScrollTop(newScrollTop);
-    this.props.setIndex(index - 1);
-  }
-  render() {
-    const coinOptions = this.props.coins.slice(0, 10).map(coin => {
-      const selected = this.props.index == coin.rank - 1;
-      return /*#__PURE__*/(
-        React.createElement("div", { key: coin.symbol, className: `coin-option ${selected ? 'selected' : ''}` }, /*#__PURE__*/
-        React.createElement("div", { className: 'coin-option-icon', style: { backgroundImage: `url(${coin.img})` } })));
-
-
+const ChartUtility = {
+    draw: (id, points, change) => {
+        const canvas = document.getElementById(id);
+        if (canvas !== null) {
+            const context = canvas.getContext("2d");
+            const { clientHeight: height, clientWidth: width } = context.canvas;
+            context.stroke();
+            return new Chart(context, {
+                type: "line",
+                data: {
+                    datasets: [Object.assign({ data: points.map((point) => point.price) }, ChartUtility.getDatasetOptions(change))],
+                    labels: points.map((point) => point.timestamp)
+                },
+                options: ChartUtility.getOptions(points)
+            });
+        }
+    },
+    getDatasetOptions: (change) => {
+        const color = change >= 0 ? Color.Green : Color.Red;
+        return {
+            backgroundColor: "rgba(" + color + ", 0.1)",
+            borderColor: "rgba(" + color + ", 0.5)",
+            fill: true,
+            tension: 0.2,
+            pointRadius: 0
+        };
+    },
+    getOptions: (points) => {
+        const min = Math.min.apply(Math, points.map((point) => point.price)), max = Math.max.apply(Math, points.map((point) => point.price));
+        return {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                x: {
+                    display: false,
+                    gridLines: {
+                        display: false
+                    }
+                },
+                y: {
+                    display: false,
+                    gridLines: {
+                        display: false
+                    },
+                    suggestedMin: min * 0.98,
+                    suggestedMax: max * 1.02
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                }
+            }
+        };
+    },
+    getUrl: (id) => {
+        return `${CoinGeckoApi.Base}/coins/${id}/market_chart?vs_currency=usd&days=1`;
+    },
+    mapPoints: (data) => {
+        return data.prices.map((price) => ({
+            price: price[1],
+            timestamp: price[0]
+        }));
+    },
+    update: (chart, points, change) => {
+        chart.options = ChartUtility.getOptions(points);
+        const options = ChartUtility.getDatasetOptions(change);
+        chart.data.datasets[0].data = points.map((point) => point.price);
+        chart.data.datasets[0].backgroundColor = options.backgroundColor;
+        chart.data.datasets[0].borderColor = options.borderColor;
+        chart.data.datasets[0].pointRadius = options.pointRadius;
+        chart.data.labels = points.map((point) => point.timestamp);
+        chart.update();
+    }
+};
+/* ---------- Loading Component ---------- */
+const LoadingSpinner = () => {
+    return (React.createElement("div", { className: "loading-spinner-wrapper" },
+        React.createElement("div", { className: "loading-spinner" },
+            React.createElement("i", { className: "fa-regular fa-spinner-third" }))));
+};
+/* ---------- Crypto List Component ---------- */
+const CryptoListToggle = () => {
+    const { state, toggleList } = React.useContext(AppContext);
+    if (state.status === RequestStatus.Success && state.cryptos.length > 0) {
+        const classes = classNames("fa-regular", {
+            "fa-bars": !state.listToggled,
+            "fa-xmark": state.listToggled
+        });
+        return (React.createElement("button", { id: "crypto-list-toggle-button", onClick: () => toggleList(!state.listToggled) },
+            React.createElement("i", { className: classes })));
+    }
+    return null;
+};
+const CryptoListItem = (props) => {
+    const { state, selectCrypto } = React.useContext(AppContext);
+    const { crypto } = props;
+    const getClasses = () => {
+        const selected = state.selectedCrypto && state.selectedCrypto.id === crypto.id;
+        return classNames("crypto-list-item", {
+            selected
+        });
+    };
+    return (React.createElement("button", { type: "button", className: getClasses(), onClick: () => selectCrypto(crypto.id) },
+        React.createElement("div", { className: "crypto-list-item-background" },
+            React.createElement("h1", { className: "crypto-list-item-symbol" }, crypto.symbol),
+            React.createElement("img", { className: "crypto-list-item-background-image", src: crypto.image })),
+        React.createElement("div", { className: "crypto-list-item-content" },
+            React.createElement("h1", { className: "crypto-list-item-rank" }, crypto.rank),
+            React.createElement("img", { className: "crypto-list-item-image", src: crypto.image }),
+            React.createElement("div", { className: "crypto-list-item-details" },
+                React.createElement("h1", { className: "crypto-list-item-name" }, crypto.name),
+                React.createElement("h1", { className: "crypto-list-item-price" }, crypto.price)))));
+};
+const CryptoList = () => {
+    const { state } = React.useContext(AppContext);
+    if (state.status === RequestStatus.Success && state.cryptos.length > 0) {
+        const getItems = () => {
+            return state.cryptos.map((crypto) => (React.createElement(CryptoListItem, { key: crypto.id, crypto: crypto })));
+        };
+        return (React.createElement("div", { id: "crypto-list" }, getItems()));
+    }
+    return null;
+};
+const CryptoPriceChart = () => {
+    const { selectedCrypto: crypto } = React.useContext(AppContext).state;
+    const id = "crypto-price-chart";
+    const [state, setStateTo] = React.useState({
+        chart: null,
+        points: [],
+        status: RequestStatus.Loading
     });
-    return /*#__PURE__*/(
-      React.createElement("div", { id: "coin-selection", onMouseLeave: this.moveScrollTop }, /*#__PURE__*/
-      React.createElement("div", { id: "coin-options-wrapper",
-        ref: "coinOptions",
-        className: "scroll-bar",
-        onScroll: _.throttle(this.onOptionsScroll, 200) }, /*#__PURE__*/
-
-      React.createElement("div", { id: "coin-options" },
-      coinOptions))));
-
-
-
-
-  }}
-
-
-const formatNum = num => {
-  const splitNum = num.split('.'),
-  firstHalf = splitNum[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-  secondHalf = splitNum[1] ? splitNum[1].substring(0, 2) : splitNum[1];
-
-  return secondHalf ? `${firstHalf}.${secondHalf}` : firstHalf;
+    const setStatusTo = (status) => {
+        setStateTo(Object.assign(Object.assign({}, state), { status }));
+    };
+    const setChartTo = (chart) => {
+        setStateTo(Object.assign(Object.assign({}, state), { chart }));
+    };
+    React.useEffect(() => {
+        const fetch = async () => {
+            try {
+                setStatusTo(RequestStatus.Loading);
+                const res = await axios.get(ChartUtility.getUrl(crypto.id));
+                setStateTo(Object.assign(Object.assign({}, state), { points: ChartUtility.mapPoints(res.data), status: RequestStatus.Success }));
+            }
+            catch (err) {
+                console.error(err);
+                setStatusTo(RequestStatus.Error);
+            }
+        };
+        fetch();
+    }, [crypto]);
+    React.useEffect(() => {
+        if (state.chart === null && state.status === RequestStatus.Success) {
+            setChartTo(ChartUtility.draw(id, state.points, crypto.change));
+        }
+    }, [state.status]);
+    React.useEffect(() => {
+        if (state.chart !== null) {
+            const update = () => ChartUtility.update(state.chart, state.points, crypto.change);
+            update();
+        }
+    }, [state.chart, state.points]);
+    const getLoadingSpinner = () => {
+        if (state.status === RequestStatus.Loading) {
+            return (React.createElement("div", { id: "crypto-price-chart-loading-spinner" },
+                React.createElement(LoadingSpinner, null)));
+        }
+    };
+    return (React.createElement("div", { id: "crypto-price-chart-wrapper" },
+        React.createElement("canvas", { id: id }),
+        getLoadingSpinner()));
 };
-
-const getColorClass = color => {
-  switch (color) {
-    case ORANGE:
-      return 'orange';
-    case BLUE:
-      return 'blue';
-    case GREEN:
-      return 'green';
-    case GRAY:
-      return 'gray';}
-
+const CryptoField = (props) => {
+    return (React.createElement("div", { className: classNames("crypto-field", props.className) },
+        React.createElement("h1", { className: "crypto-field-value" }, props.value),
+        React.createElement("h1", { className: "crypto-field-label" }, props.label)));
 };
+const CryptoDetails = () => {
+    const { selectedCrypto } = React.useContext(AppContext).state;
+    const [state, setStateTo] = React.useState({
+        crypto: null,
+        transitioning: true
+    });
+    const setTransitioningTo = (transitioning) => {
+        setStateTo(Object.assign(Object.assign({}, state), { transitioning }));
+    };
+    const { crypto } = state;
+    React.useEffect(() => {
+        if (selectedCrypto !== null) {
+            setTransitioningTo(true);
+            const timeout = setTimeout(() => {
+                setStateTo({ crypto: selectedCrypto, transitioning: false });
+            }, 500);
+            return () => {
+                clearTimeout(timeout);
+            };
+        }
+    }, [selectedCrypto]);
+    if (crypto !== null) {
+        const sign = crypto.change >= 0 ? "positive" : "negative";
+        return (React.createElement("div", { id: "crypto-details", className: classNames(sign, { transitioning: state.transitioning }) },
+            React.createElement("div", { id: "crypto-details-content" },
+                React.createElement("div", { id: "crypto-fields" },
+                    React.createElement(CryptoField, { label: "Rank", value: crypto.rank }),
+                    React.createElement(CryptoField, { label: "Name", value: crypto.name }),
+                    React.createElement(CryptoField, { label: "Price", value: crypto.price }),
+                    React.createElement(CryptoField, { label: "Market Cap", value: crypto.marketCap }),
+                    React.createElement(CryptoField, { label: "24H Volume", value: crypto.volume }),
+                    React.createElement(CryptoField, { label: "Circulating Supply", value: crypto.supply }),
+                    React.createElement(CryptoField, { className: sign, label: "24H Change", value: CryptoUtility.formatPercent(crypto.change) })),
+                React.createElement(CryptoPriceChart, null),
+                React.createElement("h1", { id: "crypto-details-symbol" }, crypto.symbol))));
+    }
+    return null;
+};
+const AppContext = React.createContext(null);
+const App = () => {
+    const [state, setStateTo] = React.useState({
+        cryptos: [],
+        listToggled: true,
+        selectedCrypto: null,
+        status: RequestStatus.Loading
+    });
+    const setStatusTo = (status) => {
+        setStateTo(Object.assign(Object.assign({}, state), { status }));
+    };
+    const selectCrypto = (id) => {
+        setStateTo(Object.assign(Object.assign({}, state), { listToggled: window.innerWidth > 800, selectedCrypto: CryptoUtility.getByID(id, state.cryptos) }));
+    };
+    const toggleList = (listToggled) => {
+        setStateTo(Object.assign(Object.assign({}, state), { listToggled }));
+    };
+    React.useEffect(() => {
+        const fetch = async () => {
+            try {
+                setStatusTo(RequestStatus.Loading);
+                const res = await axios.get(`${CoinGeckoApi.Base}/${CoinGeckoApi.AllCoins}`);
+                setStateTo(Object.assign(Object.assign({}, state), { cryptos: CryptoUtility.mapAll(res.data), status: RequestStatus.Success }));
+            }
+            catch (err) {
+                console.error(err);
+                setStatusTo(RequestStatus.Error);
+            }
+        };
+        fetch();
+    }, []);
+    React.useEffect(() => {
+        if (state.status === RequestStatus.Success && state.cryptos.length > 0) {
+            selectCrypto(state.cryptos[0].id);
+        }
+    }, [state.status]);
+    const getLoadingSpinner = () => {
+        if (state.status === RequestStatus.Loading) {
+            return (React.createElement(LoadingSpinner, null));
+        }
+    };
+    return (React.createElement(AppContext.Provider, { value: { state, selectCrypto, setStateTo, toggleList } },
+        React.createElement("div", { id: "app", className: classNames({ "list-toggled": state.listToggled }) },
+            React.createElement(CryptoList, null),
+            React.createElement(CryptoDetails, null),
+            React.createElement(CryptoListToggle, null),
+            getLoadingSpinner())));
+};
+ReactDOM.render(React.createElement(App, null), document.getElementById("root"));
 
-const particlesConfig = {
-  "particles": {
-    "number": {
-      "value": 30 },
-
-    "color": {
-      "value": "#607d8b" },
-
-    "size": {
-      "value": 2 },
-
-    "line_linked": {
-      "enable": true,
-      "distance": 350,
-      "color": "#607d8b" } },
-
-
-  "interactivity": {
-    "events": {
-      "onhover": {
-        "enable": true,
-        "mode": "grab" },
-
-      "onclick": {
-        "enable": false } },
-
-
-    "modes": {
-      "grab": {
-        "distance": 500,
-        "line_linked": {
-          "opacity": 1 } } } } };
-
-
-
-
-
-
-ReactDOM.render( /*#__PURE__*/React.createElement(App, null), document.getElementById('root'));
