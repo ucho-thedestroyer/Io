@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decentralized File Purchase</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Buy this file for 1 STX or 1000 Sats</h1>
+    <div class="button-group">
+      <button id="pay-lightning">⚡ Pay with Lightning</button>
+      <button id="pay-stx">🟧 Pay with STX</button>
+    </div>
+    <a id="download" href="https://ipfs.io/ipfs/QmYourFileHash" download>Download File</a>
+    <div id="lnInvoice" style="display:none;">
+      <p>Scan this QR to pay with any Lightning wallet:</p>
+      <div id="qrcode"></div>
+    </div>
+  </div>
+
+  <script src="qrcode.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
