@@ -64,6 +64,39 @@ body {
   border-radius: inherit;
 }
 
+/* Player button size */
+.controls button {
+  font-size: 32px; /* Doubles the size of the button */
+  padding: 15px 25px; /* Increase padding for bigger buttons */
+  border-radius: 50%;
+  background-color: var(--button-bg);
+  border: none;
+  cursor: pointer;
+}
+
+.controls button i {
+  font-size: inherit;
+  color: var(--primary-clr);
+}
+
+/* Play button style */
+.play-pause-btn {
+  background-color: #ff0000; /* Bright red */
+}
+
+.play-pause-btn i {
+  color: #ffffff; /* White icon */
+}
+
+/* Optional: Add a hover effect */
+.controls button:hover {
+  background-color: rgba(54, 54, 54, 0.1);
+}
+
+.play-pause-btn:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
 /* Make sure it adapts to smaller screens */
 @media (max-width: 768px) {
   .player-container {
