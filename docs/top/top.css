@@ -23,6 +23,14 @@ body {
   justify-content: center;
 }
 
+.player-container {
+  width: 90%;
+  max-width: 1200px; /* Optional: Set a max-width to avoid it getting too large on big screens */
+  margin: 0 auto; /* Center the container */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 /* Slide background animation (optional) */
 @keyframes slidein {
   0%, 100% {
@@ -60,3 +68,19 @@ body {
   width: 100%;
   height: 100%;
   border-radius: inherit;
+}
+
+/* Make sure it adapts to smaller screens */
+@media (max-width: 768px) {
+  .player-container {
+    width: 95%; /* Slightly larger width for smaller screens */
+  }
+}
+
+/* For very small screens like smartphones in portrait mode */
+@media (max-width: 480px) {
+  .player-container {
+    width: 100%; /* Full width on small screens */
+    padding: 10px; /* Reduce padding */
+  }
+}
