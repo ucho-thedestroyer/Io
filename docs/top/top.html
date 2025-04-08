@@ -21,25 +21,27 @@
    <td width="137"><a href="https://web.archive.org/web/20040605121316/http://club.mp3search.ru/"><img src="https://web.archive.org/web/20040605121316im_/http://img.mp3search.ru/club_160x60.gif" width="160" height="60" vspace="2" hspace="2" border="0"></a></td>
    <td align="center" height="45">
      <table cellpadding="0" cellspacing="0" border="0">
-      <tr><form action="https://web.archive.org/web/20040605121316/http://club.mp3search.ru/search.html" id="search_form">
-       <td align="right" nowrap><font size="2"><b>Find:&nbsp;</b></font></td>
-       <td><input type="text" id="q" name="q" size="35" maxlength="60" style="width:240; height:20;" value=""></td>
-       <td>&nbsp;<input type="submit" value=" search " style="background-color:##d8d8d8; width:60; height:20; font-size: 11;"></td>
-      </tr>
       <tr>
-       <td colspan="3" valign="top" align="center">
-        <table border="0" cellspacing="0" cellpadding="0">
-         <tr>
-          <td><font size="1">
-           <input style="background-color:#eeeeee" type="radio" name="target" value="" checked id="music"> <a href="#" onclick="music.click();return false;"><font color="000000">in music</font></a>
-           <input style="background-color:#eeeeee" type="radio" name="target" value="artist" id="artist"> <a href="#" onclick="artist.click();return false;"><font color="000000">by artist</font></a>
-           <input style="background-color:#eeeeee" type="radio" name="target" value="album" id="album"> <a href="#" onclick="album.click();return false;"><font color="000000">by album</font></a>
-           <input style="background-color:#eeeeee" type="radio" name="target" value="song" id="song"> <a href="#" onclick="song.click();return false;"><font color="000000">by song</font></a></font>
-          </td>
-         </tr>
-        </table>
-       </td>
-      </tr></form>
+        <div class="music-player">
+    <h1 class="blocktitle" id="song-title">Song Title Goes Here</h1>
+    <p class="blocktitle2" id="song-duration">00:00</p>
+
+    <audio id="song" src=""></audio>
+    <input type="range" value="0" id="progress" />
+
+    <div class="controls">
+      <button class="backward" title="Previous">
+        <span>&laquo;</span>
+      </button>
+      <button class="play-pause-btn" title="Play/Pause">
+        <i id="controlIcon" class="fa fa-play"></i>
+      </button>
+      <button class="forward" title="Next">
+        <span>&raquo;</span>
+      </button>
+    </div>
+  </div>
+      </tr>
      </table>
    </td>
    <td valign="middle" align="right" width="250">
