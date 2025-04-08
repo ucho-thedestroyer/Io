@@ -10,25 +10,32 @@ const artistName = document.querySelector(".music-player p");
 const songs = [
   {
     source: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/camp/Star_Wars_original_opening_crawl_1977.ogg",
+    cover: "https://path/to/star-wars-cover.jpg"
   },
   {
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Pawn-It-All.mp3",
+    cover: "https://path/to/pawn-it-all-cover.jpg"
   },
   {
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
+    cover: "https://path/to/madrigal-cover.jpg"
   },
   {
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3",
+    cover: "https://path/to/daft-punk-cover.jpg"
   },
   {
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Harry-Styles-As-It-Was.mp3",
+    cover: "https://path/to/harry-styles-cover.jpg"
   },
   {
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Dua-Lipa-Physical.mp3",
+    cover: "https://path/to/dua-lipa-cover.jpg"
   },
   {
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Taylor-Swift-Delicate.mp3",
-  },
+    cover: "https://path/to/taylor-swift-cover.jpg"
+  }
 ];
 
 let currentSongIndex = 3;
