@@ -43,6 +43,8 @@ body {
   border-radius: 8px;
   object-fit: cover;
   margin-top: 20px;
+  align-items: center;
+  
 }
 
 .swiper {
