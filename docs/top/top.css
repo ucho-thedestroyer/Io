@@ -36,7 +36,11 @@ body {
 }
 
 .album-cover {
-  width: 90%;
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-top: 20px;
 }
 
 .swiper {
