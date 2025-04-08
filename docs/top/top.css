@@ -97,6 +97,53 @@ body {
   background-color: #cc0000; /* Darker red on hover */
 }
 
+.album-tracks {
+  width: 90%;
+  margin: 20px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.album-tracks h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#album-tracks-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.track-item {
+  width: 200px;
+  margin: 10px;
+  text-align: center;
+}
+
+.track-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.track-item p {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.track-item a {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.track-item a:hover {
+  text-decoration: underline;
+}
+
 /* Make sure it adapts to smaller screens */
 @media (max-width: 768px) {
   .player-container {
