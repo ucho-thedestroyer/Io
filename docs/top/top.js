@@ -147,3 +147,61 @@ swiper.on("slideChange", () => {
   updateSongInfo();
   playPause();
 });
+
+Example album data (you can replace this with actual data)
+const albums = {
+  "Album 1": [
+    { title: "Track 1", image: "album1-cover.jpg", source: "track1.mp3" },
+    { title: "Track 2", image: "album1-cover.jpg", source: "track2.mp3" },
+    // more tracks...
+  ],
+  "Album 2": [
+    { title: "Track 1", image: "album2-cover.jpg", source: "track1.mp3" },
+    { title: "Track 2", image: "album2-cover.jpg", source: "track2.mp3" },
+    // more tracks...
+  ],
+  // add more albums as needed
+};
+
+const albumLinks = document.querySelectorAll(".choose-album-link"); // Assuming you have links with this class
+const albumTracksContainer = document.getElementById("album-tracks-list");
+
+albumLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    const albumName = link.textContent.trim(); // Get album name from the link text
+    updateAlbumTracks(albumName);
+  });
+});
+
+function updateAlbumTracks(albumName) {
+  const tracks = albums[albumName];
+  
+  if (tracks) {
+    // Clear previous tracks
+    albumTracksContainer.innerHTML = "";
+
+    // Dynamically add tracks to the container
+    tracks.forEach(track => {
+      const trackElement = document.createElement("div");
+      trackElement.classList.add("track-item");
+
+      const trackImage = document.createElement("img");
+      trackImage.src = track.image; // Use track image from data
+      trackImage.alt = track.title;
+      trackImage.classList.add("track-image");
+
+      const trackTitle = document.createElement("p");
+      trackTitle.textContent = track.title;
+
+      const trackLink = document.createElement("a");
+      trackLink.href = track.source; // Link to the track file
+      trackLink.textContent = "Listen"; // Or add a play button icon here
+
+      trackElement.appendChild(trackImage);
+      trackElement.appendChild(trackTitle);
+      trackElement.appendChild(trackLink);
+
+      albumTracksContainer.appendChild(trackElement);
+    });
+  }
+}
