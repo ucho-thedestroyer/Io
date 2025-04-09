@@ -107,7 +107,7 @@ body {
 }
 .controls button {
   font-size: 1.2vw; /* Doubles the size of the button */
-  padding: 12px 20px; /* Increase padding for bigger buttons */
+  padding: 12px; /* Increase padding for bigger buttons */
 }
 
   .tip-container {
@@ -124,8 +124,8 @@ body {
     padding: 10px; /* Reduce padding */
   }
   .controls button {
-  font-size: 1.2vw; /* Doubles the size of the button */
-  padding: 12px 20px; /* Increase padding for bigger buttons */
+  font-size: 1.1vw; /* Doubles the size of the button */
+  padding: 12px; /* Increase padding for bigger buttons */
   
 }
 
