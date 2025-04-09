@@ -19,10 +19,14 @@ body {
 
 .player-container {
   width: 90%;
-  max-width: 1500px; /* Optional: Set a max-width to avoid it getting too large on big screens */
+  max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   margin: 0 auto; /* Center the container */
   padding: 20px;
   box-sizing: border-box;
+}
+
+.tip-container {
+ width: 240px;
 }
 
 /* Slide background animation (optional) */
@@ -115,8 +119,12 @@ body {
 .controls button {
   font-size: 1.2vw; /* Doubles the size of the button */
   padding: 12px 20px; /* Increase padding for bigger buttons */
-  
 }
+
+  .tip-container {
+ width: 200px;
+}
+
 
 }
 
