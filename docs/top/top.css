@@ -73,7 +73,7 @@ body {
 /* Player button size */
 .controls button {
   font-size: 1.3vw; /* Doubles the size of the button */
-  padding: 14px; /* Increase padding for bigger buttons */
+  padding: 14px 16px; /* Increase padding for bigger buttons */
   border-radius: 70%;
   background-color: var(--button-bg);
   border: none;
@@ -107,7 +107,7 @@ body {
 }
 .controls button {
   font-size: 1.2vw; /* Doubles the size of the button */
-  padding: 12px; /* Increase padding for bigger buttons */
+  padding: 12px 14px; /* Increase padding for bigger buttons */
 }
 
   .tip-container {
@@ -125,7 +125,7 @@ body {
   }
   .controls button {
   font-size: 1.1vw; /* Doubles the size of the button */
-  padding: 12px; /* Increase padding for bigger buttons */
+  padding: 11px 13px; /* Increase padding for bigger buttons */
   
 }
 
