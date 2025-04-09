@@ -86,7 +86,7 @@ body {
 }
 
 /* Play button style */
-.play-pause-btn .fa fa-play{
+.play-pause-btn fa fa-play{
   background-color: #ff0000; /* Bright red */
 }
 
