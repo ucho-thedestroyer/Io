@@ -46,7 +46,7 @@ body {
   height: 160px;
   border-radius: 8px;
   object-fit: cover;
-  margin-top: 10px;
+  margin-top: 2px;
   align-items: self-center;
   
 }
@@ -111,10 +111,6 @@ body {
   .album-cover {
   width: 130px;
   height: 130px;
-  border-radius: 8px;
-  object-fit: cover;
-  margin-top: 10px;
-  align-items: safe-center;
 }
 .controls button {
   font-size: 1.2vw; /* Doubles the size of the button */
