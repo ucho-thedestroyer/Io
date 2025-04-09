@@ -29,6 +29,10 @@ body {
  width: 210px;
 }
 
+.hot {
+  align-items: safe-center;
+}
+
 /* Slide background animation (optional) */
 @keyframes slidein {
   0%, 100% {
