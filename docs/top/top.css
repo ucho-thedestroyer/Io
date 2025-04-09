@@ -86,13 +86,11 @@ body {
 }
 
 /* Play button style */
-.play-pause-btn fa fa-play{
+.controls .play-pause-btn {
   background-color: #ff0000; /* Bright red */
+  --fa-color: red;
 }
 
-.play-pause-btn i {
-  color: #ffffff; /* White icon */
-}
 
 /* Optional: Add a hover effect */
 .controls button:hover {
