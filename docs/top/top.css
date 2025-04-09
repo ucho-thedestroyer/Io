@@ -68,7 +68,7 @@ body {
 
 /* Player button size */
 .controls button {
-  font-size: 1vw; /* Doubles the size of the button */
+  font-size: 1.1vw; /* Doubles the size of the button */
   padding: 12px 20px; /* Increase padding for bigger buttons */
   border-radius: 60%;
   background-color: var(--button-bg);
@@ -82,7 +82,7 @@ body {
 }
 
 /* Play button style */
-.play-pause-btn {
+.play-pause-btn .fa fa-play{
   background-color: #ff0000; /* Bright red */
 }
 
@@ -105,14 +105,19 @@ body {
     width: 95%; /* Slightly larger width for smaller screens */
   }
   .album-cover {
-  width: 160px;
-  height: 160px;
+  width: 130px;
+  height: 130px;
   border-radius: 8px;
   object-fit: cover;
   margin-top: 20px;
   align-items: safe-center;
+}
+.controls button {
+  font-size: 1.2vw; /* Doubles the size of the button */
+  padding: 12px 20px; /* Increase padding for bigger buttons */
   
 }
+
 }
 
 /* For very small screens like smartphones in portrait mode */
@@ -121,4 +126,10 @@ body {
     width: 100%; /* Full width on small screens */
     padding: 10px; /* Reduce padding */
   }
+  .controls button {
+  font-size: 1.2vw; /* Doubles the size of the button */
+  padding: 12px 20px; /* Increase padding for bigger buttons */
+  
+}
+
 }
