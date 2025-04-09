@@ -26,7 +26,7 @@ body {
 }
 
 .tip-container {
- width: 220px;
+ max-width: 200px;
 }
 
 /* Slide background animation (optional) */
