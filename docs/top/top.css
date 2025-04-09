@@ -80,10 +80,6 @@ body {
   cursor: pointer;
 }
 
-.controls button i {
-  font-size: inherit;
-  color: var(--primary-clr);
-}
 
 /* Play button style */
 .controls .play-pause-btn {
