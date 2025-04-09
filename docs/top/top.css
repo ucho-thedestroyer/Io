@@ -46,7 +46,7 @@ body {
   height: 160px;
   border-radius: 8px;
   object-fit: cover;
-  margin-top: 20px;
+  margin-top: 10px;
   align-items: self-center;
   
 }
@@ -113,7 +113,7 @@ body {
   height: 130px;
   border-radius: 8px;
   object-fit: cover;
-  margin-top: 20px;
+  margin-top: 10px;
   align-items: safe-center;
 }
 .controls button {
