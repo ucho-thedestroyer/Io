@@ -43,7 +43,7 @@ body {
   border-radius: 8px;
   object-fit: cover;
   margin-top: 20px;
-  align-items: center;
+  align-items: self-center;
   
 }
 
@@ -104,6 +104,15 @@ body {
   .player-container {
     width: 95%; /* Slightly larger width for smaller screens */
   }
+  .album-cover {
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-top: 20px;
+  align-items: safe-center;
+  
+}
 }
 
 /* For very small screens like smartphones in portrait mode */
