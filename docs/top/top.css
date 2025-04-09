@@ -88,7 +88,9 @@ body {
 /* Play button style */
 .controls .play-pause-btn {
   background-color: #ff0000; /* Bright red */
-  --fa-color: red;
+  color: #ffffff;
+  font-size: 2vw;
+  
 }
 
 
