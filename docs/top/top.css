@@ -72,23 +72,20 @@ body {
 
 /* Player button size */
 .controls button {
-  font-size: 1.1vw; /* Doubles the size of the button */
+  font-size: 1.3vw; /* Doubles the size of the button */
   padding: 12px 20px; /* Increase padding for bigger buttons */
-  border-radius: 60%;
+  border-radius: 70%;
   background-color: var(--button-bg);
   border: none;
   cursor: pointer;
+  color: #333333;
 }
-
 
 /* Play button style */
 .controls .play-pause-btn {
   background-color: #ff0000; /* Bright red */
   color: #ffffff;
-  font-size: 2vw;
-  
 }
-
 
 /* Optional: Add a hover effect */
 .controls button:hover {
