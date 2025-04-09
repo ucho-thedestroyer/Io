@@ -156,6 +156,6 @@ function getVote(int) {
       document.getElementById("poll").innerHTML=this.responseText;
     }
   }
-  xmlhttp.open("GET","top/poll_vote.php?vote="+int,true);
+  xmlhttp.open("GET","https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/poll_vote.php?vote="+int,true);
   xmlhttp.send();
 }
