@@ -21,7 +21,7 @@ body {
   width: 90%;
   max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   margin: 0 auto; /* Center the container */
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
