@@ -68,9 +68,9 @@ body {
 
 /* Player button size */
 .controls button {
-  font-size: 32px; /* Doubles the size of the button */
-  padding: 15px 25px; /* Increase padding for bigger buttons */
-  border-radius: 50%;
+  font-size: 1vw; /* Doubles the size of the button */
+  padding: 12px 20px; /* Increase padding for bigger buttons */
+  border-radius: 60%;
   background-color: var(--button-bg);
   border: none;
   cursor: pointer;
