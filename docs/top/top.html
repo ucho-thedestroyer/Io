@@ -223,17 +223,6 @@
   <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons.js"></script>
   <script src="top.js"></script>
-    <script>
-      function getVote(int) {
-  var xmlhttp=new XMLHttpRequest();
-  xmlhttp.onreadystatechange=function() {
-    if (this.readyState==4 && this.status==200) {
-      document.getElementById("poll").innerHTML=this.responseText;
-    }
-  }
-  xmlhttp.open("GET","https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/poll_vote.php?vote="+int,true);
-  xmlhttp.send();
-}
-    </script>
+    
 </body>
 </html>
