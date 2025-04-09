@@ -101,6 +101,27 @@ body {
   background-color: #cc0000; /* Darker red on hover */
 }
 
+.options{
+display: flex; flex-direction: column;
+align-items: center;
+｝
+.option {
+margin-bottom: 10px;
+}
+input[type="radio"]{
+display: none;
+}
+label{
+display: inline-block; background-color: #AF8F6F; padding: 10px 20px; border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+｝
+.option{
+color: black;
+｝
+.option input[type="radio"]:checked + label{background-color: #AF8F6F;
+color: _#fff;
+                                           }
 /* Make sure it adapts to smaller screens */
 @media (max-width: 768px) {
   .player-container {
