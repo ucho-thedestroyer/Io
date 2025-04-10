@@ -1,7 +1,8 @@
+
 let poll =
 {
-    question: "Which is your favorite programming language?",
-    answers:["Python", "Java", "R", "Php"],
+    question: "How do you like the music so far?",
+    answers:["rockin' it!", "I enjoyed that", "what the fuck?", "skipped at 0:10"],
     pollcount:100,
     answerweight:[60,10,20,10], //sum = 100
     selectanswer:-1
