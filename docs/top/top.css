@@ -50,6 +50,11 @@ body {
     
 }
 
+.poll .answers .answer.selected{
+    border: 2px solid #606a9c;
+}
+
+
 /* Slide background animation (optional) */
 @keyframes slidein {
   0%, 100% {
