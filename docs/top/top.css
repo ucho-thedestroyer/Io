@@ -108,7 +108,7 @@ body {
 }
 .poll {
     position: static;
-    width: 100%;
+    width: auto;
     top: 8px;
     left: 50%;
     transform: translate(-50%,-50%);
