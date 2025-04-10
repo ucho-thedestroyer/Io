@@ -33,6 +33,9 @@ body {
   align-items: safe-center;
 }
 
+.poll {
+  transform: translate(-50%,-50%);
+}
 
 .poll .question{
     padding: 2px;
