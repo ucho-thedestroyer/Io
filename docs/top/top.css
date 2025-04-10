@@ -40,12 +40,11 @@ body {
 }
 
 .poll .answers{
-    padding: 1.5px;
+    padding: 2.3px;
 }
 
 .poll .answers .answer{
-    border: 1px solid #d4d4d4;
-    cursor: pointer;
+        cursor: pointer;
     overflow: hidden;
     border-radius: 4px;
     
