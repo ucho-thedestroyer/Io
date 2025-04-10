@@ -107,9 +107,9 @@ body {
   color: #581845;
 }
 .poll {
-    position: absolute;
+    position: static;
     width: 100%;
-    top: 50%;
+    top: 8px;
     left: 50%;
     transform: translate(-50%,-50%);
     border-radius: 25px;
