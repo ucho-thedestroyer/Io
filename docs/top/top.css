@@ -34,7 +34,6 @@ body {
 }
 
 
-
 .poll .question{
     padding: 2px;
     border-bottom: 1px solid #eee;
@@ -58,16 +57,11 @@ body {
 .poll .answers .answer span.percentage_value
 {
     text-align: right;
-  width: 10px;
   padding-right: 2px;
     color: #b0050e;
-  fon-size: 10px;
 }
 
 .poll .answers .answer span.percentage_bar{
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 0;
     height: 100%;
     background: #b6b6bf;
