@@ -107,7 +107,7 @@ body {
   color: #581845;
 }
 .poll {
-    
+    position: relative;
     transform: translate(-50%,-50%);
     
 }
