@@ -106,58 +106,6 @@ body {
   align-items: flex-end;
   color: #581845;
 }
-.poll {
-    position: absolute;
-    width: 130px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: #ffff;
-    border-radius: 2px;
-    
-}
-
-.poll .question{
-    
-    font-size: 1em;
-    border-bottom: 1px solid #eee;
-}
-
-.poll .answers{
-    
-}
-
-.poll .answers .answer{
-    
-    border: 1px solid #d4d4d4;
-    cursor: pointer;
-    overflow: hidden;
-    
-}
-
-.poll .answers .answer.selected{
-    border: 2px solid #8f9fe8;
-}
-
-.poll .answers .answer span.percentage_value
-{
-    position: absolute;
-    transform: translateY(-50%);
-    color: #111;
-    font-size: 1em;
-}
-
-.poll .answers .answer span.percentage_bar{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: #97b5f5;
-    z-index: -2;
-    transition: width 200ms ease-in-out;
-}
-
 /* Make sure it adapts to smaller screens */
 @media (max-width: 768px) {
   .player-container {
