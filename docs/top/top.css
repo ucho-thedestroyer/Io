@@ -56,7 +56,8 @@ body {
 
 .poll .answers .answer span.percentage_value
 {
-    transform: translateY(-50%);
+    text-align: right;
+  padding-right: 2px;
     color: #b0050e;
 }
 
