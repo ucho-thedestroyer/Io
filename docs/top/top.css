@@ -103,7 +103,7 @@ body {
 
 .play-btn {
   font-size: 1px;
-  margin: auto;
+  align-items: flex-end;
   color: #581845;
 }
 .poll {
