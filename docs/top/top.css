@@ -33,6 +33,12 @@ body {
   align-items: safe-center;
 }
 
+
+.poll .question{
+    padding: 2px;
+    border-bottom: 1px solid #eee;
+}
+
 /* Slide background animation (optional) */
 @keyframes slidein {
   0%, 100% {
