@@ -127,7 +127,7 @@ body {
 
 .poll .answers .answer{
     position: relative;
-    width: 100%;
+    width: auto;
     height: 4px;
     line-height: 4px;
     padding: 0 4px;
