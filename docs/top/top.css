@@ -60,6 +60,8 @@ body {
   width: 10px;
   padding-right: 2px;
     color: #b0050e;
+  fon-size: 10px;
+  transform: translateY(-50%);
 }
 
 .poll .answers .answer span.percentage_bar{
