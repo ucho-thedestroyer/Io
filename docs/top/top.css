@@ -54,6 +54,11 @@ body {
     border: 2px solid #606a9c;
 }
 
+.poll .answers .answer span.percentage_value
+{
+    transform: translateY(-50%);
+    color: #b0050e;
+}
 
 /* Slide background animation (optional) */
 @keyframes slidein {
