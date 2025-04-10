@@ -39,6 +39,18 @@ body {
     border-bottom: 1px solid #eee;
 }
 
+.poll .answers{
+    padding: 1.5px;
+}
+
+.poll .answers .answer{
+    border: 1px solid #d4d4d4;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+    
+}
+
 /* Slide background animation (optional) */
 @keyframes slidein {
   0%, 100% {
