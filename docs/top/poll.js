@@ -1,6 +1,5 @@
-v const options = [
-(id:"option1",
-text: "JavaScript", votes:0}, (id:"option2", text:"Python", votes:0}, (id: "option3", text: "Java", votes:0},
+const options = [
+  {id:"option1",text: "JavaScript", votes:0}, (id:"option2", text:"Python", votes:0}, (id: "option3", text: "Java", votes:0},
 (id:"option4", text:"(++", votes:0},
 v function submitVote
 く
