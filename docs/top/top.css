@@ -62,13 +62,15 @@ body {
 }
 
 .poll .answers .answer span.percentage_bar{
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 0;
     height: 100%;
-    background: #b6b6bf;
+    background: #97b5f5;
     z-index: -2;
     transition: width 200ms ease-in-out;
 }
-
 /* Slide background animation (optional) */
 @keyframes slidein {
   0%, 100% {
