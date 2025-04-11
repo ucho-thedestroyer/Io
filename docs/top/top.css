@@ -48,6 +48,7 @@ body {
     overflow: hidden;
     border-radius: 4px;
   width: 100%;
+  padding-bottom: 6px;
     
 }
 
@@ -62,15 +63,18 @@ body {
     color: #b0050e;
 }
 
-.poll .answers .answer span.percentage_bar{
-    display: flex;
-  
-    width: auto;
-    height: 10%;
+.poll .answers .answer span.percentage_bar {
+    display: block;
+    width: 0%; /* Start from 0 */
+    height: 10px;
     background: #97b5f5;
-    z-index: -2;
     transition: width 200ms ease-in-out;
+    margin-top: 3px;
+    border-radius: 4px;
 }
+
+
+
 /* Slide background animation (optional) */
 @keyframes slidein {
   0%, 100% {
