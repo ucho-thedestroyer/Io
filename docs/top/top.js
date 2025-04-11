@@ -9,17 +9,17 @@ const artistName = document.querySelector(".music-player p");
 
 const songs = [
   {
-    title: "colma",
+    title: "Star Wars original opening crawl 1977",
     source: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/camp/Star_Wars_original_opening_crawl_1977.ogg",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
   },
   {
-    title: "for mom",
+    title: "Pawn It All",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Pawn-It-All.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg"
   },
   {
-    title: "ghost",
+    title: "Madrigal Seni Dert Etmeler",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0512.jpeg"
   },
@@ -66,38 +66,6 @@ function updateSongInfo() {
     progress.value = song.currentTime;
   });
 }
-
-function preloadAndPlay(url, title = "Unknown Title", cover = "") {
-  song.src = url;
-  songName.textContent = title;
-  artistName.textContent = "Loading...";
-
-  if (cover) {
-    document.getElementById("albumCover").src = cover;
-  }
-
-  song.addEventListener("loadedmetadata", () => {
-    const totalSeconds = Math.floor(song.duration);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    artistName.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    progress.max = song.duration;
-    progress.value = song.currentTime;
-  });
-
-  song.load(); // preload
-  playSong();
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  preloadAndPlay(
-    "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3",
-    "Instant Crush",
-    "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
-  );
-});
-
-
 
 song.addEventListener("timeupdate", () => {
   if (!song.paused) {
@@ -204,31 +172,11 @@ const trackData = {
 let currentAlbumTracks = []; // holds the currently loaded album's track list
 
 
-function normalize(str) {
-  return str
-    .toLowerCase()
-    .replace(/[-_]/g, ' ') // Convert - and _ to spaces
-    .replace(/\s+/g, ' ')  // Collapse multiple spaces
-    .trim();
-}
-
 function getSongUrlFromTitle(title) {
-  const normalizedTitle = normalize(title);
-
-  for (let song of songs) {
-    const fileName = song.source.split("/").pop().replace(/\.[^/.]+$/, "");
-    const normalizedFileTitle = normalize(fileName);
-
-    if (normalizedFileTitle.includes(normalizedTitle) || normalizedTitle.includes(normalizedFileTitle)) {
-      return {
-        url: song.source,
-        cover: song.cover || "",
-        title: fileName.replace(/[-_]/g, ' '),
-      };
-    }
-  }
-
-  return null; // not found
+  const songMatch = songs.find(
+    (song) => song.title.toLowerCase() === title.toLowerCase()
+  );
+  return songMatch ? songMatch.source : null;
 }
 
 
@@ -262,45 +210,55 @@ function loadAndPlayTrack(title) {
 }
 
 
-tracks.forEach((track) => {
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td class="track-cell" width="10%">
-      <div class="tracknumber">
-        <span class="track-label">Track</span>
-        <span class="track-id">#${track.number}</span>
-      </div>
-    </td>
-    <td class="track-cell" width="35%">
-      <div class="trackname">${track.title}</div>
-    </td>
-    <td class="track-cell" width="5%">
-      <div class="sendtrack">
-        <button class="play-btn" title="Play">
-          <i class="fa fa-play"></i>
-        </button>
-      </div>
-    </td>
-  `;
-  table.appendChild(row);
+function renderTrackList(container, tracks) {
+  const table = document.createElement("table");
+  table.setAttribute("width", "100%");
+  table.setAttribute("cellspacing", "0");
+  table.setAttribute("cellpadding", "0");
+  table.setAttribute("align", "center");
 
-  const divider = document.createElement("tr");
-  divider.innerHTML = `<td colspan="5" class="divider"></td>`;
-  table.appendChild(divider);
+  tracks.forEach((track, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="track-cell" width="10%">
+        <div class="tracknumber">
+          <span class="track-label">Track</span>
+          <span class="track-id">#${track.number}</span>
+        </div>
+      </td>
+      <td class="track-cell" width="35%">
+        <div class="trackname">${track.title}</div>
+      </td>
+      <td class="track-cell" width="5%">
+        <div class="sendtrack">
+          <button class="play-btn" title="Play" data-title="${track.title}">
+            <i class="fa fa-play"></i>
+          </button>
+        </div>
+      </td>
+    `;
 
-  // ✅ Attach play handler here
-  const playBtn = row.querySelector(".play-btn");
-  playBtn.addEventListener("click", () => {
-    const title = track.title;
-    const songInfo = getSongUrlFromTitle(title);
-    if (songInfo) {
-      preloadAndPlay(songInfo.url, songInfo.title, songInfo.cover);
-    } else {
-      alert(`Sorry, the track "${title}" isn't available.`);
-    }
+    table.appendChild(row);
+
+    const divider = document.createElement("tr");
+    divider.innerHTML = `<td colspan="5" class="divider"></td>`;
+    table.appendChild(divider);
   });
-});
 
+  const filler = document.createElement("tr");
+  filler.style.backgroundColor = "#EEEEEE";
+  table.appendChild(filler);
+
+  container.appendChild(table);
+
+  // Add event listeners to each play button
+  container.querySelectorAll(".play-btn").forEach(button => {
+    button.addEventListener("click", (e) => {
+      const title = e.currentTarget.dataset.title;
+      loadAndPlayTrack(title);
+    });
+  });
+}
 
 
 document.querySelectorAll(".album").forEach(album => {
