@@ -89,6 +89,15 @@ function preloadAndPlay(url, title = "Unknown Title", cover = "") {
   playSong();
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+  preloadAndPlay(
+    "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3",
+    "Instant Crush",
+    "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
+  );
+});
+
+
 
 song.addEventListener("timeupdate", () => {
   if (!song.paused) {
