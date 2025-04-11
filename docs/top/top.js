@@ -105,10 +105,6 @@ song.addEventListener("timeupdate", () => {
   }
 });
 
-song.addEventListener("loadedmetadata", () => {
-  progress.max = song.duration;
-  progress.value = song.currentTime;
-});
 
 song.addEventListener("ended", () => {
   currentSongIndex = (swiper.activeIndex + 1) % songs.length;
