@@ -67,6 +67,29 @@ function updateSongInfo() {
   });
 }
 
+function preloadAndPlay(url, title = "Unknown Title", cover = "") {
+  song.src = url;
+  songName.textContent = title;
+  artistName.textContent = "Loading...";
+
+  if (cover) {
+    document.getElementById("albumCover").src = cover;
+  }
+
+  song.addEventListener("loadedmetadata", () => {
+    const totalSeconds = Math.floor(song.duration);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    artistName.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+  });
+
+  song.load(); // preload
+  playSong();
+}
+
+
 song.addEventListener("timeupdate", () => {
   if (!song.paused) {
     progress.value = song.currentTime;
@@ -172,11 +195,17 @@ const trackData = {
 let currentAlbumTracks = []; // holds the currently loaded album's track list
 
 
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9]/gi, '')  // Remove all non-alphanumeric characters
+    .trim();
+}
+
 function getSongUrlFromTitle(title) {
-  const songMatch = songs.find(
-    (song) => song.title.toLowerCase() === title.toLowerCase()
-  );
-  return songMatch ? songMatch.source : null;
+  const normalizedTitle = normalize(title);
+  const match = songs.find(song => normalize(song.title) === normalizedTitle);
+  return match ? match.source : null;
 }
 
 
