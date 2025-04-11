@@ -149,3 +149,80 @@ swiper.on("slideChange", () => {
 });
 
 
+const trackData = {
+  album1: [
+    { number: 1, title: "Cuckoo Clocks Of Hell" },
+    { number: 2, title: "Spokes for the Wheel of Torment" },
+    { number: 3, title: "The Last Ride of the Bozomobile" }
+  ],
+  album2: [
+    { number: 1, title: "Colma" },
+    { number: 2, title: "For Mom" },
+    { number: 3, title: "Ghost" }
+  ]
+};
+
+function renderTrackList(container, tracks) {
+  const table = document.createElement("table");
+  table.setAttribute("width", "100%");
+  table.setAttribute("cellspacing", "0");
+  table.setAttribute("cellpadding", "0");
+  table.setAttribute("align", "center");
+
+  tracks.forEach((track) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="track-cell" width="10%">
+        <div class="tracknumber">
+          <span class="track-label">Track</span>
+          <span class="track-id">#${track.number}</span>
+        </div>
+      </td>
+      <td class="track-cell" width="35%">
+        <div class="trackname">${track.title}</div>
+      </td>
+      <td class="track-cell" width="5%">
+        <div class="sendtrack">
+          <button class="play-btn" title="Play">
+            <i class="fa fa-play"></i>
+          </button>
+        </div>
+      </td>
+    `;
+    table.appendChild(row);
+
+    const divider = document.createElement("tr");
+    divider.innerHTML = `<td colspan="5" class="divider"></td>`;
+    table.appendChild(divider);
+  });
+
+  const filler = document.createElement("tr");
+  filler.style.backgroundColor = "#EEEEEE";
+  table.appendChild(filler);
+
+  container.appendChild(table);
+}
+
+document.querySelectorAll(".album").forEach(album => {
+  album.addEventListener("click", (e) => {
+    e.preventDefault();
+    const albumId = album.getAttribute("data-album-id");
+    const trackContainer = document.getElementById("dynamic-tracklist");
+
+    // Clear any previous track list
+    trackContainer.innerHTML = "";
+
+    if (trackData[albumId]) {
+      renderTrackList(trackContainer, trackData[albumId]);
+    }
+  });
+});
+
+// Render all tracklist elements on the page
+document.querySelectorAll(".tracklist").forEach((el) => {
+  const id = el.getAttribute("data-tracklist-id");
+  if (trackData[id]) {
+    renderTrackList(el, trackData[id]);
+  }
+});
+
