@@ -1,4 +1,4 @@
-Review my code: const progress = document.getElementById("progress");
+const progress = document.getElementById("progress");
 const song = document.getElementById("song");
 const controlIcon = document.getElementById("controlIcon");
 const playPauseButton = document.querySelector(".play-pause-btn");
@@ -105,6 +105,10 @@ song.addEventListener("timeupdate", () => {
   }
 });
 
+song.addEventListener("loadedmetadata", () => {
+  progress.max = song.duration;
+  progress.value = song.currentTime;
+});
 
 song.addEventListener("ended", () => {
   currentSongIndex = (swiper.activeIndex + 1) % songs.length;
