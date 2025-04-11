@@ -202,6 +202,23 @@ body {
   margin: 4px 0;
 }
 
+.mp3player {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mp3p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.mp3p img {
+  margin-left: 10px;
+  border-radius: 4px;
+}
 
 
 
