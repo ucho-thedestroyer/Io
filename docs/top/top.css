@@ -64,8 +64,6 @@ body {
 
 .poll .answers .answer span.percentage_bar{
     position: relative;
-    top: 0;
-    left: 0;
     width: auto;
     height: 10%;
     background: #97b5f5;
