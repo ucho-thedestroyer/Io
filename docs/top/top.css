@@ -34,13 +34,13 @@ body {
 }
 
 .poll {
-  height: 150px; /* Set to a fixed height that fits both initial and updated content */
+  height: 237px; /* Set to a fixed height that fits both initial and updated content */
   overflow: hidden; /* or auto if you want scrollbars */
 }
 
 
 .poll .question{
-  height: 30px; /* adjust as needed */
+  height: 40px; /* adjust as needed */
   overflow: hidden;
   text-overflow: ellipsis;
   max-height: 40px;
@@ -63,7 +63,7 @@ body {
 }
 
 .poll .answers .answer.selected{
-    border: 2px solid #606a9c;
+    border: 1px solid #606a9c;
 }
 
 .poll .answers .answer span.percentage_value
@@ -76,10 +76,10 @@ body {
 .poll .answers .answer span.percentage_bar {
     display: block;
     width: 0%; /* Start from 0 */
-    height: 10px;
+    height: 8px;
     background: #191970;
     transition: width 200ms ease-in-out;
-    margin-top: 3px;
+    margin-top: 2px;
 
 }
 
