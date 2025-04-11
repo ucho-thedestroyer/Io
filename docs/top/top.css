@@ -231,13 +231,17 @@ body {
   border-radius: 4px;
 }
 
-
-@keyframes rainbow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes bwPulse {
+  0%   { background-color: black; color: white; }
+  50%  { background-color: red; color: black; }
+  100% { background-color: black; color: red; }
 }
-
+.bw-highlight {
+  animation: bwPulse 2s infinite;
+  
+  display: inline-block;
+  text-decoration: none;
+}
 
 
 /* Make sure it adapts to smaller screens */
