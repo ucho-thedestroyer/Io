@@ -63,7 +63,7 @@ body {
 }
 
 .poll .answers .answer.selected{
-    border: 1px solid #606a9c;
+    border: 1px dashed #606a9c;
 }
 
 .poll .answers .answer span.percentage_value
@@ -79,7 +79,7 @@ body {
     height: 8px;
     background: #191970;
     transition: width 200ms ease-in-out;
-    margin-top: 2px;
+    margin-top: 1px;
 
 }
 
@@ -223,6 +223,7 @@ body {
   justify-content: space-between;
   align-items: start;
   cursor: pointer;
+  margin: 2px;
 }
 
 .mp3p img {
