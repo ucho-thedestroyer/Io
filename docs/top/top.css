@@ -27,7 +27,12 @@ body {
 }
 /* Ensure the player container doesn't change size based on title length */
 .music-player {
-  word-wrap: break-word; /* Allow wrapping of long words */
+  display: flex;
+  flex-direction: column; /* Align child elements vertically */
+  align-items: flex-start; /* Align to the left */
+  justify-content: center; /* Center the content vertically */
+  width: 100%;
+  max-width: 600px; /* Optional: Set a max width for the music player */
 }
 
 
@@ -37,14 +42,18 @@ overflow-wrap: break-word;
 
 #song-title {
   display: block;
-  width: 90%; /* Take up the full width of its container */
-  white-space: normal; /* Allow text to wrap */
-  word-break: break-word; /* Break words at the end of the line to prevent overflow */
-  overflow-wrap: break-word; /* Fallback for word break handling */
-  margin: 0; /* Remove default margins to ensure clean layout */
-  font-size: 1em; /* Adjust font size as needed */
-  line-height: 1.1em; /* Adjust line-height for better readability if title wraps */
+  width: 100%; /* Ensure it takes up all available space */
+  max-width: 350px; /* Limit the max width to avoid excessive stretching */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Add ellipsis when text overflows */
+  font-size: 1em;
+  line-height: 1.1em;
+  margin: 0;
+  padding-right: 10px; /* Add some space on the right to prevent cutting off */
+  box-sizing: border-box;
 }
+
 
 .blocktitle2 {
   font-size: 1em; /* Adjust to make it look nice alongside the title */
@@ -64,8 +73,9 @@ overflow-wrap: break-word;
   margin: 8px 0;
 }
 
-.tip-container {
- width: 210px;
+tip-container {
+  width: 210px;
+  padding-left: 10px; /* Add some padding to prevent the element from shifting */
 }
 
 .hot {
