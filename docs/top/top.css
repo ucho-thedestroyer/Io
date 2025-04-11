@@ -26,13 +26,16 @@ body {
   box-sizing: border-box;
 }
 /* Ensure the player container doesn't change size based on title length */
-.music-player {
-  display: flex;
-  flex-direction: column; /* Align child elements vertically */
-  align-items: flex-start; /* Align to the left */
-  justify-content: center; /* Center the content vertically */
-  width: 100%;
-  max-width: 600px; /* Optional: Set a max width for the music player */
+/* Song title styling */
+.music-player h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  word-break: break-word; /* wrap on long words if needed */
+  white-space: normal;     /* allow line breaks */
+  max-width: 100%;         /* responsive */
+  text-align: center;
 }
 
 
