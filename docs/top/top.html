@@ -41,12 +41,16 @@
       <button class="play-pause-btn" title="Play/Pause">
         <i id="controlIcon" class="fa fa-play"></i>
       </button>
-            <button class="play-pause-btn" title="Play/Pause">
-        <i id="controlIcon" class="fa fa-pause"></i>
-      </button>
       <button class="forward" title="Next">
         <i id="controlIcon" class="fa fa-angles-right"></i>
       </button>
+      <div class="player-options" style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1" title="Volume" />
+  <button id="shuffleBtn" style="padding: 5px 10px; background-color: #333; color: white; border: none; border-radius: 5px;">
+    🔀 Shuffle it!
+  </button>
+</div>
+
     </div>
   </div>
    </td>
