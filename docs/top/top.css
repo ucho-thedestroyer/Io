@@ -143,6 +143,62 @@ body {
   align-items: flex-end;
   color: #581845;
 }
+
+.tracknumber, .trackname {
+  text-align: left;
+  font-size: 0.75rem;
+}
+
+.track-label {
+  color: #900C3F;
+}
+
+.track-id {
+  color: onyx;
+}
+
+.sendtrack {
+  text-align: left;
+}
+
+.play-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.divider {
+  height: 1px;
+  background-color: pink;
+}
+
+.album-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.album {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.album img {
+  margin-left: 10px;
+  border-radius: 4px;
+}
+
+.album-divider {
+  height: 1px;
+  background-color: #dfdfdf;
+  margin: 4px 0;
+}
+
+
+
+
 /* Make sure it adapts to smaller screens */
 @media (max-width: 768px) {
   .player-container {
