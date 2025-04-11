@@ -9,30 +9,37 @@ const artistName = document.querySelector(".music-player p");
 
 const songs = [
   {
+    title: "Star Wars original opening crawl 1977",
     source: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/camp/Star_Wars_original_opening_crawl_1977.ogg",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
   },
   {
+    title: "Pawn It All",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Pawn-It-All.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg"
   },
   {
+    title: "Madrigal Seni Dert Etmeler",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0512.jpeg"
   },
   {
+    title: "Daft Punk Instant Crush",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
   },
   {
+    title: "Harry Styles As It Was",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Harry-Styles-As-It-Was.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg"
   },
   {
+    title: "Dua Lipa Physical",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Dua-Lipa-Physical.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0512.jpeg"
   },
   {
+    title: "Taylor Swift Delicate",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Taylor-Swift-Delicate.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
   }
@@ -162,6 +169,47 @@ const trackData = {
   ]
 };
 
+let currentAlbumTracks = []; // holds the currently loaded album's track list
+
+
+function getSongUrlFromTitle(title) {
+  const songMatch = songs.find(
+    (song) => song.title.toLowerCase() === title.toLowerCase()
+  );
+  return songMatch ? songMatch.source : null;
+}
+
+
+function loadAndPlayTrack(title) {
+  const url = getSongUrlFromTitle(title);
+
+  if (!url) {
+    alert(`Sorry, the track "${title}" isn't available.`);
+    return;
+  }
+
+  song.src = url;
+  songName.textContent = title;
+  artistName.textContent = "Loading...";
+
+  const match = songs.find((s) => s.title.toLowerCase() === title.toLowerCase());
+  if (match && match.cover) {
+    document.getElementById("albumCover").src = match.cover;
+  }
+
+  song.addEventListener("loadedmetadata", () => {
+    const totalSeconds = Math.floor(song.duration);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    artistName.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+  });
+
+  playSong();
+}
+
+
 function renderTrackList(container, tracks) {
   const table = document.createElement("table");
   table.setAttribute("width", "100%");
@@ -169,7 +217,7 @@ function renderTrackList(container, tracks) {
   table.setAttribute("cellpadding", "0");
   table.setAttribute("align", "center");
 
-  tracks.forEach((track) => {
+  tracks.forEach((track, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td class="track-cell" width="10%">
@@ -183,12 +231,13 @@ function renderTrackList(container, tracks) {
       </td>
       <td class="track-cell" width="5%">
         <div class="sendtrack">
-          <button class="play-btn" title="Play">
+          <button class="play-btn" title="Play" data-title="${track.title}">
             <i class="fa fa-play"></i>
           </button>
         </div>
       </td>
     `;
+
     table.appendChild(row);
 
     const divider = document.createElement("tr");
@@ -201,7 +250,16 @@ function renderTrackList(container, tracks) {
   table.appendChild(filler);
 
   container.appendChild(table);
+
+  // Add event listeners to each play button
+  container.querySelectorAll(".play-btn").forEach(button => {
+    button.addEventListener("click", (e) => {
+      const title = e.currentTarget.dataset.title;
+      loadAndPlayTrack(title);
+    });
+  });
 }
+
 
 document.querySelectorAll(".album").forEach(album => {
   album.addEventListener("click", (e) => {
@@ -209,14 +267,22 @@ document.querySelectorAll(".album").forEach(album => {
     const albumId = album.getAttribute("data-album-id");
     const trackContainer = document.getElementById("dynamic-tracklist");
 
-    // Clear any previous track list
+    // Clear previous track list and load new one
     trackContainer.innerHTML = "";
+    currentAlbumTracks = trackData[albumId] || [];
 
-    if (trackData[albumId]) {
-      renderTrackList(trackContainer, trackData[albumId]);
+    if (currentAlbumTracks.length > 0) {
+      renderTrackList(trackContainer, currentAlbumTracks);
+
+      // Play the track with number 1 (our "album-single")
+      const single = currentAlbumTracks.find(track => track.number === 1);
+      if (single) {
+        loadAndPlayTrack(single.title);
+      }
     }
   });
 });
+
 
 // Render all tracklist elements on the page
 document.querySelectorAll(".tracklist").forEach((el) => {
