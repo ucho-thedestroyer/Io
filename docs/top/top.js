@@ -158,14 +158,14 @@ swiper.on("slideChange", () => {
 
 const trackData = {
   album1: [
-    { number: 1, title: "Cuckoo Clocks Of Hell" },
-    { number: 2, title: "Spokes for the Wheel of Torment" },
-    { number: 3, title: "The Last Ride of the Bozomobile" }
+    { number: 1, title: "Star Wars original opening crawl 1977" },
+    { number: 2, title: "Pawn It All" },
+    { number: 3, title: "Madrigal Seni Dert Etmeler" }
   ],
   album2: [
-    { number: 1, title: "Colma" },
-    { number: 2, title: "For Mom" },
-    { number: 3, title: "Ghost" }
+    { number: 1, title: "Daft Punk Instant Crush" },
+    { number: 2, title: "Harry Styles As It Was" },
+    { number: 3, title: "Dua Lipa Physical" }
   ]
 };
 
