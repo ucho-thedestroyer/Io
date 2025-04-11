@@ -25,6 +25,10 @@ body {
   box-sizing: border-box;
 }
 
+.playin {
+  text-wrap: wrap;
+}
+
 .tip-container {
  width: 210px;
 }
