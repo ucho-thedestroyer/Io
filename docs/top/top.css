@@ -27,6 +27,12 @@ body {
 }
 /* Ensure the player container doesn't change size based on title length */
 /* Song title styling */
+
+.music-player {
+  word-wrap: break-word; /* Prevents words from breaking awkwardly */
+  padding: 10px 0; /* Reserve space */
+}
+
 .music-player h1 {
   font-size: 1.5rem;
   font-weight: 600;
