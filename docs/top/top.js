@@ -233,33 +233,15 @@ function getSongUrlFromTitle(title) {
 
 
 function loadAndPlayTrack(title) {
-  const url = getSongUrlFromTitle(title);
+  const songInfo = getSongUrlFromTitle(title);
 
-  if (!url) {
+  if (songInfo) {
+    preloadAndPlay(songInfo.url, songInfo.title, songInfo.cover);
+  } else {
     alert(`Sorry, the track "${title}" isn't available.`);
-    return;
   }
-
-  song.src = url;
-  songName.textContent = title;
-  artistName.textContent = "Loading...";
-
-  const match = songs.find((s) => s.title.toLowerCase() === title.toLowerCase());
-  if (match && match.cover) {
-    document.getElementById("albumCover").src = match.cover;
-  }
-
-  song.addEventListener("loadedmetadata", () => {
-    const totalSeconds = Math.floor(song.duration);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    artistName.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    progress.max = song.duration;
-    progress.value = song.currentTime;
-  });
-
-  playSong();
 }
+
 
 
 tracks.forEach((track) => {
