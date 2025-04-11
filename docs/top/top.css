@@ -63,7 +63,9 @@ body {
 }
 
 .poll .answers .answer span.percentage_bar{
-    
+    position: static;
+  top: 0;
+    left: 0;
     width: auto;
     height: 10%;
     background: #97b5f5;
@@ -146,7 +148,7 @@ body {
 
 .tracknumber, .trackname {
   text-align: left;
-  font-size: 0.75rem;
+  font-size: 1px;
 }
 
 .track-label {
