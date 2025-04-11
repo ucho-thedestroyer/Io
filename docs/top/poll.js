@@ -1,11 +1,16 @@
 
-let poll =
-{
+let poll = {
     question: "How do you like the music so far?",
-    answers:["rockin' it!", "I enjoyed that", "what the fuck?", "skipped at 0:10"],
-    pollcount:100,
-    answerweight:[60,10,20,10], //sum = 100
-    selectanswer:-1
+    answers: ["rockin' it!", "I enjoyed that", "what the fuck?", "skipped at 0:10"],
+    pollcount: 100,
+    answerweight: [60, 10, 20, 10], // sum = 100
+    selectanswer: -1,
+    messages: [
+        "Yeah! Glad you're vibing with it. 🎸",
+        "Nice, thanks for listening! 🎶",
+        "Oops! Not for everyone 😅",
+        "Fair enough, not every track hits. ⏭️"
+    ]
 };
 
 let polldom =
@@ -40,8 +45,12 @@ function markanswer(i) {
     document.querySelectorAll(".poll .answers .answer")[+i]
         .classList.add("selected");
 
+    // Update the question area with a dynamic message
+    polldom.question.innerText = poll.messages[i];
+
     showresults();
 }
+
 
 
 
