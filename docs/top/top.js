@@ -207,14 +207,28 @@ let currentAlbumTracks = []; // holds the currently loaded album's track list
 function normalize(str) {
   return str
     .toLowerCase()
-    .replace(/[^a-z0-9]/gi, '')  // Remove all non-alphanumeric characters
+    .replace(/[-_]/g, ' ') // Convert - and _ to spaces
+    .replace(/\s+/g, ' ')  // Collapse multiple spaces
     .trim();
 }
 
 function getSongUrlFromTitle(title) {
   const normalizedTitle = normalize(title);
-  const match = songs.find(song => normalize(song.title) === normalizedTitle);
-  return match ? match.source : null;
+
+  for (let song of songs) {
+    const fileName = song.source.split("/").pop().replace(/\.[^/.]+$/, "");
+    const normalizedFileTitle = normalize(fileName);
+
+    if (normalizedFileTitle.includes(normalizedTitle) || normalizedTitle.includes(normalizedFileTitle)) {
+      return {
+        url: song.source,
+        cover: song.cover || "",
+        title: fileName.replace(/[-_]/g, ' '),
+      };
+    }
+  }
+
+  return null; // not found
 }
 
 
@@ -248,55 +262,45 @@ function loadAndPlayTrack(title) {
 }
 
 
-function renderTrackList(container, tracks) {
-  const table = document.createElement("table");
-  table.setAttribute("width", "100%");
-  table.setAttribute("cellspacing", "0");
-  table.setAttribute("cellpadding", "0");
-  table.setAttribute("align", "center");
+tracks.forEach((track) => {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td class="track-cell" width="10%">
+      <div class="tracknumber">
+        <span class="track-label">Track</span>
+        <span class="track-id">#${track.number}</span>
+      </div>
+    </td>
+    <td class="track-cell" width="35%">
+      <div class="trackname">${track.title}</div>
+    </td>
+    <td class="track-cell" width="5%">
+      <div class="sendtrack">
+        <button class="play-btn" title="Play">
+          <i class="fa fa-play"></i>
+        </button>
+      </div>
+    </td>
+  `;
+  table.appendChild(row);
 
-  tracks.forEach((track, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td class="track-cell" width="10%">
-        <div class="tracknumber">
-          <span class="track-label">Track</span>
-          <span class="track-id">#${track.number}</span>
-        </div>
-      </td>
-      <td class="track-cell" width="35%">
-        <div class="trackname">${track.title}</div>
-      </td>
-      <td class="track-cell" width="5%">
-        <div class="sendtrack">
-          <button class="play-btn" title="Play" data-title="${track.title}">
-            <i class="fa fa-play"></i>
-          </button>
-        </div>
-      </td>
-    `;
+  const divider = document.createElement("tr");
+  divider.innerHTML = `<td colspan="5" class="divider"></td>`;
+  table.appendChild(divider);
 
-    table.appendChild(row);
-
-    const divider = document.createElement("tr");
-    divider.innerHTML = `<td colspan="5" class="divider"></td>`;
-    table.appendChild(divider);
+  // ✅ Attach play handler here
+  const playBtn = row.querySelector(".play-btn");
+  playBtn.addEventListener("click", () => {
+    const title = track.title;
+    const songInfo = getSongUrlFromTitle(title);
+    if (songInfo) {
+      preloadAndPlay(songInfo.url, songInfo.title, songInfo.cover);
+    } else {
+      alert(`Sorry, the track "${title}" isn't available.`);
+    }
   });
+});
 
-  const filler = document.createElement("tr");
-  filler.style.backgroundColor = "#EEEEEE";
-  table.appendChild(filler);
-
-  container.appendChild(table);
-
-  // Add event listeners to each play button
-  container.querySelectorAll(".play-btn").forEach(button => {
-    button.addEventListener("click", (e) => {
-      const title = e.currentTarget.dataset.title;
-      loadAndPlayTrack(title);
-    });
-  });
-}
 
 
 document.querySelectorAll(".album").forEach(album => {
