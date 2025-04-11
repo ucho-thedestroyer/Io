@@ -17,6 +17,13 @@ body {
   
 }
 
+
+/* Ensure the player container doesn't change size based on title length */
+.music-player {
+  width: 100%; /* Make sure the player container takes up the full width of its parent */
+  word-wrap: break-word; /* Allow wrapping of long words */
+}
+
 .player-container {
   width: 90%;
   max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
@@ -27,6 +34,34 @@ body {
 
 .playin {
   text-wrap: wrap;
+}
+
+#song-title {
+  display: block;
+  width: 100%; /* Take up the full width of its container */
+  white-space: normal; /* Allow text to wrap */
+  word-break: break-word; /* Break words at the end of the line to prevent overflow */
+  overflow-wrap: break-word; /* Fallback for word break handling */
+  margin: 0; /* Remove default margins to ensure clean layout */
+  font-size: 1.2em; /* Adjust font size as needed */
+  line-height: 1.4em; /* Adjust line-height for better readability if title wraps */
+}
+
+.blocktitle2 {
+  font-size: 0.9em; /* Adjust to make it look nice alongside the title */
+}
+
+/* Optional: Controls styling for a better layout */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Optional: Set width and padding for the audio progress range slider */
+#progress {
+  width: 100%;
+  margin: 10px 0;
 }
 
 .tip-container {
