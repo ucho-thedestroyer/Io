@@ -48,14 +48,13 @@ const songs = [
 let currentSongIndex = 3;
 
 function updateSongInfo() {
-  const fileName = songs[currentSongIndex].source.split('/').pop().replace('.mp3', '');
-  const formattedTitle = fileName.replace(/-/g, ' ');
-  songName.textContent = formattedTitle;
-  song.src = songs[currentSongIndex].source;
+  const currentSong = songs[currentSongIndex];
+  songName.textContent = currentSong.title;
+  song.src = currentSong.source;
 
   // Update album cover
   const albumCover = document.getElementById("albumCover");
-  albumCover.src = songs[currentSongIndex].cover;
+  albumCover.src = currentSong.cover;
 
   song.addEventListener("loadedmetadata", () => {
     const totalSeconds = Math.floor(song.duration);
