@@ -33,8 +33,18 @@ body {
   align-items: safe-center;
 }
 
+.poll {
+  height: 150px; /* Set to a fixed height that fits both initial and updated content */
+  overflow: hidden; /* or auto if you want scrollbars */
+}
+
 
 .poll .question{
+  height: 30px; /* adjust as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 40px;
+  overflow-y: auto;
     padding: 2px;
     border-bottom: 1px solid #eee;
 }
