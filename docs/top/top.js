@@ -9,17 +9,17 @@ const artistName = document.querySelector(".music-player p");
 
 const songs = [
   {
-    title: "Star Wars original opening crawl 1977",
+    title: "colma",
     source: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/camp/Star_Wars_original_opening_crawl_1977.ogg",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
   },
   {
-    title: "Pawn It All",
+    title: "for mom",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Pawn-It-All.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg"
   },
   {
-    title: "Madrigal Seni Dert Etmeler",
+    title: "ghost",
     source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
     cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0512.jpeg"
   },
