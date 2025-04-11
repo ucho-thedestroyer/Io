@@ -6,10 +6,10 @@ let poll = {
     answerweight: [60, 10, 20, 10], // sum = 100
     selectanswer: -1,
     messages: [
-        "Yeah! Glad you're vibing with it. 🎸",
-        "Nice, thanks for listening! 🎶",
-        "Oops! Not for everyone 😅",
-        "Fair enough, not every track hits. ⏭️"
+        "Yeah! 🎸",
+        "Thanks for listening! 🎶",
+        "Not for everyone 😅",
+        "Not every track hits ⏭️"
     ]
 };
 
