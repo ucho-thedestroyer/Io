@@ -63,10 +63,10 @@ body {
 }
 
 .poll .answers .answer span.percentage_bar{
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
-    width: 0;
+    width: auto;
     height: 10%;
     background: #97b5f5;
     z-index: -2;
