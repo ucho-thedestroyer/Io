@@ -29,22 +29,20 @@ polldom.answers.innerHTML  = poll.answers.map(function(answer,i){
 }).join("");
 
 
-function markanswer(i)
-{
+function markanswer(i) {
     poll.selectanswer = +i;
 
-    try{
+    try {
         document.querySelector(".poll .answers .answer.selected")
-        .classList.remove(".selected");
-    }
-    catch(msg){}
+            .classList.remove("selected");
+    } catch (msg) {}
 
-    document.querySelectorAll(".poll .answers .answer")
-    [+i].classList.add(".selected");
-
+    document.querySelectorAll(".poll .answers .answer")[+i]
+        .classList.add("selected");
 
     showresults();
 }
+
 
 
 
