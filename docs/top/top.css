@@ -27,7 +27,6 @@ body {
 }
 /* Ensure the player container doesn't change size based on title length */
 .music-player {
-  width: 100%; /* Make sure the player container takes up the full width of its parent */
   word-wrap: break-word; /* Allow wrapping of long words */
 }
 
@@ -38,7 +37,7 @@ overflow-wrap: break-word;
 
 #song-title {
   display: block;
-  width: 100%; /* Take up the full width of its container */
+  width: 90%; /* Take up the full width of its container */
   white-space: normal; /* Allow text to wrap */
   word-break: break-word; /* Break words at the end of the line to prevent overflow */
   overflow-wrap: break-word; /* Fallback for word break handling */
@@ -48,11 +47,12 @@ overflow-wrap: break-word;
 }
 
 .blocktitle2 {
-  font-size: 0.8em; /* Adjust to make it look nice alongside the title */
+  font-size: 1em; /* Adjust to make it look nice alongside the title */
 }
 
 /* Optional: Controls styling for a better layout */
 .controls {
+  width: 73%;
   display: flex;
   justify-content: space-between;
   margin-top: 6px;
