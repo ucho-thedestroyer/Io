@@ -42,8 +42,8 @@ overflow-wrap: break-word;
   word-break: break-word; /* Break words at the end of the line to prevent overflow */
   overflow-wrap: break-word; /* Fallback for word break handling */
   margin: 0; /* Remove default margins to ensure clean layout */
-  font-size: 1.2em; /* Adjust font size as needed */
-  line-height: 1.4em; /* Adjust line-height for better readability if title wraps */
+  font-size: 1em; /* Adjust font size as needed */
+  line-height: 1.1em; /* Adjust line-height for better readability if title wraps */
 }
 
 .blocktitle2 {
