@@ -33,6 +33,12 @@ body {
   padding: 10px 0; /* Reserve space */
 }
 
+.playin {
+  display: block;
+  overflow: hidden;
+  max-width: 200px;
+}
+
 .music-player .playin h1.blocktitle {
   display: block;
   font-size: 1.2px;
@@ -49,10 +55,6 @@ body {
   box-sizing: border-box;
 }
 
-
-.playin {
-overflow-wrap: break-word;
-}
 
 
 .blocktitle2 {
