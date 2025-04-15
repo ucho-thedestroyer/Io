@@ -34,6 +34,7 @@ body {
 }
 
 .music-player .playin h1.blocktitle {
+  display: block;
   font-size: 1.2px;
   font-weight: 600;
   margin: 2px 0;
@@ -44,25 +45,13 @@ body {
   text-overflow: ellipsis;
   max-width: 100%;         /* responsive */
   text-align: start;
+  padding-right: 4px; /* Add some space on the right to prevent cutting off */
+  box-sizing: border-box;
 }
 
 
 .playin {
 overflow-wrap: break-word;
-}
-
-#song-title {
-  display: block;
-  width: 100%; /* Ensure it takes up all available space */
-  max-width: 350px; /* Limit the max width to avoid excessive stretching */
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: hidden; /* Hide any overflow */
-  text-overflow: ellipsis; /* Add ellipsis when text overflows */
-  font-size: 1em;
-  line-height: 1.1em;
-  margin: 0;
-  padding-right: 10px; /* Add some space on the right to prevent cutting off */
-  box-sizing: border-box;
 }
 
 
