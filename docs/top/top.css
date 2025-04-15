@@ -76,6 +76,10 @@ tip-container {
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
 }
 
+.core {
+  width: 78%;
+  max-width: 1180px;
+}
 .hot {
   align-items: safe-center;
 }
