@@ -29,6 +29,7 @@ body {
 /* Song title styling */
 
 .music-player {
+  display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 0; /* Reserve space */
   max-width: 210px;
@@ -42,7 +43,7 @@ body {
 }
 
 .music-player .playin h1.blocktitle {
-  display: block;
+  display: inline-block;
   font-size: 11px;
   font-weight: 600;
   margin: 2px 0;
