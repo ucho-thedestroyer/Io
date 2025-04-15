@@ -29,7 +29,7 @@ body {
 /* Song title styling */
 
 .music-player {
-  word-wrap: break-word; /* Prevents words from breaking awkwardly */
+  word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 0; /* Reserve space */
 }
 
@@ -37,6 +37,7 @@ body {
   display: block;
   overflow: hidden;
   max-width: 200px;
+  box-sizing: border-box;
 }
 
 .music-player .playin h1.blocktitle {
@@ -45,14 +46,13 @@ body {
   font-weight: 600;
   margin: 2px 0;
   line-height: 1.4;
-  word-break: break-word; /* wrap on long words if needed */
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;         /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
-  box-sizing: border-box;
+  
 }
 
 
