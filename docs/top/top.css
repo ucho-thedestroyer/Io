@@ -31,6 +31,7 @@ body {
 .music-player {
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 0; /* Reserve space */
+  max-width: 210px;
 }
 
 .playin {
@@ -49,7 +50,7 @@ body {
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;         /* responsive */
+  max-width: 199px;     /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
   
