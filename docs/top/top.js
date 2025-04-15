@@ -4,7 +4,7 @@ const controlIcon = document.getElementById("controlIcon");
 const playPauseButton = document.querySelector(".play-pause-btn");
 const nextButton = document.querySelector(".controls button.forward");
 const prevButton = document.querySelector(".controls button.backward");
-const songName = document.querySelector(".music-player font");
+const songName = document.querySelector(".music-player h1");
 const artistName = document.querySelector(".music-player p");
 
 const songs = [
