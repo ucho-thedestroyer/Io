@@ -56,15 +56,15 @@ body {
   
 }
 
-
-
 .blocktitle2 {
   font-size: 1em; /* Adjust to make it look nice alongside the title */
 }
 
 /* Optional: Controls styling for a better layout */
 
-
+.controls button {
+  margin: 2px 8px;
+}
 /* Optional: Set width and padding for the audio progress range slider */
 #progress {
   width: 73%;
