@@ -37,7 +37,7 @@ body {
 .playin {
   display: block;
   overflow: hidden;
-  max-width: 200px;
+  max-width: 150px;
   box-sizing: border-box;
 }
 
@@ -50,7 +50,7 @@ body {
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 199px;     /* responsive */
+  max-width: 145px;   /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
   
