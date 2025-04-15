@@ -43,7 +43,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;         /* responsive */
-  text-align: left;
+  text-align: start;
 }
 
 
