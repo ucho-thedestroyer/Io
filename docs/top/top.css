@@ -33,7 +33,7 @@ body {
   padding: 10px 0; /* Reserve space */
 }
 
-.music-player h1 {
+.music-player .playin h1.blocktitle {
   font-size: 1.2px;
   font-weight: 600;
   margin: 2px 0;
