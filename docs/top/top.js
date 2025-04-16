@@ -256,8 +256,8 @@ function loadSecondFile() {
     console.log('js.js loaded!');
 
     // ✅ This is where the constants from file2.js will be available
-    console.log('songs:', firstConst);
-    console.log('trackData:', secondConst);
+    console.log('Value of firstConst:', songs);
+    console.log('Value of secondConst:', trackData);
   };
   script.onerror = function () {
     console.error('Failed to load file2.js');
