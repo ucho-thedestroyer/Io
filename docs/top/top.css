@@ -63,8 +63,34 @@ body {
 /* Optional: Controls styling for a better layout */
 
 .controls button {
-  margin: 2px 8px;
+  font-size: 1.3vw; /* Doubles the size of the button */
+  margin: 2px 6px;
+  padding: 14px 16px; /* Increase padding for bigger buttons */
+  border-radius: 70%;
+  background-color: var(--button-bg);
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  color: #333333;
 }
+
+/* Play button style */
+.controls .play-pause-btn {
+  background-color: #B33638; /* et red */
+  color: #fdffee;
+}
+
+/* Optional: Add a hover effect */
+.controls button:hover {
+  background-color: rgba(54, 54, 54, 0.1);
+}
+
+.play-pause-btn:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
+
+
 /* Optional: Set width and padding for the audio progress range slider */
 #progress {
   width: 73%;
@@ -177,32 +203,7 @@ tip-container {
   border-radius: inherit;
 }
 
-/* Player button size */
-.controls button {
-  font-size: 1.3vw; /* Doubles the size of the button */
-  padding: 14px 16px; /* Increase padding for bigger buttons */
-  border-radius: 70%;
-  background-color: var(--button-bg);
-  border: none;
-  text-align: center;
-  cursor: pointer;
-  color: #333333;
-}
-
-/* Play button style */
-.controls .play-pause-btn {
-  background-color: #B33638; /* et red */
-  color: #fdffee;
-}
-
-/* Optional: Add a hover effect */
-.controls button:hover {
-  background-color: rgba(54, 54, 54, 0.1);
-}
-
-.play-pause-btn:hover {
-  background-color: #cc0000; /* Darker red on hover */
-}
+/* playlist button */
 
 .play-btn {
   font-size: 1px;
