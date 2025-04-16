@@ -105,6 +105,7 @@ tip-container {
 .core {
   width: 78%;
   max-width: 1180px;
+  margin: auto;
 }
 .hot {
   align-items: safe-center;
