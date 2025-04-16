@@ -46,6 +46,10 @@ const trackData = {
     { number: 1, title: "Daft Punk Instant Crush" },
     { number: 2, title: "Harry Styles As It Was" },
     { number: 3, title: "Dua Lipa Physical" }
+  ],
+  album3: [
+    { number: 1, title: "Daft Punk Instant Crush" },
+    { number: 2, title: "Dua Lipa Physical" }
   ]
 };
 
