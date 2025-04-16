@@ -1,3 +1,28 @@
+// calling
+
+
+// end call 
+function loadSecondFile() {
+  const script = document.createElement('script');
+  script.src = 'https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/js.js'; // Path to second JS file
+  script.onload = function () {
+    console.log('js.js loaded!');
+
+    // ✅ This is where the constants from file2.js will be available
+    console.log('Value of firstConst:', songs);
+    console.log('Value of secondConst:', trackData);
+  };
+  script.onerror = function () {
+    console.error('Failed to load file2.js');
+  };
+
+  document.head.appendChild(script);
+}
+
+// ✅ Call the function immediately so the file loads on page load
+loadSecondFile();
+
+
 const progress = document.getElementById("progress");
 const song = document.getElementById("song");
 const controlIcon = document.getElementById("controlIcon");
@@ -245,26 +270,3 @@ document.querySelectorAll(".tracklist").forEach((el) => {
   }
 });
 
-// calling
-
-
-// end call 
-function loadSecondFile() {
-  const script = document.createElement('script');
-  script.src = 'https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/js.js'; // Path to second JS file
-  script.onload = function () {
-    console.log('js.js loaded!');
-
-    // ✅ This is where the constants from file2.js will be available
-    console.log('Value of firstConst:', songs);
-    console.log('Value of secondConst:', trackData);
-  };
-  script.onerror = function () {
-    console.error('Failed to load file2.js');
-  };
-
-  document.head.appendChild(script);
-}
-
-// ✅ Call the function immediately so the file loads on page load
-loadSecondFile();
