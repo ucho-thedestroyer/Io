@@ -19,7 +19,7 @@ body {
 
 
 .player-container {
-  width: 90%;
+  width: 80%;
   max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   margin: 0 auto; /* Center the container */
   padding: 10px;
