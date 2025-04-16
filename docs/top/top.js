@@ -16,7 +16,7 @@ function loadSecondFile() {
     console.error('Failed to load file2.js');
   };
 
-  document.head.appendChild(script);
+  document.body.appendChild(script);
 }
 
 // ✅ Call the function immediately so the file loads on page load
