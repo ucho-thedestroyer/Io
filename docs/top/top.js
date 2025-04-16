@@ -251,7 +251,7 @@ document.querySelectorAll(".tracklist").forEach((el) => {
 // end call 
 function loadSecondFile() {
   const script = document.createElement('script');
-  script.src = 'js.js'; // Path to second JS file
+  script.src = 'https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/js.js'; // Path to second JS file
   script.onload = function () {
     console.log('js.js loaded!');
 
