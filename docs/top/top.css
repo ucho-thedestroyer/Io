@@ -33,6 +33,9 @@ body {
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 0; /* Reserve space */
   max-width: 210px;
+    background: #343434;
+        background-image: url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
+        background-repeat: no-repeat;
 }
 
 .playin {
