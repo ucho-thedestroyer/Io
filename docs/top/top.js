@@ -1,1 +1,294 @@
-const _0x183832=_0x15a5;(function(_0x517089,_0x1e23d7){const _0x32a663=_0x15a5,_0x1c6207=_0x517089();while(!![]){try{const _0x2e16cd=-parseInt(_0x32a663(0x17c))/0x1*(-parseInt(_0x32a663(0x1a2))/0x2)+parseInt(_0x32a663(0x1ab))/0x3*(parseInt(_0x32a663(0x191))/0x4)+-parseInt(_0x32a663(0x18a))/0x5+parseInt(_0x32a663(0x185))/0x6*(-parseInt(_0x32a663(0x1ba))/0x7)+parseInt(_0x32a663(0x183))/0x8+-parseInt(_0x32a663(0x187))/0x9+-parseInt(_0x32a663(0x184))/0xa;if(_0x2e16cd===_0x1e23d7)break;else _0x1c6207['push'](_0x1c6207['shift']());}catch(_0x11f174){_0x1c6207['push'](_0x1c6207['shift']());}}}(_0x2ae0,0x5b696));const progress=document[_0x183832(0x1be)]('progress'),song=document[_0x183832(0x1be)]('song'),controlIcon=document[_0x183832(0x1be)](_0x183832(0x17e)),playPauseButton=document[_0x183832(0x1c3)](_0x183832(0x1bc)),nextButton=document[_0x183832(0x1c3)](_0x183832(0x1d2)),prevButton=document['querySelector'](_0x183832(0x1bf)),songName=document['querySelector']('.music-player\x20.playin\x20h1.blocktitle'),artistName=document[_0x183832(0x1c3)](_0x183832(0x1d5)),songs=[{'title':_0x183832(0x18d),'source':_0x183832(0x193),'cover':_0x183832(0x1a5)},{'title':_0x183832(0x1cf),'source':_0x183832(0x1ce),'cover':'https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg'},{'title':_0x183832(0x19a),'source':_0x183832(0x1b0),'cover':_0x183832(0x1a8)},{'title':_0x183832(0x1ad),'source':_0x183832(0x180),'cover':_0x183832(0x1a5)},{'title':'Harry\x20Styles\x20As\x20It\x20Was','source':_0x183832(0x1b8),'cover':_0x183832(0x1c7)},{'title':'Dua\x20Lipa\x20Physical','source':_0x183832(0x19f),'cover':_0x183832(0x1a8)},{'title':_0x183832(0x1ca),'source':_0x183832(0x188),'cover':_0x183832(0x1a5)}];let currentSongIndex=0x3;function _0x15a5(_0x51dcd4,_0x5deb7c){const _0x2ae0fd=_0x2ae0();return _0x15a5=function(_0x15a521,_0x50f18c){_0x15a521=_0x15a521-0x178;let _0x1d367c=_0x2ae0fd[_0x15a521];return _0x1d367c;},_0x15a5(_0x51dcd4,_0x5deb7c);}function updateSongInfo(){const _0x1d0a37=_0x183832,_0xd4feec=songs[currentSongIndex];songName[_0x1d0a37(0x1c2)]=_0xd4feec[_0x1d0a37(0x17a)],song[_0x1d0a37(0x1d8)]=_0xd4feec['source'];const _0x1210aa=document['getElementById']('albumCover');_0x1210aa[_0x1d0a37(0x1d8)]=_0xd4feec['cover'],song[_0x1d0a37(0x1b4)](_0x1d0a37(0x1b5),()=>{const _0x45c5c8=_0x1d0a37,_0x1d429d=Math[_0x45c5c8(0x18c)](song[_0x45c5c8(0x1d1)]),_0x318546=Math[_0x45c5c8(0x18c)](_0x1d429d/0x3c),_0x2feaa6=_0x1d429d%0x3c;artistName[_0x45c5c8(0x1c2)]=_0x318546+':'+_0x2feaa6[_0x45c5c8(0x196)]()[_0x45c5c8(0x199)](0x2,'0'),progress['max']=song[_0x45c5c8(0x1d1)],progress[_0x45c5c8(0x1ae)]=song[_0x45c5c8(0x19b)];});}song[_0x183832(0x1b4)](_0x183832(0x1b7),()=>{const _0x59e154=_0x183832;!song['paused']&&(progress[_0x59e154(0x1ae)]=song[_0x59e154(0x19b)]);}),song[_0x183832(0x1b4)](_0x183832(0x1b5),()=>{const _0x4c732e=_0x183832;progress[_0x4c732e(0x190)]=song[_0x4c732e(0x1d1)],progress[_0x4c732e(0x1ae)]=song[_0x4c732e(0x19b)];}),song[_0x183832(0x1b4)](_0x183832(0x1c9),()=>{const _0x58c6f6=_0x183832;currentSongIndex=(swiper['activeIndex']+0x1)%songs[_0x58c6f6(0x1d3)],updateSongInfo(),swiper[_0x58c6f6(0x1a6)](currentSongIndex),playSong();});function pauseSong(){const _0x3bfc33=_0x183832;song['pause'](),controlIcon[_0x3bfc33(0x197)][_0x3bfc33(0x1d7)](_0x3bfc33(0x189)),controlIcon[_0x3bfc33(0x197)][_0x3bfc33(0x1a1)]('fa-play');}function playSong(){const _0x32ae40=_0x183832;song[_0x32ae40(0x1d6)](),controlIcon[_0x32ae40(0x197)][_0x32ae40(0x1a1)](_0x32ae40(0x189)),controlIcon[_0x32ae40(0x197)][_0x32ae40(0x1d7)](_0x32ae40(0x194));}function playPause(){const _0x50033f=_0x183832;song[_0x50033f(0x1cd)]?playSong():pauseSong();}playPauseButton[_0x183832(0x1b4)]('click',playPause),progress[_0x183832(0x1b4)]('input',()=>{const _0x103a0c=_0x183832;song[_0x103a0c(0x19b)]=progress[_0x103a0c(0x1ae)];}),progress['addEventListener'](_0x183832(0x1c0),()=>{playSong();}),nextButton[_0x183832(0x1b4)](_0x183832(0x17b),()=>{const _0x5dbeaa=_0x183832;currentSongIndex=(currentSongIndex+0x1)%songs[_0x5dbeaa(0x1d3)],updateSongInfo(),playPause();}),prevButton['addEventListener']('click',()=>{const _0x3d149a=_0x183832;currentSongIndex=(currentSongIndex-0x1+songs['length'])%songs[_0x3d149a(0x1d3)],updateSongInfo(),playPause();}),updateSongInfo();var swiper=new Swiper(_0x183832(0x1a4),{'effect':_0x183832(0x19c),'centeredSlides':!![],'initialSlide':0x3,'slidesPerView':_0x183832(0x1aa),'grabCursor':!![],'spaceBetween':0x28,'coverflowEffect':{'rotate':0x19,'stretch':0x0,'depth':0x32,'modifier':0x1,'slideShadows':![]},'navigation':{'nextEl':_0x183832(0x1b6),'prevEl':_0x183832(0x18f)}});swiper['on'](_0x183832(0x1b2),()=>{const _0xe446da=_0x183832;currentSongIndex=swiper[_0xe446da(0x18b)],updateSongInfo(),playPause();});const trackData={'album1':[{'number':0x1,'title':'Star\x20Wars\x20original\x20opening\x20crawl\x201977'},{'number':0x2,'title':'Pawn\x20It\x20All'},{'number':0x3,'title':_0x183832(0x19a)}],'album2':[{'number':0x1,'title':_0x183832(0x1ad)},{'number':0x2,'title':_0x183832(0x19e)},{'number':0x3,'title':_0x183832(0x1b3)}]};let currentAlbumTracks=[];function _0x2ae0(){const _0x3a9b2d=['width','https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22track-cell\x22\x20width=\x2235%\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22trackname\x22>','#EEEEEE','1406704IgFFho','1999990KdgULZ','4854FItXFZ','dynamic-tracklist','3363858jEfiEF','https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Taylor-Swift-Delicate.mp3','fa-pause','65570hQPknf','activeIndex','floor','Star\x20Wars\x20original\x20opening\x20crawl\x201977','preventDefault','.backward','max','268AIcmIO','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fa\x20fa-play\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20','https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/camp/Star_Wars_original_opening_crawl_1977.ogg','fa-play','data-tracklist-id','toString','classList','.tracklist','padStart','Madrigal\x20Seni\x20Dert\x20Etmeler','currentTime','coverflow','albumCover','Harry\x20Styles\x20As\x20It\x20Was','https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Dua-Lipa-Physical.mp3','find','add','44338jUmAlc','table','.swiper','https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg','slideTo','dataset','https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0512.jpeg','toLowerCase','auto','32559xeBhiZ','number','Daft\x20Punk\x20Instant\x20Crush','value','<td\x20colspan=\x225\x22\x20class=\x22divider\x22></td>','https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3','.album','slideChange','Dua\x20Lipa\x20Physical','addEventListener','loadedmetadata','.forward','timeupdate','https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Harry-Styles-As-It-Was.mp3','\x22\x20isn\x27t\x20available.','4291NPuTOJ','cover','.play-pause-btn','querySelectorAll','getElementById','.controls\x20button.backward','change','align','textContent','querySelector','source','setAttribute','appendChild','https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg','currentTarget','ended','Taylor\x20Swift\x20Delicate','getAttribute','forEach','paused','https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Pawn-It-All.mp3','Pawn\x20It\x20All','innerHTML','duration','.controls\x20button.forward','length','cellpadding','.music-player\x20p','play','remove','src','cellspacing','backgroundColor','title','click','25BdBUhy','createElement','controlIcon'];_0x2ae0=function(){return _0x3a9b2d;};return _0x2ae0();}function getSongUrlFromTitle(_0xfa46ae){const _0x4ee59b=_0x183832,_0x1388c6=songs[_0x4ee59b(0x1a0)](_0x3bb3b8=>_0x3bb3b8[_0x4ee59b(0x17a)]['toLowerCase']()===_0xfa46ae['toLowerCase']());return _0x1388c6?_0x1388c6[_0x4ee59b(0x1c4)]:null;}function loadAndPlayTrack(_0x17e9d7){const _0x3b8204=_0x183832,_0x426e0a=getSongUrlFromTitle(_0x17e9d7);if(!_0x426e0a){alert('Sorry,\x20the\x20track\x20\x22'+_0x17e9d7+_0x3b8204(0x1b9));return;}song['src']=_0x426e0a,songName[_0x3b8204(0x1c2)]=_0x17e9d7,artistName[_0x3b8204(0x1c2)]='Loading...';const _0x372ca6=songs[_0x3b8204(0x1a0)](_0x5c8e42=>_0x5c8e42[_0x3b8204(0x17a)][_0x3b8204(0x1a9)]()===_0x17e9d7[_0x3b8204(0x1a9)]());_0x372ca6&&_0x372ca6[_0x3b8204(0x1bb)]&&(document[_0x3b8204(0x1be)](_0x3b8204(0x19d))[_0x3b8204(0x1d8)]=_0x372ca6[_0x3b8204(0x1bb)]),song['addEventListener'](_0x3b8204(0x1b5),()=>{const _0x580fa3=_0x3b8204,_0x546c7d=Math[_0x580fa3(0x18c)](song[_0x580fa3(0x1d1)]),_0x4877d9=Math[_0x580fa3(0x18c)](_0x546c7d/0x3c),_0xb6868f=_0x546c7d%0x3c;artistName[_0x580fa3(0x1c2)]=_0x4877d9+':'+_0xb6868f[_0x580fa3(0x196)]()[_0x580fa3(0x199)](0x2,'0'),progress[_0x580fa3(0x190)]=song[_0x580fa3(0x1d1)],progress[_0x580fa3(0x1ae)]=song[_0x580fa3(0x19b)];}),playSong();}function renderTrackList(_0x42335a,_0x5a815a){const _0x5b8652=_0x183832,_0x195541=document[_0x5b8652(0x17d)](_0x5b8652(0x1a3));_0x195541['setAttribute'](_0x5b8652(0x17f),'100%'),_0x195541[_0x5b8652(0x1c5)](_0x5b8652(0x178),'0'),_0x195541['setAttribute'](_0x5b8652(0x1d4),'0'),_0x195541[_0x5b8652(0x1c5)](_0x5b8652(0x1c1),'center'),_0x5a815a[_0x5b8652(0x1cc)]((_0x5d835c,_0x4852a6)=>{const _0x22d19c=_0x5b8652,_0x3f0533=document[_0x22d19c(0x17d)]('tr');_0x3f0533[_0x22d19c(0x1d0)]='\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22track-cell\x22\x20width=\x2210%\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22tracknumber\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22track-label\x22>Track</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22track-id\x22>#'+_0x5d835c[_0x22d19c(0x1ac)]+_0x22d19c(0x181)+_0x5d835c[_0x22d19c(0x17a)]+'</div>\x0a\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22track-cell\x22\x20width=\x225%\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22sendtrack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22play-btn\x22\x20title=\x22Play\x22\x20data-title=\x22'+_0x5d835c['title']+_0x22d19c(0x192),_0x195541['appendChild'](_0x3f0533);const _0x3d39d0=document[_0x22d19c(0x17d)]('tr');_0x3d39d0['innerHTML']=_0x22d19c(0x1af),_0x195541[_0x22d19c(0x1c6)](_0x3d39d0);});const _0x1607c7=document['createElement']('tr');_0x1607c7['style'][_0x5b8652(0x179)]=_0x5b8652(0x182),_0x195541[_0x5b8652(0x1c6)](_0x1607c7),_0x42335a[_0x5b8652(0x1c6)](_0x195541),_0x42335a[_0x5b8652(0x1bd)]('.play-btn')[_0x5b8652(0x1cc)](_0x52cfaf=>{const _0x33348c=_0x5b8652;_0x52cfaf[_0x33348c(0x1b4)](_0x33348c(0x17b),_0x49e01b=>{const _0x2d5d85=_0x33348c,_0x183263=_0x49e01b[_0x2d5d85(0x1c8)][_0x2d5d85(0x1a7)][_0x2d5d85(0x17a)];loadAndPlayTrack(_0x183263);});});}document[_0x183832(0x1bd)](_0x183832(0x1b1))[_0x183832(0x1cc)](_0x8acacf=>{const _0xf80651=_0x183832;_0x8acacf[_0xf80651(0x1b4)](_0xf80651(0x17b),_0x31e808=>{const _0x165a05=_0xf80651;_0x31e808[_0x165a05(0x18e)]();const _0x1916b6=_0x8acacf['getAttribute']('data-album-id'),_0x5a1aa6=document[_0x165a05(0x1be)](_0x165a05(0x186));_0x5a1aa6['innerHTML']='',currentAlbumTracks=trackData[_0x1916b6]||[];if(currentAlbumTracks[_0x165a05(0x1d3)]>0x0){renderTrackList(_0x5a1aa6,currentAlbumTracks);const _0x4bae52=currentAlbumTracks['find'](_0x3eb835=>_0x3eb835[_0x165a05(0x1ac)]===0x1);_0x4bae52&&loadAndPlayTrack(_0x4bae52['title']);}});}),document['querySelectorAll'](_0x183832(0x198))[_0x183832(0x1cc)](_0x56038c=>{const _0x1e70e4=_0x183832,_0x5f3cef=_0x56038c[_0x1e70e4(0x1cb)](_0x1e70e4(0x195));trackData[_0x5f3cef]&&renderTrackList(_0x56038c,trackData[_0x5f3cef]);});
+TOP
+
+const progress = document.getElementById("progress");
+const song = document.getElementById("song");
+const controlIcon = document.getElementById("controlIcon");
+const playPauseButton = document.querySelector(".play-pause-btn");
+const nextButton = document.querySelector(".controls button.forward");
+const prevButton = document.querySelector(".controls button.backward");
+const songName = document.querySelector(".music-player .playin h1.blocktitle");
+
+const artistName = document.querySelector(".music-player p");
+
+const songs = [
+  {
+    title: "Star Wars original opening crawl 1977",
+    source: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/camp/Star_Wars_original_opening_crawl_1977.ogg",
+    cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
+  },
+  {
+    title: "Pawn It All",
+    source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Pawn-It-All.mp3",
+    cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg"
+  },
+  {
+    title: "Madrigal Seni Dert Etmeler",
+    source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
+    cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0512.jpeg"
+  },
+  {
+    title: "Daft Punk Instant Crush",
+    source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Daft-Punk-Instant-Crush.mp3",
+    cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
+  },
+  {
+    title: "Harry Styles As It Was",
+    source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Harry-Styles-As-It-Was.mp3",
+    cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0511.jpeg"
+  },
+  {
+    title: "Dua Lipa Physical",
+    source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Dua-Lipa-Physical.mp3",
+    cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0512.jpeg"
+  },
+  {
+    title: "Taylor Swift Delicate",
+    source: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Taylor-Swift-Delicate.mp3",
+    cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0510.jpeg"
+  }
+];
+
+let currentSongIndex = 3;
+
+function updateSongInfo() {
+  const currentSong = songs[currentSongIndex];
+  songName.textContent = currentSong.title;
+  song.src = currentSong.source;
+
+  // Update album cover
+  const albumCover = document.getElementById("albumCover");
+  albumCover.src = currentSong.cover;
+
+  song.addEventListener("loadedmetadata", () => {
+    const totalSeconds = Math.floor(song.duration);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    artistName.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+  });
+}
+
+song.addEventListener("timeupdate", () => {
+  if (!song.paused) {
+    progress.value = song.currentTime;
+  }
+});
+
+song.addEventListener("loadedmetadata", () => {
+  progress.max = song.duration;
+  progress.value = song.currentTime;
+});
+
+song.addEventListener("ended", () => {
+  currentSongIndex = (swiper.activeIndex + 1) % songs.length;
+  updateSongInfo();
+  swiper.slideTo(currentSongIndex);
+  playSong();
+});
+
+function pauseSong() {
+  song.pause();
+  controlIcon.classList.remove("fa-pause");
+  controlIcon.classList.add("fa-play");
+}
+
+function playSong() {
+  song.play();
+  controlIcon.classList.add("fa-pause");
+  controlIcon.classList.remove("fa-play");
+}
+
+function playPause() {
+  if (song.paused) {
+    playSong();
+  } else {
+    pauseSong();
+  }
+}
+
+playPauseButton.addEventListener("click", playPause);
+
+progress.addEventListener("input", () => {
+  song.currentTime = progress.value;
+});
+
+progress.addEventListener("change", () => {
+  playSong();
+});
+
+nextButton.addEventListener("click", () => {
+  currentSongIndex = (currentSongIndex + 1) % songs.length;
+  updateSongInfo();
+  playPause();
+});
+
+prevButton.addEventListener("click", () => {
+  currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+  updateSongInfo();
+  playPause();
+});
+
+updateSongInfo();
+
+var swiper = new Swiper(".swiper", {
+  effect: "coverflow",
+  centeredSlides: true,
+  initialSlide: 3,
+  slidesPerView: "auto",
+  grabCursor: true,
+  spaceBetween: 40,
+  coverflowEffect: {
+    rotate: 25,
+    stretch: 0,
+    depth: 50,
+    modifier: 1,
+    slideShadows: false,
+  },
+  navigation: {
+    nextEl: ".forward",
+    prevEl: ".backward",
+  },
+});
+
+swiper.on("slideChange", () => {
+  currentSongIndex = swiper.activeIndex;
+  updateSongInfo();
+  playPause();
+});
+
+
+const trackData = {
+  album1: [
+    { number: 1, title: "Star Wars original opening crawl 1977" },
+    { number: 2, title: "Pawn It All" },
+    { number: 3, title: "Madrigal Seni Dert Etmeler" }
+  ],
+  album2: [
+    { number: 1, title: "Daft Punk Instant Crush" },
+    { number: 2, title: "Harry Styles As It Was" },
+    { number: 3, title: "Dua Lipa Physical" }
+  ]
+};
+
+let currentAlbumTracks = []; // holds the currently loaded album's track list
+
+
+function getSongUrlFromTitle(title) {
+  const songMatch = songs.find(
+    (song) => song.title.toLowerCase() === title.toLowerCase()
+  );
+  return songMatch ? songMatch.source : null;
+}
+
+
+function loadAndPlayTrack(title) {
+  const url = getSongUrlFromTitle(title);
+
+  if (!url) {
+    alert(`Sorry, the track "${title}" isn't available.`);
+    return;
+  }
+
+  song.src = url;
+  songName.textContent = title;
+  artistName.textContent = "Loading...";
+
+  const match = songs.find((s) => s.title.toLowerCase() === title.toLowerCase());
+  if (match && match.cover) {
+    document.getElementById("albumCover").src = match.cover;
+  }
+
+  song.addEventListener("loadedmetadata", () => {
+    const totalSeconds = Math.floor(song.duration);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    artistName.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+  });
+
+  playSong();
+}
+
+
+function renderTrackList(container, tracks) {
+  const table = document.createElement("table");
+  table.setAttribute("width", "100%");
+  table.setAttribute("cellspacing", "0");
+  table.setAttribute("cellpadding", "0");
+  table.setAttribute("align", "center");
+
+  tracks.forEach((track, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="track-cell" width="10%">
+        <div class="tracknumber">
+          <span class="track-label">Track</span>
+          <span class="track-id">#${track.number}</span>
+        </div>
+      </td>
+      <td class="track-cell" width="35%">
+        <div class="trackname">${track.title}</div>
+      </td>
+      <td class="track-cell" width="5%">
+        <div class="sendtrack">
+          <button class="play-btn" title="Play" data-title="${track.title}">
+            <i class="fa fa-play"></i>
+          </button>
+        </div>
+      </td>
+    `;
+
+    table.appendChild(row);
+
+    const divider = document.createElement("tr");
+    divider.innerHTML = `<td colspan="5" class="divider"></td>`;
+    table.appendChild(divider);
+  });
+
+  const filler = document.createElement("tr");
+  filler.style.backgroundColor = "#EEEEEE";
+  table.appendChild(filler);
+
+  container.appendChild(table);
+
+  // Add event listeners to each play button
+  container.querySelectorAll(".play-btn").forEach(button => {
+    button.addEventListener("click", (e) => {
+      const title = e.currentTarget.dataset.title;
+      loadAndPlayTrack(title);
+    });
+  });
+}
+
+
+document.querySelectorAll(".album").forEach(album => {
+  album.addEventListener("click", (e) => {
+    e.preventDefault();
+    const albumId = album.getAttribute("data-album-id");
+    const trackContainer = document.getElementById("dynamic-tracklist");
+
+    // Clear previous track list and load new one
+    trackContainer.innerHTML = "";
+    currentAlbumTracks = trackData[albumId] || [];
+
+    if (currentAlbumTracks.length > 0) {
+      renderTrackList(trackContainer, currentAlbumTracks);
+
+      // Play the track with number 1 (our "album-single")
+      const single = currentAlbumTracks.find(track => track.number === 1);
+      if (single) {
+        loadAndPlayTrack(single.title);
+      }
+    }
+  });
+});
+
+// Render all tracklist elements on the page
+document.querySelectorAll(".tracklist").forEach((el) => {
+  const id = el.getAttribute("data-tracklist-id");
+  if (trackData[id]) {
+    renderTrackList(el, trackData[id]);
+  }
+});
