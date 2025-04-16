@@ -283,7 +283,6 @@ document.querySelectorAll(".album").forEach(album => {
   });
 });
 
-
 // Render all tracklist elements on the page
 document.querySelectorAll(".tracklist").forEach((el) => {
   const id = el.getAttribute("data-tracklist-id");
