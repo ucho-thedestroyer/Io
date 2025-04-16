@@ -32,7 +32,7 @@ body {
   display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 0; /* Reserve space */
-  max-width: 210px;
+  max-width: 310px;
   background: rgb(52,52,52,0.1);
   background-image: url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
@@ -54,7 +54,7 @@ body {
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 145px;   /* responsive */
+  max-width: 150px;   /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
   
