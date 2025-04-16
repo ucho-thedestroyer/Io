@@ -1,5 +1,3 @@
-TOP
-
 const progress = document.getElementById("progress");
 const song = document.getElementById("song");
 const controlIcon = document.getElementById("controlIcon");
