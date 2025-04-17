@@ -29,14 +29,14 @@ body {
 
 
 .albumcover0 {
-  width: 18%;
+  width: 162px;
   height: 162px;
   display: inline-block;
   margin: 2px;
 }
 
 .albumcover0 img{
-  width: 98%;
+  width: 160px;
   height: 160px;
   border-radius: 8px;
   margin: auto;
@@ -48,7 +48,7 @@ body {
   display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 14px; /* Reserve space */
-  width: 30%;
+  width: 98%;
   max-width: 380px;
   background: rgb(52,52,52,0.1);
   background-image: url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
@@ -117,7 +117,7 @@ body {
 }
 
 .tip-container {
-  width: 30%;
+  width: 98%;
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
 }
 
