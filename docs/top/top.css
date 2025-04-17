@@ -25,69 +25,7 @@ body {
   padding: 10px;
   box-sizing: border-box;
 }
-
-/* Divider lines */
-.divider {
-  height: 1px;
-  width: 100%;
-}
-
-a6a6a6 {
-  background-color: #a6a6a6;
-}
-
-.ffffff {
-  background-color: #ffffff;
-}
-
-/* Main row background */
-.player-row {
-  background-color: #eeeeee;
-  padding: 0;
-}
-
-.player-inner {
-  width: 98%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-/* Album section */
-.album-section {
-  background-color: #0ff;
-  width: 170px;
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-.album-cover {
-  width: 100%;
-  display: block;
-  border-radius: 4px;
-}
-
-/* Player info */
-.player-info {
-  flex: 1;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-#song-title {
-  margin: 0;
-  font-size: 1.4rem;
-}
-
-#song-duration {
-  margin: 4px 0 10px;
-  color: #444;
-}
-
-#progress {
-  width: 100%;
-}
+/* Ensure the player container doesn't change size based on title length */
 /* Song title styling */
 
 .music-player {
@@ -100,7 +38,6 @@ a6a6a6 {
   background-size: cover;
   background-repeat: no-repeat;
 }
-
 
 .playin {
   display: inline-block;
@@ -127,11 +64,6 @@ a6a6a6 {
   font-size: 1em; /* Adjust to make it look nice alongside the title */
 }
 
-.controls {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
 /* Optional: Controls styling for a better layout */
 
 .controls button {
@@ -167,22 +99,11 @@ a6a6a6 {
   margin: 8px 0;
 }
 
-width: 220px;
-  text-align: right;
-  font-size: 0.9rem;
-  padding: 10px;
-  box-sizing: border-box;
+.tip-container {
+  width: 210px;
+  padding-left: 10px; /* Add some padding to prevent the element from shifting */
 }
 
-.tip-link {
-  font-size: 20px;
-  color: red;
-  text-decoration: none;
-}
-
-.tip-link:hover {
-  text-decoration: underline;
-}
 .core {
   width: 78%;
   max-width: 1180px;
@@ -260,9 +181,8 @@ width: 220px;
   width: 160px;
   height: 160px;
   border-radius: 8px;
-  object-fit: cover;
   margin: 2px;
-  align-items: self-center;
+  
   
 }
 
