@@ -31,8 +31,8 @@ body {
 .music-player {
   display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
-  padding: 10px 0; /* Reserve space */
-  max-width: 310px;
+  padding: 10px 4px; /* Reserve space */
+  max-width: 340px;
   background: rgb(52,52,52,0.1);
   background-image: url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
@@ -42,7 +42,7 @@ body {
 .playin {
   display: inline-block;
   overflow: hidden;
-  max-width: 150px;
+  max-width: 200px;
   box-sizing: border-box;
 }
 
@@ -54,7 +54,7 @@ body {
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;   /* responsive */
+  max-width: 180px;   /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
   
