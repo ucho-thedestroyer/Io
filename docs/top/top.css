@@ -177,14 +177,14 @@ body {
   }
 }
 
-.album-cover {
+.album-cover0 {
   width: 162px;
   height: 162px;
   display: inline-block;
   margin: 2px;
 }
 
-.album-cover img {
+.album-cover {
   border-radius: 8px;
   margin: 2px;
 }
