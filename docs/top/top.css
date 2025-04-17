@@ -25,14 +25,31 @@ body {
   padding: 10px;
   box-sizing: border-box;
 }
-/* Ensure the player container doesn't change size based on title length */
+/* albumn */
+
+
+.albumcover0 {
+  width: 18%;
+  height: 162px;
+  display: inline-block;
+  margin: 2px;
+}
+
+.albumcover0 img{
+  width: 98%;
+  height: 160px;
+  border-radius: 8px;
+  margin: auto;
+}
+
 /* Song title styling */
 
 .music-player {
   display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
-  padding: 10px 4px; /* Reserve space */
-  max-width: 340px;
+  padding: 10px 14px; /* Reserve space */
+  width: 30%;
+  max-width: 380px;
   background: rgb(52,52,52,0.1);
   background-image: url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
@@ -100,9 +117,12 @@ body {
 }
 
 .tip-container {
-  width: 210px;
+  width: 30%;
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
 }
+
+
+
 
 .core {
   width: 78%;
@@ -161,34 +181,6 @@ body {
     transition: width 200ms ease-in-out;
     margin-top: 1px;
 
-}
-
-
-
-/* Slide background animation (optional) */
-@keyframes slidein {
-  0%, 100% {
-    background-position: 20% 0%;
-    background-size: 3400px;
-  }
-  50% {
-    background-position: 100% 0%;
-    background-size: 2400px;
-  }
-}
-
-.albumcover0 {
-  width: 162px;
-  height: 162px;
-  display: inline-block;
-  margin: 2px;
-}
-
-.albumcover0 img{
-  width: 160px;
-  height: 160px;
-  border-radius: 8px;
-  margin: auto;
 }
 
 
