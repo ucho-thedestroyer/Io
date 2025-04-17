@@ -54,7 +54,7 @@ body {
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 180px;   /* responsive */
+  max-width: 160px;   /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
   
@@ -184,10 +184,13 @@ body {
   margin: 2px;
 }
 
-.album-cover {
+.album-cover0 img{
+  width: 160px;
+  height: 160px;
   border-radius: 8px;
   margin: 2px;
 }
+
 
 
 /* playlist button */
