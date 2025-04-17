@@ -93,8 +93,6 @@ body {
   background-color: #cc0000; /* Darker red on hover */
 }
 
-
-
 /* Optional: Set width and padding for the audio progress range slider */
 #progress {
   width: 73%;
@@ -189,24 +187,6 @@ body {
   
 }
 
-.swiper {
-  width: 100%;
-  padding: 10px 0 100px;
-}
-
-.swiper-slide {
-  position: relative;
-  max-width: 200px;
-  aspect-ratio: 1/1;
-  border-radius: 10px;
-}
-
-.swiper-slide img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-}
 
 /* playlist button */
 
@@ -241,7 +221,7 @@ body {
 
 .divider {
   padding-top: 2px;
-  height: 1px;
+  height: 0.5px;
   background-color: pink;
 }
 
@@ -295,7 +275,7 @@ body {
 }
 .bw-highlight {
   animation: bwPulse 2s infinite;
-  
+  font-weight: bold;
   display: inline-block;
   text-decoration: none;
 }
