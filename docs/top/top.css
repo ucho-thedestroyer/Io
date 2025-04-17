@@ -256,6 +256,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: start;
+  vertical-align: middle;
   cursor: pointer;
   margin: 2px;
 }
@@ -266,9 +267,9 @@ body {
 }
 
 @keyframes bwPulse {
-  0%   { background-color: #ADBEE1; color: white; }
+  0%   { background-color: #eeeeee; color: white; }
   50%  { background-color: #ADBCE1; color: black; }
-  100% { background-color: #ADBEE1; color: red; }
+  100% { background-color: #eeeeee; color: red; }
 }
 .bw-highlight {
   animation: bwPulse 2s infinite;
