@@ -177,18 +177,18 @@ body {
   }
 }
 
-.album-cover0 {
+.albumcover0 {
   width: 162px;
   height: 162px;
   display: inline-block;
   margin: 2px;
 }
 
-.album-cover0 img{
+.albumcover0 img{
   width: 160px;
   height: 160px;
   border-radius: 8px;
-  margin: 2px;
+  margin: auto;
 }
 
 
