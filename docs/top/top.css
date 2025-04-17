@@ -305,6 +305,7 @@ body {
 @media (max-width: 768px) {
   .player-container {
     width: 95%; /* Slightly larger width for smaller screens */
+    display: grid;
   }
   .album-cover {
   width: 130px;
