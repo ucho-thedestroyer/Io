@@ -136,6 +136,15 @@ body {
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
 }
 
+.tip-container a {
+  color: red;
+  font-weight: 800;
+}
+.tip-container .note {
+  text-align: end;
+  font-size: 1.2vw;
+  
+}
 
 
 
