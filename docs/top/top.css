@@ -41,7 +41,7 @@ body {
   margin: 2px;
 
   flex: 1;
-  min-width: 880px; /* Boxes will stack if screen is narrower than this */
+  min-width: 250px; /* Boxes will stack if screen is narrower than this */
   text-align: center;
 
 }
@@ -67,7 +67,7 @@ body {
   background-repeat: no-repeat;
 
   flex: 1;
-  min-width: 880px; /* Boxes will stack if screen is narrower than this */
+  min-width: 250px; /* Boxes will stack if screen is narrower than this */
   text-align: center;
 
   
@@ -139,7 +139,7 @@ body {
 
   
     flex: 1;
-  min-width: 880px; /* Boxes will stack if screen is narrower than this */
+  min-width: 250px; /* Boxes will stack if screen is narrower than this */
   text-align: center;
 
 }
