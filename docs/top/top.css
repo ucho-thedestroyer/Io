@@ -283,7 +283,7 @@ body {
 @media (max-width: 890px) {
   .player-container {
     width: 94%; /* Slightly larger width for smaller screens */
-    display: grid;
+    flex-direction: column;
   }
   .album-cover {
   width: 130px;
