@@ -74,7 +74,7 @@ body {
 }
 
 .music-player .playin h1.blocktitle {
-  font-size: 1.1em;
+  font-size: 1.3vw;
   font-weight: 600;
   margin: 2px 0;
   line-height: 1.4;
@@ -88,7 +88,11 @@ body {
 }
 
 .blocktitle2 {
-  font-size: 1em; /* Adjust to make it look nice alongside the title */
+  font-size: 1.2vw; /* Adjust to make it look nice alongside the title */
+}
+
+.blocktitle3 {
+  font-size:1vw; 
 }
 
 /* Optional: Controls styling for a better layout */
