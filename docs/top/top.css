@@ -309,39 +309,13 @@ body {
 @media (max-width: 890px) {
   .player-container {
     width: 94%; /* Slightly larger width for smaller screens */
-    display: grid;
   }
-  .album-cover {
-  width: 130px;
-  height: 130px;
-}
-.controls button {
-  font-size: 1.2vw; /* Doubles the size of the button */
-  padding: 12px 14px; /* Increase padding for bigger buttons */
-}
-
-  .tip-container {
- width: 140px;
-}
 }
 
 @media (max-width: 768px) {
   .player-container {
     width: 96%; /* Slightly larger width for smaller screens */
-    display: grid;
   }
-  .album-cover {
-  width: 130px;
-  height: 130px;
-}
-.controls button {
-  font-size: 1.2vw; /* Doubles the size of the button */
-  padding: 12px 14px; /* Increase padding for bigger buttons */
-}
-
-  .tip-container {
- width: 140px;
-}
 }
 
 
