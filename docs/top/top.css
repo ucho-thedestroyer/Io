@@ -30,7 +30,7 @@ body {
 }
 /* parent */
 .player-content {
-  padding: 1em;
+  padding: 1.2rem;
   border-radius: 2px;
 }
 .player-content > div {
@@ -135,6 +135,7 @@ body {
 .tip-container {
   width: 340px;
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
+  font-size: 1.2vw;
 }
 
 .tip-container a {
@@ -143,7 +144,6 @@ body {
 }
 .tip-container .note {
   text-align: end;
-  font-size: 1.2vw;
   
 }
 
