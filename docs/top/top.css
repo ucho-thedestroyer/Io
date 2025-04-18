@@ -24,20 +24,31 @@ body {
   margin: 0 auto; /* Center the container */
   padding: 10px;
   box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
+
 /* albumn */
 
 
 .albumcover0 {
-  width: 162px;
-  height: 162px;
+  width: 262px;
+  height: 262px;
   display: inline-block;
   margin: 2px;
+
+  flex: 1;
+  min-width: 250px; /* Boxes will stack if screen is narrower than this */
+  text-align: center;
+
 }
 
 .albumcover0 img{
-  width: 160px;
-  height: 160px;
+  width: 260px;
+  height: 260px;
   border-radius: 8px;
   margin: auto;
 }
@@ -54,6 +65,12 @@ body {
   background-image: url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
   background-repeat: no-repeat;
+
+  flex: 1;
+  min-width: 250px; /* Boxes will stack if screen is narrower than this */
+  text-align: center;
+
+  
 }
 
 .playin {
@@ -119,6 +136,11 @@ body {
 .tip-container {
   width: 98%;
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
+
+    flex: 1;
+  min-width: 250px; /* Boxes will stack if screen is narrower than this */
+  text-align: center;
+
 }
 
 
