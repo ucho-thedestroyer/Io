@@ -6,8 +6,6 @@
     <!-- Font Awesome (for icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Swiper Stylesheet (for the carousel/slider) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   
     <link rel="stylesheet" type="text/css" href="top.css" />
     <meta name="description" content="make some noise, you'll die soon" />
@@ -23,13 +21,15 @@
  <tr bgcolor="#ffffff"><td height="1"></td></tr>
  <tr>
    <td bgcolor="#eeeeee" align="left">
-     <table border="0" width="98%" align="center" cellpadding="0" cellspacing="0">
-       <tr>
-         <td class="albumcover0">
-           <img id="albumCover" src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg" alt="Album Cover" class="album-cover">
-         </td>
-         <td>
-           <div class="music-player">
+
+       <!-- parent -->
+  <div class="player-content">
+    <!-- one -->
+    <div class="albumcover0">
+      <img id="albumCover" src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg" alt="Album Cover" class="album-cover">
+    </div>
+    <!-- two -->
+    <div class="music-player">
              <div class="playin">
                <h1 class="blocktitle" id="song-title">Song Title Goes Here</h1>
              </div>
@@ -49,16 +49,17 @@
                  <i id="controlIcon" class="fa fa-angles-right"></i>
                </button>
              </div>
-           </div>
-         </td>
-         <td class="tip-container" valign="middle" align="right">
+    </div>
+    <!-- three -->
+    <div class="tip-container">
            <a style="font-size:20px;color:red" href="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/epilogue%20I.m4a">
              <b>Tip 4 this track!</b></a><br>
            <b>And download its high quality FLAC.</b><br>
            Your $upport helps me keep going.
          </td>
-       </tr>
-     </table>
+      
+    </div> 
+     <!-- end of td -->
   </td>
  </tr>
 </table>
