@@ -20,24 +20,36 @@ body {
 
 .player-container {
   width: 80%;
+  display: flex;
+  flex-wrap: wrap;
   max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   margin: 0 auto; /* Center the container */
   padding: 10px;
   box-sizing: border-box;
 }
+/* parent */
+.player-content {
+  padding: 1em;
+  border-radius: 2px;
+}
+.player-content > div {
+  flex: 1 1 350px;
+}
+
+
 /* albumn */
 
 
 .albumcover0 {
-  width: 162px;
-  height: 162px;
+  width: 240px;
+  height: auto;
   display: inline-block;
   margin: 2px;
 }
 
 .albumcover0 img{
   width: 160px;
-  height: 160px;
+  height: 230px;
   border-radius: 8px;
   margin: auto;
 }
@@ -48,10 +60,8 @@ body {
   display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 14px; /* Reserve space */
-  width: 98%;
-  max-width: 380px;
-  background: rgb(52,52,52,0.6);
-  background-image: url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
+  width: 340px;
+  background:linear-gradient(0deg, rgba(52,52,52, 0.3), rgba(52,52,52,0.3)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -117,7 +127,7 @@ body {
 }
 
 .tip-container {
-  width: 98%;
+  width: 340px;
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
 }
 
