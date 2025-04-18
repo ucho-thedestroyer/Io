@@ -49,8 +49,8 @@ body {
 }
 
 .albumcover0 img{
-  width: 160px;
-  height: 230px;
+  width: 100%;
+  height: auto;
   border-radius: 8px;
   margin: auto;
 }
