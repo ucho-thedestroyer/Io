@@ -17,7 +17,6 @@ body {
   
 }
 
-
 .player-container {
   width: 80%;
   display: flex;
@@ -26,6 +25,8 @@ body {
   margin: 0 auto; /* Center the container */
   padding: 10px;
   box-sizing: border-box;
+    align-items: center;
+  justify-content: center;
 }
 /* parent */
 .player-content {
