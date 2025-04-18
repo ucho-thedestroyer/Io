@@ -49,10 +49,11 @@ body {
 }
 
 .albumcover0 img{
-  width: 73%;
+  width: 330%;
   height: auto;
   border-radius: 8px;
   margin: auto;
+  overflow: hidden;
 }
 
 /* Song title styling */
