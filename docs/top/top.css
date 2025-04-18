@@ -26,9 +26,28 @@ body {
   box-sizing: border-box;
 
   display: flex;
-  
   flex-wrap: wrap;
 }
+/* Divider lines */
+.divider-top {
+  height: 1px;
+  background-color: #a6a6a6;
+}
+
+.divider-bottom {
+  height: 1px;
+  background-color: #ffffff;
+}
+
+/* Main row background */
+.player-content {
+  background-color: #eeeeee;
+  padding: 0.5rem 1%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 /* albumn */
 
@@ -55,7 +74,7 @@ body {
 /* Song title styling */
 
 .music-player {
-  display: block;
+  display: flex;
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 14px; /* Reserve space */
   width: 98%;
@@ -68,6 +87,8 @@ body {
   flex: 1;
   min-width: 250px; /* Boxes will stack if screen is narrower than this */
   text-align: center;
+  justify-content: center;
+  align-items: center;
 
   
 }
@@ -137,9 +158,13 @@ body {
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
 
   
+  font-size: 1vw;
+  color: red;
+  text-align: right;
+  text-decoration: none;
     flex: 1;
   min-width: 250px; /* Boxes will stack if screen is narrower than this */
-  text-align: center;
+  
 
 }
 
