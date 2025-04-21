@@ -77,7 +77,6 @@ body {
 .playin {
   display: inline-block;
   overflow: hidden;
-  max-width: 200px;
   box-sizing: border-box;
 }
 
@@ -136,7 +135,7 @@ body {
 /* Optional: Set width and padding for the audio progress range slider */
 #progress {
   width: 73%;
-  margin: 8px 0;
+  margin: 6px 0;
 }
 
 .tip-container {
