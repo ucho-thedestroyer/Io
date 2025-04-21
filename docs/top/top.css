@@ -19,22 +19,24 @@ body {
 
 .player-container {
   width: 80%;
-  display: grid;
-  
   max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   margin: 0 auto; /* Center the container */
   padding: 10px;
   box-sizing: border-box;
-    align-items: center;
+  align-items: center;
   justify-content: center;
 }
 /* parent */
 .player-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  grid-auto-rows: minmax(100px, auto);
+  max-width: 1100px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   padding: 1.2rem;
-  border-radius: 2px
 }
 .player-content > div {
-  flex: 2 1 550px;
+  border-radius: 2px
 }
 
 
@@ -62,7 +64,7 @@ body {
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 14px; /* Reserve space */
   width: 340px;
-  background:linear-gradient(0deg, rgba(52,52,52, 0.3), rgba(52,52,52,0.3)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
+  background:linear-gradient(0deg, rgba(52,52,52, 0.6), rgba(52,52,52,0.6)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
   background-repeat: no-repeat;
 }
