@@ -30,7 +30,7 @@ body {
 .player-content {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  gap: 8px;
   grid-auto-rows: minmax(250px, auto);
   max-width: 1100px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   padding: 1.2rem;
@@ -65,7 +65,7 @@ body {
 .music-player {
   display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
-  /* padding: 10px 14px;  Reserve space */
+  padding: 4px 8px;  /* Reserve space */
   grid-column: 2 / 4;
   grid-row: 1;
   height: 220px;
@@ -81,35 +81,35 @@ body {
 }
 
 .music-player .playin h1.blocktitle {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 600;
   margin: 2px 0;
   line-height: 1.4;
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 160px;   /* responsive */
+  max-width: 170px;   /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
   
 }
 
 .blocktitle2 {
-  font-size: 1.2rem; /* Adjust to make it look nice alongside the title */
+  font-size: 1.3rem; /* Adjust to make it look nice alongside the title */
 }
 
 .blocktitle3 {
   font-size:1.1rem; 
-  padding:2px;
+  padding:3px;
 }
 
 /* Optional: Controls styling for a better layout */
 
 .controls button {
-  font-size: 1.3vw; /* Doubles the size of the button */
+  font-size: 1.5vw; /* Doubles the size of the button */
   margin: 2px 6px;
-  padding: 14px 16px; /* Increase padding for bigger buttons */
-  border-radius: 70%;
+  padding: 18px 16px; /* Increase padding for bigger buttons */
+  border-radius: 60%;
   background-color: #f8f8ff;
   border: none;
   text-align: center;
