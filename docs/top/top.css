@@ -29,9 +29,9 @@ body {
 /* parent */
 .player-content {
   display: grid;
-  grid-template-columns: 1fr 1fr 20px 20%;
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
-  grid-auto-rows: 390px 340px;
+  grid-auto-rows: minmax(300px, auto);
   max-width: 1100px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   padding: 1.2rem;
 }
@@ -67,7 +67,7 @@ body {
   word-break: break-all; /* Prevents words from breaking awkwardly */
   padding: 10px 14px; /* Reserve space */
   grid-column: 2 / 4;
-  grid-row: 1;
+  grid-row: 1 / 2;
   height: 320px;
   background:linear-gradient(0deg, rgba(52,52,52, 0.6), rgba(52,52,52,0.6)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
