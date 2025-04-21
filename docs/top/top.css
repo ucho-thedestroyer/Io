@@ -19,8 +19,8 @@ body {
 
 .player-container {
   width: 80%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  
   max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   margin: 0 auto; /* Center the container */
   padding: 10px;
@@ -34,7 +34,7 @@ body {
   border-radius: 2px
 }
 .player-content > div {
-  flex: 1 1 550px;
+  flex: 2 1 550px;
 }
 
 
