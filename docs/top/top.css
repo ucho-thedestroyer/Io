@@ -68,7 +68,7 @@ body {
   padding: 0 8px;  /* Reserve space */
   grid-column: 2 / 4;
   grid-row: 1;
-  height: 212px;
+  height: 220px;
   background:linear-gradient(0deg, rgba(238,238,238, 0.4), rgba(238,238,238,0.6)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
   background-repeat: no-repeat;
