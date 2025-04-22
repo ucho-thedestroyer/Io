@@ -68,7 +68,7 @@ body {
   padding: 4px 8px;  /* Reserve space */
   grid-column: 2 / 4;
   grid-row: 1;
-  height: 214px;
+  height: 213px;
   background:linear-gradient(0deg, rgba(166,166,166, 0.3), rgba(166,166,166,0.3)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -81,7 +81,7 @@ body {
 }
 
 .music-player .playin h1.blocktitle {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 600;
   margin: 2px 0;
   line-height: 1.4;
