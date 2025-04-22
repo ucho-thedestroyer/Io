@@ -88,7 +88,7 @@ body {
   white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 170px;   /* responsive */
+  max-width: 183px;   /* responsive */
   text-align: start;
   padding-right: 4px; /* Add some space on the right to prevent cutting off */
   
