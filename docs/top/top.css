@@ -31,7 +31,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  grid-auto-rows: minmax(230px, auto);
+  grid-auto-rows: minmax(224px, auto);
   max-width: 1100px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   padding: 1.2rem;
 }
@@ -106,7 +106,7 @@ body {
 /* Optional: Controls styling for a better layout */
 
 .controls button {
-  font-size: 1.9rem; /* Doubles the size of the button */
+  font-size: 18px; /* Doubles the size of the button */
   margin: 2px;
   width: 64px;
   padding: 14px 10px; /* Increase padding for bigger buttons */
