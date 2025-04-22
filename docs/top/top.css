@@ -50,7 +50,7 @@ body {
 /*  width: 340px;
   height: auto;
   display: inline-block; */
-  margin: 2px;
+  margin: auto;
 }
 
 .albumcover0 img{
@@ -65,7 +65,7 @@ body {
 .music-player {
   display: block;
   word-break: break-all; /* Prevents words from breaking awkwardly */
-  padding: 4px 8px;  /* Reserve space */
+  padding: 0 8px;  /* Reserve space */
   grid-column: 2 / 4;
   grid-row: 1;
   height: 213px;
