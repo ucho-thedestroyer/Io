@@ -50,7 +50,7 @@ body {
 /*  width: 340px;
   height: auto;
   display: inline-block; */
-  margin: 2px;
+  margin: 1px;
 }
 
 .albumcover0 img{
@@ -108,7 +108,7 @@ body {
 .controls button {
   font-size: 1.8rem; /* Doubles the size of the button */
   margin: 2px 6px;
-  width: 24px;
+  width: 48px;
   padding: 14px 16px; /* Increase padding for bigger buttons */
   border-radius: 30%;
   background-color: #f8f8ff;
