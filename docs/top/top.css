@@ -68,7 +68,7 @@ body {
   padding: 4px 8px;  /* Reserve space */
   grid-column: 2 / 4;
   grid-row: 1;
-  height: 216px;
+  height: 214px;
   background:linear-gradient(0deg, rgba(166,166,166, 0.3), rgba(166,166,166,0.3)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -106,10 +106,10 @@ body {
 /* Optional: Controls styling for a better layout */
 
 .controls button {
-  font-size: 1.rem; /* Doubles the size of the button */
+  font-size: 1.5rem; /* Doubles the size of the button */
   margin: 2px 6px;
   padding: 16px 20px; /* Increase padding for bigger buttons */
-  border-radius: 60%;
+  border-radius: 30%;
   background-color: #f8f8ff;
   border: none;
   text-align: center;
