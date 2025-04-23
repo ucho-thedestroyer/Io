@@ -131,6 +131,7 @@ body {
 
 .play-pause-btn:hover {
   background-color: #cc0000; /* Darker red on hover */
+  color: #333333;
 }
 
 /* Optional: Set width and padding for the audio progress range slider */
@@ -144,7 +145,7 @@ body {
   grid-column: 4 / 4;
   grid-row: 1;
   padding-left: 10px; /* Add some padding to prevent the element from shifting */
-  font-size: 1.2vw;
+  font-size: 1.6rem;
 }
 
 .tip-container a {
