@@ -106,7 +106,7 @@ body {
 /* Optional: Controls styling for a better layout */
 
 .controls button {
-  font-size: 24px; /* Doubles the size of the button */
+  font-size: 2px; /* Doubles the size of the button */
   margin: 2px;
   width: 64px;
   padding: 14px 10px; /* Increase padding for bigger buttons */
