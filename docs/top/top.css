@@ -139,7 +139,10 @@ body {
   width: 73%;
   margin: 6px 0;
   background-color: rgba(54, 54, 54, 0.8);
-  accent-color: #FFEC60;
+}
+#progress .accent {
+    accent-color: #FFEC60;
+    color: #FFEC60;
 }
 
   
