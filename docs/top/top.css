@@ -81,6 +81,7 @@ body {
 }
 
 .music-player .playin h1.blocktitle {
+  padding-top: 10px;
   font-size: 1.8rem;
   font-weight: 600;
   margin: 2px 0;
