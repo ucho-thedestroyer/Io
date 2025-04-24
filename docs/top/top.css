@@ -139,9 +139,13 @@ body {
   width: 73%;
   margin: 6px 0;
   background-color: rgba(54, 54, 54, 0.8);
-  color: #FFEC60;
+  accent-color: #FFEC60;
 }
-
+input[type="range"]::-webkit-slider-runnable-track {
+            background: green;
+  
+}
+  
 .tip-container {
   grid-column: 4 / 4;
   grid-row: 1;
