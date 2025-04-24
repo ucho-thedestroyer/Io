@@ -148,7 +148,13 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
    background-color: #FFEC60;
 }
-
+input[type="range"]::-moz-range-progress {
+  background-color: #333333; 
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #333333; 
+}
   
 .tip-container {
   grid-column: 4 / 4;
