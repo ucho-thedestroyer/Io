@@ -141,8 +141,7 @@ body {
   background-color: rgba(54, 54, 54, 0.8);
   accent-color: #FFEC60;
 }
-input[type="range"]::-webkit-slider-runnable-track {
-            background: green;
+
   
 }
   
