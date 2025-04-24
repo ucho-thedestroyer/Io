@@ -149,12 +149,12 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
    background-color: #FFEC60;
 }
-input[type="range"]::-moz-range-progress {
-  background-color: #333333; 
+input[type=range]::-ms-fill-lower {
+  background: #333333;
+
 }
-/* IE*/
-input[type="range"]::-ms-fill-lower {
-  background-color: #333333; 
+input[type=range]:focus::-ms-fill-lower {
+  background: #333333;
 }
   
 .tip-container {
@@ -167,6 +167,7 @@ input[type="range"]::-ms-fill-lower {
 .tip-container a {
   color: red;
   font-weight: 800;
+  font-size: 1.8rem;
 }
 .tip-container .note {
   text-align: end;
