@@ -140,13 +140,15 @@ body {
   margin: 6px 0;
   background-color: rgba(54, 54, 54, 0.8);
 }
-#progress .accent {
-    accent-color: #FFEC60;
-    color: #FFEC60;
+
+input[type="range"]::-webkit-slider-thumb {
+   /*custom styles*/
+   background-color: #FFEC60;
+}
+input[type="range"]::-moz-range-thumb {
+   background-color: #FFEC60;
 }
 
-  
-}
   
 .tip-container {
   grid-column: 4 / 4;
