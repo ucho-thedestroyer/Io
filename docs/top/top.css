@@ -176,28 +176,23 @@ input[type=range]::-moz-range-track {
 }
 
 input[type=range]::-ms-track {
-
   background: transparent;
   border-color: transparent;
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
   background: #333;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
 input[type=range]:focus::-ms-fill-lower {
   background: #333;
 }
 input[type=range]::-ms-fill-upper {
-  background: #3071a9;
+  background: #999;
   border: 0.2px solid #010101;
-  border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
 input[type=range]:focus::-ms-fill-upper {
-  background: #367ebd;
+  background: #999;
 }
   
 .tip-container {
