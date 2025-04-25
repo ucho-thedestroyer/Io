@@ -161,6 +161,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
    background-color: #FFEC60;
 }
+/* 
 input[type=range]::-webkit-slider-runnable-track {
   cursor: pointer;
   background: rgba(54, 54, 54, 0.3);
@@ -169,7 +170,7 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]:focus::-webkit-slider-runnable-track {
   background:rgba(54, 54, 54, 0.3);
 }
-
+*/
 input[type=range]::-moz-range-track {
   
   background: #333;
@@ -181,10 +182,10 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #333;
+  background: rgba(54, 54, 54, 0.3);
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #333;
+  background: rgba(54, 54, 54, 0.3);
 }
 input[type=range]::-ms-fill-upper {
   background: #999;
@@ -207,7 +208,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .tip-container .note {
   text-align: end;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 
