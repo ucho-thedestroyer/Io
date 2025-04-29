@@ -375,7 +375,14 @@ input[type=range]:focus::-ms-fill-upper {
     width: 94%; /* Slightly larger width for smaller screens */
   }
 
+  .topbar {
+    max-width: 800px;
+  }
 
+  .bottombar {
+     max-width: 800px;
+  }
+  
 .albumcover0 {
   grid-column: 1 / 2;
   grid-row: 1;
