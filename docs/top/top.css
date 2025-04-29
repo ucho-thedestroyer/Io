@@ -374,6 +374,37 @@ input[type=range]:focus::-ms-fill-upper {
   .player-container {
     width: 94%; /* Slightly larger width for smaller screens */
   }
+
+
+.albumcover0 {
+  grid-column: 1 / 2;
+  grid-row: 1;
+  
+/*  width: 340px;
+  height: auto;
+  display: inline-block; */
+  margin: 0;
+}
+
+/* Song title styling */
+
+.music-player {
+  grid-column: 2 / 4;
+  grid-row: 1;
+}
+
+.playin {
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.tip-container {
+  grid-column: 4 / 4;
+  grid-row: 2;
+  
+}
+
 }
 
 @media (max-width: 768px) {
