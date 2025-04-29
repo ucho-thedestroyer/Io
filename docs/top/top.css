@@ -412,6 +412,14 @@ input[type=range]:focus::-ms-fill-upper {
   
 }
 
+  .core {
+  width: 94%;
+  max-width: 1180px;
+  margin: auto;
+}
+
+  
+
 }
 
 @media (max-width: 768px) {
