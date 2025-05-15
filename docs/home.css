@@ -54,12 +54,13 @@ h4 {
   }
 
 @media screen and (max-width: 600px) {
-
+/*---
 	.container {
 	
 		width: 500px;
 		height: 450px;
 	}
+	------*/
 	main {
 
 		height: 100%;
