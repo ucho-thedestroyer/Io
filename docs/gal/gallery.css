@@ -91,7 +91,7 @@ img {
 }
 
 .series, img {
-	width: 26vh;
+	width: 400px;
 	height: auto;
 }
 
@@ -146,6 +146,8 @@ a {
   
   /* scene wrapper */
   .wrapper{
+	  width:100%;
+	  max-width:400px;
 	height: 400px;
 	margin-top:10px;
 	position:relative;
