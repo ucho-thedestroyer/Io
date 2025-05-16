@@ -180,26 +180,26 @@ a {
 	transition: all 1s linear;
   }
   b.back{
-	transform: translateZ(-100px) rotateY(180deg);
+	transform: translateZ(-200px) rotateY(180deg);
   }
   b.right{
-	transform:rotateY(-270deg) translateX(100px);
+	transform:rotateY(-270deg) translateX(200px);
 	transform-origin: top right;
   }
   b.left{
-	transform:rotateY(270deg) translateX(-100px);
+	transform:rotateY(270deg) translateX(-200px);
 	transform-origin: center left;
   }
   b.top{
-	transform:rotateX(-90deg) translateY(-100px);
+	transform:rotateX(-90deg) translateY(-200px);
 	transform-origin: top center;
   }
   b.bottom{
-	transform:rotateX(90deg) translateY(100px);
+	transform:rotateX(90deg) translateY(200px);
 	transform-origin: bottom center;
   }
   b.front{
-	transform: translateZ(100px);
+	transform: translateZ(200px);
   }
   
   /* inner cube */
@@ -214,25 +214,25 @@ a {
 	transition: all 1s linear;
   }
   i.front{
-	transform: translateZ(50px);
+	transform: translateZ(100px);
   }
   i.back{
-	transform: translateZ(-50px) rotateY(180deg);
+	transform: translateZ(-100px) rotateY(180deg);
   }
   i.bottom{
-	transform:rotateX(-90deg) translateY(50px);
+	transform:rotateX(-90deg) translateY(100px);
 	transform-origin: left bottom;
   }
   i.left{
-	transform:rotateY(270deg) translateX(-50px);
+	transform:rotateY(270deg) translateX(-100px);
 	transform-origin: center left;
   }
   i.right{
-	transform:rotateY(-270deg) translateX(50px);
+	transform:rotateY(-270deg) translateX(100px);
 	transform-origin: top right;
   }
   i.top{
-	transform:rotateX(-270deg) translateY(-50px);
+	transform:rotateX(-270deg) translateY(-100px);
 	transform-origin: left top;
   }
   
