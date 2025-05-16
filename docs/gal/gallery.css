@@ -10,7 +10,7 @@ body {
 	background: url("backconclusioness.jpeg");
 	overflow: auto;
 }
-
+/*
 .container {
 	background: #222;
 	position: relative;
@@ -54,7 +54,7 @@ body {
 	left: 50%;
 	transform: translate(-50%, 0);
 }
-
+*/
 main {
 	padding: 10px 0;
 	background: #222;
@@ -86,7 +86,7 @@ h4 {
 }
 
 img {
-	width: 80%;
+	width: 400px;
 	height: auto;
 }
 
@@ -113,7 +113,7 @@ td {
 a {
 	color: hotpink;
 }
-
+/*
 #drag-handle {
 	position: absolute;
 	top: 0;
@@ -137,7 +137,8 @@ a {
 	cursor: nw-resize !important;
 }
 
-  
+*/
+
   /* keyframes for rotating animation */
   @-webkit-keyframes spin {
 	from { transform: rotateY(0); }
