@@ -91,7 +91,7 @@ img {
 }
 
 .series, img {
-	width: 600px;
+	width: 573px;
 	height: auto;
 }
 
@@ -149,7 +149,7 @@ a {
 	width: 73%;
 	  Max-width: 573px;
 	height: auto;
-	margin-top:10px;
+	margin: 0 auto;
 	position:relative;
 	perspective: 800;
 	perspective-origin: 50% 100px;
@@ -160,8 +160,7 @@ a {
 	position: relative;
 	margin: 0 auto;
 	width: 573px;
-	  max-width: 100%;
-	height: auto;
+	height: 573px;
 	transform-style: preserve-3d;
 	animation: spin 13s infinite linear;
 	transition: all 1s linear;
