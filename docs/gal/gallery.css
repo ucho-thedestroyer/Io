@@ -147,8 +147,8 @@ a {
   /* scene wrapper */
   .wrapper{
 
-	width: auto;
-	height: 20vw;
+	width: 73%;
+	height: auto;
 	margin-top:10px;
 	position:relative;
 	perspective: 800;
@@ -159,9 +159,8 @@ a {
   .cube{
 	position: relative;
 	margin: 0 auto;
-
-	width: auto;
-	height: 20vw;
+	width: 90%;
+	height: auto;
 	transform-style: preserve-3d;
 	animation: spin 13s infinite linear;
 	transition: all 1s linear;
