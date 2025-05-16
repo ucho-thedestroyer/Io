@@ -159,7 +159,7 @@ a {
   .cube{
 	position: relative;
 	margin: 0 auto;
-	width: 98%;
+	width: 500px;
 	height: auto;
 	transform-style: preserve-3d;
 	animation: spin 13s infinite linear;
@@ -169,8 +169,8 @@ a {
   /* outer cube */
   b{
 	position:absolute;
-	width:200px;
-	height:200px;
+	width:600px;
+	height:600px;
 	display:block;
 	background:rgba(255,255,255,0.1);
 	box-shadow:inset 0 0 30px rgba(0,0,0,0.2);
