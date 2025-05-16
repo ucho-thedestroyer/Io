@@ -170,7 +170,6 @@ a {
   /* outer cube */
   b{
 	position:absolute;
-	  max-with:100%;
 	width:573px;
 	height:573px;
 	display:block;
@@ -212,8 +211,8 @@ a {
 	position:absolute;
 	top:50px;
 	left:50px;
-	width:100px;
-	height:100px;
+	width:573px;
+	height:573px;
 	display:block;
 
 	transition: all 1s linear;
