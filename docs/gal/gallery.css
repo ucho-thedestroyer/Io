@@ -160,8 +160,8 @@ a {
 	margin: 0 auto;
 	width: 400px;
 	transform-style: preserve-3d;
-	animation: spin 23s infinite linear;
-	transition: all 2s linear;
+	animation: spin 13s infinite linear;
+	transition: all 1s linear;
   }
   
   /* outer cube */
@@ -178,7 +178,7 @@ a {
 	color:rgba(0,0,0,0.5);
 	font-family:sans-serif;
 	text-transform:uppercase;
-	transition: all 2s linear;
+	transition: all 1s linear;
   }
   b.back{
 	transform: translateZ(-200px) rotateY(180deg);
@@ -212,7 +212,7 @@ a {
 	height:200px;
 	display:block;
 
-	transition: all 2s linear;
+	transition: all 1s linear;
   }
   i.front{
 	transform: translateZ(100px);
