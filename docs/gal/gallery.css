@@ -160,7 +160,7 @@ a {
 	margin: 0 auto;
 	width: 400px;
 	transform-style: preserve-3d;
-	animation: spin 13s infinite linear;
+	animation: spin 33s infinite linear;
 	transition: all 1s linear;
   }
   
