@@ -32,6 +32,7 @@ font-family: "Josefin sans", sans-serif;
 	justify-items: center;
 	margin: 20% auto;
 	box-shadow: 0 16px 37px rgba(143, 143, 143, 0.6);
+	z-index: 1;
   }
   /*
   .photo-frame > iframe {
@@ -53,7 +54,7 @@ overlay-video {
   transform: translate(-50%, -50%);
   width: 560px;
   height: 315px;
-  z-index: 1;
+  z-index: 9;
 }
 
   .photo-frame button {
