@@ -33,8 +33,19 @@ font-family: "Josefin sans", sans-serif;
 	margin: 20% auto;
 	box-shadow: 0 16px 37px rgba(143, 143, 143, 0.6);
   }
-  
+  /*
   .photo-frame > iframe {
+	position: absolute;
+	top: 51.54%;
+    left: 40.39%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+	width: 560px;
+	height: 315px;
+	  
+  }
+*/
+  .photo-frame > video {
 	position: absolute;
 	top: 51.54%;
     left: 40.39%;
