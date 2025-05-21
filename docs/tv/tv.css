@@ -45,7 +45,7 @@ font-family: "Josefin sans", sans-serif;
 	  
   }
 */
-  .photo-frame > video {
+  .photo-frame video {
 	position: absolute;
 	top: 51.54%;
     left: 40.39%;
