@@ -57,7 +57,7 @@ font-family: "Josefin sans", sans-serif;
   z-index: 9;
 }
 
-  .photo-frame button {
+  .b button {
 	position: absolute;
 	cursor: pointer;
 	bottom: 1.54%;
@@ -70,12 +70,22 @@ font-family: "Josefin sans", sans-serif;
 
 }
 
-button:hover {
+.b button:hover {
 	background-color: rgb(255, 255, 7);
 	border: 0px;
 	
 }
-	  
+
+#muteToggleBtn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
   
 
   
