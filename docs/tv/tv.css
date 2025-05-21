@@ -45,16 +45,17 @@ font-family: "Josefin sans", sans-serif;
 	  
   }
 */
-  .photo-frame video {
-	position: absolute;
-	top: 51.54%;
-    left: 40.39%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-	width: 560px;
-	height: 315px;
-	  
-  }
+
+.photo-frame video {
+  position: absolute;
+  top: 51.54%;
+  left: 40.39%;
+  transform: translate(-50%, -50%);
+  width: 560px;
+  height: 315px;
+  z-index: 1;
+}
+
   .photo-frame button {
 	position: absolute;
 	cursor: pointer;
