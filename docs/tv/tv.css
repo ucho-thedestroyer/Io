@@ -47,7 +47,7 @@ font-family: "Josefin sans", sans-serif;
   }
 */
 
-overlay-video {
+.overlay-video {
   position: absolute;
   top: 51.54%;
   left: 40.39%;
