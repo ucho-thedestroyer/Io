@@ -58,16 +58,16 @@ font-family: "Josefin sans", sans-serif;
 }
 */
 .crt-tv {
-  width: 611px;
-  height: 418px;
-  border-radius: 40px;
+  width: 608px;
+  height: 422px;
+  border-radius: 60px;
   overflow: hidden;
   border: 12px solid #222;
   background: #111;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
 
 position: absolute;
-  top: 49.54%;
+  top: 49.94%;
   left: 40.39%;
   transform: translate(-50%, -50%);
   
@@ -75,7 +75,7 @@ position: absolute;
 }
 
 /* Video fills container */
-.crt-tv.overlay-video {
+.crt-tv .overlay-video {
   width: 100%;
   height: 100%;
   object-fit: contain;
