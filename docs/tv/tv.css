@@ -122,12 +122,12 @@ position: absolute;
 	  background-color: rgb(255, 255, 255, 0.1);
 	cursor: pointer;
 	bottom: 2.94%;
-    right: 4.39%;
+    right: 2.39%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 	font-size: 0.6em;
 	border: 1px;
-	padding: 2px auto 10px;
+	padding: 12px auto 0;
 
 }
 
