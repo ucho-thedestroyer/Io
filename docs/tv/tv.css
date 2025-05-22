@@ -1,4 +1,4 @@
-html,
+  html,
 body {
 	margin: 0;
 	width: 100%;
@@ -62,12 +62,12 @@ font-family: "Josefin sans", sans-serif;
 	  background-color: rgb(255, 255, 255, 0.1);
 	cursor: pointer;
 	bottom: 1.94%;
-    right: 8.39%;
+    right: 6.39%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 	font-size: 0.6em;
 	border: 1px;
-	padding: 8px auto 2px;
+	padding: 2px auto 10px;
 
 }
 
