@@ -76,7 +76,7 @@ position: absolute;
 }
 
 /* Video fills container */
-.crt-tv overlay-video {
+.crt-tv.overlay-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
