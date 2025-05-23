@@ -12,7 +12,7 @@ button.addEventListener('click', () => {
 
 // Volume control
 slider.addEventListener('input', () => {
-  video.volume = slider.value;
+  video.volume = slider.value / 100;
 });
 
 function updateFilters() {
