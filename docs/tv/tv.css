@@ -59,7 +59,7 @@ font-family: "Josefin sans", sans-serif;
 */
 .crt-tv {
   width: 588px;
-  height: 479px;
+  height: 476px;
   border-radius: 81px;
   overflow: hidden;
   border: 12px solid #222;
@@ -78,7 +78,7 @@ position: absolute;
 .crt-tv .overlay-video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
@@ -122,14 +122,14 @@ position: absolute;
 	  color: #FFEC60;
 	  background-color: rgb(255, 255, 255, 0.1);
 	cursor: pointer;
-	bottom: 7.64%;
+	bottom: 6.64%;
     right: 0.88%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 	font-size: 0.6em;
 	  font-weight: bold;
 	border: 1px;
-	padding-bottom: 12px;
+	padding-bottom: 13px;
 	  display: flex;
 	flex-direction: column;
 	justify-content: flex-start; /* align text to the top */
