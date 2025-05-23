@@ -159,25 +159,27 @@ position: absolute;
 }
 
 #muteToggleBtn {
-    	position: absolute;
-	  color: #FFEC60;
-	  background-color: rgb(255, 255, 255, 0.1);
-	cursor: pointer;
-	bottom: 24.24%;
-    right: 0.88%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-	font-size: 0.6em;
-	  font-weight: bold;
-	border: 1px;
-	padding-bottom: 13px;
-	  display: flex;
-	flex-direction: column;
-	justify-content: flex-start; /* align text to the top */
-	align-items: center;
+  position: absolute;
+  bottom: 24.24%;
+  right: 0.88%;
+  transform: translate(50%, 50%); /* Corrected to match expected direction */
+  
+  color: #FFEC60;
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-size: 0.6em;
+  font-weight: bold;
+  padding: 6px 10px; /* Adjust padding for readability */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 
-    z-index: 10;
-  }
+  z-index: 10;
+
+
+}
 
 
 #controlsWrapper {
