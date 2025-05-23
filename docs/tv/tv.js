@@ -12,8 +12,11 @@ button.addEventListener('click', () => {
 
 // Volume control
 slider.addEventListener('input', () => {
+  video.muted = false;
   video.volume = slider.value / 100;
+  button.textContent = 'Mute';
 });
+
 
 function updateFilters() {
   const val1 = parseInt(effectSlider1.value);
