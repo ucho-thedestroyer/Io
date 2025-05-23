@@ -132,6 +132,10 @@ position: absolute;
   z-index: 3;
 }
 
+.b {
+  position: relative;
+}
+
   .b button {
 	position: absolute;
 	  color: #FFEC60;
@@ -161,7 +165,10 @@ position: absolute;
 .b #muteToggleBtn {
   bottom: 24.24%;
   right: 0.88%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
+
 
 #controlsWrapper {
   position: absolute;
