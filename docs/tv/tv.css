@@ -75,6 +75,8 @@ position: absolute;
 }
 
 #myVideo {
+	width: 100%;
+	Height: auto;
   transition: filter 0.3s ease;
 }
 /* Video fills container */
@@ -173,7 +175,7 @@ position: absolute;
 }
 
 #controlsWrapper input[type="range"] {
-  width: 200px;
+  width: 180px;
 }
 
 
