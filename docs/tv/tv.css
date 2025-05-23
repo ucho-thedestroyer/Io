@@ -137,7 +137,7 @@ position: absolute;
 	  color: #FFEC60;
 	  background-color: rgb(255, 255, 255, 0.1);
 	cursor: pointer;
-	bottom: 5.24%;
+	bottom: 4.24%;
     right: 0.88%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
@@ -185,7 +185,7 @@ position: absolute;
 }
 
 #controlsWrapper input[type="range"] {
-  width: 180px;
+  width: 131px;
 }
 
 
