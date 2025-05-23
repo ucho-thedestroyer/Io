@@ -158,28 +158,9 @@ position: absolute;
 	
 }
 
-.mute-wrapper {
-  position: absolute; /* Or absolute, depending on your layout */
+.b #muteToggleBtn {
   bottom: 24.24%;
   right: 0.88%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-}
-
-.mute-wrapper #muteToggleBtn {
-  color: #FFEC60;
-  background-color: rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  font-size: 0.6em;
-  font-weight: bold;
-  padding: 6px 10px;
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  border: none;
-  background-clip: padding-box;
 }
 
 #controlsWrapper {
