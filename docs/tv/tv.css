@@ -60,7 +60,7 @@ font-family: "Josefin sans", sans-serif;
 .crt-tv {
   width: 581px;
   height: 454px;
-  border-radius: 73px;
+  border-radius: 81px;
   overflow: hidden;
   border: 12px solid #222;
   background: #111;
@@ -123,7 +123,7 @@ position: absolute;
 	  background-color: rgb(255, 255, 255, 0.1);
 	cursor: pointer;
 	bottom: 7.64%;
-    right: 1.13%;
+    right: 1.03%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 	font-size: 0.6em;
