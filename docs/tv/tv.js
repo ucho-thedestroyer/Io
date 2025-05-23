@@ -4,6 +4,13 @@ const slider = document.getElementById('volumeSlider');
 const effectSlider1 = document.getElementById('effectSlider1');
 const effectSlider2 = document.getElementById('effectSlider2');
 
+// Start video muted
+video.muted = true;
+
+// Initialize volume and mute button text on page load
+video.volume = slider.value / 100;
+button.textContent = video.muted ? 'Unmute' : 'Mute';
+
 // Mute toggle button
 button.addEventListener('click', () => {
   video.muted = !video.muted;
@@ -16,7 +23,6 @@ slider.addEventListener('input', () => {
   video.volume = slider.value / 100;
   button.textContent = 'Mute';
 });
-
 
 function updateFilters() {
   const val1 = parseInt(effectSlider1.value);
@@ -39,7 +45,6 @@ function updateFilters() {
     contrast(${contrast})
   `;
 }
-
 
 effectSlider1.addEventListener('input', updateFilters);
 effectSlider2.addEventListener('input', updateFilters);
