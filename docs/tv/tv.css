@@ -158,29 +158,29 @@ position: absolute;
 	
 }
 
-.b #muteToggleBtn {
-  position: absolute;
+.mute-wrapper {
+  position: fixed; /* Or absolute, depending on your layout */
   bottom: 24.24%;
   right: 0.88%;
-  transform: translate(50%, 50%); /* Corrected to match expected direction */
-  
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.mute-wrapper #muteToggleBtn {
   color: #FFEC60;
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   font-size: 0.6em;
   font-weight: bold;
-  padding: 6px 10px; /* Adjust padding for readability */
+  padding: 6px 10px;
   
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
-  z-index: 10;
-
-
+  border: none;
+  background-clip: padding-box;
 }
-
 
 #controlsWrapper {
   position: absolute;
