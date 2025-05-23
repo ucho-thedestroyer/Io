@@ -142,7 +142,7 @@ position: absolute;
     right: 0.88%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-	font-size: 0.6em;
+	font-size: 0.8em;
 	  font-weight: bold;
 	border: 1px;
 	padding-bottom: 14px;
@@ -168,7 +168,7 @@ position: absolute;
     right: 3.88%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-	font-size: 0.6em;
+	font-size: 0.8em;
 	  font-weight: bold;
 	border: 1px;
 	padding: 14px;
@@ -181,10 +181,12 @@ position: absolute;
 
 #controlsWrapper {
   position: absolute;
-  top: 9.64%;
-    right: 0.88%;
+  top: 14.64%;
+    right: 1.88%;
   display: flex;
   flex-direction: column;
+	font-size: 0.8em;
+	  font-weight: bold;
   gap: 3px;
   background: rgba(255, 255, 255, 0.1);
   padding: 10px;
@@ -195,7 +197,7 @@ position: absolute;
 }
 
 #controlsWrapper input[type="range"] {
-  width: 131px;
+  width: 126px;
 }
 
 
