@@ -137,14 +137,14 @@ position: absolute;
 	  color: #FFEC60;
 	  background-color: rgb(255, 255, 255, 0.1);
 	cursor: pointer;
-	bottom: 4.24%;
+	bottom: 4.04%;
     right: 0.88%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 	font-size: 0.6em;
 	  font-weight: bold;
 	border: 1px;
-	padding-bottom: 13px;
+	padding-bottom: 14px;
 	  display: flex;
 	flex-direction: column;
 	justify-content: flex-start; /* align text to the top */
