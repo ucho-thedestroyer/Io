@@ -58,8 +58,8 @@ font-family: "Josefin sans", sans-serif;
 }
 */
 .crt-tv {
-  width: 563px;
-  height: 488px;
+  width: 573px;
+  height: 468px;
   border-radius: 60px;
   overflow: hidden;
   border: 12px solid #222;
@@ -68,7 +68,7 @@ font-family: "Josefin sans", sans-serif;
 
 position: absolute;
   top: 48.94%;
-  left: 40.31%;
+  left: 40.01%;
   transform: translate(-50%, -50%);
   
   z-index: 9;	
@@ -122,8 +122,8 @@ position: absolute;
 	  color: #FFEC60;
 	  background-color: rgb(255, 255, 255, 0.1);
 	cursor: pointer;
-	bottom: 7.04%;
-    right: 1.37%;
+	bottom: 7.64%;
+    right: 1.53%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 	font-size: 0.6em;
