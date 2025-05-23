@@ -22,4 +22,21 @@ function updateFilters() {
 
   const grayscale = Math.min(val1, 30) / 30;
   const sepia = Math.max(0, Math.min(val1 - 30, 30)) / 30;
-  con
+  const hue = Math.max(0, val1 - 60) * 3.6;
+
+  const blur = Math.min(val2, 33) / 10;
+  const brightness = 1 + (Math.max(0, Math.min(val2 - 33, 33)) / 100);
+  const contrast = 1 + (Math.max(0, val2 - 66) / 100);
+
+  video.style.filter = `
+    grayscale(${grayscale})
+    sepia(${sepia})
+    hue-rotate(${hue}deg)
+    blur(${blur}px)
+    brightness(${brightness})
+    contrast(${contrast})
+  `;
+}
+
+effectSlider1.addEventListener('input', updateFilters);
+effectSlider2.addEventListener('input', updateFilters);
