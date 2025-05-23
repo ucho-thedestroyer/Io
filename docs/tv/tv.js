@@ -1,27 +1,13 @@
 const video = document.getElementById('myVideo');
 const button = document.getElementById('muteToggleBtn');
-const slider = document.getElementById('volumeSlider');
 const effectSlider1 = document.getElementById('effectSlider1');
 const effectSlider2 = document.getElementById('effectSlider2');
 
-// Ensure video starts muted and volume is set to slider value
+// Ensure video starts muted
 document.addEventListener('DOMContentLoaded', () => {
-  video.volume = slider.value / 100;
   video.muted = true;
   button.textContent = 'Unmute';
-
-  // Enable volume control after first user interaction
-  document.body.addEventListener('click', enableVolumeControl, { once: true });
 });
-
-// Enable volume control
-function enableVolumeControl() {
-  slider.addEventListener('input', () => {
-    video.muted = false;
-    video.volume = slider.value / 100;
-    button.textContent = 'Mute';
-  });
-}
 
 // Mute toggle button
 button.addEventListener('click', () => {
