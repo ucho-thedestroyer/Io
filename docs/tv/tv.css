@@ -75,17 +75,20 @@ position: absolute;
 }
 
 #myVideo {
-	width: 100%;
-	Height: auto;
+  width: 100%;
+  height: 100%; /* not auto, so it fills the container */
+  object-fit: cover;
+  display: block;
   transition: filter 0.3s ease;
 }
-/* Video fills container */
+/* Video fills container
 .crt-tv .overlay-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+ */
 
 /* Inner curved screen glass effect */
 .crt-tv::before {
