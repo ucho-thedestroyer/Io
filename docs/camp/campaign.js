@@ -49,7 +49,7 @@ StarWars = (function () {
       e.preventDefault();
       this.startBtn.hide();
 
-      this.audioContext.resume().then(() => { 
+      this.audioContext.resume().then(() => {
         this.playNoise();
         this.audio.play();
         this.el.append(this.animation);
