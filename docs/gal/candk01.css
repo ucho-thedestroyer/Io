@@ -1,13 +1,17 @@
-html, body {
+
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
+      width: 100%;
+      background-color: black; /* Fills the space around the image */
     }
 
     body {
       background: url('https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/cak/01/cultureandkindred01.jpg') no-repeat center center fixed;
       background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
   #info-circle {
