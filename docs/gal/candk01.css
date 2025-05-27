@@ -33,7 +33,7 @@ html, body {
     align-items: center;
     cursor: pointer;
     transition: transform 1000ms ease-in;
-    background-color: #c9d303;
+    background-color: #FFEC60;
     z-index: 99;
 }
 #info-circle > div {
