@@ -21,7 +21,7 @@
     align-items: center;
     cursor: pointer;
     transition: transform 1000ms ease-in;
-    background-color: rgba(255,236,96,0.4);
+    background-color: rgba(255,236,96);
     z-index: 99;
 }
 #info-circle > div {
