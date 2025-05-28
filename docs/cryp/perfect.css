@@ -22,8 +22,7 @@
     cursor: pointer;
     transition: transform 1000ms ease-in;
     background-color: #FFEC60;
-    
-}
+ 
 
     z-index: 9999;
 }
