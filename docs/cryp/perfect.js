@@ -1,7 +1,7 @@
 "use strict";
 var CoinGeckoApi;
 (function (CoinGeckoApi) {
-    CoinGeckoApi["AllCoins"] = "coins/markets?vs_currency=usd&page=1&per_page=7&sparkline=false";
+    CoinGeckoApi["AllCoins"] = "coins/markets?vs_currency=usd&page=1&per_page=1&sparkline=false";
     CoinGeckoApi["Base"] = "https://api.coingecko.com/api/v3";
 })(CoinGeckoApi || (CoinGeckoApi = {}));
 var RequestStatus;
