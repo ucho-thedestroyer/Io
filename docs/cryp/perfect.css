@@ -38,7 +38,7 @@
 .logo {
 display: flex;
 	justify-content: space-between;
-	padding: 0.9rem 2.6rem 0 2rem;
+	padding: 2px 6px 0 2px;
 	background-color: brown;
 	height: 3.7rem;
 	box-shadow: inset 0 0 2rem rgba(black, 0.1);
@@ -52,7 +52,7 @@ display: flex;
 	}
 
 .logo img {
-	height: 3rem;
+	height: 100px;
 	color: yellow;	
 	}
 
