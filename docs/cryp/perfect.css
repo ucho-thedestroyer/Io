@@ -22,6 +22,9 @@
     cursor: pointer;
     transition: transform 1000ms ease-in;
     background-color: yellow;
+    filter: invert(78%) sepia(88%) saturate(686%) hue-rotate(6deg) brightness(105%) contrast(104%);
+}
+
     z-index: 9999;
 }
 #info-circle > div {
