@@ -52,7 +52,8 @@ display: flex;
 	}
 
 .logo img {
-	height: 100px;
+	width: 100px;
+	height: auto;
 	color: yellow;	
 	}
 
