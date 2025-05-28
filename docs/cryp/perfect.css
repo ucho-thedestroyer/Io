@@ -1,7 +1,7 @@
 #info-circle {
     position: fixed;
     bottom: 20px;
-    left: 10vw;
+    left: 2vw;
     width: 50px;
     height: 50px;
     padding: 10px;
@@ -22,7 +22,7 @@
     cursor: pointer;
     transition: transform 1000ms ease-in;
     background-color: yellow;
-    filter: invert(78%) sepia(88%) saturate(686%) hue-rotate(6deg) brightness(105%) contrast(104%);
+    
 }
 
     z-index: 9999;
