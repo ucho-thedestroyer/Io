@@ -121,9 +121,9 @@ body {
 /* Man's Head */
 .man-head {
   top: 10px;
-  left: 180px;
-  width: 60px;
-  height: 60px;
+  left: 280px;
+  width: 160px;
+  height: 160px;
   background-position: -180px -10px;
   animation: head-bob 1s infinite ease-in-out alternate;
 }
