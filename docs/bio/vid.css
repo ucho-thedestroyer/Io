@@ -98,69 +98,6 @@ body {
 }
 
 
-
-.pixel-scene {
-  position: relative;
-  width: 310px;
-  height: 460px;
-}
-
-.base-image {
-  width: 100%;
-  height: auto;
-  image-rendering: pixelated;
-}
-
-.head, .fist {
-  position: absolute;
-  background-image: url('https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/bio/edandedna.png');
-  background-size: 310px 460px;
-  image-rendering: pixelated;
-}
-
-/* Man's Head */
-.man-head {
-  top: 10px;
-  left: 280px;
-  width: 160px;
-  height: 160px;
-  background-position: -180px -10px;
-  animation: head-bob 1s infinite ease-in-out alternate;
-}
-
-/* Woman's Head */
-.woman-head {
-  top: 40px;
-  left: 60px;
-  width: 60px;
-  height: 60px;
-  background-position: -60px -40px;
-  animation: head-bob 1s infinite ease-in-out alternate-reverse;
-}
-
-/* Woman's Right Fist */
-.woman-fist {
-  top: 180px;
-  left: 10px;
-  width: 30px;
-  height: 30px;
-  background-position: -10px -180px;
-  animation: fist-pump 1s infinite ease-in-out alternate;
-}
-
-/* Animations */
-@keyframes head-bob {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-5px) rotate(-3deg); }
-}
-
-@keyframes fist-pump {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-12px) rotate(-15deg); }
-}
-
-
-/*
   .Iam {
 	padding: 0.4em 3em;
 	font: normal 40px/50px Josefin Sans, sans-serif;
@@ -264,7 +201,7 @@ body {
 
   }
 
-*/
+
 
   @media screen and (max-width: 1000px) {
 
