@@ -1,0 +1,306 @@
+html,
+body {
+	margin: 0;
+	 justify-content: center;
+  align-items: center;
+  height: 100vh;
+ overflow: hidden;
+	color: #fff;
+	background: #343434;
+	background-image: url(/bio/ETLOcirclelogo-2.png);
+	background-repeat: no-repeat;
+	background-size: 50rem;
+	background-position: -80px;
+	background-position-y: -80px;
+	padding-top: 1rem;
+   display: flex;
+}
+
+body {
+  background: black;
+ 
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  image-rendering: pixelated;
+}
+
+:root {
+    --main-color: #c9d303;
+    --border-color: #f80909;
+    --cassette-size: 180px;
+    --border-weight: 2px;
+}
+
+  
+  #info-circle {
+    position: fixed;
+    bottom: 20px;
+    right: 10vw;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 50%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 1000ms ease-in;
+    background-color: var(--main-color);
+    z-index: 99;
+}
+#info-circle > div {
+	font-family: josefin Sans;
+	font-weight: 600;
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+#info-circle2 {
+    position: fixed;
+	background-image: url(biopic.jpeg);
+	background-size: cover;
+    top: 400px;
+    right: 10vw;
+    width: 100px;
+    height: 110px;
+    padding: 10px;
+    border-radius: 3%;
+	
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 1000ms ease-in;
+    background-color: var(--main-color);
+    z-index: 99;
+}
+
+
+
+.pixel-scene {
+  position: relative;
+  width: 310px;
+  height: 460px;
+}
+
+.base-image {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.head, .fist {
+  position: absolute;
+  background-image: url('https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/bio/edandedna.png');
+  background-size: 310px 460px;
+  image-rendering: pixelated;
+}
+
+/* Man's Head */
+.man-head {
+  top: 10px;
+  left: 180px;
+  width: 60px;
+  height: 60px;
+  background-position: -180px -10px;
+  animation: head-bob 1s infinite ease-in-out alternate;
+}
+
+/* Woman's Head */
+.woman-head {
+  top: 40px;
+  left: 60px;
+  width: 60px;
+  height: 60px;
+  background-position: -60px -40px;
+  animation: head-bob 1s infinite ease-in-out alternate-reverse;
+}
+
+/* Woman's Right Fist */
+.woman-fist {
+  top: 180px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background-position: -10px -180px;
+  animation: fist-pump 1s infinite ease-in-out alternate;
+}
+
+/* Animations */
+@keyframes head-bob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px) rotate(-3deg); }
+}
+
+@keyframes fist-pump {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-12px) rotate(-15deg); }
+}
+
+
+/*
+  .Iam {
+	padding: 0.4em 3em;
+	font: normal 40px/50px Josefin Sans, sans-serif;
+	color: #999;
+	font-weight: 900;
+	width: 70%;
+  }
+  .Iam p {
+	height: 90px;
+	float: left;
+	margin-right: 0.3em;
+  }
+  .Iam b {
+	float: left;
+	overflow: hidden;
+	position: relative;
+	height: 140px;
+	top: 40px;
+  }
+  .Iam .innerIam {
+	display: inline-block;
+	color: #e74c3c;
+	position: relative;
+	top: 0;
+	left: 0;
+  
+  
+  /*animation*/
+  -webkit-animation:move 13s;
+	 -moz-animation:move 13s;
+	  -ms-animation:move 13s;
+	   -o-animation:move 13s;
+		  animation:move 13s;
+  /*animation-iteration-count*/
+  -webkit-animation-iteration-count:infinite;
+	 -moz-animation-iteration-count:infinite;
+	  -ms-animation-iteration-count:infinite;
+	   -o-animation-iteration-count:infinite;
+		  animation-iteration-count:infinite;
+  /*animation-delay*/
+  -webkit-animation-delay:1.7s;
+	 -moz-animation-delay:1.7s;
+	  -ms-animation-delay:1.7s;
+	   -o-animation-delay:1.7s;
+		  animation-delay:1.7s;
+  }
+  @keyframes move{
+  0%  { top: 0px; }
+  10% { top: -70px; }
+  20% { top: -140px; }
+  30% { top: -210px; }
+  40% { top: -280px; }
+  50% { top: -350px; }
+  60% { top: -420px; }
+
+ 
+  }
+  
+  @-webkit-keyframes move {
+	0%  { top: 0px; }
+	10% { top: -70px; }
+	20% { top: -140px; }
+	30% { top: -210px; }
+	40% { top: -280px; }
+	50% { top: -350px; }
+	60% { top: -420px; }
+
+
+  }
+  @-moz-keyframes move {
+	0%  { top: 0px; }
+	10% { top: -70px; }
+	20% { top: -140px; }
+	30% { top: -210px; }
+	40% { top: -280px; }
+	50% { top: -350px; }
+	60% { top: -420px; }
+
+
+ }
+  @-o-keyframes move {
+	0%  { top: 0px; }
+	10% { top: -70px; }
+	20% { top: -140px; }
+	30% { top: -210px; }
+	40% { top: -280px; }
+	50% { top: -350px; }
+	60% { top: -420px; }
+
+
+  }
+  @keyframes move {
+	0%  { top: 0px; }
+	10% { top: -70px; }
+	20% { top: -140px; }
+	30% { top: -210px; }
+	40% { top: -280px; }
+	50% { top: -350px; }
+	60% { top: -420px; }
+
+
+  }
+
+*/
+
+  @media screen and (max-width: 1000px) {
+
+
+#info-circle2 {
+	right: 4vw;
+
+
+}
+#info-circle {
+	right: 4vw;
+
+}
+
+.Iam {
+	padding: 0.4em 1.4em;
+
+  }
+
+}
+  
+@media screen and (max-width: 780px) {
+
+
+	main {
+
+		height: 100%;
+		width: 95%;
+		overflow: auto;
+	
+	}
+
+	.Iam {
+		padding: 0.4em 0.6em;
+		font: normal 30px/40px Josefin Sans, sans-serif;
+
+	  }
+	
+}
