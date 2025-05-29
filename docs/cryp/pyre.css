@@ -1,0 +1,123 @@
+#info-circle {
+    position: fixed;
+    bottom: 20px;
+    left: 2vw;
+    width: 50px;
+    height: 50px;
+    padding: 12px;
+    border-radius: 50%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 1000ms ease-in;
+    background-color: #FFEC60;
+ 
+
+    z-index: 9999;
+}
+#info-circle > div {
+	font-family: josefin Sans;
+	font-weight: 600;
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+
+body {
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.bill-wrapper {
+  position: relative;
+  width: 160px;
+  height: 80px;
+  image-rendering: pixelated;
+}
+
+.dollar-bill {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #39d17c;
+  border: 4px solid #2b8f5e;
+  box-shadow: inset 0 0 0 4px #54e39b;
+}
+
+.pixel-art {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 40px;
+  height: 40px;
+}
+
+.dollar-sign {
+  width: 4px;
+  height: 4px;
+  background: #111;
+  box-shadow:
+    4px 0 #111,
+    8px 0 #111,
+    12px 0 #111,
+    4px 4px #111,
+    12px 4px #111,
+    4px 8px #111,
+    8px 8px #111,
+    12px 8px #111,
+    4px 12px #111,
+    12px 12px #111,
+    4px 16px #111,
+    8px 16px #111,
+    12px 16px #111,
+    4px 20px #111,
+    12px 20px #111,
+    4px 24px #111,
+    8px 24px #111,
+    12px 24px #111;
+}
+
+/* FIRE ANIMATION */
+.fire {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(to top, red, orange, yellow);
+  border-radius: 50%;
+  animation: fireAnim 0.2s infinite alternate;
+  opacity: 0.8;
+  mix-blend-mode: screen;
+  filter: blur(1px);
+}
+
+@keyframes fireAnim {
+  0% {
+    transform: scaleY(1) translateX(0);
+    background: radial-gradient(circle at 50% 50%, yellow, orange, red);
+  }
+  100% {
+    transform: scaleY(1.3) translateX(-2px);
+    background: radial-gradient(circle at 50% 40%, yellow, red, orange);
+  }
+}
+
+
+
+
