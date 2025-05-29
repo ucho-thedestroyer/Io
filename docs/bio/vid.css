@@ -7,7 +7,7 @@ body {
 background: url(vidback3.jpg) rgba(0, 0, 0, 0.9);
 background-size: contain;
 background-blend-mode: hard-light;
-background-size: cover;	
+
 font-family: "Josefin sans", sans-serif;
 }
 
