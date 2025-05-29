@@ -22,7 +22,7 @@ font-family: "Josefin sans", sans-serif;
 
 
 .photo-frame {
-	background: url('frame.png') rgba(0, 0, 0, 0.07);
+	background: url('https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tv/frame.png') rgba(0, 0, 0, 0.07);
 	background-blend-mode: color-burn;
 	background-repeat: no-repeat;
 	background-size: 99.9%;
