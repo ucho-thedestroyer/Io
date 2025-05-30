@@ -5,7 +5,7 @@ body {
 	height: 100%;
 	overflow: hidden;
 background: url(vidback3.jpg) rgba(0, 0, 0, 0.9);
-background-size: contain;
+background-size: cover;
 background-blend-mode: hard-light;
 
 font-family: "Josefin sans", sans-serif;
