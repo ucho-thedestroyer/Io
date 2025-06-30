@@ -5,7 +5,7 @@ $(document).ready(function() {
   const radioOn = new Audio("http://www.jarrodyellets.com/sounds/radioOn.mp3");
   const radioOff = new Audio("http://www.jarrodyellets.com/sounds/CRTOff.mp3");
   const static = new Audio("http://www.jarrodyellets.com/sounds/static.mp3");
-  const rap = new Audio("http://ic269.c715.fast-serv.com/stream.mp3");
+  const rap = new Audio("https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/TRKS/epilogue.m4a");
   const eclectic = new Audio("http://50.22.253.46/supernovaradio");
   const jazz = new Audio("http://stream.100000000000000.com:8000/JAZZ");
   const rock = new Audio("http://orpheus.noctrl.edu:8000/wonclive-128s");
