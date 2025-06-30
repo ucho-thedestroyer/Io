@@ -16,15 +16,37 @@
   <body>
     <div class="outer">
       <div class="photo-frame">
-        <iframe
-          width="300%"
-          height="200"
-          scrolling="yes"
-          frameborder="yes"
-          allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1379930245%3Fsecret_token%3Ds-lBgaGKmN8KH&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-        ></iframe>
-        <br />
+        <div class="container">
+    <div class="radio">
+      <div class="title">Silvertone</div>
+      <div class="labelLeft">Tune Left</div>
+      <div class="knob" id="left-knob"></div>
+      <div class="power"></div>
+      <div class="powerText">Power</div>
+      <div class="outerDis">
+        <div class="display">
+          <div class="upperDis">
+            <div class="light"></div>
+            <div class="stations">
+              <hr>
+              <p>88  90  92  96  100  104  108</p>
+              <div class="needle"></div>
+            </div>
+          </div>
+          <div class="lowerDis">
+            <button class="button" id="btn1"></button>
+            <button class="button" id="btn2"></button>
+            <button class="button" id="btn3"></button>
+            <button class="button" id="btn4"></button>
+            <button class="button" id="btn5"></button>
+          </div>
+        </div>
+      </div>
+      <div class="labelRight">Tune Right</div>
+      <div class="knob" id="right-knob"></div>
+    </div>
+  </div>
+  <br />
         <div class="b">
           <a href="http://www.thesenoises.xyz"
             ><button>turn off the radio</button></a
