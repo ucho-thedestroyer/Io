@@ -44,7 +44,7 @@ font-family: "Josefin sans", sans-serif;
 	height: 226px;
 	  
   }
-  .photo-frame button {
+  .photo-frame vutton {
 	position: absolute;
 	cursor: pointer;
 	bottom: 15.54%;
@@ -58,7 +58,7 @@ font-family: "Josefin sans", sans-serif;
 	color: blanchedalmond;
 }
 
-button:hover {
+vutton:hover {
 	background-color: rgb(255, 255, 7);
 	color: rgb(7, 6, 6);
 	border: 0px;
