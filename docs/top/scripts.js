@@ -38,11 +38,11 @@ let currentTrackIndex = 0;
 const tracks = [
   {
     title: "Space Boogie",
-    file: "assets/space-boogie.mp3"
+    file: "https://github.com/ucho-thedestroyer/Io/raw/Backup/top/space-boogie.mp3"
   },
   {
     title: "Neon Dreams",
-    file: "assets/neon-dreams.mp3"
+    file: "https://github.com/ucho-thedestroyer/Io/raw/Backup/top/neon-dreams.mp3"
   }
 ];
 
