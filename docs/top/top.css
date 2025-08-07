@@ -1,259 +1,444 @@
 :root {
-  --primary-clr: #ffffff;
-  --background-clr: #0f0f0f;
-  --accent: #1a1a1a;
-  --button-bg: #1c1c1c;
-  --highlight: #ff3366;
-  --track-color: #e6e6e6;
-  --thumb-color: #ffec60;
+  --primary-clr: #252525;
+  --background-clr: #ffffff;
+  --accent: rgba(5, 6, 6, 0.3);
+  --button-bg: rgba(54, 54, 54, 0.05);
 }
 
 * {
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family: Arial, Helvetica, Verdana, sans-serif;
   font-size: 12px;
-  box-sizing: border-box;
 }
 
 body {
   background-color: var(--background-clr);
   color: var(--primary-clr);
-  margin: 0;
-  padding: 0;
+  
 }
 
 .player-container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
+  width: 80%;
+  max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
+  margin: 0 auto; /* Center the container */
+  padding: 10px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
 }
-
+/* parent */
 .player-content {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 8px;
   grid-auto-rows: minmax(224px, auto);
+  max-width: 1100px; /* Optional: Set a max-width to avoid it getting too large on big screens */
+  padding: 1.2rem;
 }
-
 .player-content > div {
-  border-radius: 0;
+  border-radius: 2px
 }
 
-/* Album cover */
-.albumcover0 img {
+
+/* albumn */
+
+
+.albumcover0 {
+  grid-column: 1 / 2;
+  grid-row: 1;
+  
+/*  width: 340px;
+  height: auto;
+  display: inline-block; */
+  margin: 0;
+}
+
+.albumcover0 img{
   width: 220px;
   height: 220px;
-  border-radius: 0;
-  display: block;
+  border-radius: 8px;
+  margin: auto;
 }
 
-/* Main music player section */
+/* Song title styling */
+
 .music-player {
+  display: block;
+  word-break: break-all; /* Prevents words from breaking awkwardly */
+  padding: 0 8px;  /* Reserve space */
   grid-column: 2 / 4;
-  background-color: var(--accent);
-  background-size: cover;
-  background-blend-mode: overlay;
-  padding: 1rem;
+  grid-row: 1;
   height: 220px;
+  background:linear-gradient(0deg, rgba(238,238,238, 0.3), rgba(238,238,238,0.3)), url(https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/ETLOcirclelogo-2.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.playin {
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .music-player .playin h1.blocktitle {
+  padding-top: 10px;
   font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--primary-clr);
-  white-space: nowrap;
+  font-weight: 600;
+  margin: 2px 0;
+  line-height: 1.4;
+  white-space: nowrap;   
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 183px;
+  max-width: 183px;   /* responsive */
+  text-align: start;
+  padding-right: 4px; /* Add some space on the right to prevent cutting off */
+  
 }
 
 .blocktitle2 {
-  font-size: 1.3rem;
-  color: #cccccc;
+  font-size: 1.3rem; /* Adjust to make it look nice alongside the title */
 }
 
 .blocktitle3 {
-  font-size: 1.1rem;
-  color: #999;
+  font-size:1.1rem; 
+  padding:3px;
 }
 
-/* Controls */
+/* Optional: Controls styling for a better layout */
+
 .controls button {
-  background-color: var(--button-bg);
-  color: #fff;
+  font-size: 2px; /* Doubles the size of the button */
+  margin: 2px;
+  width: 64px;
+  padding: 14px 10px; /* Increase padding for bigger buttons */
+  border-radius: 30%;
+  background-color: #333333;
   border: none;
-  padding: 10px 14px;
-  border-radius: 0;
-  font-size: 12px;
+  text-align: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  color: #fdffee;
 }
 
+/* Play button style */
 .controls .play-pause-btn {
-  background-color: var(--highlight);
-  color: #fff;
+  background-color: #B33638; /* et red */
+  color: #fdffee;
 }
 
+/* Optional: Add a hover effect */
 .controls button:hover {
-  background-color: #333;
+  background-color: rgba(54, 54, 54, 0.1);
 }
 
 .play-pause-btn:hover {
-  background-color: #ff1f4b;
+  background-color: #cc0000; /* Darker red on hover */
+  color: #333333;
 }
 
-/* Progress Bar */
+/* Optional: Set width and padding for the audio progress range slider */
 #progress {
-  width: 100%;
-  background-color: #333;
-  height: 4px;
-  margin: 8px 0;
-  -webkit-appearance: none;
-  appearance: none;
+  width: 73%;
+  margin: 6px 0;
+  background-color: rgba(54, 54, 54, 0.8);
+}
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 73%;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  background-color: var(--thumb-color);
-  border-radius: 0;
-  height: 12px;
-  width: 12px;
+   /*custom styles*/
+   background-color: #FFEC60;
+}
+input[type="range"]::-moz-range-thumb {
+   background-color: #FFEC60;
+}
+/* 
+input[type=range]::-webkit-slider-runnable-track {
+  cursor: pointer;
+  background: rgba(54, 54, 54, 0.3);
 }
 
-input[type="range"]::-webkit-slider-runnable-track {
-  background: #666;
-  height: 4px;
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background:rgba(54, 54, 54, 0.3);
+}
+*/
+input[type=range]::-moz-range-track {
+  
+  background: #333;
 }
 
-/* Tip Section */
+input[type=range]::-ms-track {
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: rgba(54, 54, 54, 0.3);
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: rgba(54, 54, 54, 0.3);
+}
+input[type=range]::-ms-fill-upper {
+  background: #999;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #999;
+}
+  
 .tip-container {
-  grid-column: 4 / 5;
-  text-align: right;
-  padding: 0.5rem;
-  font-size: 1.2rem;
-  color: #aaa;
+  grid-column: 4 / 4;
+  grid-row: 1;
+  padding-left: 10px; /* Add some padding to prevent the element from shifting */
+  font-size: 1.6rem;
 }
 
 .tip-container a {
-  color: var(--highlight);
-  font-weight: bold;
+  color: red;
+  font-weight: 800;
+  font-size: 1.5rem;
 }
-
 .tip-container .note {
-  font-size: 0.95rem;
-  color: #666;
+  text-align: end;
+  font-size: 1.1rem;
 }
 
-/* Poll */
+
+
+.core {
+  width: 78%;
+  max-width: 1180px;
+  margin: auto;
+}
+.hot {
+  align-items: safe-center;
+}
+
 .poll {
-  height: 237px;
-  background-color: #111;
-  padding: 1rem;
-  border: 1px solid #222;
-  color: var(--track-color);
+  height: 237px; /* Set to a fixed height that fits both initial and updated content */
+  overflow: hidden; /* or auto if you want scrollbars */
 }
 
-.poll .question {
-  font-weight: bold;
-  margin-bottom: 10px;
+
+.poll .question{
+  height: 40px; /* adjust as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
   max-height: 40px;
   overflow-y: auto;
+    padding: 2px;
+    border-bottom: 1px solid #eee;
 }
 
-.poll .answers .answer {
-  margin: 4px 0;
-  padding: 4px;
-  background: #1a1a1a;
-  border: 1px solid transparent;
-  transition: all 0.2s;
+.poll .answers{
+    padding: 2.3px;
 }
 
-.poll .answers .answer:hover {
-  border-color: var(--highlight);
+.poll .answers .answer{
+        cursor: pointer;
+    overflow: hidden;
+    border-radius: 1px;
+  width: 100%;
+  padding-bottom: 4px;
+    
 }
 
-.poll .answers .answer.selected {
-  border: 1px dashed var(--highlight);
+.poll .answers .answer.selected{
+    border: 1px dashed #606a9c;
+}
+
+.poll .answers .answer span.percentage_value
+{
+    text-align: right;
+  padding-right: 2px;
+    color: #b0050e;
 }
 
 .poll .answers .answer span.percentage_bar {
-  display: block;
-  height: 6px;
-  background: var(--highlight);
-  margin-top: 4px;
-  transition: width 0.2s ease-in-out;
+    display: block;
+    width: 0%; /* Start from 0 */
+    height: 8px;
+    background: #191970;
+    transition: width 200ms ease-in-out;
+    margin-top: 1px;
+
 }
 
-.poll .answers .answer span.percentage_value {
-  font-size: 0.8rem;
-  text-align: right;
-  color: #999;
+
+
+/* playlist button */
+
+.play-btn {
+  font-size: 1px;
+  align-items: flex-end;
+  color: #581845;
 }
 
-/* Playlist buttons & track display */
-.tracknumber,
-.trackname,
-.track-label,
-.track-id,
+.tracknumber, .trackname {
+  text-align: left;
+  
+}
+
+.track-label {
+  color: #900C3F;
+}
+
+.track-id {
+  color: onyx;
+}
+
 .sendtrack {
-  color: #ccc;
   text-align: left;
 }
 
-.album-select,
-.album,
-.mp3player,
-.mp3p {
+.play-btn {
   background: none;
-  gap: 0.4rem;
-  color: var(--track-color);
-}
-
-.album img,
-.mp3p img {
-  border-radius: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .divider {
+  padding-top: 2px;
+  height: 0.2px;
+  background-color: pink;
+}
+
+.album-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.album {
+  display: flex;
+  margin-top: 0.8rem;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.album img {
+  margin: 2px 4px 10px;
+  border-radius: 4px;
+}
+
+.album-divider {
   height: 1px;
-  background-color: #444;
-  margin: 8px 0;
+  background-color: #dfdfdf;
+  margin: 4px 0;
 }
 
-/* Glowing highlight animation */
+.mp3player {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mp3p {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  vertical-align: middle;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.mp3p img {
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
 @keyframes bwPulse {
-  0%   { background-color: #111; color: #fff; }
-  50%  { background-color: var(--highlight); color: #000; }
-  100% { background-color: #111; color: #fff; }
+  0%   { background-color: #eeeeee; color: white; }
+  50%  { background-color: #ADBCE1; color: black; }
+  100% { background-color: #eeeeee; color: red; }
 }
-
 .bw-highlight {
   animation: bwPulse 2s infinite;
   font-weight: bold;
+  display: inline-block;
+  text-decoration: none;
 }
 
-/* Responsive Tweaks */
+
+/* Make sure it adapts to smaller screens */
 @media (max-width: 890px) {
-  .music-player {
-    grid-column: 2 / 5;
+  .player-container {
+    width: 94%; /* Slightly larger width for smaller screens */
   }
-  .tip-container {
-    grid-column: 1 / 4;
-    grid-row: 2;
+
+  .topbar {
+    max-width: 800px;
   }
+
+  .bottombar {
+     max-width: 800px;
+  }
+  
+.albumcover0 {
+  grid-column: 1 / 2;
+  grid-row: 1;
+  
+/*  width: 340px;
+  height: auto;
+  display: inline-block; */
+  margin: 0;
+}
+
+/* Song title styling */
+
+.music-player {
+  grid-column: 2 / 5;
+  grid-row: 1;
+}
+
+.playin {
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.tip-container {
+  grid-column: 1 / 4;
+  grid-row: 2;
+  
+}
+
+  .core {
+  width: 94%;
+  max-width: 1180px;
+  margin: auto;
+}
+
+  
+
 }
 
 @media (max-width: 768px) {
   .player-container {
-    width: 96%;
+    width: 96%; /* Slightly larger width for smaller screens */
   }
 }
 
+
+/* For very small screens like smartphones in portrait mode */
 @media (max-width: 480px) {
   .player-container {
-    padding: 0.5rem;
+    width: 100%; /* Full width on small screens */
+    padding: 10px; /* Reduce padding */
   }
   .controls button {
-    padding: 8px 10px;
-    font-size: 1rem;
-  }
+  font-size: 1.1vw; /* Doubles the size of the button */
+  padding: 11px 13px; /* Increase padding for bigger buttons */
+  
+}
+
 }
