@@ -1,8 +1,8 @@
 :root {
-  --primary-clr: #252525;
-  --background-clr: #ffffff;
-  --accent: rgba(5, 6, 6, 0.3);
-  --button-bg: rgba(54, 54, 54, 0.05);
+  --primary-clr: #f5f5f5;
+  --background-clr: #121212;
+  --accent: rgba(255, 255, 255, 0.08);
+  --button-bg: rgba(255, 255, 255, 0.05);
 }
 
 * {
