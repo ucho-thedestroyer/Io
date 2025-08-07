@@ -1,0 +1,124 @@
+body {
+  background-color: #000033;
+  color: #00ffcc;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 20px;
+}
+
+.music-player {
+  display: flex;
+  background: #111144;
+  padding: 15px;
+  border: 3px double #00ffcc;
+}
+
+.album-cover {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #00ffcc;
+  margin-right: 20px;
+}
+
+.controls-section {
+  flex: 1;
+}
+
+.track-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volume-slider {
+  width: 100px;
+}
+
+.right-section .gif-placeholder {
+  width: 150px;
+  height: 150px;
+  background: #222266;
+  border: 2px dashed #00ffcc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00ffcc;
+}
+
+.lists-container {
+  display: flex;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.track-list, .queue-list {
+  flex: 1;
+  background: #111144;
+  padding: 15px;
+  border: 3px double #00ffcc;
+}
+
+.track {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px dashed #00ffcc;
+}
+
+.track:hover {
+  background: #222266;
+}
+
+.queue-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px dashed #00ffcc;
+}
+
+.remove-btn {
+  background: none;
+  color: #ff0066;
+  border: none;
+  cursor: pointer;
+}
+
+body {
+  font-family: 'Press Start 2P', monospace;
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background: #222266;
+  border: 1px solid #00ffcc;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background-color: #00ffcc;
+}
+
+body.dark-mode {
+  background-color: #000000;
+  color: #ffcc00;
+}
+
+.dark-mode .music-player,
+.dark-mode .track-list,
+.dark-mode .queue-list {
+  background-color: #222222;
+  border-color: #ffcc00;
+}
+
+.queue-item.dragging {
+  opacity: 0.5;
+}
