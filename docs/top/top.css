@@ -18,7 +18,7 @@ body {
 }
 
 .player-container {
-  width: 80%;
+  width: 96%;
   max-width: 1600px; /* Optional: Set a max-width to avoid it getting too large on big screens */
   margin: 0 auto; /* Center the container */
   padding: 10px;
@@ -214,7 +214,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 .core {
-  width: 78%;
+  width: 94%;
   max-width: 1180px;
   margin: auto;
 }
