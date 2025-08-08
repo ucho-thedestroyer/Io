@@ -77,15 +77,32 @@ function preloadAndPlay(index) {
 
     const data = tracksData[trackTitle];
     audioSource.src = data.src;
+    audioPlayer.preload = "auto"; // Ensure preload
     audioPlayer.load();
 
     albumCover.src = data.cover;
     trackInfoSpan.textContent = trackTitle;
     trackLengthSpan.textContent = `00:00 / ${data.length}`;
 
-    // Wait until buffered enough for smooth playback
+    // Show buffering indicator
+    const bufferingNotice = document.createElement("div");
+    bufferingNotice.textContent = "Loading...";
+    bufferingNotice.style.position = "absolute";
+    bufferingNotice.style.top = "50%";
+    bufferingNotice.style.left = "50%";
+    bufferingNotice.style.transform = "translate(-50%, -50%)";
+    bufferingNotice.style.background = "rgba(0,0,0,0.8)";
+    bufferingNotice.style.color = "#0ff";
+    bufferingNotice.style.padding = "5px 10px";
+    bufferingNotice.style.borderRadius = "5px";
+    bufferingNotice.style.fontSize = "14px";
+    bufferingNotice.style.zIndex = "2000";
+    document.body.appendChild(bufferingNotice);
+
+    // Wait until the file is fully buffered
     audioPlayer.addEventListener("canplaythrough", function handler() {
         audioPlayer.removeEventListener("canplaythrough", handler);
+        document.body.removeChild(bufferingNotice);
         audioPlayer.play();
         isPlaying = true;
     });
