@@ -9,7 +9,7 @@ const tracksData = {
         genre: "Synthwave"
     },
     "freak": {
-        src: "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/",
+        src: "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/ipfs/bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq/Freak%20Analog%20Textures3%20by%20easterntraveler.mp4",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg",
         length: "03:45",
         genre: "Synthwave"
