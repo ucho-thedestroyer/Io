@@ -16,7 +16,7 @@ body {
 .album-cover {
   width: 150px;
   height: 150px;
-  border: 2px dashed #00ffcc;
+  border: 2px dashed #ffcc00;
   margin-right: 20px;
 }
 
@@ -45,7 +45,7 @@ body {
   width: 150px;
   height: 150px;
   background: #222266;
-  border: 2px dashed #00ffcc;
+  border: 2px dashed #ffcc00;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,6 +130,12 @@ body.dark-mode {
   background-color: #222222;
   border-color: #ffcc00;
 }
+
+.dark-mode .album-cover,
+.dark-mode .right-section .gif-placeholder {
+  border: 2px dashed #00ffcc;
+}
+
 
 .queue-item.dragging {
   opacity: 0.5;
