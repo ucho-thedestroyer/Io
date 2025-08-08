@@ -1,3 +1,27 @@
+function addToQueue(trackElement) {
+  const title = trackElement.querySelector("h4").textContent;
+  const meta = trackElement.querySelector("p").textContent;
+  const desc = trackElement.querySelector(".desc").textContent;
+
+  const queue = document.getElementById("queue");
+  const li = document.createElement("li");
+  li.className = "queue-item"; li.setAttribute("draggable", "true");
+  li.innerHTML = \
+    <div>
+      <strong>\${title}</strong><br/>
+      <small>\${meta}</small><br/>
+      <em>\${desc}</em>
+    </div>
+    <button class="remove-btn" onclick="removeFromQueue(this)">✖</button>
+  \;
+  queue.appendChild(li);
+}
+
+function removeFromQueue(button) {
+  const item = button.parentElement;
+  item.remove();
+}
+
 function prevTrack() {
   alert("Previous track");
 }
@@ -136,29 +160,3 @@ document.addEventListener("dragend", function (e) {
     e.target.classList.remove("dragging");
   }
 });
-
-
-function addToQueue(trackElement) {
-  const title = trackElement.querySelector("h4").textContent;
-  const meta = trackElement.querySelector("p").textContent;
-  const desc = trackElement.querySelector(".desc").textContent;
-
-  const queue = document.getElementById("queue");
-  const li = document.createElement("li");
-  li.className = "queue-item"; li.setAttribute("draggable", "true");
-  li.innerHTML = \`
-    <div>
-      <strong>\${title}</strong><br/>
-      <small>\${meta}</small><br/>
-      <em>\${desc}</em>
-    </div>
-    <button class="remove-btn" onclick="removeFromQueue(this)">✖</button>
-  \`;
-  queue.appendChild(li);
-}
-
-function removeFromQueue(button) {
-  const item = button.parentElement;
-  item.remove();
-}
-
