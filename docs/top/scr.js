@@ -42,13 +42,11 @@ function addToQueue(trackElement) {
     // Add to queue
     queue.push(trackTitle);
 
-    // Create queue list item with clickable [X] for delete
+    // Create queue list item with delete button
     const li = document.createElement("li");
     li.textContent = trackTitle + " ";
-    const delBtn = document.createElement("span");
-    delBtn.textContent = " [X]";
-    delBtn.style.color = "red";
-    delBtn.style.cursor = "pointer";
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
     delBtn.onclick = () => removeFromQueue(trackTitle, li);
     li.appendChild(delBtn);
     document.getElementById("queue").appendChild(li);
@@ -117,30 +115,19 @@ function nextTrack() {
 
 // ================== DOWNLOAD POPUP ==================
 function downloadCurrentTrack() {
-    if (currentTrackIndex === -1) {
-        // Mini popup above the download button
-        const downloadBtn = document.querySelector(".player-controls button:nth-child(2)");
-        const popup = document.createElement("div");
-        popup.textContent = "First choose a song!";
-        popup.style.position = "absolute";
-        popup.style.background = "#FF0000";
-        popup.style.color = "white";
-        popup.style.fontSize = "12px";
-        popup.style.padding = "2px 5px";
-        popup.style.borderRadius = "3px";
-        popup.style.top = (downloadBtn.offsetTop - 20) + "px";
-        popup.style.left = downloadBtn.offsetLeft + "px";
-        popup.style.zIndex = "1000";
-        document.body.appendChild(popup);
+    if (currentTrackIndex === -1) return;
 
-        setTimeout(() => {
-            popup.style.opacity = "0";
-            popup.style.transition = "opacity 0.5s";
-            setTimeout(() => popup.remove(), 500);
-        }, 1000);
-        return;
-    }
+    const popup = window.open("", "DownloadPopup", "width=300,height=150");
+    popup.document.write(`
+        <html><head><title>Download Track</title></head>
+        <body style="background-color:black;color:#0ff;font-family:monospace;text-align:center;padding-top:20px;">
+            <p>Ready to download your track?</p>
+            <button onclick="window.opener.triggerDownload(); window.close();" style="background:#0ff;color:black;padding:5px 10px;">OK!</button>
+        </body></html>
+    `);
+}
 
+function triggerDownload() {
     const trackTitle = queue[currentTrackIndex];
     const link = document.createElement("a");
     link.href = tracksData[trackTitle].src;
@@ -201,3 +188,4 @@ audioPlayer.addEventListener("ended", () => {
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
 }
+
