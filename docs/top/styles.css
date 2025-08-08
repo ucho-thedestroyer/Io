@@ -137,10 +137,6 @@ body.dark-mode {
   border: 2px dashed #00ffcc;
 }
 
-.dark-mode #loading-spinner {
-  color: #ff66cc;
-}
-
 .queue-item.dragging {
   opacity: 0.5;
 }
@@ -190,11 +186,16 @@ body.dark-mode {
 }
 
 
-/* Spinner style */
+/* Default spinner color */
 #loading-spinner {
   display: none;
   text-align: center;
   font-size: 14px;
-  color: #ffcc00;
+  color: #ff66cc; /* Light mode color */
   margin-bottom: 5px;
+}
+
+/* Spinner color when dark mode is active */
+.dark-mode #loading-spinner {
+  color: #ffb3ff; /* Dark mode color (lighter pink for visibility) */
 }
