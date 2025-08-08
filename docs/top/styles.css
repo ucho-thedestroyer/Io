@@ -186,3 +186,12 @@ body.dark-mode {
 
 }
 
+
+/* Spinner style */
+#loading-spinner {
+  display: none;
+  text-align: center;
+  font-size: 14px;
+  color: #ff66cc;
+  margin-bottom: 5px;
+}
