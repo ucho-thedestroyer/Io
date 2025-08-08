@@ -92,7 +92,7 @@ function preloadAndPlay(index) {
     bufferingNotice.style.left = "50%";
     bufferingNotice.style.transform = "translate(-50%, -50%)";
     bufferingNotice.style.background = "rgba(0,0,0,0.8)";
-    bufferingNotice.style.color = "#0ff";
+    
     bufferingNotice.style.padding = "5px 10px";
     bufferingNotice.style.borderRadius = "5px";
     bufferingNotice.style.fontSize = "14px";
