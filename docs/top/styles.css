@@ -65,15 +65,15 @@ body {
 }
 
 .track-list {
-  flex: 0 0 40%; /* Don't grow, don't shrink, 40% width */
+  flex: 0 0 33%; /* Don't grow, don't shrink, 40% width */
 }
 
 .queue-list {
-  flex: 0 0 40%; /* Don't grow, don't shrink, 40% width */
+  flex: 0 0 33%; /* Don't grow, don't shrink, 40% width */
 }
 
 .poll {
-  flex: 0 0 20%; /* Don't grow, don't shrink, 20% width */
+  flex: 0 0 14%; /* Don't grow, don't shrink, 20% width */
 }
 
 
