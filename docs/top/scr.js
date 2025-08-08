@@ -4,19 +4,19 @@
 const tracksData = {
     "epilogue I": {
         src: "https://bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4.ipfs.w3s.link/ipfs/bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4/epilogue%20I.m4a",
-        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/IMG_0513.jpeg",
+        cover: "https://github.com/ucho/Io/raw/Backup/docs/tracks/covers/IMG_0513.jpeg",
         length: "03:45",
         genre: "Synthwave"
     },
     "freak": {
         src: "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/ipfs/bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq/Freak%20Analog%20Textures3%20by%20easterntraveler.mp4",
-        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg",
+        cover: "https://github.com/ucho/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg",
         length: "03:45",
         genre: "Synthwave"
     },
     "Neon Dreams": {
         src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
-        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0514.jpeg",
+        cover: "https://github.com/ucho/Io/raw/Backup/docs/top/covers/IMG_0514.jpeg",
         length: "04:10",
         genre: "Retro Pop"
     }
@@ -39,26 +39,22 @@ function addToQueue(trackElement) {
     const trackTitle = trackElement.querySelector("h4").innerText.trim();
     if (!tracksData[trackTitle]) return;
 
-    // Add to queue
     queue.push(trackTitle);
 
-    // Create queue list item with clickable [X] for delete
+    // Create queue item with [X] delete
     const li = document.createElement("li");
     li.textContent = trackTitle + " ";
     const delBtn = document.createElement("span");
-    delBtn.textContent = " [X]";
+    delBtn.textContent = "[X]";
     delBtn.style.color = "red";
     delBtn.style.cursor = "pointer";
     delBtn.onclick = () => removeFromQueue(trackTitle, li);
     li.appendChild(delBtn);
     document.getElementById("queue").appendChild(li);
 
-    // If nothing is playing, load and start this track
     if (currentTrackIndex === -1) {
         currentTrackIndex = 0;
-        loadTrack(currentTrackIndex);
-        audioPlayer.play();
-        isPlaying = true;
+        preloadAndPlay(currentTrackIndex);
     }
 }
 
@@ -67,7 +63,6 @@ function removeFromQueue(title, element) {
     queue = queue.filter(t => t !== title);
     element.remove();
 
-    // If queue becomes empty
     if (queue.length === 0) {
         audioPlayer.pause();
         currentTrackIndex = -1;
@@ -75,9 +70,8 @@ function removeFromQueue(title, element) {
     }
 }
 
-
-// ================== LOAD TRACK ==================
-function loadTrack(index) {
+// ================== PRELOAD & PLAY TRACK ==================
+function preloadAndPlay(index) {
     const trackTitle = queue[index];
     if (!trackTitle) return;
 
@@ -88,6 +82,18 @@ function loadTrack(index) {
     albumCover.src = data.cover;
     trackInfoSpan.textContent = trackTitle;
     trackLengthSpan.textContent = `00:00 / ${data.length}`;
+
+    // Wait until buffered enough for smooth playback
+    audioPlayer.addEventListener("canplaythrough", function handler() {
+        audioPlayer.removeEventListener("canplaythrough", handler);
+        audioPlayer.play();
+        isPlaying = true;
+    });
+}
+
+// ================== LOAD TRACK ==================
+function loadTrack(index) {
+    preloadAndPlay(index);
 }
 
 // ================== PLAYER CONTROLS ==================
@@ -95,7 +101,14 @@ function playPause() {
     if (isPlaying) {
         audioPlayer.pause();
     } else {
-        audioPlayer.play();
+        if (audioPlayer.readyState < 4) {
+            audioPlayer.addEventListener("canplaythrough", function handler() {
+                audioPlayer.removeEventListener("canplaythrough", handler);
+                audioPlayer.play();
+            });
+        } else {
+            audioPlayer.play();
+        }
     }
     isPlaying = !isPlaying;
 }
@@ -103,22 +116,21 @@ function playPause() {
 function prevTrack() {
     if (queue.length === 0) return;
     currentTrackIndex = (currentTrackIndex - 1 + queue.length) % queue.length;
-    loadTrack(currentTrackIndex);
-    audioPlayer.play();
-    isPlaying = true;
+    preloadAndPlay(currentTrackIndex);
 }
 
 function nextTrack() {
     if (queue.length === 0) return;
     currentTrackIndex = (currentTrackIndex + 1) % queue.length;
-    loadTrack(currentTrackIndex);
-    audioPlayer.play();
-    isPlaying = true;
+    preloadAndPlay(currentTrackIndex);
 }
 
 // ================== DOWNLOAD POPUP ==================
 function downloadCurrentTrack() {
-    if (currentTrackIndex === -1) return;
+    if (currentTrackIndex === -1) {
+        showMiniPopupAboveDownload("first choose a song!");
+        return;
+    }
 
     const popup = window.open("", "DownloadPopup", "width=300,height=150");
     popup.document.write(`
@@ -138,6 +150,29 @@ function triggerDownload() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+
+// ================== MINI POPUP ABOVE DOWNLOAD BUTTON ==================
+function showMiniPopupAboveDownload(text) {
+    const btn = document.querySelector(".player-controls button:nth-child(5)"); // your download button
+    const popup = document.createElement("div");
+    popup.textContent = text;
+    popup.style.position = "absolute";
+    popup.style.background = "#0ff";
+    popup.style.color = "black";
+    popup.style.fontSize = "12px";
+    popup.style.padding = "2px 5px";
+    popup.style.borderRadius = "3px";
+    popup.style.top = (btn.offsetTop - 20) + "px";
+    popup.style.left = btn.offsetLeft + "px";
+    popup.style.zIndex = "1000";
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        popup.style.opacity = "0";
+        popup.style.transition = "opacity 0.5s";
+        setTimeout(() => popup.remove(), 500);
+    }, 1000);
 }
 
 // ================== SHARE POPUP ==================
@@ -189,6 +224,5 @@ audioPlayer.addEventListener("ended", () => {
 });
 
 function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
+    document.body.classList.toggle("dark-mode");
 }
-
