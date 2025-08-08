@@ -3,7 +3,7 @@
 // Track storage: title, length, genre, description, audio URL, cover URL
 const tracksData = {
     "epilogue I": {
-        src: "https://bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4.ipfs.w3s.link/",
+        src: "https://bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4.ipfs.w3s.link/ipfs/bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4/epilogue%20I.m4a",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/IMG_0513.jpeg",
         length: "03:45",
         genre: "Synthwave"
@@ -15,7 +15,7 @@ const tracksData = {
         genre: "Synthwave"
     },
     "Neon Dreams": {
-        src: "https://github.com/ucho-thedestroyer/Io/raw/Backup/top/neon-dreams.mp3",
+        src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0514.jpeg",
         length: "04:10",
         genre: "Retro Pop"
