@@ -1,155 +1,185 @@
+// scr.js
+
+// Track storage: title, length, genre, description, audio URL, cover URL
+const tracksData = {
+    "Space Boogie": {
+        src: "https://github.com/Io/raw/Backup/top/space-boogie.mp3",
+        cover: "https://github.com/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg",
+        length: "03:45",
+        genre: "Synthwave"
+    },
+    "Neon Dreams": {
+        src: "https://github.com/Io/raw/Backup/top/neon-dreams.mp3",
+        cover: "https://github.com/Io/raw/Backup/docs/top/covers/IMG_0514.jpeg",
+        length: "04:10",
+        genre: "Retro Pop"
+    }
+};
+
+let queue = [];
+let currentTrackIndex = -1;
+let isPlaying = false;
+
+const audioPlayer = document.getElementById("audio-player");
+const audioSource = document.getElementById("audio-source");
+const albumCover = document.querySelector(".album-cover");
+const trackInfoSpan = document.querySelector(".track-info span strong");
+const trackLengthSpan = document.querySelector(".track-length");
+const progressBar = document.getElementById("progress-bar");
+const volumeSlider = document.querySelector(".volume-slider");
+
+// ================== ADD TO QUEUE ==================
 function addToQueue(trackElement) {
-  const title = trackElement.querySelector("h4").textContent;
-  const meta = trackElement.querySelector("p").textContent;
-  const desc = trackElement.querySelector(".desc").textContent;
+    const trackTitle = trackElement.querySelector("h4").innerText.trim();
+    if (!tracksData[trackTitle]) return;
 
-  const queue = document.getElementById("queue");
-  const li = document.createElement("li");
-  li.className = "queue-item"; li.setAttribute("draggable", "true");
- 
-  queue.appendChild(li);
+    // Add to queue
+    queue.push(trackTitle);
+
+    // Create queue list item with delete button
+    const li = document.createElement("li");
+    li.textContent = trackTitle + " ";
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.onclick = () => removeFromQueue(trackTitle, li);
+    li.appendChild(delBtn);
+    document.getElementById("queue").appendChild(li);
+
+    // If nothing is playing, load and start this track
+    if (currentTrackIndex === -1) {
+        currentTrackIndex = 0;
+        loadTrack(currentTrackIndex);
+        audioPlayer.play();
+        isPlaying = true;
+    }
 }
 
-function removeFromQueue(button) {
-  const item = button.parentElement;
-  item.remove();
+// ================== REMOVE FROM QUEUE ==================
+function removeFromQueue(title, element) {
+    queue = queue.filter(t => t !== title);
+    element.remove();
+
+    // If queue becomes empty
+    if (queue.length === 0) {
+        audioPlayer.pause();
+        currentTrackIndex = -1;
+        isPlaying = false;
+    }
+}
+
+// ================== LOAD TRACK ==================
+function loadTrack(index) {
+    const trackTitle = queue[index];
+    if (!trackTitle) return;
+
+    const data = tracksData[trackTitle];
+    audioSource.src = data.src;
+    audioPlayer.load();
+
+    albumCover.src = data.cover;
+    trackInfoSpan.textContent = trackTitle;
+    trackLengthSpan.textContent = `00:00 / ${data.length}`;
+}
+
+// ================== PLAYER CONTROLS ==================
+function playPause() {
+    if (isPlaying) {
+        audioPlayer.pause();
+    } else {
+        audioPlayer.play();
+    }
+    isPlaying = !isPlaying;
 }
 
 function prevTrack() {
-  alert("Previous track");
-}
-
-function playPause() {
-  alert("Play/Pause toggle");
-}
-
-function nextTrack() {
-  alert("Next track");
-}
-
-let currentTrackIndex = 0;
-const tracks = [
-  {
-    title: "Space Boogie",
-    file: "https://github.com/ucho-thedestroyer/Io/raw/Backup/top/space-boogie.mp3"
-  },
-  {
-    title: "Neon Dreams",
-    file: "https://github.com/ucho-thedestroyer/Io/raw/Backup/top/neon-dreams.mp3"
-  }
-];
-
-function playTrack(index) {
-  const player = document.getElementById("audio-player");
-  const source = document.getElementById("audio-source");
-  currentTrackIndex = index;
-  source.src = tracks[index].file;
-  player.load();
-  player.play();
-}
-
-function playPause() {
-  const player = document.getElementById("audio-player");
-  if (player.paused) {
-    player.play();
-  } else {
-    player.pause();
-  }
+    if (queue.length === 0) return;
+    currentTrackIndex = (currentTrackIndex - 1 + queue.length) % queue.length;
+    loadTrack(currentTrackIndex);
+    audioPlayer.play();
+    isPlaying = true;
 }
 
 function nextTrack() {
-  currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-  playTrack(currentTrackIndex);
+    if (queue.length === 0) return;
+    currentTrackIndex = (currentTrackIndex + 1) % queue.length;
+    loadTrack(currentTrackIndex);
+    audioPlayer.play();
+    isPlaying = true;
 }
 
-function prevTrack() {
-  currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-  playTrack(currentTrackIndex);
+// ================== DOWNLOAD POPUP ==================
+function downloadCurrentTrack() {
+    if (currentTrackIndex === -1) return;
+
+    const popup = window.open("", "DownloadPopup", "width=300,height=150");
+    popup.document.write(`
+        <html><head><title>Download Track</title></head>
+        <body style="background-color:black;color:#0ff;font-family:monospace;text-align:center;padding-top:20px;">
+            <p>Ready to download your track?</p>
+            <button onclick="window.opener.triggerDownload(); window.close();" style="background:#0ff;color:black;padding:5px 10px;">OK!</button>
+        </body></html>
+    `);
 }
 
-// Autoplay next track when current one ends
-document.addEventListener("DOMContentLoaded", function () {
-  const player = document.getElementById("audio-player");
-  player.addEventListener("ended", nextTrack);
+function triggerDownload() {
+    const trackTitle = queue[currentTrackIndex];
+    const link = document.createElement("a");
+    link.href = tracksData[trackTitle].src;
+    link.download = `${trackTitle}.mp3`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// ================== SHARE POPUP ==================
+function shareCurrentTrack() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        const btn = document.querySelector(".player-controls button:nth-child(3)");
+        const popup = document.createElement("div");
+        popup.textContent = "link copied!";
+        popup.style.position = "absolute";
+        popup.style.background = "#0ff";
+        popup.style.color = "black";
+        popup.style.fontSize = "12px";
+        popup.style.padding = "2px 5px";
+        popup.style.borderRadius = "3px";
+        popup.style.top = (btn.offsetTop - 20) + "px";
+        popup.style.left = btn.offsetLeft + "px";
+        popup.style.zIndex = "1000";
+        document.body.appendChild(popup);
+
+        setTimeout(() => {
+            popup.style.opacity = "0";
+            popup.style.transition = "opacity 0.5s";
+            setTimeout(() => popup.remove(), 500);
+        }, 1000);
+    });
+}
+
+// ================== PROGRESS & VOLUME ==================
+audioPlayer.addEventListener("timeupdate", () => {
+    if (audioPlayer.duration) {
+        const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+
+        const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+        const currentSeconds = String(Math.floor(audioPlayer.currentTime % 60)).padStart(2, "0");
+        trackLengthSpan.textContent = `${currentMinutes}:${currentSeconds} / ${tracksData[queue[currentTrackIndex]].length}`;
+    }
 });
 
-function updateProgress() {
-  const player = document.getElementById("audio-player");
-  const progressBar = document.getElementById("progress-bar");
-  if (player && progressBar) {
-    const percent = (player.currentTime / player.duration) * 100;
-    progressBar.style.width = percent + "%";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  const player = document.getElementById("audio-player");
-  player.addEventListener("ended", nextTrack);
-  player.addEventListener("timeupdate", updateProgress);
+volumeSlider.addEventListener("input", () => {
+    audioPlayer.volume = volumeSlider.value / 100;
 });
 
-// Allow clicking on queue item to play
-document.addEventListener("click", function (e) {
-  if (e.target.closest(".queue-item")) {
-    const title = e.target.closest(".queue-item").querySelector("strong").textContent;
-    const index = tracks.findIndex(t => t.title === title);
-    if (index !== -1) playTrack(index);
-  }
+// Auto-play next track when current ends
+audioPlayer.addEventListener("ended", () => {
+    if (queue.length > 0) {
+        nextTrack();
+    }
 });
 
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
 }
 
-function downloadCurrentTrack() {
-  const current = tracks[currentTrackIndex];
-  const a = document.createElement("a");
-  a.href = current.file;
-  a.download = current.title + ".mp3";
-  a.click();
-}
-
-function shareCurrentTrack() {
-  const current = tracks[currentTrackIndex];
-  const dummy = document.createElement("input");
-  const url = window.location.href + "#" + encodeURIComponent(current.title);
-  document.body.appendChild(dummy);
-  dummy.value = url;
-  dummy.select();
-  document.execCommand("copy");
-  document.body.removeChild(dummy);
-  alert("Track link copied!");
-}
-
-// Drag and drop reorder for queue
-let dragSrcEl = null;
-
-document.addEventListener("dragstart", function (e) {
-  if (e.target.classList.contains("queue-item")) {
-    dragSrcEl = e.target;
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", e.target.innerHTML);
-    e.target.classList.add("dragging");
-  }
-});
-
-document.addEventListener("dragover", function (e) {
-  if (e.preventDefault) e.preventDefault();
-  return false;
-});
-
-document.addEventListener("drop", function (e) {
-  if (e.stopPropagation) e.stopPropagation();
-  if (dragSrcEl && e.target.closest(".queue-item") !== dragSrcEl) {
-    const target = e.target.closest(".queue-item");
-    dragSrcEl.innerHTML = target.innerHTML;
-    target.innerHTML = e.dataTransfer.getData("text/html");
-  }
-  return false;
-});
-
-document.addEventListener("dragend", function (e) {
-  if (e.target.classList.contains("queue-item")) {
-    e.target.classList.remove("dragging");
-  }
-});
