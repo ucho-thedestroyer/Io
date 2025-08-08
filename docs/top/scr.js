@@ -42,11 +42,13 @@ function addToQueue(trackElement) {
     // Add to queue
     queue.push(trackTitle);
 
-    // Create queue list item with delete button
+    // Create queue list item with clickable [X] for delete
     const li = document.createElement("li");
     li.textContent = trackTitle + " ";
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
+    const delBtn = document.createElement("span");
+    delBtn.textContent = " [X]";
+    delBtn.style.color = "red";
+    delBtn.style.cursor = "pointer";
     delBtn.onclick = () => removeFromQueue(trackTitle, li);
     li.appendChild(delBtn);
     document.getElementById("queue").appendChild(li);
@@ -72,6 +74,7 @@ function removeFromQueue(title, element) {
         isPlaying = false;
     }
 }
+
 
 // ================== LOAD TRACK ==================
 function loadTrack(index) {
