@@ -69,7 +69,7 @@ body {
 }
 
 .queue-list {
-  flex: 0 0 33%; /* Don't grow, don't shrink, 40% width */
+  flex: 0 0 27%; /* Don't grow, don't shrink, 40% width */
 }
 
 .poll {
