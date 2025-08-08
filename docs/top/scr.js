@@ -197,3 +197,6 @@ audioPlayer.addEventListener("ended", () => {
         nextTrack();
     }
 });
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
