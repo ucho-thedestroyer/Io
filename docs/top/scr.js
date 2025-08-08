@@ -200,3 +200,4 @@ audioPlayer.addEventListener("ended", () => {
 
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
+}
