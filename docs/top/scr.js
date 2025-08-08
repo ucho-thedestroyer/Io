@@ -143,7 +143,7 @@ function triggerDownload() {
 // ================== SHARE POPUP ==================
 function shareCurrentTrack() {
     navigator.clipboard.writeText(window.location.href).then(() => {
-        const btn = document.querySelector(".player-controls button:nth-child(3)");
+        const btn = document.querySelector(".player-controls button:nth-child(6)");
         const popup = document.createElement("div");
         popup.textContent = "link copied!";
         popup.style.position = "absolute";
