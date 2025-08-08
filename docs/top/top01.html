@@ -232,14 +232,14 @@ function addToQueue(trackElement) {
   const queue = document.getElementById("queue");
   const li = document.createElement("li");
   li.className = "queue-item"; li.setAttribute("draggable", "true");
-  li.innerHTML = \`
+  li.innerHTML = \'
     <div>
       <strong>\${title}</strong><br/>
       <small>\${meta}</small><br/>
       <em>\${desc}</em>
     </div>
     <button class="remove-btn" onclick="removeFromQueue(this)">✖</button>
-  \`;
+  \';
   queue.appendChild(li);
 }
 
