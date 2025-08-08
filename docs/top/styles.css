@@ -137,6 +137,9 @@ body.dark-mode {
   border: 2px dashed #00ffcc;
 }
 
+.dark-mode #loading-spinner {
+  color: #ff66cc;
+}
 
 .queue-item.dragging {
   opacity: 0.5;
@@ -192,6 +195,6 @@ body.dark-mode {
   display: none;
   text-align: center;
   font-size: 14px;
-  color: #ff66cc;
+  color: #ffcc00;
   margin-bottom: 5px;
 }
