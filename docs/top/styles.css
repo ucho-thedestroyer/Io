@@ -141,3 +141,48 @@ body.dark-mode {
 .queue-item.dragging {
   opacity: 0.5;
 }
+
+.poll .question{
+  height: 40px; /* adjust as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 40px;
+  overflow-y: auto;
+    padding: 2px;
+    border-bottom: 1px solid #eee;
+}
+
+.poll .answers{
+    padding: 2.3px;
+}
+
+.poll .answers .answer{
+        cursor: pointer;
+    overflow: hidden;
+    border-radius: 1px;
+  width: 100%;
+  padding-bottom: 4px;
+    
+}
+
+.poll .answers .answer.selected{
+    border: 1px dashed #606a9c;
+}
+
+.poll .answers .answer span.percentage_value
+{
+    text-align: right;
+  padding-right: 2px;
+    color: #b0050e;
+}
+
+.poll .answers .answer span.percentage_bar {
+    display: block;
+    width: 0%; /* Start from 0 */
+    height: 8px;
+    background: #191970;
+    transition: width 200ms ease-in-out;
+    margin-top: 1px;
+
+}
+
