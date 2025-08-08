@@ -58,12 +58,24 @@ body {
   gap: 20px;
 }
 
-.track-list, .queue-list {
-  flex: 1;
+.track-list, .queue-list, .poll {
   background: #111144;
   padding: 15px;
   border: 3px double #00ffcc;
 }
+
+.track-list {
+  flex: 0 0 40%; /* Don't grow, don't shrink, 40% width */
+}
+
+.queue-list {
+  flex: 0 0 40%; /* Don't grow, don't shrink, 40% width */
+}
+
+.poll {
+  flex: 0 0 20%; /* Don't grow, don't shrink, 20% width */
+}
+
 
 .track {
   cursor: pointer;
