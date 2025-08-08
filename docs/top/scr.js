@@ -4,19 +4,19 @@
 const tracksData = {
     "epilogue I": {
         src: "https://bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4.ipfs.w3s.link/ipfs/bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4/epilogue%20I.m4a",
-        cover: "https://github.com/ucho/Io/raw/Backup/docs/tracks/covers/IMG_0513.jpeg",
+        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/IMG_0513.jpeg",
         length: "03:45",
         genre: "Synthwave"
     },
     "freak": {
         src: "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/ipfs/bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq/Freak%20Analog%20Textures3%20by%20easterntraveler.mp4",
-        cover: "https://github.com/ucho/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg",
+        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/tunnel04.jpeg",
         length: "03:45",
         genre: "Synthwave"
     },
     "Neon Dreams": {
         src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
-        cover: "https://github.com/ucho/Io/raw/Backup/docs/top/covers/IMG_0514.jpeg",
+        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0514.jpeg",
         length: "04:10",
         genre: "Retro Pop"
     }
