@@ -3,13 +3,13 @@
 // Track storage: title, length, genre, description, audio URL, cover URL
 const tracksData = {
     "epilogue I": {
-        src: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/epilogue I.m4a",
+        src: "https://bafybeifaxa7aiw6qrp6k7a3w3xf4j4rxxiwa3epbqhwkqmf7qg2lkh5ui4.ipfs.w3s.link/",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/IMG_0513.jpeg",
         length: "03:45",
         genre: "Synthwave"
     },
     "freak": {
-        src: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/freaktextures3.mp4",
+        src: "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg",
         length: "03:45",
         genre: "Synthwave"
