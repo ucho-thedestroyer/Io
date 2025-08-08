@@ -28,16 +28,15 @@ Personal Computer DOS - Version 1.0.x (c) Monochrome 1983<!DOCTYPE html>
     </div>
     
     <div class="player-controls">
-      <button onclick="toggleDarkMode()">dark_Mode</button>
+      <button onclick="prevTrack()">⏮</button>
+      <button onclick="playPause()">▶️</button>
+      <button onclick="nextTrack()">⏭</button>
+      <input type="range" min="0" max="100" value="50" class="volume-slider" />
+      <br>
+            <button onclick="toggleDarkMode()">dark_Mode</button>
       <button onclick="downloadCurrentTrack()">download</button>
       <button onclick="shareCurrentTrack()">share</button>
-    
-    
-    
-        <button onclick="prevTrack()">⏮</button>
-        <button onclick="playPause()">▶️</button>
-        <button onclick="nextTrack()">⏭</button>
-        <input type="range" min="0" max="100" value="50" class="volume-slider" />
+
       </div>
     </div>
     <div class="right-section">
