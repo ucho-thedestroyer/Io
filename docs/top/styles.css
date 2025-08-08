@@ -126,7 +126,8 @@ body.dark-mode {
 
 .dark-mode .music-player,
 .dark-mode .track-list,
-.dark-mode .queue-list {
+.dark-mode .queue-list,
+.dark-mode .poll {
   background-color: #222222;
   border-color: #ffcc00;
 }
