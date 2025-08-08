@@ -2,6 +2,12 @@
 
 // Track storage: title, length, genre, description, audio URL, cover URL
 const tracksData = {
+    "epilogue I": {
+        src: "https://github.com/ucho-thedestroyer/Io/raw/Backup/tracks/epilogue I.m4a",
+        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/covers/IMG_0513.jpeg",
+        length: "03:45",
+        genre: "Synthwave"
+    },
     "Space Boogie": {
         src: "https://github.com/ucho-thedestroyer/Io/raw/Backup/top/space-boogie.mp3",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0513.jpeg",
