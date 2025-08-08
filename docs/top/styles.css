@@ -143,10 +143,10 @@ body.dark-mode {
 }
 
 .poll .question{
-  height: 40px; /* adjust as needed */
+  height: 54px; /* adjust as needed */
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 40px;
+  max-height: 54px;
   overflow-y: auto;
     padding: 2px;
     border-bottom: 1px solid #eee;
