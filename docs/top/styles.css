@@ -64,7 +64,7 @@ body.dark-mode a:active {
   height: 150px;
   max-width: 100%;
   height: auto;
-  border: 2px dashed #00ffcc;
+  border: 2px dashed #ffcc00;
   object-fit: cover;
 }
 
@@ -129,7 +129,7 @@ body.dark-mode a:active {
   height: 150px;
   max-width: 100%;
   height: auto;
-  border: 2px dashed #00ffcc;
+  border: 2px dashed #ffcc00;
   object-fit: cover;
 }
 
