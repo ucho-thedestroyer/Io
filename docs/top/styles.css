@@ -85,19 +85,24 @@ body.dark-mode a:active {
 }
 
 
+
+/* Progress bar container in light mode */
 .progress-container {
   width: 100%;
-  height: 6px;
-  background: #111166;
-  border-radius: 3px;
+  height: 8px;
+  background-color: #181800; /* same as light mode button background */
+  border: 1px solid #ffcc00; /* same as light mode button border */
+  border-radius: 2px;
   overflow: hidden;
 }
 
+/* Progress bar fill in light mode */
 .progress-bar {
   height: 100%;
-  width: 0%;
-  background: #ff66cc;
+  width: 0;
+  background-color: #ffcc00; /* fill matches button border/text color */
 }
+
 
 .player-controls {
   display: flex;
