@@ -317,11 +317,11 @@ body.dark-mode .poll .question{
 /* Small screens: 3rd element below full width */
 @media (max-width: 900px) {
   .track-list {
-    flex: 0 0 calc(46% - 10px); /* subtract gap for accuracy */
+    flex: 0 0 calc(54% - 10px); /* subtract gap for accuracy */
   }
 
   .queue-list {
-    flex: 0 0 calc(54% - 10px); /* fills the rest of the first row */
+    flex: 0 0 calc(46% - 10px); /* fills the rest of the first row */
   }
 
   .poll {
@@ -332,11 +332,11 @@ body.dark-mode .poll .question{
 /* Phones: track + queue stay side by side, poll full width below */
 @media (max-width: 600px) {
   .track-list {
-    flex: 0 0 calc(48% - 10px); /* same ratio as bigger layouts */
+    flex: 0 0 calc(46% - 10px); /* same ratio as bigger layouts */
   }
 
   .queue-list {
-    flex: 0 0 calc(28% - 10px);
+    flex: 0 0 calc(24% - 10px);
   }
 
   .poll {
