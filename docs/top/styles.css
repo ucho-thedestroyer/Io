@@ -222,14 +222,15 @@ body.dark-mode .right-section img {
 }
 
 body.dark-mode .progress-container {
-  background: #111122;
-  
+  background-color: #111122;
+  border: 1px solid #00ffaa; 
 }
+
 
 
 body.dark-mode .progress-bar {
   background: #00ffaa;
-border: #00ffaa;
+
 }
 
 body.dark-mode .player-controls button,
