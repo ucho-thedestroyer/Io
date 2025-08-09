@@ -154,7 +154,7 @@ body.dark-mode a:active {
 }
 
 .queue-list {
-  flex: 0 0 27%;
+  flex: 0 0 27.4%;
 }
 
 .poll {
@@ -249,10 +249,10 @@ body.dark-mode .player-controls input[type="range"] {
 }
 
 .poll .question{
-  height: 54px; /* adjust as needed */
+  height: 58px; /* adjust as needed */
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 54px;
+  max-height: 60px;
   overflow-y: auto;
     padding: 2px;
     border-bottom: 1px dashed #00ffaa;
