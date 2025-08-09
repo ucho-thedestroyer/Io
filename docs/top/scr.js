@@ -33,6 +33,7 @@ const trackInfoSpan = document.querySelector(".track-info span strong");
 const trackLengthSpan = document.querySelector(".track-length");
 const progressBar = document.getElementById("progress-bar");
 const volumeSlider = document.querySelector(".volume-slider");
+const downloadButton = document.querySelector(".player-controls button.download-btn"); // Assign class to your download button in HTML
 
 // ================== ADD TO QUEUE ==================
 function addToQueue(trackElement) {
@@ -56,6 +57,8 @@ function addToQueue(trackElement) {
         currentTrackIndex = 0;
         preloadAndPlay(currentTrackIndex);
     }
+
+    updateDownloadButtonState();
 }
 
 // ================== REMOVE FROM QUEUE ==================
@@ -67,7 +70,13 @@ function removeFromQueue(title, element) {
         audioPlayer.pause();
         currentTrackIndex = -1;
         isPlaying = false;
+    } else if (currentTrackIndex >= queue.length) {
+        // Adjust currentTrackIndex if out of range
+        currentTrackIndex = queue.length - 1;
+        preloadAndPlay(currentTrackIndex);
     }
+
+    updateDownloadButtonState();
 }
 
 // ================== PRELOAD & PLAY TRACK ==================
@@ -77,7 +86,7 @@ function preloadAndPlay(index) {
 
     const data = tracksData[trackTitle];
     audioSource.src = data.src;
-    audioPlayer.preload = "auto"; // Ensure preload
+    audioPlayer.preload = "auto";
     audioPlayer.load();
 
     albumCover.src = data.cover;
@@ -99,13 +108,16 @@ function preloadAndPlay(index) {
     bufferingNotice.style.zIndex = "2000";
     document.body.appendChild(bufferingNotice);
 
-    // Wait until the file is fully buffered
-    audioPlayer.addEventListener("canplaythrough", function handler() {
-        audioPlayer.removeEventListener("canplaythrough", handler);
-        document.body.removeChild(bufferingNotice);
+    function canPlayHandler() {
+        audioPlayer.removeEventListener("canplaythrough", canPlayHandler);
+        if (document.body.contains(bufferingNotice)) {
+            document.body.removeChild(bufferingNotice);
+        }
         audioPlayer.play();
         isPlaying = true;
-    });
+    }
+
+    audioPlayer.addEventListener("canplaythrough", canPlayHandler);
 }
 
 // ================== LOAD TRACK ==================
@@ -159,6 +171,7 @@ function downloadCurrentTrack() {
     `);
 }
 
+// ================== TRIGGER DOWNLOAD ==================
 function triggerDownload() {
     const trackTitle = queue[currentTrackIndex];
     const link = document.createElement("a");
@@ -171,7 +184,7 @@ function triggerDownload() {
 
 // ================== MINI POPUP ABOVE DOWNLOAD BUTTON ==================
 function showMiniPopupAboveDownload(text) {
-    const btn = document.querySelector(".player-controls button:nth-child(5)"); // your download button
+    const btn = downloadButton;
     const popup = document.createElement("div");
     popup.textContent = text;
     popup.style.position = "absolute";
@@ -180,9 +193,13 @@ function showMiniPopupAboveDownload(text) {
     popup.style.fontSize = "12px";
     popup.style.padding = "2px 5px";
     popup.style.borderRadius = "3px";
-    popup.style.top = (btn.offsetTop - 20) + "px";
-    popup.style.left = btn.offsetLeft + "px";
+
+    // Calculate position relative to button and page scroll
+    const rect = btn.getBoundingClientRect();
+    popup.style.top = window.scrollY + rect.top - 25 + "px";
+    popup.style.left = window.scrollX + rect.left + "px";
     popup.style.zIndex = "1000";
+
     document.body.appendChild(popup);
 
     setTimeout(() => {
@@ -195,7 +212,7 @@ function showMiniPopupAboveDownload(text) {
 // ================== SHARE POPUP ==================
 function shareCurrentTrack() {
     navigator.clipboard.writeText(window.location.href).then(() => {
-        const btn = document.querySelector(".player-controls button:nth-child(6)");
+        const btn = document.querySelector(".player-controls button.share-btn"); // Add class to share button in HTML
         const popup = document.createElement("div");
         popup.textContent = "link copied!";
         popup.style.position = "absolute";
@@ -204,9 +221,12 @@ function shareCurrentTrack() {
         popup.style.fontSize = "12px";
         popup.style.padding = "2px 5px";
         popup.style.borderRadius = "3px";
-        popup.style.top = (btn.offsetTop - 20) + "px";
-        popup.style.left = btn.offsetLeft + "px";
+
+        const rect = btn.getBoundingClientRect();
+        popup.style.top = window.scrollY + rect.top - 25 + "px";
+        popup.style.left = window.scrollX + rect.left + "px";
         popup.style.zIndex = "1000";
+
         document.body.appendChild(popup);
 
         setTimeout(() => {
@@ -219,7 +239,7 @@ function shareCurrentTrack() {
 
 // ================== PROGRESS & VOLUME ==================
 audioPlayer.addEventListener("timeupdate", () => {
-    if (audioPlayer.duration) {
+    if (audioPlayer.duration && currentTrackIndex !== -1) {
         const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
         progressBar.style.width = `${progressPercent}%`;
 
@@ -238,8 +258,27 @@ audioPlayer.addEventListener("ended", () => {
     if (queue.length > 0) {
         nextTrack();
     }
+    updateDownloadButtonState();
 });
 
+// ================== UPDATE DOWNLOAD BUTTON STATE ==================
+function updateDownloadButtonState() {
+    if (!downloadButton) return;
+    if (currentTrackIndex === -1 || queue.length === 0) {
+        downloadButton.disabled = true;
+        downloadButton.style.opacity = "0.5"; // visually indicate disabled
+        downloadButton.style.cursor = "not-allowed";
+    } else {
+        downloadButton.disabled = false;
+        downloadButton.style.opacity = "1";
+        downloadButton.style.cursor = "pointer";
+    }
+}
+
+// Call once on page load
+updateDownloadButtonState();
+
+// ================== TOGGLE DARK MODE ==================
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 }
