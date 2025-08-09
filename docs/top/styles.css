@@ -337,6 +337,18 @@ body.dark-mode .poll .question{
     border-bottom: 1px dashed #00ffaa;
   }
 
+body.dark-mode .player-controls button:disabled {
+  background: linear-gradient(135deg, #4d4d1a 0%, #666622 100%); /* muted olive yellow gradient */
+  border-color: #999977;   /* soft pale yellow border */
+  color: #cccc99;          /* pale creamy yellow text */
+  cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none;
+  box-shadow: none;
+  transition: none;
+}
+
+
 .queue-item.dragging {
   opacity: 0.5;
 }
