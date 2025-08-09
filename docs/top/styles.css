@@ -330,12 +330,18 @@ body.dark-mode .player-controls input[type="range"] {
   }
 }
 
-/* Phones: stack everything full width */
+/* Phones: track + queue stay side by side, poll full width below */
 @media (max-width: 600px) {
-  .track-list,
-  .queue-list,
+  .track-list {
+    flex: 0 0 calc(54% - 10px); /* same ratio as bigger layouts */
+  }
+
+  .queue-list {
+    flex: 0 0 calc(46% - 10px);
+  }
+
   .poll {
-    flex: 0 0 100%; /* full width */
+    flex: 0 0 100%; /* force full width below */
   }
 }
 
