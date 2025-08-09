@@ -7,8 +7,8 @@ let poll = {
     selectanswer: -1,
     messages: [
         "Rockin' it!",
-        "Thanks for listening!",
-        "Not for everyone",
+        "Thanks!",
+        "Not for all",
         "Oh well"
     ]
 };
