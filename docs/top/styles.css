@@ -180,6 +180,30 @@ body.dark-mode {
 .dark-mode .right-section .gif-placeholder {
   border: 2px dashed #00ffcc;
 }
+/* Dark mode overrides for music player */
+body.dark-mode .music-player {
+  background: #000022; /* darker background for dark mode */
+}
+
+body.dark-mode .left-section img.album-cover,
+body.dark-mode .right-section img {
+  border-color: #00ffaa; /* tweak border in dark mode if you want */
+}
+
+body.dark-mode .progress-container {
+  background: #111122;
+}
+
+body.dark-mode .progress-bar {
+  background: #00ffaa;
+}
+
+body.dark-mode .player-controls button,
+body.dark-mode .player-controls input[type="range"] {
+  background: #111122;
+  border-color: #00ffaa;
+  color: #00ffaa;
+}
 
 .queue-item.dragging {
   opacity: 0.5;
