@@ -33,7 +33,7 @@ const trackInfoSpan = document.querySelector(".track-info span strong");
 const trackLengthSpan = document.querySelector(".track-length");
 const progressBar = document.getElementById("progress-bar");
 const volumeSlider = document.querySelector(".volume-slider");
-const downloadButton = document.querySelector(".player-controls button.download-btn"); // Assign class to your download button in HTML
+const downloadButton = document.querySelector(".player-controls button.download-btn"); // Make sure button has class "download-btn"
 
 // ================== ADD TO QUEUE ==================
 function addToQueue(trackElement) {
@@ -181,7 +181,6 @@ function triggerDownload() {
     document.body.removeChild(link);
 }
 
-
 // ================== SHARE POPUP ==================
 function shareCurrentTrack() {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -248,10 +247,11 @@ function updateDownloadButtonState() {
     }
 }
 
-// Call once on page load
+// Call once on page load to set initial state
 updateDownloadButtonState();
 
 // ================== TOGGLE DARK MODE ==================
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 }
+
