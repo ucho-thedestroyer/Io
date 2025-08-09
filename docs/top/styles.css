@@ -7,7 +7,6 @@ body {
 }
 
 
-
 .music-player {
   display: flex;
   align-items: center;
@@ -16,16 +15,20 @@ body {
   padding: 10px;
   gap: 15px;
   flex-wrap: wrap; /* allows stacking in small screens */
+  max-width: 100%; /* prevent oversized growth */
 }
 
-
-
+/* Album cover — original 150x150, scales down if needed */
 .left-section img.album-cover {
-  max-width: 80px;
+  width: 150px;
+  height: 150px;
+  max-width: 100%;
   height: auto;
   border: 2px solid #00ffcc;
+  object-fit: cover;
 }
 
+/* Controls section stays flexible */
 .controls-section {
   flex: 1;
   min-width: 200px;
@@ -57,7 +60,7 @@ body {
 
 .player-controls {
   display: flex;
-  flex-wrap: wrap; /* buttons will wrap instead of shrinking */
+  flex-wrap: wrap; /* buttons wrap instead of shrinking */
   gap: 8px;
 }
 
@@ -75,15 +78,19 @@ body {
   flex: 1;
 }
 
+/* GIF — original 172x150, scales down if needed */
 .right-section {
   display: flex;
   align-items: center;
 }
 
 .right-section img {
-  max-width: 80px;
+  width: 172px;
+  height: 150px;
+  max-width: 100%;
   height: auto;
   border: 2px solid #00ffcc;
+  object-fit: cover;
 }
 
 .lists-container {
@@ -254,7 +261,8 @@ body.dark-mode {
 }
 
 
-/* Responsive behavior */
+
+/* Responsive stacking */
 @media (max-width: 800px) {
   .music-player {
     flex-direction: column;
@@ -275,12 +283,10 @@ body.dark-mode {
     justify-content: center;
   }
 
-  .right-section img {
-    max-width: 100px;
-  }
-
   .player-controls {
     justify-content: center;
   }
 }
+
+
 
