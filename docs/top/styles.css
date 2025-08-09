@@ -267,6 +267,7 @@ body.dark-mode .player-controls input[type="range"] {
 .poll .answers .answer{
         cursor: pointer;
     overflow: hidden;
+  text-overflow: ellipsis;
     border-radius: 1px;
   width: 100%;
   padding-bottom: 4px;
