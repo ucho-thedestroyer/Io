@@ -325,11 +325,11 @@ body.dark-mode .player-controls input[type="range"] {
 /* Phones: track + queue stay side by side, poll full width below */
 @media (max-width: 600px) {
   .track-list {
-    flex: 0 0 calc(52% - 10px); /* same ratio as bigger layouts */
+    flex: 0 0 calc(54% - 10px); /* same ratio as bigger layouts */
   }
 
   .queue-list {
-    flex: 0 0 calc(44% - 10px);
+    flex: 0 0 calc(32% - 10px);
   }
 
   .poll {
