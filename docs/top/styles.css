@@ -84,44 +84,31 @@ body.dark-mode a:active {
   font-size: 14px;
 }
 
-
-
 /* Progress bar container in light mode */
 .progress-container {
   width: 100%;
   height: 8px;
-  background-color: #181800; /* same as light mode button background */
-  border: 1px solid #ffcc00; /* same as light mode button border */
-  border-radius: 2px;
+  background-color: #181800; /* light mode button background */
+  border: 1px solid #ffcc00; /* light mode button border */
+  border-radius: 2px; /* retro sharp corner */
   overflow: hidden;
 }
-body.progress-container {
-  background: #ffcc00;
-}
 
-body.progress-bar {
-  background: #181800;
-}
-
-body.player-controls input[type="range"] {
-  background: #111122;
-  border-color: #ffcc00;
-  color: #4444aa;
-}
 /* Progress bar fill in light mode */
 .progress-bar {
   height: 100%;
   width: 0;
-  background-color: #ffcc00; /* fill matches button border/text color */
+  background-color: #ffcc00; /* matches button border/text color */
 }
 
-
+/* Player controls container */
 .player-controls {
   display: flex;
   flex-wrap: wrap; /* buttons wrap instead of shrinking */
   gap: 8px;
 }
 
+/* Player control buttons and sliders */
 .player-controls button,
 .player-controls input[type="range"] {
   padding: 5px 8px;
