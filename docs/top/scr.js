@@ -21,7 +21,6 @@ const tracksData = {
         genre: "Retro Pop"
     }
 };
-
 let queue = [];
 let currentTrackIndex = -1;
 let isPlaying = false;
@@ -33,8 +32,7 @@ const trackInfoSpan = document.querySelector(".track-info span strong");
 const trackLengthSpan = document.querySelector(".track-length");
 const progressBar = document.getElementById("progress-bar");
 const volumeSlider = document.querySelector(".volume-slider");
-const downloadButton = document.getElementById("download-btn");
-
+const downloadButton = document.getElementById("download-btn"); // Updated to select by ID
 
 // ================== ADD TO QUEUE ==================
 function addToQueue(trackElement) {
@@ -182,6 +180,7 @@ function triggerDownload() {
     document.body.removeChild(link);
 }
 
+
 // ================== SHARE POPUP ==================
 function shareCurrentTrack() {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -248,11 +247,12 @@ function updateDownloadButtonState() {
     }
 }
 
-// Call once on page load to set initial state
+// Call once on page load
 updateDownloadButtonState();
 
 // ================== TOGGLE DARK MODE ==================
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 }
+
 
