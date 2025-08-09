@@ -180,7 +180,8 @@ body.dark-mode a:active {
 .queue-item {
   display: flex;
   justify-content: space-between;
-  padding: 5px 0;
+  padding: 5px 0;      /* keep vertical padding */
+  padding-left: 4px;   /* reduced left padding */
   border-bottom: 1px dashed #00ffcc;
 }
 
