@@ -124,6 +124,31 @@ body.dark-mode a:active {
   flex: 1;
 }
 
+/* Tip buttons inside player controls */
+.player-controls .tip-link {
+  display: inline-block;
+}
+
+.player-controls .tip-btn {
+  padding: 5px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 2px;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  background: linear-gradient(135deg, #181800 0%, #222222 100%);
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.1s;
+}
+
+/* Hover/active states for light mode */
+.player-controls .tip-btn:hover {
+  background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+  color: #181800;
+  transform: scale(1.05);
+}
+
+
 /* GIF — original 172x150, scales down if needed */
 .right-section {
   display: flex;
@@ -289,6 +314,18 @@ body.dark-mode .player-controls input[type="range"] {
   background: #111122;
   border-color: #00ffaa;
   color: #00ffaa;
+}
+/* Dark mode: override colors & gradient */
+body.dark-mode .player-controls .tip-btn {
+  background: linear-gradient(135deg, #00ffcc 0%, #008888 100%);
+  border: 1px solid #181800;
+  color: #181800;
+}
+
+body.dark-mode .player-controls .tip-btn:hover {
+  background: linear-gradient(135deg, #181800 0%, #000000 100%);
+  color: #00ffcc;
+  transform: scale(1.05);
 }
 
 body.dark-mode .poll .question{
