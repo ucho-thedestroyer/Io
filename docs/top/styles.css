@@ -24,7 +24,7 @@ body {
   height: 150px;
   max-width: 100%;
   height: auto;
-  border: 2px solid #00ffcc;
+  border: 2px dashed #00ffcc;
   object-fit: cover;
 }
 
@@ -89,7 +89,7 @@ body {
   height: 150px;
   max-width: 100%;
   height: auto;
-  border: 2px solid #00ffcc;
+  border: 2px dashed #00ffcc;
   object-fit: cover;
 }
 
@@ -168,7 +168,7 @@ body.dark-mode {
   color: #ffcc00;
 }
 
-.dark-mode .music-player,
+
 .dark-mode .track-list,
 .dark-mode .queue-list,
 .dark-mode .poll {
@@ -176,10 +176,6 @@ body.dark-mode {
   border-color: #ffcc00;
 }
 
-.dark-mode .album-cover,
-.dark-mode .right-section .gif-placeholder {
-  border: 2px dashed #00ffcc;
-}
 /* Dark mode overrides for music player */
 body.dark-mode .music-player {
   background: #000022; /* darker background for dark mode */
@@ -187,7 +183,8 @@ body.dark-mode .music-player {
 
 body.dark-mode .left-section img.album-cover,
 body.dark-mode .right-section img {
-  border-color: #00ffaa; /* tweak border in dark mode if you want */
+  border: 2px dashed #00ffcc;
+  border-color: #00ffcc; /* tweak border in dark mode if you want */
 }
 
 body.dark-mode .progress-container {
