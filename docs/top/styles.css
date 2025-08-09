@@ -330,6 +330,15 @@ body.dark-mode .player-controls input[type="range"] {
   }
 }
 
+/* Phones: stack everything full width */
+@media (max-width: 600px) {
+  .track-list,
+  .queue-list,
+  .poll {
+    flex: 0 0 100%; /* full width */
+  }
+}
+
 
 
 /* Responsive stacking */
