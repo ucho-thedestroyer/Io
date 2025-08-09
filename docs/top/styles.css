@@ -101,6 +101,7 @@ body.dark-mode a:active {
   background-color: #ffcc00; /* matches button border/text color */
 }
 
+
 /* Player controls container */
 .player-controls {
   display: flex;
@@ -194,19 +195,6 @@ body {
   font-family: 'Press Start 2P', monospace;
 }
 
-.progress-container {
-  width: 100%;
-  height: 10px;
-  background: #222266;
-  border: 1px solid #00ffcc;
-  margin-bottom: 10px;
-}
-
-.progress-bar {
-  height: 100%;
-  width: 0;
-  background-color: #00ffcc;
-}
 
 body.dark-mode {
   background-color: #000000;
