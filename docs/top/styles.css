@@ -242,6 +242,10 @@ body.dark-mode .player-controls input[type="range"] {
   color: #00ffaa;
 }
 
+body.poll .question{
+    border-bottom: 1px dashed #00ffaa;
+  }
+
 .queue-item.dragging {
   opacity: 0.5;
 }
@@ -254,7 +258,7 @@ body.dark-mode .player-controls input[type="range"] {
   overflow-y: auto;
     padding-top: 15px;
   padding: 2px;
-    border-bottom: 1px dashed #00ffaa;
+    border-bottom: 1px dashed #ffcc00;
   line-height: 1.3; /* slightly increased spacing */
 }
 
