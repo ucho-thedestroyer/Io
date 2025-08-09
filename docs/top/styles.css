@@ -14,8 +14,10 @@ body {
   background: #111144;
   padding: 10px;
   gap: 15px;
+  border: 3px double #00ffcc;
   flex-wrap: wrap; /* allows stacking in small screens */
-  max-width: 100%; /* prevent oversized growth */
+  max-width: 100%; /* 
+  prevent oversized growth */
 }
 
 /* Album cover — original 150x150, scales down if needed */
@@ -55,7 +57,7 @@ body {
 .progress-bar {
   height: 100%;
   width: 0%;
-  background: #00ffcc;
+  background: #ff66cc;
 }
 
 .player-controls {
@@ -179,6 +181,7 @@ body.dark-mode {
 /* Dark mode overrides for music player */
 body.dark-mode .music-player {
   background: #000022; /* darker background for dark mode */
+  border: 3px double #ff00cc;
 }
 
 body.dark-mode .left-section img.album-cover,
