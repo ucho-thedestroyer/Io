@@ -61,6 +61,7 @@ body {
 
 .lists-container {
   display: flex;
+  flex-wrap: wrap;
   margin-top: 20px;
   gap: 20px;
 }
@@ -69,18 +70,20 @@ body {
   background: #111144;
   padding: 15px;
   border: 3px double #00ffcc;
+  box-sizing: border-box;
 }
 
+/* Default: Large screens */
 .track-list {
-  flex: 0 0 46%; /* Don't grow, don't shrink, 40% width */
+  flex: 0 0 46%;
 }
 
 .queue-list {
-  flex: 0 0 27%; /* Don't grow, don't shrink, 40% width */
+  flex: 0 0 27%;
 }
 
 .poll {
-  flex: 0 0 14%; /* Don't grow, don't shrink, 20% width */
+  flex: 0 0 14%;
 }
 
 
@@ -205,4 +208,20 @@ body.dark-mode {
 /* Spinner color when dark mode is active */
 .dark-mode #loading-spinner {
   color: #ffb3ff; /* Dark mode color (lighter pink for visibility) */
+}
+
+
+/* Small screens: 3rd element below full width */
+@media (max-width: 900px) {
+  .track-list {
+    flex: 0 0 calc(46% - 10px); /* subtract gap for accuracy */
+  }
+
+  .queue-list {
+    flex: 0 0 calc(54% - 10px); /* fills the rest of the first row */
+  }
+
+  .poll {
+    flex: 0 0 100%; /* full width below */
+  }
 }
