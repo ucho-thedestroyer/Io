@@ -150,7 +150,7 @@ body.dark-mode a:active {
 
 /* Default: Large screens */
 .track-list {
-  flex: 0 0 56%;
+  flex: 0 0 55%;
 }
 
 .queue-list {
@@ -256,6 +256,7 @@ body.dark-mode .player-controls input[type="range"] {
   overflow-y: auto;
     padding: 2px;
     border-bottom: 1px dashed #00ffaa;
+  line-height: 1.3; /* slightly increased spacing */
 }
 
 .poll .answers{
@@ -268,7 +269,7 @@ body.dark-mode .player-controls input[type="range"] {
     border-radius: 1px;
   width: 100%;
   padding-bottom: 4px;
-    
+    line-height: 1.3; /* slightly increased spacing */
 }
 
 .poll .answers .answer.selected{
