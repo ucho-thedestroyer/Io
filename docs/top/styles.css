@@ -260,14 +260,16 @@ body.dark-mode a:active {
 }
 
 .player-controls button:disabled {
-  background-color: #555555;   /* greyed out background */
-  border-color: #999999;       /* lighter grey border */
-  color: #cccccc;              /* light grey text */
-  cursor: not-allowed;         /* show not-allowed cursor */
-  opacity: 0.6;                /* slightly transparent */
-  pointer-events: none;        /* prevent interactions */
-  transition: none;            /* disable hover transitions */
+  background: linear-gradient(135deg, #333300 0%, #555522 100%); /* muted dark yellow/olive */
+  border-color: #999966;   /* soft, desaturated yellow border */
+  color: #bbbb88;          /* pale yellow text */
+  cursor: not-allowed;
+  opacity: 0.7;            /* slight transparency for subtlety */
+  pointer-events: none;
+  box-shadow: none;        /* no glow */
+  transition: none;
 }
+
 
 body {
   font-family: 'Press Start 2P', monospace;
