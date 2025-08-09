@@ -124,16 +124,6 @@ body.dark-mode a:active {
   flex: 1;
 }
 
-.player-controls button:disabled {
-  background-color: #555555;   /* greyed out background */
-  border-color: #999999;       /* lighter grey border */
-  color: #cccccc;              /* light grey text */
-  cursor: not-allowed;         /* show not-allowed cursor */
-  opacity: 0.6;                /* slightly transparent */
-  pointer-events: none;        /* prevent interactions */
-  transition: none;            /* disable hover transitions */
-}
-
 
 /* Tip buttons inside player controls */
 .player-controls .tip-link {
@@ -269,6 +259,15 @@ body.dark-mode a:active {
 
 }
 
+.player-controls button:disabled {
+  background-color: #555555;   /* greyed out background */
+  border-color: #999999;       /* lighter grey border */
+  color: #cccccc;              /* light grey text */
+  cursor: not-allowed;         /* show not-allowed cursor */
+  opacity: 0.6;                /* slightly transparent */
+  pointer-events: none;        /* prevent interactions */
+  transition: none;            /* disable hover transitions */
+}
 
 body {
   font-family: 'Press Start 2P', monospace;
