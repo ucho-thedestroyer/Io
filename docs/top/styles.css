@@ -329,21 +329,26 @@ body.dark-mode .poll .question{
   }
 }
 
-/* Phones: track + queue stay side by side, poll full width below */
 @media (max-width: 600px) {
+  .lists-container {
+    display: flex;
+    flex-direction: row; /* ensure row layout */
+    flex-wrap: nowrap;   /* prevent wrapping */
+    gap: 10px;           /* maintain gap */
+  }
+
   .track-list {
-    flex: 0 0 calc(46% - 10px); /* same ratio as bigger layouts */
+    flex: 0 0 calc(54% - 10px);
   }
 
   .queue-list {
-    flex: 0 0 calc(24% - 10px);
+    flex: 0 0 calc(46% - 10px);
   }
 
   .poll {
-    flex: 0 0 100%; /* force full width below */
+    flex: 0 0 100%; /* force poll below */
   }
 }
-
 
 
 /* Responsive stacking */
