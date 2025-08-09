@@ -1,15 +1,15 @@
 
 let poll = {
-    question: "How do you like the music so far?",
-    answers: ["rockin' it!", "I enjoyed that", "what the fuck?", "skipped at 0:10"],
+    question: "How's the music?",
+    answers: ["Oof!", "I enjoyed that", "what the...?", "skipped at 0:02"],
     pollcount: 100,
     answerweight: [60, 10, 20, 10], // sum = 100
     selectanswer: -1,
     messages: [
-        "Yeah! 🎸",
-        "Thanks for listening! 🎶",
-        "Not for everyone 😅",
-        "Not every track hits ⏭️"
+        "Rockin' it!",
+        "Thanks for listening!",
+        "Not for everyone",
+        "Oh well"
     ]
 };
 
