@@ -95,7 +95,19 @@ body.dark-mode a:active {
   border-radius: 2px;
   overflow: hidden;
 }
+body.progress-container {
+  background: #ffcc00;
+}
 
+body.progress-bar {
+  background: #181800;
+}
+
+body.player-controls input[type="range"] {
+  background: #111122;
+  border-color: #ffcc00;
+  color: #4444aa;
+}
 /* Progress bar fill in light mode */
 .progress-bar {
   height: 100%;
