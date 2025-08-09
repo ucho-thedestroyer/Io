@@ -242,7 +242,7 @@ body.dark-mode .player-controls input[type="range"] {
   color: #00ffaa;
 }
 
-body.poll .question{
+body.dark-mode .poll .question{
     border-bottom: 1px dashed #00ffaa;
   }
 
