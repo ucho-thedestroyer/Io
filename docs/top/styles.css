@@ -181,7 +181,7 @@ body.dark-mode {
 /* Dark mode overrides for music player */
 body.dark-mode .music-player {
   background: #000022; /* darker background for dark mode */
-  border: 3px double #ff00cc;
+  border: 3px double #ffcc00;
 }
 
 body.dark-mode .left-section img.album-cover,
