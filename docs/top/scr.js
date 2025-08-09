@@ -33,7 +33,8 @@ const trackInfoSpan = document.querySelector(".track-info span strong");
 const trackLengthSpan = document.querySelector(".track-length");
 const progressBar = document.getElementById("progress-bar");
 const volumeSlider = document.querySelector(".volume-slider");
-const downloadButton = document.querySelector(".player-controls button.download-btn"); // Make sure button has class "download-btn"
+const downloadButton = document.getElementById("download-btn");
+
 
 // ================== ADD TO QUEUE ==================
 function addToQueue(trackElement) {
