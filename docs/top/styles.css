@@ -330,24 +330,33 @@ body.dark-mode .poll .question{
   }
 }
 
+/* Phones: keep track + queue side-by-side (shrink if needed), poll full width below */
 @media (max-width: 600px) {
   .lists-container {
+    /* keep normal flex behavior but allow wrapping so .poll can go below */
     display: flex;
-    flex-direction: row; /* ensure row layout */
-    flex-wrap: nowrap;   /* prevent wrapping */
-    gap: 10px;           /* maintain gap */
+    flex-wrap: wrap;
+    gap: 10px; /* optional, smaller gap on phones */
   }
 
+  /* Keep track and queue on one row by giving them basis percentages
+     but allow shrinking (flex-shrink: 1). min-width:0 fixes flex overflow issues. */
   .track-list {
-    flex: 0 0 calc(54% - 10px);
+    flex: 1 1 54%;   /* grow 1, shrink 1, basis 54% */
+    min-width: 0;    /* important to allow content to shrink */
+    order: 1;
   }
 
   .queue-list {
-    flex: 0 0 calc(46% - 10px);
+    flex: 1 1 46%;   /* grow 1, shrink 1, basis 46% */
+    min-width: 0;
+    order: 1;
   }
 
+  /* Force poll onto its own row, full width */
   .poll {
-    flex: 0 0 100%; /* force poll below */
+    flex: 0 0 100%;
+    order: 2;
   }
 }
 
