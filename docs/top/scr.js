@@ -157,7 +157,6 @@ function nextTrack() {
 // ================== DOWNLOAD POPUP ==================
 function downloadCurrentTrack() {
     if (currentTrackIndex === -1) {
-        showMiniPopupAboveDownload("first choose a song!");
         return;
     }
 
@@ -182,32 +181,6 @@ function triggerDownload() {
     document.body.removeChild(link);
 }
 
-// ================== MINI POPUP ABOVE DOWNLOAD BUTTON ==================
-function showMiniPopupAboveDownload(text) {
-    const btn = downloadButton;
-    const popup = document.createElement("div");
-    popup.textContent = text;
-    popup.style.position = "absolute";
-    popup.style.background = "#0ff";
-    popup.style.color = "black";
-    popup.style.fontSize = "12px";
-    popup.style.padding = "2px 5px";
-    popup.style.borderRadius = "3px";
-
-    // Calculate position relative to button and page scroll
-    const rect = btn.getBoundingClientRect();
-    popup.style.top = window.scrollY + rect.top - 25 + "px";
-    popup.style.left = window.scrollX + rect.left + "px";
-    popup.style.zIndex = "1000";
-
-    document.body.appendChild(popup);
-
-    setTimeout(() => {
-        popup.style.opacity = "0";
-        popup.style.transition = "opacity 0.5s";
-        setTimeout(() => popup.remove(), 500);
-    }, 1000);
-}
 
 // ================== SHARE POPUP ==================
 function shareCurrentTrack() {
