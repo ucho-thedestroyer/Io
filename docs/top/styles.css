@@ -6,57 +6,84 @@ body {
   padding: 20px;
 }
 
+
+
 .music-player {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #111144;
-  padding: 15px;
-  border: 3px double #00ffcc;
+  padding: 10px;
+  gap: 15px;
+  flex-wrap: wrap; /* allows stacking in small screens */
 }
 
-.album-cover {
-  width: 150px;
-  height: 150px;
-  border: 2px dashed #ffcc00;
-  margin-right: 20px;
+
+
+.left-section img.album-cover {
+  max-width: 80px;
+  height: auto;
+  border: 2px solid #00ffcc;
 }
 
 .controls-section {
   flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .track-info {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   font-size: 14px;
-  margin-bottom: 10px;
+}
+
+.progress-container {
+  width: 100%;
+  height: 6px;
+  background: #222266;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #00ffcc;
 }
 
 .player-controls {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-wrap: wrap; /* buttons will wrap instead of shrinking */
+  gap: 8px;
 }
 
-.volume-slider {
-  width: 100px;
-}
-
-.right-section .gif-placeholder {
-  width: 172px;
-  height: 150px;
+.player-controls button,
+.player-controls input[type="range"] {
+  padding: 5px 8px;
   background: #222266;
-  border: 2px dashed #ffcc00;
+  border: 1px solid #00ffcc;
+  color: #00ffcc;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.player-controls input[type="range"] {
+  flex: 1;
+}
+
+.right-section {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #00ffcc;
-  overflow: hidden; /* Ensures content stays within the div */
 }
 
-.right-section .gif-placeholder img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* Ensures the image scales proportionally */
+.right-section img {
+  max-width: 80px;
+  height: auto;
+  border: 2px solid #00ffcc;
 }
 
 .lists-container {
@@ -225,3 +252,35 @@ body.dark-mode {
     flex: 0 0 100%; /* full width below */
   }
 }
+
+
+/* Responsive behavior */
+@media (max-width: 800px) {
+  .music-player {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .left-section {
+    display: flex;
+    justify-content: center;
+  }
+
+  .controls-section {
+    order: 2; /* keep controls above GIF */
+  }
+
+  .right-section {
+    order: 3;
+    justify-content: center;
+  }
+
+  .right-section img {
+    max-width: 100px;
+  }
+
+  .player-controls {
+    justify-content: center;
+  }
+}
+
