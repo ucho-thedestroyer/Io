@@ -170,7 +170,7 @@ body.dark-mode a:active {
 .track {
   cursor: pointer;
   padding: 10px;
-  border-bottom: 1px dashed #00ffcc;
+  border-bottom: 1px dashed #ffcc00;
 }
 
 .track:hover {
@@ -226,7 +226,9 @@ body.dark-mode .progress-container {
   border: 1px solid #00ffaa; 
 }
 
-
+body.dark-mode .track {
+  border-bottom: 1px dashed #00ffcc;
+}
 
 body.dark-mode .progress-bar {
   background: #00ffaa;
