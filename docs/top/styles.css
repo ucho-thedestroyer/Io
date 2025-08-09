@@ -224,7 +224,7 @@ body.dark-mode {
 
 /* Dark mode overrides for music player */
 body.dark-mode .music-player {
-  background: #000022; /* darker background for dark mode */
+  background: #222211; /* darker background for dark mode */
   border: 3px double #ffcc00;
 }
 
