@@ -465,6 +465,37 @@ body.dark-mode .player-controls button:disabled {
 }
 
 
+body.dark-mode .selector-btn {
+  background: #00ffcc; /* yellow-gold like old terminal highlights */
+  color: #000;
+  border: 2px solid #00ffcc; /* match your frame border color */
+
+}
+
+body.dark-mode .selector-btn.active {
+  background: #ffcc00;
+  border: 2px solid #ffcc00; /* match your frame border color */
+  color: #000;
+}
+
+body.dark-mode .selector-btn:hover {
+  background: #ff00ff; /* magenta hover like old ANSI art */
+  color: #000;
+}
+
+body.dark-mode .sub-tab {
+  background: #FFCC33; /* retro blue */
+  color: cyan;
+  border: 2px solid #FFCC33;
+  
+}
+
+body.dark-mode .sub-tab:hover {
+  background: #ffcc00;
+  color: #000;
+}
+
+
 .queue-item.dragging {
   opacity: 0.5;
 }
