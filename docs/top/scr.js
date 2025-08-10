@@ -432,3 +432,76 @@ function addToQueueFromData(track) {
 
 // Build tabs after DOM is ready
 document.addEventListener("DOMContentLoaded", buildTrackTabs);
+
+
+// === Dynamic Genre/Album Tabs Builder ===
+document.addEventListener("DOMContentLoaded", () => {
+  const trackListContainer = document.querySelector(".track-list");
+  const selectorButtons = document.querySelectorAll(".selector-btn");
+  const subTabsContainer = document.querySelector(".sub-tabs");
+
+  // Get unique values
+  function getUniqueValues(key) {
+    const values = [];
+    for (const track in tracksData) {
+      if (tracksData[track][key]) {
+        const val = tracksData[track][key];
+        if (!values.includes(val)) values.push(val);
+      }
+    }
+    return values.sort();
+  }
+
+  // Render sub-tabs
+  function renderSubTabs(type) {
+    subTabsContainer.innerHTML = "";
+    const values = getUniqueValues(type);
+    if (values.length === 0) {
+      subTabsContainer.innerHTML = `<div class="no-data">No ${type} data yet</div>`;
+      return;
+    }
+    values.forEach(val => {
+      const tab = document.createElement("button");
+      tab.className = "sub-tab";
+      tab.textContent = val;
+      tab.addEventListener("click", () => renderTracks(type, val));
+      subTabsContainer.appendChild(tab);
+    });
+    // Auto-select first tab
+    if (values[0]) renderTracks(type, values[0]);
+  }
+
+  // Render track list for selected tab
+  function renderTracks(type, value) {
+    const existingTracks = trackListContainer.querySelectorAll(".track");
+    existingTracks.forEach(el => el.remove()); // Clear current
+
+    for (const [title, data] of Object.entries(tracksData)) {
+      if (data[type] && data[type] === value) {
+        const trackDiv = document.createElement("div");
+        trackDiv.className = "track";
+        trackDiv.setAttribute("onclick", "addToQueue(this)");
+        trackDiv.innerHTML = `
+          <div class="track-meta">
+            <h4>${title}</h4>
+            <p>Length: ${data.length} | Genre: ${data.genre || "Unknown"}</p>
+            <p class="desc">${data.desc || ""}</p>
+          </div>
+        `;
+        trackListContainer.appendChild(trackDiv);
+      }
+    }
+  }
+
+  // Selector button clicks
+  selectorButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectorButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderSubTabs(btn.dataset.type);
+    });
+  });
+
+  // Init on Genre
+  renderSubTabs("genre");
+});
