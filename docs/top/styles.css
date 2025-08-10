@@ -197,6 +197,64 @@ body.dark-mode a:active {
   background: #222266;
 }
 
+/* Tabs / sort UI for track list (retro-friendly, scoped) */
+.track-list h2 {
+  display: inline-block;
+  margin: 0;
+  margin-right: 8px; /* a few pixels away from title */
+  vertical-align: middle;
+}
+
+.track-list .track-controls {
+  display: inline-flex;
+  gap: 8px;
+  vertical-align: middle;
+  margin-left: 6px;
+  align-items: center;
+}
+
+.track-list .mode-toggle {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.track-list .mode-toggle button,
+.track-list .track-tabs button,
+.track-list .track-sort-btn {
+  background: transparent;
+  color: inherit;
+  border: 1px solid #00ffcc;
+  padding: 4px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.track-list .mode-toggle button.active,
+.track-list .track-tabs button.active {
+  background: #00ffcc;
+  color: #000;
+  border-color: #00ffcc;
+}
+
+.track-list .track-sort-btn {
+  border-color: #ffcc00;
+  color: #ffcc00;
+  margin-left: 6px;
+}
+
+.track-list .track-groups {
+  margin-top: 10px;
+}
+
+/* keep per-track spacing consistent with your existing .track style */
+.track-list .track-group .track {
+  margin-bottom: 6px;
+}
+
+
 .queue-item {
   display: flex;
   justify-content: space-between;
@@ -440,3 +498,13 @@ body.dark-mode .player-controls button:disabled {
     justify-content: center;
   }
 }
+
+/* small screens: tabs wrap */
+@media (max-width: 480px) {
+  .track-list .track-controls {
+    display: block;
+    margin-top: 6px;
+  }
+  .track-list h2 { display:block; }
+}
+
