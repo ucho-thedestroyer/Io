@@ -484,9 +484,9 @@ body.dark-mode .selector-btn:hover {
 }
 
 body.dark-mode .sub-tab {
-  background: #FFCC33; /* retro blue */
-  color: cyan;
-  border: 2px solid #FFCC33;
+  background: #FFEFA1; /* retro blue */
+  color: #ffcc33;
+  border: 2px solid #FFEFA1;
   
 }
 
