@@ -197,62 +197,74 @@ body.dark-mode a:active {
   background: #222266;
 }
 
-/* Tabs / sort UI for track list (retro-friendly, scoped) */
-.track-list h2 {
-  display: inline-block;
-  margin: 0;
-  margin-right: 8px; /* a few pixels away from title */
-  vertical-align: middle;
-}
-
-.track-list .track-controls {
-  display: inline-flex;
+/* ==================== TRACK LIST TAB STYLES ==================== */
+.tab-container {
+  display: flex;
   gap: 8px;
-  vertical-align: middle;
-  margin-left: 6px;
-  align-items: center;
+  margin-top: 6px; /* a few pixels under the title */
+  margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
-.track-list .mode-toggle {
-  display: inline-flex;
-  gap: 6px;
-}
-
-.track-list .mode-toggle button,
-.track-list .track-tabs button,
-.track-list .track-sort-btn {
-  background: transparent;
-  color: inherit;
-  border: 1px solid #00ffcc;
-  padding: 4px 8px;
-  border-radius: 2px;
+.tab-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  border: 2px solid transparent;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 12px;
-  line-height: 1;
+  transition: all 0.25s ease;
+  font-family: 'Orbitron', sans-serif; /* retro vibe font */
+  letter-spacing: 0.5px;
 }
 
-.track-list .mode-toggle button.active,
-.track-list .track-tabs button.active {
-  background: #00ffcc;
-  color: #000;
-  border-color: #00ffcc;
+/* Light mode tabs */
+@media (prefers-color-scheme: light) {
+  .tab-btn {
+    background: #fff7cc; /* pale yellow */
+    color: #222;
+    border-color: #ffdd55; /* warm yellow border */
+  }
+  .tab-btn:hover {
+    background: #222;
+    color: #ffdd55;
+    border-color: #ffdd55;
+  }
+  .tab-btn.active {
+    background: #ffdd55;
+    color: #222;
+    border-color: #ffdd55;
+    box-shadow: 0 0 6px #ffdd55;
+  }
 }
 
-.track-list .track-sort-btn {
-  border-color: #ffcc00;
-  color: #ffcc00;
-  margin-left: 6px;
+/* Dark mode tabs */
+@media (prefers-color-scheme: dark) {
+  .tab-btn {
+    background: #332b00; /* deep muted yellow-brown */
+    color: #ffeb99; /* pale neon yellow text */
+    border-color: #ffeb99;
+  }
+  .tab-btn:hover {
+    background: #ffeb99;
+    color: #332b00;
+    border-color: #ffeb99;
+  }
+  .tab-btn.active {
+    background: #ffeb99;
+    color: #332b00;
+    border-color: #ffeb99;
+    box-shadow: 0 0 6px #ffeb99;
+  }
 }
 
-.track-list .track-groups {
-  margin-top: 10px;
+/* Track list spacing so it doesn't break layout */
+.tracks-display {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* keep per-track spacing consistent with your existing .track style */
-.track-list .track-group .track {
-  margin-bottom: 6px;
-}
 
 
 .queue-item {
