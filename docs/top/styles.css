@@ -439,7 +439,7 @@ body.dark-mode .player-controls input[type="range"] {
 }
 /* Dark mode: override colors & gradient */
 body.dark-mode .player-controls .tip-btn {
-  background: linear-gradient(135deg, #00ffcc 0%, #008888 100%);
+  background: #00ffcc;
   border: 1px solid #181800;
   color: #181800;
 }
