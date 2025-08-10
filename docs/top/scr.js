@@ -18,7 +18,8 @@ const tracksData = {
         src: "https://github.com/ecemgo/mini-samples-great-tricks/raw/main/song-list/Madrigal-Seni-Dert-Etmeler.mp3",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/IMG_0514.jpeg",
         length: "04:10",
-        genre: "Retro Pop"
+        genre: "Retro Pop",
+        album: "wow"
     }
 };
 
