@@ -21,6 +21,7 @@ const tracksData = {
         genre: "Retro Pop"
     }
 };
+
 let queue = [];
 let currentTrackIndex = -1;
 let isPlaying = false;
@@ -338,170 +339,168 @@ function toggleDarkMode() {
 }
 
 
-// ==================== DYNAMIC TRACK LIST WITH GENRE TABS ====================
+/* =================== TABS (fixed, robust implementation) ===================
+   - Works with your tracksData object (keys are track titles).
+   - Creates selector bar if missing.
+   - "All Songs" is default and fully populated.
+   - Gracefully handles missing album fields.
+   - Dynamically creates .track nodes that call addToQueue(this) so your queue logic is preserved.
+*/
 
-// Your existing track data
-// const tracksData = [
-//   { title: "epilogue I", length: "3:45", genre: "dark", desc: "A groovy ride through cosmic sounds." },
-//   { title: "freak", length: "3:45", genre: "dark", desc: "A cosmic sample." },
-//   { title: "Neon Dreams", length: "4:10", genre: "Retro Pop", desc: "A nostalgic dive into pulsing beats." }
-// ];
-
-function buildTrackTabs() {
-    const trackListContainer = document.querySelector(".track-list");
-    const heading = trackListContainer.querySelector("h2");
-
-    // Create tab bar
-    const tabContainer = document.createElement("div");
-    tabContainer.className = "tab-container";
-    trackListContainer.insertBefore(tabContainer, heading.nextSibling);
-
-    // Get unique genres from tracksData
-    const genres = [...new Set(tracksData.map(track => track.genre))].sort();
-
-    // Track display area
-    const tracksDisplay = document.createElement("div");
-    tracksDisplay.className = "tracks-display";
-    trackListContainer.appendChild(tracksDisplay);
-
-    let activeGenre = genres[0];
-
-    function renderTracks(genre) {
-        tracksDisplay.innerHTML = "";
-
-        // Filter & sort alphabetically
-        const filtered = tracksData
-            .filter(track => track.genre === genre)
-            .sort((a, b) => a.title.localeCompare(b.title));
-
-        filtered.forEach(track => {
-            const trackDiv = document.createElement("div");
-            trackDiv.className = "track";
-
-            // Click -> add to queue
-            trackDiv.addEventListener("click", function () {
-                addToQueueFromData(track);
-            });
-
-            trackDiv.innerHTML = `
-                <div class="track-meta">
-                    <h4>${track.title}</h4>
-                    <p>Length: ${track.length} | Genre: ${track.genre}</p>
-                    <p class="desc">${track.desc}</p>
-                </div>
-            `;
-
-            tracksDisplay.appendChild(trackDiv);
-        });
-    }
-
-    // Create tabs
-    genres.forEach(genre => {
-        const tab = document.createElement("button");
-        tab.className = "tab-btn";
-        tab.textContent = genre;
-        if (genre === activeGenre) tab.classList.add("active");
-
-        tab.addEventListener("click", () => {
-            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-            tab.classList.add("active");
-            activeGenre = genre;
-            renderTracks(genre);
-        });
-
-        tabContainer.appendChild(tab);
+(function initTabs() {
+  function getTracksArray() {
+    return Object.entries(tracksData).map(([title, data]) => {
+      return {
+        title,
+        length: data.length || "",
+        genre: data.genre || "Unknown",
+        album: data.album || null,
+        desc: data.desc || "",
+        src: data.src || "",
+        cover: data.cover || ""
+      };
     });
-
-    // Initial render
-    renderTracks(activeGenre);
-}
-
-// ==================== QUEUE INTEGRATION ====================
-
-// Uses the same logic as your old addToQueue, but from track data
-function addToQueueFromData(track) {
-    const queueContainer = document.getElementById("queue");
-
-    const li = document.createElement("li");
-    li.textContent = `${track.title} (${track.length})`;
-
-    // If your old addToQueue had extra logic (play next, highlight now playing, etc.),
-    // place it here exactly as before.
-    queueContainer.appendChild(li);
-}
-
-// Build tabs after DOM is ready
-document.addEventListener("DOMContentLoaded", buildTrackTabs);
-
-
-// === Dynamic Genre/Album Tabs Builder ===
-document.addEventListener("DOMContentLoaded", () => {
-  const trackListContainer = document.querySelector(".track-list");
-  const selectorButtons = document.querySelectorAll(".selector-btn");
-  const subTabsContainer = document.querySelector(".sub-tabs");
-
-  // Get unique values
-  function getUniqueValues(key) {
-    const values = [];
-    for (const track in tracksData) {
-      if (tracksData[track][key]) {
-        const val = tracksData[track][key];
-        if (!values.includes(val)) values.push(val);
-      }
-    }
-    return values.sort();
   }
 
-  // Render sub-tabs
-  function renderSubTabs(type) {
-    subTabsContainer.innerHTML = "";
-    const values = getUniqueValues(type);
-    if (values.length === 0) {
-      subTabsContainer.innerHTML = `<div class="no-data">No ${type} data yet</div>`;
-      return;
+  function createSelectorIfNeeded(trackListContainer) {
+    let selector = trackListContainer.querySelector('.track-selector');
+    if (!selector) {
+      selector = document.createElement('div');
+      selector.className = 'track-selector';
+      selector.innerHTML = `
+        <button class="selector-btn" data-type="all">All Songs</button>
+        <button class="selector-btn" data-type="genre">Genre</button>
+        <button class="selector-btn" data-type="album">Album</button>
+      `;
+      const title = trackListContainer.querySelector('h2');
+      if (title) title.insertAdjacentElement('afterend', selector);
+      else trackListContainer.insertBefore(selector, trackListContainer.firstChild);
     }
-    values.forEach(val => {
-      const tab = document.createElement("button");
-      tab.className = "sub-tab";
-      tab.textContent = val;
-      tab.addEventListener("click", () => renderTracks(type, val));
-      subTabsContainer.appendChild(tab);
-    });
-    // Auto-select first tab
-    if (values[0]) renderTracks(type, values[0]);
+    return selector;
   }
 
-  // Render track list for selected tab
-  function renderTracks(type, value) {
-    const existingTracks = trackListContainer.querySelectorAll(".track");
-    existingTracks.forEach(el => el.remove()); // Clear current
+  function createSubTabsContainerIfNeeded(trackListContainer, afterElement) {
+    let st = trackListContainer.querySelector('.sub-tabs');
+    if (!st) {
+      st = document.createElement('div');
+      st.className = 'sub-tabs';
+      if (afterElement) afterElement.insertAdjacentElement('afterend', st);
+      else trackListContainer.appendChild(st);
+    }
+    return st;
+  }
 
-    for (const [title, data] of Object.entries(tracksData)) {
-      if (data[type] && data[type] === value) {
-        const trackDiv = document.createElement("div");
-        trackDiv.className = "track";
-        trackDiv.setAttribute("onclick", "addToQueue(this)");
-        trackDiv.innerHTML = `
+  function createTracksDisplayIfNeeded(trackListContainer) {
+    let disp = trackListContainer.querySelector('.tracks-display');
+    if (!disp) {
+      disp = document.createElement('div');
+      disp.className = 'tracks-display';
+      trackListContainer.appendChild(disp);
+    }
+    return disp;
+  }
+
+  // Render an array of track objects into the tracks-display container
+  function renderTracksArray(trackListContainer, tracksArray) {
+    const disp = createTracksDisplayIfNeeded(trackListContainer);
+    disp.innerHTML = ''; // clear
+
+    // Always sort alphabetically by title for predictable order
+    tracksArray.sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
+
+    tracksArray.forEach(t => {
+      const trackDiv = document.createElement('div');
+      trackDiv.className = 'track';
+      // use inline onclick to reuse your existing addToQueue(element) function
+      trackDiv.setAttribute('onclick', 'addToQueue(this)');
+
+      // build HTML as your original structure expects
+      trackDiv.innerHTML = `
           <div class="track-meta">
-            <h4>${title}</h4>
-            <p>Length: ${data.length} | Genre: ${data.genre || "Unknown"}</p>
-            <p class="desc">${data.desc || ""}</p>
+            <h4>${t.title}</h4>
+            <p>Length: ${t.length || ''} | Genre: ${t.genre || 'Unknown'}</p>
+            <p class="desc">${t.desc || ''}</p>
           </div>
-        `;
-        trackListContainer.appendChild(trackDiv);
-      }
-    }
+      `;
+      disp.appendChild(trackDiv);
+    });
   }
 
-  // Selector button clicks
-  selectorButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      selectorButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderSubTabs(btn.dataset.type);
-    });
-  });
+  // Utilities to build unique lists for genre/album
+  function uniqueSorted(values) {
+    return Array.from(new Set(values.filter(Boolean))).sort((a,b) => a.localeCompare(b, undefined, { sensitivity:'base' }));
+  }
 
-  // Init on Genre
-  renderSubTabs("genre");
-});
+  // Main init on DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const trackListContainer = document.querySelector('.track-list');
+    if (!trackListContainer) return;
+
+    const selector = createSelectorIfNeeded(trackListContainer);
+    const subTabs = createSubTabsContainerIfNeeded(trackListContainer, selector);
+    const tracksDisplay = createTracksDisplayIfNeeded(trackListContainer);
+
+    const selectorButtons = selector.querySelectorAll('.selector-btn');
+
+    // Attach selector behavior
+    selectorButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // active class
+        selectorButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const type = btn.dataset.type;
+        if (type === 'genre') {
+          buildSubTabs('genre');
+        } else if (type === 'album') {
+          buildSubTabs('album');
+        } else { // all
+          subTabs.innerHTML = '';
+          renderTracksArray(trackListContainer, getTracksArray());
+        }
+      });
+    });
+
+    // Make "All Songs" the default active tab
+    const allBtn = selector.querySelector('.selector-btn[data-type="all"]');
+    if (allBtn) {
+      allBtn.classList.add('active');
+      // initial render of all tracks
+      renderTracksArray(trackListContainer, getTracksArray());
+    }
+
+    // Build sub-tabs for given key (genre or album)
+    function buildSubTabs(key) {
+      subTabs.innerHTML = '';
+      const arr = getTracksArray();
+      const values = uniqueSorted(arr.map(t => t[key]).filter(v => v)); // album might be null for some
+      if (values.length === 0) {
+        subTabs.innerHTML = `<div class="no-data">No ${key} data yet</div>`;
+        return;
+      }
+
+      values.forEach((val, idx) => {
+        const b = document.createElement('button');
+        b.className = 'sub-tab';
+        b.type = 'button';
+        b.dataset.filter = val;
+        b.textContent = val;
+        if (idx === 0) b.classList.add('active');
+        b.addEventListener('click', () => {
+          // active state
+          Array.from(subTabs.querySelectorAll('.sub-tab')).forEach(x => x.classList.remove('active'));
+          b.classList.add('active');
+
+          const filtered = getTracksArray().filter(t => (t[key] || '') === val);
+          renderTracksArray(trackListContainer, filtered);
+        });
+        subTabs.appendChild(b);
+      });
+
+      // auto-click first sub-tab (or simply render the first group)
+      const firstVal = values[0];
+      const firstGroup = getTracksArray().filter(t => (t[key] || '') === firstVal);
+      renderTracksArray(trackListContainer, firstGroup);
+    }
+  });
+})();
