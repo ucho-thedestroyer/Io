@@ -181,33 +181,115 @@ function triggerDownload() {
 }
 
 
-// ================== SHARE POPUP ==================
+// ================== SHARE POPUP (robust, non-breaking) ==================
 function shareCurrentTrack() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        const btn = document.querySelector(".player-controls button.share-btn"); // Add class to share button in HTML
-        const popup = document.createElement("div");
-        popup.textContent = "link copied!";
-        popup.style.position = "absolute";
-        popup.style.background = "#0ff";
-        popup.style.color = "black";
-        popup.style.fontSize = "12px";
-        popup.style.padding = "2px 5px";
-        popup.style.borderRadius = "3px";
+  const url = window.location.href;
 
-        const rect = btn.getBoundingClientRect();
-        popup.style.top = window.scrollY + rect.top - 25 + "px";
-        popup.style.left = window.scrollX + rect.left + "px";
-        popup.style.zIndex = "1000";
-
-        document.body.appendChild(popup);
-
-        setTimeout(() => {
-            popup.style.opacity = "0";
-            popup.style.transition = "opacity 0.5s";
-            setTimeout(() => popup.remove(), 500);
-        }, 1000);
+  // copy helper: prefer navigator.clipboard, fallback to execCommand
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise((resolve, reject) => {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (ok) resolve();
+        else reject(new Error("copy-failed"));
+      } catch (err) {
+        reject(err);
+      }
     });
+  }
+
+  copyToClipboard(url).then(() => {
+    // robustly find the share button or fall back to the .player-controls container
+    let btn = document.querySelector(".player-controls button.share-btn")
+           || document.querySelector('.player-controls button[onclick*="shareCurrentTrack"]')
+           || Array.from(document.querySelectorAll(".player-controls button")).find(b => {
+                return b && b.textContent && b.textContent.trim().toLowerCase() === "share";
+              })
+           || document.querySelector(".player-controls"); // fallback place
+
+    // create popup
+    const popup = document.createElement("div");
+    popup.textContent = "link copied!";
+    popup.style.position = "absolute";
+    popup.style.background = "#0ff";    // blue-ish popup like your old style
+    popup.style.color = "black";
+    popup.style.fontSize = "12px";
+    popup.style.padding = "4px 8px";
+    popup.style.borderRadius = "4px";
+    popup.style.fontFamily = "inherit";
+    popup.style.zIndex = "10000";
+    popup.style.opacity = "0";
+    popup.style.transition = "opacity 0.15s ease";
+
+    document.body.appendChild(popup);
+
+    // position popup relative to found element
+    try {
+      const rect = btn.getBoundingClientRect();
+      const popupRect = popup.getBoundingClientRect();
+      // center above button by default
+      let top = window.scrollY + rect.top - popupRect.height - 8;
+      let left = window.scrollX + rect.left + (rect.width - popupRect.width) / 2;
+      // if there's no room above, put it below
+      if (top < window.scrollY + 4) top = window.scrollY + rect.bottom + 8;
+      // if left would overflow off-screen, clamp it
+      left = Math.max(6 + window.scrollX, Math.min(left, window.scrollX + document.documentElement.clientWidth - popupRect.width - 6));
+      popup.style.top = `${top}px`;
+      popup.style.left = `${left}px`;
+    } catch (e) {
+      // If anything goes wrong, center the popup near the top of the player-controls
+      const pc = document.querySelector(".player-controls");
+      const pcRect = pc ? pc.getBoundingClientRect() : { top: 60, left: 20, width: 200 };
+      const popupRect = popup.getBoundingClientRect();
+      const top = window.scrollY + pcRect.top - popupRect.height - 8;
+      const left = window.scrollX + pcRect.left + (pcRect.width - popupRect.width) / 2;
+      popup.style.top = `${top}px`;
+      popup.style.left = `${left}px`;
+    }
+
+    // fade in -> stay -> fade out
+    requestAnimationFrame(() => popup.style.opacity = "1");
+    setTimeout(() => {
+      popup.style.opacity = "0";
+      setTimeout(() => popup.remove(), 400);
+    }, 1100);
+
+  }).catch(() => {
+    // fallback UX if clipboard not available / copy failed
+    const popup = document.createElement("div");
+    popup.textContent = "couldn't copy link";
+    popup.style.position = "fixed";
+    popup.style.right = "12px";
+    popup.style.bottom = "12px";
+    popup.style.background = "#ff6666";
+    popup.style.color = "black";
+    popup.style.padding = "6px 10px";
+    popup.style.borderRadius = "4px";
+    popup.style.zIndex = "10000";
+    popup.style.fontFamily = "inherit";
+    popup.style.fontSize = "12px";
+    popup.style.opacity = "0";
+    popup.style.transition = "opacity 0.15s ease";
+    document.body.appendChild(popup);
+    requestAnimationFrame(() => popup.style.opacity = "1");
+    setTimeout(() => {
+      popup.style.opacity = "0";
+      setTimeout(() => popup.remove(), 400);
+    }, 1300);
+  });
 }
+
 
 // ================== PROGRESS & VOLUME ==================
 audioPlayer.addEventListener("timeupdate", () => {
