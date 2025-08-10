@@ -336,6 +336,8 @@ updateDownloadButtonState();
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 }
+
+
 // ==================== DYNAMIC TRACK LIST WITH GENRE TABS ====================
 
 // Your existing track data
@@ -430,7 +432,3 @@ function addToQueueFromData(track) {
 
 // Build tabs after DOM is ready
 document.addEventListener("DOMContentLoaded", buildTrackTabs);
-
-
-
-
