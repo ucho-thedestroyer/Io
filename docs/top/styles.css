@@ -262,11 +262,11 @@ body.dark-mode a:active {
 }
 
 .selector-btn {
-  background: #d4af37; /* yellow-gold like old terminal highlights */
+  background: #ffcc00; /* yellow-gold like old terminal highlights */
   color: #000;
   font-weight: bold;
   font-family: inherit; /* keep same pixel/retro font */
-  border: 2px solid cyan; /* match your frame border color */
+  border: 2px solid #ffcc00; /* match your frame border color */
   border-bottom: none;
   padding: 4px 8px;
   cursor: pointer;
@@ -274,7 +274,8 @@ body.dark-mode a:active {
 }
 
 .selector-btn.active {
-  background: cyan;
+  background: #00ffcc;
+  border: 2px solid #00ffcc; /* match your frame border color */
   color: #000;
 }
 
@@ -292,7 +293,7 @@ body.dark-mode a:active {
 .sub-tab {
   background: #4444aa; /* retro blue */
   color: cyan;
-  border: 2px solid cyan;
+  border: 2px solid #4444aa;
   padding: 3px 6px;
   font-family: inherit;
   cursor: pointer;
@@ -304,7 +305,7 @@ body.dark-mode a:active {
 }
 
 .no-data {
-  color: cyan;
+  color: gray;
   font-style: normal;
   font-family: inherit;
 }
