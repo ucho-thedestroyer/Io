@@ -254,58 +254,61 @@ body.dark-mode a:active {
   margin-bottom: 6px;
 }
 
+
 .track-selector {
   display: flex;
-  gap: 8px;
+  gap: 4px;
   margin-bottom: 8px;
 }
 
 .selector-btn {
-  background: linear-gradient(145deg, #fce97b, #d4b83f);
-  color: #222;
+  background: #d4af37; /* yellow-gold like old terminal highlights */
+  color: #000;
   font-weight: bold;
-  border: 2px solid #bfa12c;
-  border-radius: 6px 6px 0 0;
-  padding: 6px 12px;
+  font-family: inherit; /* keep same pixel/retro font */
+  border: 2px solid cyan; /* match your frame border color */
+  border-bottom: none;
+  padding: 4px 8px;
   cursor: pointer;
-  box-shadow: 0 2px 0 #bfa12c;
-  transition: background 0.3s, transform 0.1s;
+  text-transform: uppercase;
 }
 
 .selector-btn.active {
-  background: linear-gradient(145deg, #fff3a3, #fce97b);
-  transform: translateY(-2px);
+  background: cyan;
+  color: #000;
 }
 
 .selector-btn:hover {
-  background: linear-gradient(145deg, #fff7c2, #fce97b);
+  background: #ff00ff; /* magenta hover like old ANSI art */
+  color: #000;
 }
 
 .sub-tabs {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   margin-bottom: 10px;
 }
 
 .sub-tab {
-  background: linear-gradient(145deg, #89c3ff, #4b8bd4);
-  color: white;
-  border: 2px solid #3a72a1;
-  padding: 4px 10px;
-  border-radius: 6px;
+  background: #4444aa; /* retro blue */
+  color: cyan;
+  border: 2px solid cyan;
+  padding: 3px 6px;
+  font-family: inherit;
   cursor: pointer;
-  font-size: 0.9em;
-  transition: background 0.3s;
 }
 
 .sub-tab:hover {
-  background: linear-gradient(145deg, #a1d4ff, #5a9fe0);
+  background: cyan;
+  color: #000;
 }
 
 .no-data {
-  color: #aaa;
-  font-style: italic;
+  color: cyan;
+  font-style: normal;
+  font-family: inherit;
 }
+
 
 
 .queue-item {
