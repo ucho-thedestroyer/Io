@@ -337,255 +337,91 @@ function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 }
 
-/* ======= Track list tabs & sort enhancement (safe, non-destructive) ======= */
-(function () {
-  // Helper to parse metadata from a track element
-  function parseMeta(trackEl, key) {
-    // data-* attr takes precedence
-    if (key && trackEl.dataset && trackEl.dataset[key]) return trackEl.dataset[key].trim();
-    // fallback: look for "Key: value" in .track-meta p elements
-    const ps = Array.from(trackEl.querySelectorAll('.track-meta p'));
-    for (const p of ps) {
-      const m = p.textContent.match(new RegExp(key + '\\s*:\\s*([^|]+)', 'i'));
-      if (m) return m[1].trim();
-    }
-    return 'Unknown';
-  }
+// ==================== DYNAMIC TRACK LIST WITH GENRE TABS ====================
 
-  function initTrackTabs() {
-    const trackList = document.querySelector('.track-list');
-    if (!trackList) return;
+// Example data format (your existing tracksData array at the top of your JS):
+// const tracksData = [
+//   { title: "epilogue I", length: "3:45", genre: "dark", desc: "A groovy ride through cosmic sounds." },
+//   { title: "freak", length: "3:45", genre: "dark", desc: "A cosmic sample." },
+//   { title: "Neon Dreams", length: "4:10", genre: "Retro Pop", desc: "A nostalgic dive into pulsing beats." }
+// ];
 
-    // Avoid double-init: if we already built .track-groups, do nothing or refresh
-    if (trackList.querySelector('.track-groups')) {
-      // Already initialized — if you want to rebuild after dynamic edits, call refreshTrackTabs()
-      return;
-    }
+function buildTrackTabs() {
+    const trackListContainer = document.querySelector(".track-list");
+    const heading = trackListContainer.querySelector("h2");
 
-    const existingTracks = Array.from(trackList.querySelectorAll(':scope > .track'));
-    if (existingTracks.length === 0) return;
+    // Create tab bar
+    const tabContainer = document.createElement("div");
+    tabContainer.className = "tab-container";
+    trackListContainer.insertBefore(tabContainer, heading.nextSibling);
 
-    // Build maps for both category modes
-    const genreMap = new Map();
-    const albumMap = new Map();
+    // Get unique genres from tracksData
+    const genres = [...new Set(tracksData.map(track => track.genre))].sort();
 
-    existingTracks.forEach(tr => {
-      const genre = parseMeta(tr, 'genre') || 'Unknown';
-      const album = parseMeta(tr, 'album') || 'Unknown';
+    // Track display area
+    const tracksDisplay = document.createElement("div");
+    tracksDisplay.className = "tracks-display";
+    trackListContainer.appendChild(tracksDisplay);
 
-      if (!genreMap.has(genre)) genreMap.set(genre, []);
-      genreMap.get(genre).push(tr);
+    let activeGenre = genres[0];
 
-      if (!albumMap.has(album)) albumMap.set(album, []);
-      albumMap.get(album).push(tr);
-    });
+    function renderTracks(genre) {
+        tracksDisplay.innerHTML = "";
 
-    // Create the UI containers
-    const tabsWrap = document.createElement('div');
-    tabsWrap.className = 'track-tabs';
+        // Filter & sort alphabetically
+        const filtered = tracksData
+            .filter(track => track.genre === genre)
+            .sort((a, b) => a.title.localeCompare(b.title));
 
-    const controlsWrap = document.createElement('div');
-    controlsWrap.className = 'track-controls';
+        filtered.forEach(track => {
+            const trackDiv = document.createElement("div");
+            trackDiv.className = "track";
+            trackDiv.onclick = function () { addToQueueFromData(track); };
 
-    const modeToggle = document.createElement('div');
-    modeToggle.className = 'mode-toggle';
+            trackDiv.innerHTML = `
+                <div class="track-meta">
+                    <h4>${track.title}</h4>
+                    <p>Length: ${track.length} | Genre: ${track.genre}</p>
+                    <p class="desc">${track.desc}</p>
+                </div>
+            `;
 
-    const btnModeGenre = document.createElement('button');
-    btnModeGenre.type = 'button';
-    btnModeGenre.textContent = 'By Genre';
-    btnModeGenre.dataset.mode = 'genre';
-
-    const btnModeAlbum = document.createElement('button');
-    btnModeAlbum.type = 'button';
-    btnModeAlbum.textContent = 'By Album';
-    btnModeAlbum.dataset.mode = 'album';
-
-    modeToggle.appendChild(btnModeGenre);
-    modeToggle.appendChild(btnModeAlbum);
-
-    const sortBtn = document.createElement('button');
-    sortBtn.type = 'button';
-    sortBtn.className = 'track-sort-btn';
-    sortBtn.textContent = 'Sort A→Z';
-
-    controlsWrap.appendChild(modeToggle);
-    controlsWrap.appendChild(tabsWrap);
-    controlsWrap.appendChild(sortBtn);
-
-    // Insert controls a few pixels after the H2 title
-    const title = trackList.querySelector('h2');
-    if (title) {
-      title.insertAdjacentElement('afterend', controlsWrap);
-    } else {
-      trackList.insertBefore(controlsWrap, trackList.firstChild);
-    }
-
-    // Create group container wrapper (we will move track nodes inside)
-    const groupWrapper = document.createElement('div');
-    groupWrapper.className = 'track-groups';
-
-    // Move existing track nodes into group containers
-    function createGroups(map, mode) {
-      const groups = new Map();
-      // create a group element for each key and append tracks
-      map.forEach((arr, key) => {
-        const g = document.createElement('div');
-        g.className = 'track-group';
-        g.dataset.category = key;
-        arr.forEach(el => g.appendChild(el)); // move node; preserves inline onclick
-        groups.set(key, g);
-      });
-      return groups;
-    }
-
-    const genreGroups = createGroups(genreMap, 'genre');
-    const albumGroups = createGroups(albumMap, 'album');
-
-    // Build "All" group (contains all tracks in original order)
-    const allGroup = document.createElement('div');
-    allGroup.className = 'track-group';
-    allGroup.dataset.category = 'All';
-    existingTracks.forEach(t => allGroup.appendChild(t));
-
-    // Append groups to wrapper (but we will control visibility based on mode)
-    groupWrapper.appendChild(allGroup);
-    genreGroups.forEach(g => groupWrapper.appendChild(g));
-    // album groups appended but hidden until user switches
-    albumGroups.forEach(g => groupWrapper.appendChild(g));
-
-    trackList.appendChild(groupWrapper);
-
-    // State
-    let currentMode = 'genre'; // 'genre' or 'album'
-    let activeCategory = 'All';
-    const sortState = {}; // map key "mode|category" => 'asc'|'desc'|'none'
-
-    // Utility to refresh tab buttons for current mode
-    function rebuildTabsForMode(mode) {
-      tabsWrap.innerHTML = '';
-      let keys;
-      if (mode === 'genre') keys = ['All', ...Array.from(genreMap.keys())];
-      else keys = ['All', ...Array.from(albumMap.keys())];
-
-      keys.forEach(k => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'track-tab';
-        b.textContent = k;
-        b.dataset.category = k;
-        b.addEventListener('click', () => {
-          activeCategory = k;
-          showCategory(mode, k);
+            tracksDisplay.appendChild(trackDiv);
         });
-        tabsWrap.appendChild(b);
-      });
-
-      // set active class
-      Array.from(tabsWrap.querySelectorAll('.track-tab')).forEach(b => {
-        b.classList.toggle('active', b.dataset.category === activeCategory);
-      });
-
-      // set sort button label based on sortState
-      const key = mode + '|' + activeCategory;
-      sortBtn.textContent = (sortState[key] === 'asc') ? 'Sort Z→A' : 'Sort A→Z';
     }
 
-    // Show the selected category in the chosen mode
-    function showCategory(mode, category) {
-      // highlight the selected mode button
-      btnModeGenre.classList.toggle('active', mode === 'genre');
-      btnModeAlbum.classList.toggle('active', mode === 'album');
+    // Create tabs
+    genres.forEach(genre => {
+        const tab = document.createElement("button");
+        tab.className = "tab-btn";
+        tab.textContent = genre;
+        if (genre === activeGenre) tab.classList.add("active");
 
-      // show/hide groups
-      const groups = Array.from(groupWrapper.querySelectorAll('.track-group'));
-      groups.forEach(g => {
-        // Determine if this group belongs to the current mode set
-        if (category === 'All') {
-          // when All, show only the "All" group
-          g.style.display = (g.dataset.category === 'All') ? 'block' : 'none';
-        } else {
-          // show the group whose dataset.category matches the requested category
-          if (g.dataset.category === category) g.style.display = 'block';
-          else g.style.display = 'none';
-        }
-      });
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+            tab.classList.add("active");
+            activeGenre = genre;
+            renderTracks(genre);
+        });
 
-      // Update tab active state
-      Array.from(tabsWrap.querySelectorAll('.track-tab')).forEach(b => {
-        b.classList.toggle('active', b.dataset.category === category);
-      });
-
-      // Update sort button label according to state
-      const key = mode + '|' + category;
-      sortBtn.textContent = (sortState[key] === 'asc') ? 'Sort Z→A' : 'Sort A→Z';
-    }
-
-    // Toggle sorting for current visible category (ascending <-> descending)
-    function toggleSortForActive() {
-      const mode = currentMode;
-      const category = activeCategory;
-      const key = mode + '|' + category;
-      const prev = sortState[key] || 'none';
-      const asc = prev !== 'asc';
-      // find the group element
-      let groupEl;
-      if (category === 'All') {
-        groupEl = groupWrapper.querySelector('.track-group[data-category="All"]');
-      } else {
-        // find the group that matches category
-        groupEl = Array.from(groupWrapper.querySelectorAll('.track-group')).find(g => g.dataset.category === category);
-      }
-      if (!groupEl) return;
-      const items = Array.from(groupEl.querySelectorAll('.track'));
-      items.sort((a, b) => {
-        const ta = (a.querySelector('h4')?.textContent || '').trim().toLowerCase();
-        const tb = (b.querySelector('h4')?.textContent || '').trim().toLowerCase();
-        return asc ? ta.localeCompare(tb) : tb.localeCompare(ta);
-      });
-      // Re-append in sorted order (preserves onclick handlers)
-      items.forEach(it => groupEl.appendChild(it));
-      sortState[key] = asc ? 'asc' : 'desc';
-      sortBtn.textContent = asc ? 'Sort Z→A' : 'Sort A→Z';
-    }
-
-    // Mode switch handlers
-    btnModeGenre.addEventListener('click', () => {
-      currentMode = 'genre';
-      activeCategory = 'All';
-      rebuildTabsForMode('genre');
-      showCategory('genre', activeCategory);
-    });
-    btnModeAlbum.addEventListener('click', () => {
-      currentMode = 'album';
-      activeCategory = 'All';
-      rebuildTabsForMode('album');
-      showCategory('album', activeCategory);
+        tabContainer.appendChild(tab);
     });
 
-    // sort button action
-    sortBtn.addEventListener('click', toggleSortForActive);
+    // Initial render
+    renderTracks(activeGenre);
+}
 
-    // initial build
-    rebuildTabsForMode('genre');
-    showCategory('genre', 'All');
+// Modified queue adder to work from tracksData
+function addToQueueFromData(track) {
+    // Reuse your existing queue adding logic, but build element from data
+    const trackElement = document.createElement("li");
+    trackElement.textContent = `${track.title} (${track.length})`;
+    document.getElementById("queue").appendChild(trackElement);
+    // Optionally trigger any existing "now playing" or queue handling functions here
+}
 
-    // Expose a refresh function so your code can call window.refreshTrackTabs() if you dynamically add tracks later
-    window.refreshTrackTabs = function () {
-      // remove group wrapper and controls and rebuild
-      const existingControls = trackList.querySelector('.track-controls');
-      if (existingControls) existingControls.remove();
-      const existingGroups = trackList.querySelector('.track-groups');
-      if (existingGroups) existingGroups.remove();
-      initTrackTabs(); // re-run initialization
-    };
-  }
+// Build tabs on page load
+document.addEventListener("DOMContentLoaded", buildTrackTabs);
 
-  // run on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTrackTabs);
-  } else {
-    initTrackTabs();
-  }
-})();
 
 
