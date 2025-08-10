@@ -336,10 +336,9 @@ updateDownloadButtonState();
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 }
-
 // ==================== DYNAMIC TRACK LIST WITH GENRE TABS ====================
 
-// Example data format (your existing tracksData array at the top of your JS):
+// Your existing track data
 // const tracksData = [
 //   { title: "epilogue I", length: "3:45", genre: "dark", desc: "A groovy ride through cosmic sounds." },
 //   { title: "freak", length: "3:45", genre: "dark", desc: "A cosmic sample." },
@@ -376,7 +375,11 @@ function buildTrackTabs() {
         filtered.forEach(track => {
             const trackDiv = document.createElement("div");
             trackDiv.className = "track";
-            trackDiv.onclick = function () { addToQueueFromData(track); };
+
+            // Click -> add to queue
+            trackDiv.addEventListener("click", function () {
+                addToQueueFromData(track);
+            });
 
             trackDiv.innerHTML = `
                 <div class="track-meta">
@@ -411,17 +414,23 @@ function buildTrackTabs() {
     renderTracks(activeGenre);
 }
 
-// Modified queue adder to work from tracksData
+// ==================== QUEUE INTEGRATION ====================
+
+// Uses the same logic as your old addToQueue, but from track data
 function addToQueueFromData(track) {
-    // Reuse your existing queue adding logic, but build element from data
-    const trackElement = document.createElement("li");
-    trackElement.textContent = `${track.title} (${track.length})`;
-    document.getElementById("queue").appendChild(trackElement);
-    // Optionally trigger any existing "now playing" or queue handling functions here
+    const queueContainer = document.getElementById("queue");
+
+    const li = document.createElement("li");
+    li.textContent = `${track.title} (${track.length})`;
+
+    // If your old addToQueue had extra logic (play next, highlight now playing, etc.),
+    // place it here exactly as before.
+    queueContainer.appendChild(li);
 }
 
-// Build tabs on page load
+// Build tabs after DOM is ready
 document.addEventListener("DOMContentLoaded", buildTrackTabs);
+
 
 
 
