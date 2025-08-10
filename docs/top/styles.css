@@ -269,6 +269,7 @@ body.dark-mode a:active {
   border: 2px solid #ffcc00; /* match your frame border color */
   border-bottom: none;
   padding: 4px 8px;
+  padding-top: 15px;
   cursor: pointer;
   text-transform: uppercase;
 }
