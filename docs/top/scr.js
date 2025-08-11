@@ -86,15 +86,18 @@ function preloadAndPlay(index) {
     if (!trackTitle) return;
 
     const data = tracksData[trackTitle];
+
+    // Set source & load
     audioSource.src = data.src;
     audioPlayer.preload = "auto";
     audioPlayer.load();
 
+    // UI updates
     albumCover.src = data.cover;
     trackInfoSpan.textContent = trackTitle;
     trackLengthSpan.textContent = `00:00 / ${data.length}`;
 
-    // Show buffering indicator
+    // Show loading overlay
     const bufferingNotice = document.createElement("div");
     bufferingNotice.textContent = "Loading...";
     bufferingNotice.style.position = "absolute";
@@ -109,51 +112,39 @@ function preloadAndPlay(index) {
     bufferingNotice.style.zIndex = "2000";
     document.body.appendChild(bufferingNotice);
 
-    function canPlayHandler() {
-        audioPlayer.removeEventListener("canplaythrough", canPlayHandler);
+    function removeLoading() {
         if (document.body.contains(bufferingNotice)) {
             document.body.removeChild(bufferingNotice);
         }
-        audioPlayer.play();
-        isPlaying = true;
+        audioPlayer.removeEventListener("loadeddata", removeLoading);
+        audioPlayer.removeEventListener("playing", removeLoading);
     }
 
-    audioPlayer.addEventListener("canplaythrough", canPlayHandler);
-}
+    // Remove loading when enough data is available or playback starts
+    audioPlayer.addEventListener("loadeddata", removeLoading);
+    audioPlayer.addEventListener("playing", removeLoading);
 
-// ================== LOAD TRACK ==================
-function loadTrack(index) {
-    preloadAndPlay(index);
+    // Try to play immediately (streaming)
+    audioPlayer.play().catch(err => {
+        console.warn("Autoplay prevented:", err);
+    });
+
+    isPlaying = true;
 }
 
 // ================== PLAYER CONTROLS ==================
 function playPause() {
     if (isPlaying) {
         audioPlayer.pause();
+        isPlaying = false;
     } else {
-        if (audioPlayer.readyState < 4) {
-            audioPlayer.addEventListener("canplaythrough", function handler() {
-                audioPlayer.removeEventListener("canplaythrough", handler);
-                audioPlayer.play();
-            });
-        } else {
-            audioPlayer.play();
-        }
+        audioPlayer.play().catch(err => {
+            console.warn("Autoplay prevented:", err);
+        });
+        isPlaying = true;
     }
-    isPlaying = !isPlaying;
 }
 
-function prevTrack() {
-    if (queue.length === 0) return;
-    currentTrackIndex = (currentTrackIndex - 1 + queue.length) % queue.length;
-    preloadAndPlay(currentTrackIndex);
-}
-
-function nextTrack() {
-    if (queue.length === 0) return;
-    currentTrackIndex = (currentTrackIndex + 1) % queue.length;
-    preloadAndPlay(currentTrackIndex);
-}
 
 // ================== DOWNLOAD POPUP ==================
 function downloadCurrentTrack() {
