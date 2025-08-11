@@ -4,7 +4,7 @@
 const tracksData = {
     "epilogue I": {
         src: "https://bafybeidz5hztolhqz7zmp7wohgtv6dhzv2hiynwu5hn62niupynlnycati.ipfs.w3s.link",
-        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/IMG_0513.jpeg",
+        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/darkwood.jpeg",
         length: "03:45",
         genre: "Synthwave"
     },
