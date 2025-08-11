@@ -166,87 +166,85 @@ function showTempToast(text, ms = 1400) {
   }, ms);
 }
 
+// ================== PRELOAD & PLAY TRACK ==================
 function preloadAndPlay(index) {
-    const trackTitle = queue[index];
-    if (!trackTitle) return;
+  if (!audioPlayer) return;
+  const trackTitle = queue[index];
+  if (!trackTitle) return;
+  const data = tracksData[trackTitle];
+  if (!data || !data.src) {
+    console.warn("No src for track:", trackTitle);
+    return;
+  }
 
-    const data = tracksData[trackTitle];
-
-    audioSource.src = data.src;
+  // Set source directly on audio element (more robust than modifying <source>)
+  try {
+    audioPlayer.src = data.src;
+    if (audioSource) audioSource.src = data.src; // keep <source> in sync if present
     audioPlayer.preload = "auto";
     audioPlayer.load();
+  } catch (e) {
+    console.warn("Failed to set audio src:", e);
+  }
 
-    albumCover.src = data.cover;
-    trackInfoSpan.textContent = trackTitle;
-    trackLengthSpan.textContent = `00:00 / ${data.length}`;
+  // UI updates
+  if (albumCover) albumCover.src = data.cover || "";
+  if (trackInfoSpan) trackInfoSpan.textContent = trackTitle;
+  if (trackLengthSpan) trackLengthSpan.textContent = `00:00 / ${data.length || "00:00"}`;
 
-    // === Loading Overlay ===
-    const bufferingNotice = document.createElement("div");
-    bufferingNotice.style.position = "absolute";
-    bufferingNotice.style.top = "50%";
-    bufferingNotice.style.left = "50%";
-    bufferingNotice.style.transform = "translate(-50%, -50%)";
-    bufferingNotice.style.background = "rgba(0,0,0,0.8)";
-    bufferingNotice.style.color = "#ffb3ff";
-    bufferingNotice.style.padding = "10px 15px";
-    bufferingNotice.style.borderRadius = "5px";
-    bufferingNotice.style.fontSize = "14px";
-    bufferingNotice.style.zIndex = "2000";
-    bufferingNotice.style.textAlign = "center";
+  // Show loading overlay (single reusable)
+  createLoadingOverlay();
 
-    const loadingText = document.createElement("div");
-    loadingText.textContent = "Loading...";
-    bufferingNotice.appendChild(loadingText);
+  // Setup listeners and a timeout fallback
+  let timedOut = false;
+  const overlayTimeout = setTimeout(() => {
+    timedOut = true;
+    removeExistingOverlay();
+    showTempToast("Taking a while to load — try another gateway or click play.", 2500);
+    // remove attached handlers below by calling cleanup
+    cleanup();
+  }, 12_000); // 12s fallback
 
-    // Progress bar container
-    const progressContainer = document.createElement("div");
-    progressContainer.style.width = "100%";
-    progressContainer.style.height = "6px";
-    progressContainer.style.background = "rgba(255,255,255,0.2)";
-    progressContainer.style.borderRadius = "3px";
-    progressContainer.style.marginTop = "8px";
-    bufferingNotice.appendChild(progressContainer);
+  function cleanup() {
+    clearTimeout(overlayTimeout);
+    audioPlayer.removeEventListener("loadeddata", onLoaded);
+    audioPlayer.removeEventListener("playing", onPlaying);
+    audioPlayer.removeEventListener("error", onError);
+  }
 
-    // Progress bar itself
-    const progressBar = document.createElement("div");
-    progressBar.style.height = "100%";
-    progressBar.style.width = "0%";
-    progressBar.style.background = "#ffb3ff";
-    progressBar.style.borderRadius = "3px";
-    progressBar.style.transition = "width 0.2s linear";
-    progressContainer.appendChild(progressBar);
+  function onLoaded() {
+    if (timedOut) return cleanup();
+    removeExistingOverlay();
+    cleanup();
+  }
 
-    document.body.appendChild(bufferingNotice);
+  function onPlaying() {
+    if (timedOut) return cleanup();
+    removeExistingOverlay();
+    cleanup();
+  }
 
-    function updateProgress() {
-        if (audioPlayer.buffered.length > 0 && audioPlayer.duration > 0) {
-            const bufferedEnd = audioPlayer.buffered.end(audioPlayer.buffered.length - 1);
-            const percent = Math.min(100, (bufferedEnd / audioPlayer.duration) * 100);
-            progressBar.style.width = percent + "%";
-        }
-    }
+  function onError() {
+    removeExistingOverlay();
+    cleanup();
+    showTempToast("Playback error loading track.", 1800);
+  }
 
-    function removeLoading() {
-        if (document.body.contains(bufferingNotice)) {
-            document.body.removeChild(bufferingNotice);
-        }
-        audioPlayer.removeEventListener("loadeddata", removeLoading);
-        audioPlayer.removeEventListener("playing", removeLoading);
-        audioPlayer.removeEventListener("progress", updateProgress);
-    }
+  audioPlayer.addEventListener("loadeddata", onLoaded);
+  audioPlayer.addEventListener("playing", onPlaying);
+  audioPlayer.addEventListener("error", onError);
 
-    // Events
-    audioPlayer.addEventListener("progress", updateProgress);
-    audioPlayer.addEventListener("loadeddata", removeLoading);
-    audioPlayer.addEventListener("playing", removeLoading);
-
-    // Play immediately
-    audioPlayer.play().catch(err => {
-        console.warn("Autoplay prevented:", err);
-    });
-
+  // Try to play immediately (streaming). If autoplay is prevented, catch and leave overlay until user interacts.
+  audioPlayer.play().then(() => {
     isPlaying = true;
-    currentTrackIndex = index;
+  }).catch(err => {
+    // Autoplay prevented or other play error; overlay remains until user triggers play or timeout.
+    console.warn("Autoplay prevented / play error:", err);
+    isPlaying = false;
+  });
+
+  currentTrackIndex = index;
+  updateDownloadButtonState();
 }
 
 // ================== LOAD TRACK (alias) ==================
