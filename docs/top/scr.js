@@ -12,8 +12,8 @@ const tracksData = {
     "my innards": {
         src: "https://bafybeifcdu7a6cqyki5dsg6ymdmu3gy2ad3mznhupzedqrnaufhkj7lwma.ipfs.w3s.link/my%20innards.mp3",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/darkwood.jpeg",
-        length: "03:45",
-        genre: "experimental","dark",
+        length: "04:27",
+        genre: "experimental",
         album: "dark wood/innards"
     },
     "freak": {
