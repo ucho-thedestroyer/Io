@@ -9,6 +9,13 @@ const tracksData = {
         genre: "sort of techno",
         album: "dark wood/innards"
     },
+    "my innards": {
+        src: "https://bafybeifcdu7a6cqyki5dsg6ymdmu3gy2ad3mznhupzedqrnaufhkj7lwma.ipfs.w3s.link/my%20innards.mp3",
+        cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/darkwood.jpeg",
+        length: "03:45",
+        genre: "experimental","dark",
+        album: "dark wood/innards"
+    },
     "freak": {
         src: "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/ipfs/bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq/Freak%20Analog%20Textures3%20by%20easterntraveler.mp4",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/top/covers/tunnel04.jpeg",
