@@ -6,7 +6,8 @@ const tracksData = {
         src: "https://bafybeidz5hztolhqz7zmp7wohgtv6dhzv2hiynwu5hn62niupynlnycati.ipfs.w3s.link",
         cover: "https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/darkwood.jpeg",
         length: "03:45",
-        genre: "Synthwave"
+        genre: "sort of techno",
+        album: "dark wood/innards"
     },
     "freak": {
         src: "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/ipfs/bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq/Freak%20Analog%20Textures3%20by%20easterntraveler.mp4",
