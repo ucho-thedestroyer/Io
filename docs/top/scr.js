@@ -533,6 +533,10 @@ function shareCurrentTrack() {
   });
 }
 
+// ================== TOGGLE DARK MODE ==================
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}
 
 // =================== TABS (keeps your implementation, safer attach) ===================
 (function initTabs() {
