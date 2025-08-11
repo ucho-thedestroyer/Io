@@ -27,7 +27,7 @@ const tracksData = {
 let isPlaying = false;
 let currentTrackIndex = -1; // use -1 to mean "no current track"
 let queue = [];
-let tracksData = {}; // your { title: { src, cover, length, ... } } map
+
 
 // DOM refs (guarded below)
 const audioPlayer = document.getElementById("audio-player");
