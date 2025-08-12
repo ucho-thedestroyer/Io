@@ -100,10 +100,10 @@ h2 {
 /* Content area inside PNG */
 .browser-content {
   position: absolute;
-  top: 131px; 
+  top: 132px; 
   left: 5px;
-  width: 583px; 
-  height: 322px;
+  width: 583px;
+  height: 312px;
   overflow-y: auto;
   padding: 10px;
   background: rgba(0,0,0,0.85); /* dark background to match terminal feel */
