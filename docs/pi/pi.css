@@ -67,7 +67,7 @@ body {
 .browser-content {
   position: absolute;
   top: 110px;   /* Adjust to align with white area inside PNG */
-  left: 20px;   /* Adjust to align with white area inside PNG */
+  left: 10px;   /* Adjust to align with white area inside PNG */
   width: 590px; /* Width of actual page area */
   height: 340px;/* Height of actual page area */
   overflow-y: auto;
