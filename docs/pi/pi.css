@@ -69,7 +69,7 @@ body {
   top: 120px;   /* Adjust to align with white area inside PNG */
   left: 8px;   /* Adjust to align with white area inside PNG */
   width: 580px; /* Width of actual page area */
-  height: 340px;/* Height of actual page area */
+  height: 324px;/* Height of actual page area */
   overflow-y: auto;
   padding: 10px;
   background: rgba(255,255,255,0.85); /* Slight transparency for realism */
