@@ -102,8 +102,8 @@ h2 {
   position: absolute;
   top: 132px; 
   left: 5px;
-  width: 583px;
-  height: 308px;
+  width: 584px;
+  height: 300px;
   overflow-y: auto;
   padding: 10px;
   background: rgba(0,0,0,0.85); /* dark background to match terminal feel */
