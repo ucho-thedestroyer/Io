@@ -1,12 +1,44 @@
-/* Body styling with tiled background */
+/* Body styling with tiled background 
 body {
   background: #000000 url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-  color: #FFFFFF; /* white default text like BBS */
+  color: #FFFFFF; /* white default text like BBS 
   font-family: "Verdana", sans-serif;
   font-size: 14px;
   margin: 0;
   padding: 0;
 }
+
+
+/* Global font change to match BBS style */
+body {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+}
+
+/* BBS style headings (simulate THE CAVE BBS title) */
+h2 {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  color: #00CCCC; /* cyan text */
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 2px;
+  margin: 10px 0;
+  text-shadow: 2px 2px #000000; /* chunky shadow */
+  border-bottom: 1px solid #00AAAA; /* teal divider like screenshot */
+  padding-bottom: 4px;
+}
+
+/* Optional: Make headings inside browser-content stand out even more */
+.browser-content h2 {
+  color: #FFFF55; /* bright yellow like menu items */
+  text-shadow: 2px 2px #000000;
+  border-bottom: 1px solid #AAAA00;
+}
+
 
 /* Header */
 .header {
