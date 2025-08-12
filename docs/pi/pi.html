@@ -73,5 +73,21 @@
   </div>
 
 <script src="pi.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const doomPopup = document.getElementById("doom-popup");
+
+  // Show DOOM popup
+  setTimeout(() => {
+    doomPopup.classList.add("show");
+
+    // Hide popup after 6 seconds (change as needed)
+    setTimeout(() => {
+      doomPopup.classList.remove("show");
+    }, 6000);
+  }, 2000); // Delay before showing (2s)
+});
+</script>
+
 </body>
 </html>
