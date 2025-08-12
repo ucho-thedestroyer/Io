@@ -54,15 +54,32 @@ body {
   flex: 2;
   margin-right: 10px;
 }
-.news-box {
-  border: 3px groove #ff0;
-  background-color: #000033;
-  padding: 10px;
-  margin-bottom: 15px;
+.browser-frame {
+  position: relative;
+  width: 632px;   /* Match your PNG's real width */
+  height: 480px;  /* Match your PNG's real height */
+  background: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/docs/pi/browser.png') no-repeat center center;
+  background-size: contain;
+  margin: 20px auto;
 }
-.news-box img {
+
+/* Content area inside PNG */
+.browser-content {
+  position: absolute;
+  top: 110px;   /* Adjust to align with white area inside PNG */
+  left: 20px;   /* Adjust to align with white area inside PNG */
+  width: 590px; /* Width of actual page area */
+  height: 340px;/* Height of actual page area */
+  overflow-y: auto;
+  padding: 10px;
+  background: rgba(255,255,255,0.85); /* Slight transparency for realism */
+  font-family: "Verdana", sans-serif;
+  color: black;
+  border: none;
+}
+.browser-content img {
   max-width: 100%;
-  border: 2px solid #ff0;
+  border: 2px solid #ccc;
 }
 
 /* Right Column */
