@@ -58,7 +58,7 @@ body {
   position: relative;
   width: 632px;   /* Match your PNG's real width */
   height: 480px;  /* Match your PNG's real height */
-  background: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/docs/pi/browser.png') no-repeat center center;
+  background: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/pi/browser.png') no-repeat center center;
   background-size: contain;
   margin: 20px auto;
 }
