@@ -10,7 +10,9 @@ body {
 
 
 /* Global font change to match BBS style */
-body {
+ body {
+  background-color: #000000;
+  color: #FFFFFF;
   font-family: 'Press Start 2P', 'Courier New', monospace;
   font-size: 12px;
   line-height: 1.4;
