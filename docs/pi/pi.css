@@ -91,7 +91,7 @@ body {
   left: 0;
   width: 100%;
   height: 48px; /* Matches proportion of the taskbar in your PNG */
-  background: url('https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/pi/win95.png') no-repeat center bottom;
+  background: url('https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/pi/IMG_0847.jpeg') no-repeat center bottom;
   background-size: cover;
   z-index: 1000;
 }
