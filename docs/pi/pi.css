@@ -66,9 +66,9 @@ body {
 /* Content area inside PNG */
 .browser-content {
   position: absolute;
-  top: 110px;   /* Adjust to align with white area inside PNG */
-  left: 10px;   /* Adjust to align with white area inside PNG */
-  width: 590px; /* Width of actual page area */
+  top: 120px;   /* Adjust to align with white area inside PNG */
+  left: 8px;   /* Adjust to align with white area inside PNG */
+  width: 580px; /* Width of actual page area */
   height: 340px;/* Height of actual page area */
   overflow-y: auto;
   padding: 10px;
@@ -90,7 +90,7 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 48px; /* Matches proportion of the taskbar in your PNG */
+  height: 24px; /* Matches proportion of the taskbar in your PNG */
   background: url('https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/pi/IMG_0848.jpeg') no-repeat center bottom;
   background-size: cover;
   z-index: 1000;
