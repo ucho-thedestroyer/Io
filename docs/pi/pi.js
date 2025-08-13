@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const doomPopup = document.getElementById("doom-popup");
   const doomImg = doomPopup.querySelector("img");
 
-  const gifDuration = 6000;  // ms: set to your GIF's actual length
-  const firstDelay = 6000;   // first show after 6s
-  const repeatDelay = 3000;  // 3s gap between repeats
+  const gifDuration = 9000;  // ms: set to your GIF's actual length
+  const firstDelay = 9320;   // first show after 6s
+  const repeatDelay = 4320;  // 3s gap between repeats
 
   function restartGif(img) {
     // ensures the GIF starts from frame 1 each time it appears
