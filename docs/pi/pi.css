@@ -187,8 +187,8 @@ color: #FFF; /* bright yellow like menu items */
   opacity: 0;
   pointer-events: auto;                /* allow interaction if needed */
 
-  margin-top: 10vh;    /* push down from top */
-  margin-left: 10vw;   /* push right from left */
+  margin-top: 12vh;    /* push down from top */
+  margin-left: 16vw;   /* push right from left */
 
 }
 
