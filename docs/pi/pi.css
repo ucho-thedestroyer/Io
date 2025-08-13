@@ -190,4 +190,10 @@ h2 {
   opacity: 1;
   pointer-events: auto;
 }
+.tidbit {
+	background-color:rgb(243, 241, 133, 0.5);
+	color: azure;
+	border-radius: 5px;
+	padding: 10px;
 
+}
