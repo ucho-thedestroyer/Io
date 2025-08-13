@@ -41,13 +41,12 @@ document.addEventListener("DOMContentLoaded", function() {
   stats[2].textContent = `Online now: ${Math.floor(Math.random() * 5) + 1}`;
 });
 
-
 document.addEventListener("DOMContentLoaded", function () {
   const doomPopup = document.getElementById("doom-popup");
   const doomImg = doomPopup.querySelector("img");
 
   const gifDuration = 9000;  // ms: set to your GIF's actual length
-  const firstDelay = 9320;   // first show after 6s
+  const firstDelay = 100;   // first show after 6s
   const repeatDelay = 4320;  // 3s gap between repeats
 
   function restartGif(img) {
@@ -65,5 +64,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }, gifDuration);
   }
 
-  setTimeout(showDoom, firstDelay);
+  // NEW: only start first show after GIF loads
+  if (doomImg.complete) {
+    setTimeout(showDoom, firstDelay);
+  } else {
+    doomImg.addEventListener("load", () => {
+      setTimeout(showDoom, firstDelay);
+    });
+  }
 });
