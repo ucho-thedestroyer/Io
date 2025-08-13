@@ -182,10 +182,14 @@ color: #FFF; /* bright yellow like menu items */
   background: #c0c0c0;
   border: 2px solid #000;              /* outer black edge */
   box-shadow: 6px 6px 0 #000;          /* chunky retro drop shadow */
-  padding-top: 22px;                   /* room for title bar */
-  transform: scale(0.86) translateY(8px);
+  /*---- padding-top: 22px;                   /* room for title bar */
+  /*--- transform: scale(0.86) translateY(8px); */
   opacity: 0;
   pointer-events: auto;                /* allow interaction if needed */
+
+  margin-top: 10vh;    /* push down from top */
+  margin-left: 10vw;   /* push right from left */
+
 }
 
 /* Pop-in animation (feels like a window opening) */
