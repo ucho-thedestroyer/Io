@@ -190,16 +190,46 @@ h2 {
   opacity: 1;
   pointer-events: auto;
 }
-.tidbit {
-	background-color:rgb(243, 241, 133, 0.5);
-	color: azure;
-	border-radius: 5px;
-	padding: 10px;
 
+.news-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
-  .pipipic {
+
+.news-row .flying {
+  flex-shrink: 0;
+}
+
+.news-row .tidbit {
+  flex: 1;
+}
+
+.browser-content {
+  display: flex;
+  align-items: center; /* vertically center text and image */
+  gap: 1rem; /* space between image and text */
+}
+
+.browser-content .flying {
+  flex-shrink: 0; /* prevents the image from shrinking */
+}
+
+.browser-content .pipipic {
+  max-width: 100%;
+  height: auto;
+  display: block;
     width: 136px;
     height: 107px;
+}
 
+.browser-content .tidbit {
+  flex: 1; /* text expands to fill remaining space */
+  font-size: 1rem;
+  line-height: 1.4;
+	background-color:rgb(243, 241, 133, 0.5);
+	color: azure;
+	border-radius: 2px;
+	padding: 10px;
+}
 
-  }
