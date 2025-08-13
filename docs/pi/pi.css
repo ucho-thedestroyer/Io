@@ -33,6 +33,10 @@ h2 {
   border-bottom: 1px solid #00AAAA; /* teal divider like screenshot */
   padding-bottom: 4px;
 }
+p {
+color: #FFF; /* bright yellow like menu items */	
+	
+}
 
 /* Optional: Make headings inside browser-content stand out even more */
 .browser-content h2 {
@@ -192,7 +196,7 @@ h2 {
   to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-/* Title bar (Win95 vibe) using a pseudo element so no HTML changes needed) */
+/* Title bar (Win95 vibe) using a pseudo element so no HTML changes needed) 
 .doom-window::before {
   content: "DOOM.EXE";
   position: absolute;
@@ -206,7 +210,7 @@ h2 {
   letter-spacing: 1px;
   text-shadow: 1px 1px #000;
   border-bottom: 1px solid #000;
-}
+} ----*/
 
 /* Content */
 .doom-window img {
