@@ -28,18 +28,18 @@
   <div class="main-container">
     <!-- Left Column -->
     <div class="left-column">
-      <h2>📢 Latest Updates</h2>
-      <!-- Netscape Browser Frame -->
-<div class="browser-frame">
+      <div class="browser-frame">
   <div class="browser-content">
     <h2>📰 Big News!</h2>
-    <p id="output_p" class="tidbit"></p>
-    <div class="flying">
+    <div class="news-row">
+      <div class="flying">
         <img src="pipi1.png" alt="pipi the handsome doggy" class="pipipic" />
       </div>
-    
+      <p id="output_p" class="tidbit"></p>
+    </div>
   </div>
 </div>
+
 
 <!-- Win95 Taskbar -->
 <div class="win95-taskbar"></div>
@@ -75,21 +75,6 @@
 
 <script src="pi.js"></script>
 
-  <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const doomPopup = document.getElementById("doom-popup");
-
-  // Show DOOM popup
-  setTimeout(() => {
-    doomPopup.classList.add("show");
-
-    // Hide popup after 6 seconds (change as needed)
-    setTimeout(() => {
-      doomPopup.classList.remove("show");
-    }, 6000);
-  }, 2000); // Delay before showing (2s)
-});
-</script>
 
 </body>
 </html>
