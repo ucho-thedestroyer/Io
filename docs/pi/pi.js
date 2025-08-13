@@ -1,5 +1,6 @@
+
 function main() {
-	const facts = [
+  const facts = [
 	  'It is fascinating how repetitive sounds can trigger memories of hallucinations',
 	  'Bizarre memories and dreams are prone to visit us in the late stages of our sleep',
 	  'These are randomly generated statements, woof!',
@@ -27,16 +28,40 @@ function main() {
 	  'Uranus was discovered by William Herschel in 1781.',
 	  "The first accurate calculation of the speed of light was using Jupiter's moons",
 	  "Jupiter's magnetic field is believed to be a result of rapidly spinning metallic hydrogen at the core, and is ~10x stronger than the Earth's.",
-	  'Venus spins backwards.',
-	]
-	document.querySelector('#output_p').innerHTML =
-	  facts[Math.floor(Math.random() * facts.length)]
+	  'Venus spins backwards.',  ];
+
+  // Retrieve last index from localStorage
+  let lastIndex = parseInt(localStorage.getItem('lastFactIndex'), 10);
+
+  let newIndex;
+  if (isNaN(lastIndex)) {
+    // First visit → pick a random fact
+    newIndex = Math.floor(Math.random() * facts.length);
+  } else {
+    // Otherwise → move to the next fact in sequence
+    newIndex = (lastIndex + 1) % facts.length;
   }
 
+  // Display fact
+  const outputElement = document.querySelector('#output_p');
+  if (outputElement) {
+    outputElement.textContent = facts[newIndex];
+  }
 
-// Example: Randomize visitor count to mimic old BBS style stats
+  // Store new index for next page load
+  localStorage.setItem('lastFactIndex', newIndex);
+}
+
+// Run when DOM is ready
 document.addEventListener("DOMContentLoaded", function() {
+  main();
+
+  // Randomize visitor count (BBS style)
   const stats = document.querySelectorAll(".right-column ul li");
-  stats[0].textContent = `Visitors today: ${Math.floor(Math.random() * 100) + 1}`;
-  stats[2].textContent = `Online now: ${Math.floor(Math.random() * 5) + 1}`;
+  if (stats.length >= 3) {
+    stats[0].textContent = `Visitors today: ${Math.floor(Math.random() * 100) + 1}`;
+    stats[2].textContent = `Online now: ${Math.floor(Math.random() * 5) + 1}`;
+  }
 });
+
+
