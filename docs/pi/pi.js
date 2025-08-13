@@ -26,16 +26,16 @@ function main() {
 	  'Four spacecraft have visited Saturn; no doggies there as of yet.',
 	  'Uranus was discovered by William Herschel in 1781.',
 	  "The first accurate calculation of the speed of light was using Jupiter's moons",
-	  "Jupiter's magnetic field is believed to be a result of rapidly spinning metallic hydrogen at the core, and is ~10x stronger than the Earth's.",
-	  'Venus spins backwards.',
-	]
-	document.querySelector('#output_p').innerHTML =
-	  facts[Math.floor(Math.random() * facts.length)]
-  }
+    "Jupiter's magnetic field is believed to be a result of rapidly spinning metallic hydrogen at the core, and is ~10x stronger than the Earth's.",
+    'Venus spins backwards.',
+  ];
+  document.querySelector('#output_p').innerHTML =
+    facts[Math.floor(Math.random() * facts.length)];
+}
 
-
-// Example: Randomize visitor count to mimic old BBS style stats
+// Run main() immediately on DOM ready
 document.addEventListener("DOMContentLoaded", function() {
+  main();  // call random fact function
   const stats = document.querySelectorAll(".right-column ul li");
   stats[0].textContent = `Visitors today: ${Math.floor(Math.random() * 100) + 1}`;
   stats[2].textContent = `Online now: ${Math.floor(Math.random() * 5) + 1}`;
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const doomImg = doomPopup.querySelector("img");
 
   const gifDuration = 9000;  // ms: set to your GIF's actual length
-  const firstDelay = 100;   // first show after 6s
+  const firstDelay = 100;    // first show after 100ms
   const repeatDelay = 4320;  // 3s gap between repeats
 
   function restartGif(img) {
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }, gifDuration);
   }
 
-  // NEW: only start first show after GIF loads
+  // Start doom popup only after GIF loads
   if (doomImg.complete) {
     setTimeout(showDoom, firstDelay);
   } else {
@@ -73,3 +73,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
