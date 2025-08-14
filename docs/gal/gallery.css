@@ -109,7 +109,7 @@ td.file u,
 td.file p {
   color: white;
 }
-td.file p:nth-of-type(2) {
+td.file p:nth-of-type(1) {
   background-color: #ff00aa; /* vibrant retro magenta */
   padding: 2px 5px;
   display: inline-block;
