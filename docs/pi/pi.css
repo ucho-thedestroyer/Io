@@ -173,6 +173,8 @@ color: #FFF; /* bright yellow like menu items */
   padding-left: 10px;
   background-color: #000000; /* black */
   color: #FFFF55; /* yellow text inside right column */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
 }
 
 /* Footer */
