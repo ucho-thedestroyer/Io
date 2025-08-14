@@ -37,6 +37,35 @@ p {
 color: #FFF; /* bright yellow like menu items */	
 	
 }
+/* Retro flashy link effect */
+.browser-content a {
+  color: #FFFF55; /* bright yellow like the 90s */
+  font-weight: bold;
+  text-decoration: none; /* remove underline */
+  animation: neonPulse 1.5s infinite alternate;
+}
+
+/* Flashy neon effect */
+@keyframes neonPulse {
+  0% {
+    text-shadow: 0 0 5px #FFFF55, 0 0 10px #FFFF55, 0 0 15px #FFFF55, 0 0 20px #FF00FF, 0 0 30px #FF00FF, 0 0 40px #FF00FF, 0 0 50px #FF00FF;
+    color: #FFFF55;
+  }
+  50% {
+    text-shadow: 0 0 10px #FFFF55, 0 0 20px #FFFF55, 0 0 30px #FFFF55, 0 0 40px #FF00FF, 0 0 50px #FF00FF, 0 0 60px #FF00FF, 0 0 70px #FF00FF;
+    color: #FFFF55;
+  }
+  100% {
+    text-shadow: 0 0 5px #FFFF55, 0 0 10px #FFFF55, 0 0 15px #FFFF55, 0 0 20px #FF00FF, 0 0 30px #FF00FF, 0 0 40px #FF00FF, 0 0 50px #FF00FF;
+    color: #FFFF55;
+  }
+}
+
+/* Optional: hover effect for a more intense flash */
+.browser-content a:hover {
+  text-shadow: 0 0 10px #FFFF55, 0 0 20px #FFFF55, 0 0 30px #FFFF55, 0 0 40px #FF00FF, 0 0 50px #FF00FF, 0 0 60px #FF00FF, 0 0 70px #FF00FF;
+  color: #FFFF00;
+}
 
 /* Optional: Make headings inside browser-content stand out even more */
 .browser-content h2 {
