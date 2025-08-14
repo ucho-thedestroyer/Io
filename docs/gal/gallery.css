@@ -192,7 +192,7 @@ td.file a:hover {
 	height: 400px;
 	margin-top:10px;
 	position:relative;
-	perspective: 800px;
+	perspective: 400px;
 	perspective-origin: 50% 200px;
   }
   
