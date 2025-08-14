@@ -113,6 +113,13 @@ td {
 a {
 	color: hotpink;
 }
+
+td.file u,
+td.file p,
+td.file a {
+  color: white;
+}
+
 /*
 #drag-handle {
 	position: absolute;
