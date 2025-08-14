@@ -7,7 +7,7 @@ body {
 }
 
 body {
-	background: url("https://github.com/ucho-thedestroyer/Io/raw/Backup/gal/backconclusioness.jpeg");
+	background: url("https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/backconclusioness.jpeg");
 	overflow: auto;
 }
 /*
@@ -118,6 +118,33 @@ td.file u,
 td.file p {
   color: white;
 }
+/* Retro flashy link effect for the new link */
+td.file a {
+  color: rgb(83, 132, 168); /* your current link color */
+  font-weight: bold;
+  text-decoration: none; /* remove underline */
+  animation: neonPulseBlue 1.5s infinite alternate;
+}
+
+/* Flashy neon effect with blue hues */
+@keyframes neonPulseBlue {
+  0% {
+    text-shadow: 0 0 5px rgb(83, 132, 168), 0 0 10px rgb(83, 132, 168), 0 0 15px rgb(83, 132, 168), 0 0 20px #00FFFF, 0 0 30px #00FFFF, 0 0 40px #00FFFF, 0 0 50px #00FFFF;
+    color: rgb(83, 132, 168);
+  }
+  50% {
+    text-shadow: 0 0 10px rgb(83, 132, 168), 0 0 20px rgb(83, 132, 168), 0 0 30px rgb(83, 132, 168), 0 0 40px #00FFFF, 0 0 50px #00FFFF, 0 0 60px #00FFFF, 0 0 70px #00FFFF;
+    color: rgb(83, 132, 168);
+  }
+  100% {
+    text-shadow: 0 0 5px rgb(83, 132, 168), 0 0 10px rgb(83, 132, 168), 0 0 15px rgb(83, 132, 168), 0 0 20px #00FFFF, 0 0 30px #00FFFF, 0 0 40px #00FFFF, 0 0 50px #00FFFF;
+    color: rgb(83, 132, 168);
+  }
+}
+
+/* Optional: hover effect for more intensity */
+td.file a:hover {
+  text-shadow: 0
 
 /*
 #drag-handle {
