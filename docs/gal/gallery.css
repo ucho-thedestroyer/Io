@@ -118,6 +118,12 @@ td.file u,
 td.file p {
   color: white;
 }
+td.file p:nth-of-type(2) {
+  background-color: #ff00aa; /* vibrant retro magenta */
+  padding: 2px 5px;
+  display: inline-block;
+}
+
 /* Retro flashy link effect for the new link */
 td.file a {
   color: rgb(83, 132, 168); /* your current link color */
