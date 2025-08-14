@@ -181,7 +181,7 @@ color: #FFF; /* bright yellow like menu items */
   height: 250px;
   background: #c0c0c0;
   border: 2px solid #000;              /* outer black edge */
-  box-shadow: 6px 6px 0 #000;          /* chunky retro drop shadow */
+  box-shadow: 1px 1px 0 #000;          /* chunky retro drop shadow */
   /*---- padding-top: 22px;                   /* room for title bar */
   /*--- transform: scale(0.86) translateY(8px); */
   opacity: 0;
