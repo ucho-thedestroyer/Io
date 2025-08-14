@@ -65,17 +65,8 @@ main {
 	text-transform: uppercase;
 }
 
-.the90s {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	img {
-		width: 60px;
-		flex-grow: 0;
-		flex-shrink: 0;
-		margin: 0 auto;
-	}
-}
+.the90s { display: flex; align-items: center; justify-content: center; }
+.the90s img { width: 60px; flex-grow: 0; flex-shrink: 0; margin: 0 auto; }
 
 h1 {
 	margin: 0;
@@ -191,13 +182,17 @@ td.file a:hover {
 	from { transform: rotateY(0); }
 	to   { transform: rotateY(360deg); }
   }
-  
+  @keyframes spin {
+  from { transform: rotateY(0); }
+  to   { transform: rotateY(360deg); }
+}
+
   /* scene wrapper */
   .wrapper{
 	height: 400px;
 	margin-top:10px;
 	position:relative;
-	perspective: 800;
+	perspective: 800px;
 	perspective-origin: 50% 200px;
   }
   
