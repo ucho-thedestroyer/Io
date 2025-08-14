@@ -107,7 +107,7 @@ color: #FFF; /* bright yellow like menu items */
   top: 132px; 
   left: 5px;
   width: 584px;
-  height: 290px;
+  height: 288px;
   overflow-y: auto;
   padding: 10px;
   background: rgba(0,0,0,0.85); /* dark background to match terminal feel */
