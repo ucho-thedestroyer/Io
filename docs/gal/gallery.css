@@ -123,38 +123,37 @@ td.file a {
   animation: neonPulseBlue 1.5s infinite alternate;
 }
 td.file2 a {
-  color: rgb(83, 132, 168); /* your current link color */
+  color: rgb(83, 132, 168); /* 90s blue link */
   font-weight: bold;
-  text-decoration: none; /* remove underline */
-  animation: neonPulseBlue 1.5s infinite alternate;
+  text-decoration: none;
+  animation: clunkyPulse 1.2s infinite alternate;
 }
 
-/* Flashy neon effect with blue hues */
-@keyframes neonPulseBlue {
+/* More clunky 90s-style pulse (less blur, more hard edges) */
+@keyframes clunkyPulse {
   0% {
-    text-shadow: 0 0 5px rgb(83, 132, 168), 0 0 10px rgb(83, 132, 168), 0 0 15px rgb(83, 132, 168), 0 0 20px #00FFFF, 0 0 30px #00FFFF, 0 0 40px #00FFFF, 0 0 50px #00FFFF;
-    color: rgb(83, 132, 168);
+    text-shadow:
+      1px 1px 0px #00FFFF,
+      2px 2px 0px #005577;
   }
   50% {
-    text-shadow: 0 0 10px rgb(83, 132, 168), 0 0 20px rgb(83, 132, 168), 0 0 30px rgb(83, 132, 168), 0 0 40px #00FFFF, 0 0 50px #00FFFF, 0 0 60px #00FFFF, 0 0 70px #00FFFF;
-    color: rgb(83, 132, 168);
+    text-shadow:
+      1px 1px 0px #005577,
+      2px 2px 0px #00FFFF;
   }
   100% {
-    text-shadow: 0 0 5px rgb(83, 132, 168), 0 0 10px rgb(83, 132, 168), 0 0 15px rgb(83, 132, 168), 0 0 20px #00FFFF, 0 0 30px #00FFFF, 0 0 40px #00FFFF, 0 0 50px #00FFFF;
-    color: rgb(83, 132, 168);
+    text-shadow:
+      1px 1px 0px #00FFFF,
+      2px 2px 0px #005577;
   }
 }
 
 td.file a:hover {
   text-shadow:
-    0 0 10px rgb(83, 132, 168),
-    0 0 20px rgb(83, 132, 168),
-    0 0 30px rgb(83, 132, 168),
-    0 0 40px #00FFFF,
-    0 0 50px #00FFFF,
-    0 0 60px #00FFFF,
-    0 0 70px #00FFFF;
-  color: rgb(83, 132, 168);
+    1px 1px 0px #FFFFFF,
+    2px 2px 0px #00FFFF,
+    3px 3px 0px #000000;
+  color: #00FFFF; /* make hover pop, like 90s rollover */
 }
 
 /*
