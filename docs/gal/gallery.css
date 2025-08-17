@@ -122,6 +122,12 @@ td.file a {
   text-decoration: none; /* remove underline */
   animation: neonPulseBlue 1.5s infinite alternate;
 }
+td.file2 a {
+  color: rgb(83, 132, 168); /* your current link color */
+  font-weight: bold;
+  text-decoration: none; /* remove underline */
+  animation: neonPulseBlue 1.5s infinite alternate;
+}
 
 /* Flashy neon effect with blue hues */
 @keyframes neonPulseBlue {
