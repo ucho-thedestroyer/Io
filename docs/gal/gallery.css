@@ -134,13 +134,13 @@ a {
 }
 
   
-  /* keyframes for rotating animation */
+  /* keyframes for rotating animation 
   @-webkit-keyframes spin {
 	from { transform: rotateY(0); }
 	to   { transform: rotateY(360deg); }
   }
   
-  /* scene wrapper */
+  /* scene wrapper 
   .wrapper{
 	height: 200px;
 	margin-top:10px;
@@ -149,7 +149,7 @@ a {
 	perspective-origin: 50% 100px;
   }
   
-  /* cube wrapper */
+  /* cube wrapper 
   .cube{
 	position: relative;
 	margin: 0 auto;
@@ -159,7 +159,7 @@ a {
 	transition: all 1s linear;
   }
   
-  /* outer cube */
+  /* outer cube 
   b{
 	position:absolute;
 	width:200px;
@@ -198,7 +198,7 @@ a {
 	transform: translateZ(100px);
   }
   
-  /* inner cube */
+  /* inner cube 
   i{
 	position:absolute;
 	top:50px;
@@ -231,7 +231,77 @@ a {
 	transform:rotateX(-270deg) translateY(-50px);
 	transform-origin: left top;
   }
-  
+  */
+/* === SONAR BACKGROUND EFFECT === */
+.sonar-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.sonar-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  margin-left: -400px;
+  margin-top: -400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 80%);
+  animation: sonarPulse 5s infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@keyframes sonarPulse {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* === GALLERY SECTION === */
+.gallery-section {
+  position: relative;
+  padding: 50px 20px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.gallery-content {
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.gallery-item img {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #4444aa;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .sonar-effect {
+    width: 500px;
+    height: 500px;
+    margin-left: -250px;
+    margin-top: -250px;
+  }
+}
+
   
 
 @media screen and (max-width: 900px) {
