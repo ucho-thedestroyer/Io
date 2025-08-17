@@ -279,66 +279,104 @@ td.file a:hover {
 	transform-origin: left top;
   }
   */
-/* === SONAR BACKGROUND EFFECT === */
-.sonar-wrapper {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  z-index: 0;
+
+#canvas-wrap { position:relative } /* Make this a positioned parent */
+#overlay     { position:absolute; top:0; left:0; }
+
+
+.container11 {
+  padding-top: 9rem;
+  padding-left: 8rem;
+  justify-content: flex-end;
+	position: relative;
+	width: 80vw;
+	height: 60vh;
+	transition: all 400ms;
 }
 
-.sonar-effect {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 800px;
-  height: 800px;
-  margin-left: -400px;
-  margin-top: -400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 80%);
-  animation: sonarPulse 5s infinite;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
-@keyframes sonarPulse {
-  0% {
-    transform: scale(0.3);
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
-/* === GALLERY SECTION === */
-.gallery-section {
-  position: relative;
-  padding: 50px 20px;
-  text-align: center;
-  overflow: hidden;
-}
-
-.gallery-content {
-  position: relative;
-  z-index: 1;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.gallery-item img {
+.gallery {
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  border-radius: 10px;
-  border: 2px solid #4444aa;
+  height: 50vh;
+}
+.gallery .item {
+  flex: 1;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: none;
+  transform: scale(0.95);
+  margin-right: -14px;
+  box-shadow: 0 1px 4px 0 rgba(10,16,34,0.2);
+  border-radius: 0;
+  will-change: flex, transform, box-shadow;
+  transition: flex 700ms ease, transform 700ms ease, box-shadow 700ms ease, border-radius 700ms ease;
+}
+.gallery .item:first-child {
+  border-radius: 5px 0 0 5px;
+  z-index: 5 !important;
+}
+.gallery .item:nth-child(2) {
+  z-index: 4 !important;
+}
+.gallery .item:nth-child(3) {
+  z-index: 3 !important;
+}
+.gallery .item:nth-child(4) {
+  z-index: 2 !important;
+}
+.gallery .item:last-child {
+  border-radius: 0 5px 5px 0;
+  z-index: 1 !important;
+  margin-right: 0 !important;
 }
 
+.gallery:hover .item {
+  filter: grayscale(100%) opacity(24%);
+}
+.gallery .item:hover {
+  flex: 2;
+  border-radius: 5px;
+  z-index: 999 !important;
+  filter: grayscale(0%) opacity(100%);
+  box-shadow: 0 12px 24px 0 rgba(10,16,34,0.3), 0 0 0 transparent;
+  transform: scale(1);
+}
+.item::after {
+	content: attr(data-text);
+	position: absolute;
+	bottom: 20px;
+	background: #000;
+	color: #fff;
+	padding: 10px 10px 10px 14px;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	transform: translateY(60px);
+	opacity: 0;
+	transition: all 400ms;
+}
+
+.item:hover::after {
+	transform: translateY(0);
+	opacity: 1;
+	transition-delay: 400ms;
+}
+.gallery .item-1 {
+  background-image: url("cultureimg1.jpg");
+}
+.gallery .item-2 {
+  background-image: url("cultureimg2.jpg");
+}
+.gallery .item-3 {
+  background-image: url("cultureimg3.jpg");
+}
+.gallery .item-4 {
+  background-image: url("cultureimg4.jpg");
+}
+.gallery .item-5 {
+  background-image: url("cultureimg5.jpg");
+}
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .sonar-effect {
