@@ -363,19 +363,19 @@ td.file a:hover {
 	transition-delay: 400ms;
 }
 .gallery .item-1 {
-  background-image: url("cultureimg1.jpg");
+  background-image: url("https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/cak/01/cultureimg1.jpg");
 }
 .gallery .item-2 {
-  background-image: url("cultureimg2.jpg");
+  background-image: url("https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/cak/01/cultureimg2.jpg");
 }
 .gallery .item-3 {
-  background-image: url("cultureimg3.jpg");
+  background-image: url("https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/cak/01/cultureimg3.jpg");
 }
 .gallery .item-4 {
-  background-image: url("cultureimg4.jpg");
+  background-image: url("https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/cak/01/cultureimg4.jpg");
 }
 .gallery .item-5 {
-  background-image: url("cultureimg5.jpg");
+  background-image: url("https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/cak/01/cultureimg5.jpg");
 }
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
