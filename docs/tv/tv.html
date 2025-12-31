@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>the origin of deathlessness, behind the tube</title>
+   <link rel="stylesheet" type="text/css" href="https://bafybeigfeml66thxsyjkcfal62a4auqh5nwf6lygb6qm2kclnoom4ho7ia.ipfs.w3s.link/tv.css" />
+    <meta name="description" content="eastertraveler's cable T.V." />
+    <meta name="author" content="easterntraveler" />
+
+</head>
+
+<body>
+  <div class="outer">
+    <div class="photo-frame">
+
+      <!-- CRT wrapper: locked-position (keeps exact alignment to jpg) -->
+      <div class="crt-wrap" id="crtWrap">
+        <!-- crt-inner is the scaled visual (+1.8%) — everything visual sits inside here -->
+        <div class="crt-inner">
+          <div class="crt-tv-surface">
+
+            <video id="myVideo" autoplay muted loop playsinline crossorigin="anonymous">
+              <source src="https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/Freak%20Analog%20Textures3%20by%20easterntraveler.mp4" type="video/mp4">
+            </video>
+
+            <!-- NOISE / FLICKER GIF (fixed: now full-area and object-fit:cover) -->
+            <img id="noiseOverlay" src="https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/tv/IMG_1141.gif" alt="flicker overlay">
+
+            <!-- scanlines on top -->
+            <div id="scanlines" aria-hidden="true"></div>
+
+          </div> <!-- .crt-tv-surface -->
+        </div> <!-- .crt-inner -->
+      </div> <!-- .crt-wrap -->
+<div id="hotspot-power"></div>
+
+      <!-- controls unchanged -->
+      <div class="b">
+        <button id="muteToggleBtn">Mute</button>
+        <!-- controls unchanged
+       <a id="turnOffLink" href="http://www.the.online"></a> -->
+      </div>
+
+      
+      <div id="controlsWrapper">
+        << for="effectSlider1">Color</label>
+        <input type="range" id="effectSlider1" min="0" max="100" value="0">
+        <label for="effectSlider2">Sharpness</label>
+        <input type="range" id="effectSlider2" min="0" max="100" value="0">
+      </div>
+
+      <div id="channelButtonWrapper">
+        <div id="channelKnob"></div>
+        <div id="channelNumber">channel 1</div>
+      </div>
+
+      <div id="tvOffOverlay"></div>
+    </div>
+  </div>
+
+<script src="https://bafybeia2douu2hxuazec3fqwedmfoagigvhaqvany4xnb7y2bvkratoloe.ipfs.w3s.link/tv.js"></script>
+</body>
+</html>
