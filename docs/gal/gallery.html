@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>the origin of deathlessness, in the beholder's eye</title>
+    <link rel="stylesheet" href="https://bafybeib4omlbzaak2icapna5ngmoijt2ms7vg2ntt2ez3uji7n36trprim.ipfs.w3s.link/gal.css">
+    <meta name="description" content="make some noise" />
+    <meta name="author" content="easterntraveler" />
+
+<style>
+  /* Navigation */
+.navbar {
+  background-color: #000;
+  padding: 5px;
+  text-align: center;
+  max-width: 71%;
+  margin: 0 auto;
+
+  border-bottom: 2px solid cadetblue;
+  box-shadow:
+    0 1px 0 #00FF00;
+}
+
+.navbar a {
+  color: #FFFF55; /* bright yellow text */
+  font-weight: bold;
+  margin: 0 10px;
+  text-decoration: none;
+}
+.navbar a:hover {
+  background: #FFFF55; /* bright yellow hover */
+  color: #000000; /* black hover text */
+}
+
+#glow {
+  color: #FFFF55; /* bright yellow text */
+  font-weight: bold;
+  text-decoration: none;
+  animation: clunkyPulse 1.2s infinite alternate;
+
+  /* permanent legibility edge */
+  text-shadow: 0 0 0 #000000;
+}
+
+@keyframes clunkyPulse {
+  0% {
+    text-shadow:
+      1px 1px 0px #000000,   /* fixed keyline */
+      2px 2px 0px #00FFFF,
+      3px 3px 0px #005577;
+  }
+  50% {
+    text-shadow:
+      1px 1px 0px #000000,
+      2px 2px 0px #005577,
+      3px 3px 0px #00FFFF;
+  }
+  100% {
+    text-shadow:
+      1px 1px 0px #000000,
+      2px 2px 0px #00FFFF,
+      3px 3px 0px #005577;
+  }
+}
+
+#glow:hover {
+  color: #00FFFF;
+  text-shadow:
+    1px 1px 0px #000000,
+    2px 2px 0px #FFFFFF,
+    3px 3px 0px #00FFFF;
+}
+
+#glow2 {
+  color: #FFFF55; /* bright yellow text */
+  font-weight: bold;
+  text-decoration: none;
+  animation: clunkyPulse 1.2s infinite alternate;
+
+  /* permanent legibility edge */
+  text-shadow: 0 0 0 #000000;
+}
+
+@keyframes clunkyPulse {
+  0% {
+    text-shadow:
+      1px 1px 0px #000000,   /* fixed keyline */
+      2px 2px 0px #005577,
+      3px 3px 0px #00FFFF;
+  }
+  50% {
+    text-shadow:
+      1px 1px 0px #000000,
+      2px 2px 0px #00FFFF,
+      3px 3px 0px #005577;
+  }
+  100% {
+    text-shadow:
+      1px 1px 0px #000000,
+      2px 2px 0px #005577,
+      3px 3px 0px #00FFFF;
+  }
+}
+
+#glow2:hover {
+  color: #00FFFF;
+  text-shadow:
+    1px 1px 0px #000000,
+    2px 2px 0px #00FFFF,
+    3px 3px 0px #FFFFFF;
+}
+
+
+#glow3 {
+  color: hotpink;
+  font-weight: bold;
+  text-decoration: none;
+  animation: clunkyPulse 0.65s infinite alternate;
+
+  /* permanent legibility edge */
+  text-shadow: 0 0 0 #000000;
+}
+
+@keyframes clunkyPulse {
+  0% {
+    text-shadow:
+      1px 1px 0px #000000,   /* fixed keyline */
+      2px 2px 0px #FFFF55,
+      3px 3px 0px #00FFFF,
+      4px 4px 0px #660066;
+  }
+  50% {
+    text-shadow:
+      1px 1px 0px #000000,
+      2px 2px 0px #FFFFFF,
+      3px 3px 0px #FFFF55,
+      4px 4px 0px #00FFFF;
+  }
+  100% {
+    text-shadow:
+      1px 1px 0px #000000,
+      2px 2px 0px #660066,
+      3px 3px 0px #FFFF55,
+      4px 4px 0px #00FFFF;
+  }
+}
+
+#glow3:hover {
+  color: #FFFF55;
+  text-shadow:
+    1px 1px 0px #000000,
+    2px 2px 0px hotpink,
+    3px 3px 0px #00FFFF,
+    4px 4px 0px #FFFFFF;
+}
+
+
+</style>
+    
+  </head>
+  <body>
+    <div class="container browser-frame center">
+      <div id="drag-handle"></div>
+      <main class="content">
+        <div class="the90s">
+          <img
+            style="width: 25px; height: 40px; padding-bottom: 30px"
+            src="flame.gif"
+            alt="lair"
+          />
+          <h4>easterntraveler's LAIR OF SOUNDS</h4>
+          <img
+            style="width: 25px; height: 40px; padding-bottom: 30px"
+            src="flame.gif"
+            alt="lair"
+          />
+        </div>
+        <img style="width: 24vw; height: 0.1vh" src="rider.gif" /><br />
+        <p><text style="text-transform: none"
+          >A colourful journey of noises and tones</text
+        ></p>
+  <p>
+<div class="gallery">
+  
+  <div class="doom-viewport">
+    <!-- Full-width background image -->
+    <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/cak01.jpg" alt="Gallery Background" class="viewport-background">
+    
+
+    <!-- Animation container (hidden by default) -->
+    <div class="card-animation-container" id="cardAnimationContainer"></div>
+  </div>
+  
+ <img id="winnerGif" 
+     src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/gal/IMG_1175.gif" 
+     style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            display: none; z-index: 100000; pointer-events: none;">
+</div>
+      </p>
+        
+        <table>
+          <tr>
+            <td></td>
+            <td> • Culture and Kindred • </td>
+          </tr>
+          <tr>
+            <td class="file2">
+              <p>
+                The first painting in the series<br />
+                is up for grabs here:<a href="https://www.thesenoises.online/gal/shop.html">SHOP</a>
+              </p>
+            </td>
+            <td class="file">
+              A collection of oil pantings. The main theme is man and its culture.
+              <p><u>Artwork file:</u>A painting without title, on the back of the canvas an inscription reads "a man standing under the sun, his eyes burning and chest cut open; behind him, a structure of man".
+              </p>Do ui like eastern egg?
+              Click on the painting to get yours!
+            </td>
+          </tr>
+        </table>
+        <p>
+          Follow us
+          <a target="_blank" href="https://damus.io/npub1ekcjrjzyw45weqhee8pst7wmzw7a4zcp7jh8hwn9excnk9094evqn7yf8j"
+            >@easterntraveler</a
+          >, RSVP at
+          <a target="_blank" href="https://hmpg.net">napstir.oops/404</a>
+        </p>
+         <div class="navbar">
+    <a href="https://www.thesenoises.online">home</a>
+    <a href="https://www.thesenoises.online/top/top01.html" id="glow">music</a>
+    <a href="https://www.thesenoises.online/tv/tv.html">vids</a>
+    <a href="https://www.thesenoises.online/crt/mwca.html" id="glow3">manifesto of the MWCA</a>
+  </div>
+        <p></p>
+        <textarea cols="38" rows="1">
+COPYRIGHT © 1996-2028 - A. LETSIN</textarea
+        >
+        <br />
+        <div id="counter" style="font-size: 0.8em; color: rgb(83, 132, 168)">
+          Searching for Books, Movies and Music?<br />Download WonMX 2.1
+        </div>
+
+        <img
+          style="width: 18vw; height: 5vh"
+          src="webmaster.gif"
+          alt="under construction!"
+        /><br />
+
+        <div id="counter" style="font-size: 0.6em; color: rgb(83, 132, 168)">
+          STATCOUNTER.COM - Visitor 00012
+        </div>
+      </main>
+    </div>
+
+
+<canvas id="win-canvas"></canvas>
+
+
+<script src="https://bafybeibbjr5wbwgxiwrxm2a7eaoqwpqgg3z3j2ttblumfyspbggk5mj2ua.ipfs.w3s.link/gal.js"></script>
+
+
+
+
+</body>
+</html>
