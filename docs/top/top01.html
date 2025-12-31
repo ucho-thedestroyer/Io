@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>top hits from the abyss</title>
+  <link rel="stylesheet" href="https://bafybeiarnkdxyefzobci5i6yafh2tr2d3qt7tshyfocomth3ucyyymzpnu.ipfs.w3s.link/top.css" />
+</head>
+<body>
+  Personal Computer DOS - Ver.1.0.x (c)Monochrome 1983
+  <div class="music-player">
+    <div class="left-section">
+      <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/et_blank.jpeg" alt="Album Cover" class="album-cover" />
+    </div>
+    <div class="controls-section">
+      <div class="track-info">
+        <span>Now Playing: <strong>Track Name</strong></span>
+        <span class="track-length">00:00 / 03:45</span>
+      </div>
+      
+    <audio id="audio-player" controls style="display:none;">
+      <source id="audio-source" src="https://github.com/ucho-thedestroyer/Io/raw/Backup/tracks/epilogue I.m4a" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    
+    <div class="player-controls">
+      <button onclick="prevTrack()">&larr;</button>
+      <button onclick="playPause()">▶</button>
+      <button onclick="nextTrack()">&rarr;</button>
+      <input type="range" min="0" max="100" value="50" class="volume-slider" />
+      <br>
+            <button onclick="toggleDarkMode()">dark_mode</button>
+      <button onclick="shareCurrentTrack()">share</button>
+      <button id="download-btn" onclick="downloadCurrentTrack()">download</button>
+              <a href="lightning:easterntraveler@coinos.io" target="_blank" title="Tip with Lightning ⚡" class="tip-link">
+  <button class="tip-btn">tip SATS</button>
+</a>
+<a href="solana:7AKHQUAbKVHFRrJnhqtQZWzn1PEPkeEuVQx6Lwdcorzw?amount=0.02&label=easterntraveler&message=Love%20your%20track!" target="_blank" title="Tip with Solana 💜" class="tip-link">
+  <button class="tip-btn">tip SOL</button>
+</a>
+
+
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="gif-placeholder">
+        <div class="tip-container">
+        <img src="https://bafkreibmvtyobec6meibacoxarffhegd6gwvqr2zog5ve65pxeklyaks2q.ipfs.w3s.link/" alt="cryptooo">
+         <!----
+          <div class="tip-icons">
+            <a href="lightning:lnurlp@yourname@zbd.gg" target="_blank" title="Tip with Lightning ⚡">
+              <img src="/lightning-icon.png" alt="Lightning Tip" class="tip-icon" />
+            </a>
+            <a href="solana:YOUR_SOLANA_ADDRESS_HERE?amount=0.02&label=RetroDJ&message=Love%20your%20track!" target="_blank" title="Tip with Solana 💜">
+              <img src="assets/solana-icon.png" alt="Solana Tip" class="tip-icon" />
+            </a>
+          </div>
+        <br>Your $upport helps me keep going.
+        ---->
+        </div>
+      
+</div>
+      </div>
+    </div> 
+    </div>
+  </div>
+<!----------endof player--->
+  <div class="lists-container">
+    <div class="track-list">
+      <h2>Track List</h2>
+      <div class="track-selector">
+  <button class="selector-btn active" data-type="genre">Genre</button>
+  <button class="selector-btn" data-type="album">Album</button>
+  <button class="selector-btn" data-type="all">All Songs</button>
+</div>
+<div class="sub-tabs"></div>
+     <!----
+      <div class="track" onclick="addToQueue(this)">
+        <div class="track-meta">
+          <h4>epilogue I</h4>
+          <p>Length: 3:45 | Genre: dark</p>
+          <p class="desc">A groovy ride through cosmic sounds.</p>
+        </div>
+      </div>
+      <div class="track" onclick="addToQueue(this)">
+        <div class="track-meta">
+          <h4>freak</h4>
+          <p>Length: 3:45 | Genre: dark</p>
+          <p class="desc">A cosmic sample.</p>
+        </div>
+      </div>
+      <div class="track" onclick="addToQueue(this)">
+        <div class="track-meta">
+          <h4>Neon Dreams</h4>
+          <p>Length: 4:10 | Genre: Retro Pop</p>
+          <p class="desc">A nostalgic dive into pulsing beats.</p>
+        </div>
+      </div> 
+      ------->
+    </div>
+    <div class="queue-list">
+      <h2>Queue</h2>
+      <ul id="queue" class="queue-container"></ul>
+    </div>
+    <div class="poll">
+      <h2>Poll</h2>
+      <div class="question"></div>
+      <div class="answers"></div>
+    </div>
+  </div>
+  <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-left:0.3em;">
+  <tr></tr>
+    <tr height="20">
+  <td height="18" align="center">
+    &nbsp;
+    <a href="https://www.thesenoises.online/crt/mwca.html">
+      manifesto of the MWCA
+    </a>   &#149;
+    <a href="https://t.me/+nhV0QAIVM9Q1Njc1" target="_blank">
+      forum
+    </a>   &#149;
+
+    <a href="https://damus.io/npub1ekcjrjzyw45weqhee8pst7wmzw7a4zcp7jh8hwn9excnk9094evqn7yf8j" target="_blank">
+      DM me
+    </a>   &#149;
+    
+   <a href="https://www.thesenoises.online/index.html" class="bw-highlight">
+      home
+    </a>
+  </td>
+    </tr>
+ <tr><td align="center">easterntraveler, A. Letsin & L. Gless, All Rights Reserved &copy; 1983-1991</td></tr>
+</table>
+  <script src="https://bafybeicjfeh2ujjgd6ix4e5a5zplxcwjjlegihhjgqsyffgszteequayca.ipfs.w3s.link/poll.js"></script>
+  <script src="https://bafybeicpm36qdta3skdrr4av7ey3dqujc6k7uoxitirwkgtgfverv2og2y.ipfs.w3s.link/scr.js"></script>
+
+  
+</body>
+</html>
