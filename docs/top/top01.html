@@ -329,21 +329,6 @@ body.dark-mode .volume-slider {
   <script src="https://bafybeiccyo3bpolrxcr6ufc5kw7awna4qwlu3fw7nrqo23t5ow63k6y3am.ipfs.w3s.link/tracks-config.js"></script>
 <script src="https://bafybeiccyo3bpolrxcr6ufc5kw7awna4qwlu3fw7nrqo23t5ow63k6y3am.ipfs.w3s.link/player-core.min.js"></script>
   <script src="https://bafybeicjfeh2ujjgd6ix4e5a5zplxcwjjlegihhjgqsyffgszteequayca.ipfs.w3s.link/poll.js"></script>
- <script>
-  
-
-if (volumeSlider && audioPlayer) {
-  volumeSlider.value = Math.round((audioPlayer.volume || 1) * 100);
-  
-  // Update CSS variable for visual fill
-  volumeSlider.style.setProperty('--volume-percent', volumeSlider.value + '%');
-  
-  volumeSlider.addEventListener("input", () => {
-    audioPlayer.volume = Math.max(0, Math.min(1, volumeSlider.value / 100));
-    // Update the fill percentage
-    volumeSlider.style.setProperty('--volume-percent', volumeSlider.value + '%');
-  });
-}
- </script>
+ <script src="vol.js"></script>
 </body>
 </html>
