@@ -6,6 +6,616 @@
     <link rel="stylesheet" type="text/css" href="https://bafybeiarnkdxyefzobci5i6yafh2tr2d3qt7tshyfocomth3ucyyymzpnu.ipfs.w3s.link/top.css" />
     <meta name="description" content="make some noise" />
     <meta name="author" content="easterntraveler" />
+    <style>
+      /* press-start-2p-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/fonts/press-start-2p-v16-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/fonts/press-start-2p-v16-latin-regular.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+
+body {
+  background-color: #000033;
+  color: #00ffcc;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 20px;
+}
+
+a {
+  color: #ff00cc; /* hot magenta */
+  text-decoration: none;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+a:hover {
+  color: #00aaff; /* electric blue */
+  text-shadow: 0 0 8px #00aaff, 0 0 15px #00ffff;
+}
+
+a:visited {
+  color: #cc00ff; /* neon purple */
+}
+
+a:active {
+  color: #ffffff;
+  text-shadow: 0 0 8px #00ffcc, 0 0 15px #ff00cc;
+}
+
+body.dark-mode a {
+  color: #3399ff; /* electric blue */
+}
+
+body.dark-mode a:hover {
+  color: #ff3366; /* neon red */
+  text-shadow: 0 0 6px #ff3366, 0 0 12px #ff0033;
+}
+
+body.dark-mode a:visited {
+  color: #cc33ff; /* neon purple */
+}
+
+body.dark-mode a:active {
+  color: #ffffff;
+  text-shadow: 0 0 6px #3399ff, 0 0 12px #ff3366;
+}
+
+
+.music-player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #000044;
+  padding: 10px;
+  gap: 15px;
+  border: 3px double #00ffcc;
+  flex-wrap: wrap; /* allows stacking in small screens */
+  max-width: 100%; /* 
+  prevent oversized growth */
+}
+
+/* Album cover â€” original 150x150, scales down if needed */
+.left-section img.album-cover {
+  width: 150px;
+  height: 150px;
+  max-width: 100%;
+  height: auto;
+  border: 2px dashed #ffcc00;
+  object-fit: cover;
+}
+
+/* Controls section stays flexible */
+.controls-section {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.track-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+/* Progress bar container in light mode */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background-color: #181800; /* light mode button background */
+  border: 1px solid #ffcc00; /* light mode button border */
+  border-radius: 2px; /* retro sharp corner */
+  overflow: hidden;
+}
+
+/* Progress bar fill in light mode */
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background-color: #ffcc00; /* matches button border/text color */
+}
+
+
+/* Player controls container */
+.player-controls {
+  display: flex;
+  flex-wrap: wrap; /* buttons wrap instead of shrinking */
+  gap: 8px;
+}
+
+/* Player control buttons and sliders */
+.player-controls button,
+.player-controls input[type="range"] {
+  padding: 5px 8px;
+  background: #181800;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.player-controls input[type="range"] {
+  flex: 1;
+}
+
+
+/* Tip buttons inside player controls */
+.player-controls .tip-link {
+  display: inline-block;
+}
+
+.player-controls .tip-btn {
+  background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+  border: 1px solid #ffcc00; 
+  color: #181800;
+}
+
+/* Hover/active states for light mode */
+.player-controls .tip-btn:hover {
+  background: linear-gradient(135deg, #181800 0%, #222222 100%);
+ border: 1px solid #181800;
+  color: #ffcc00;
+}
+
+
+/* GIF â€” original 172x150, scales down if needed */
+.right-section {
+  display: flex;
+  align-items: center;
+}
+
+.right-section img {
+  width: 172px;
+  height: 150px;
+  max-width: 100%;
+  height: auto;
+  border: 2px dashed #ffcc00;
+  object-fit: cover;
+}
+
+.lists-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.track-list, .queue-list, .poll {
+  background: #111144;
+  padding: 15px;
+  border: 3px double #00ffcc;
+  box-sizing: border-box;
+}
+
+/* Default: Large screens */
+.track-list {
+  flex: 0 0 55%;
+}
+
+.queue-list {
+  flex: 0 0 27.4%;
+}
+
+.poll {
+  flex: 0 0 13.9%;
+}
+
+
+.track {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px dashed #ffcc00;
+}
+
+.track:hover {
+  background: #222266;
+}
+
+/* Tabs / sort UI for track list (retro-friendly, scoped) */
+.track-list h2 {
+  display: inline-block;
+  margin: 0;
+  margin-right: 8px; /* a few pixels away from title */
+  vertical-align: middle;
+}
+
+.track-list .track-controls {
+  display: inline-flex;
+  gap: 8px;
+  vertical-align: middle;
+  margin-left: 6px;
+  align-items: center;
+}
+
+.track-list .mode-toggle {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.track-list .mode-toggle button,
+.track-list .track-tabs button,
+.track-list .track-sort-btn {
+  background: transparent;
+  color: inherit;
+  border: 1px solid #00ffcc;
+  padding: 4px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.track-list .mode-toggle button.active,
+.track-list .track-tabs button.active {
+  background: #00ffcc;
+  color: #000;
+  border-color: #00ffcc;
+}
+
+.track-list .track-sort-btn {
+  border-color: #ffcc00;
+  color: #ffcc00;
+  margin-left: 6px;
+}
+
+.track-list .track-groups {
+  margin-top: 10px;
+}
+
+/* keep per-track spacing consistent with your existing .track style */
+.track-list .track-group .track {
+  margin-bottom: 6px;
+}
+
+
+.track-selector {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.selector-btn {
+  background: #ffcc00; /* yellow-gold like old terminal highlights */
+  color: #000;
+  font-weight: bold;
+  font-family: inherit; /* keep same pixel/retro font */
+  border: 2px solid #ffcc00; /* match your frame border color */
+  border-bottom: none;
+  padding: 4px 8px;
+  padding-top: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.selector-btn.active {
+  background: #00ffcc;
+  border: 2px solid #00ffcc; /* match your frame border color */
+  color: #000;
+}
+
+.selector-btn:hover {
+  background: #ff00ff; /* magenta hover like old ANSI art */
+  color: #000;
+}
+
+.sub-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.sub-tab {
+  background: #4444aa; /* retro blue */
+  color: cyan;
+  border: 2px solid #4444aa;
+  padding: 3px 6px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.sub-tab:hover {
+  background: cyan;
+  color: #000;
+}
+
+.no-data {
+  color: gray;
+  font-style: normal;
+  font-family: inherit;
+}
+
+
+
+.queue-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;      /* keep vertical padding */
+  padding-left: 4px;   /* reduced left padding */
+  border-bottom: 1px dashed #00ffcc;
+}
+
+.remove-btn {
+  background: none;
+  color: #ff0066;
+  border: none;
+  cursor: pointer;
+} 
+
+.poll .question{
+  height: 58px; /* adjust as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 60px;
+  overflow-y: auto;
+    padding-top: 15px;
+  padding: 2px;
+    border-bottom: 1px dashed #ffcc00;
+  line-height: 1.3; /* slightly increased spacing */
+}
+
+.poll .answers{
+    padding: 2.4px;
+}
+
+.poll .answers .answer{
+        cursor: pointer;
+    overflow: hidden;
+  text-overflow: ellipsis;
+    border-radius: 1px;
+  width: 100%;
+  padding-bottom: 4px;
+    line-height: 1.4; /* slightly increased spacing */
+}
+
+.poll .answers .answer.selected{
+    border: 1px dashed #606a9c;
+}
+
+.poll .answers .answer span.percentage_value
+{
+    text-align: right;
+  padding-right: 2px;
+    color: #b0050e;
+}
+
+.poll .answers .answer span.percentage_bar {
+    display: block;
+    width: 0%; /* Start from 0 */
+    height: 8px;
+    background: #E6E6FA;
+    transition: width 200ms ease-in-out;
+    margin-top: 1px;
+
+}
+
+.player-controls button:disabled {
+  background: #555522; /* muted dark yellow/olive */
+  border-color: #999966;   /* soft, desaturated yellow border */
+  color: #bbbb88;          /* pale yellow text */
+  cursor: not-allowed;
+  opacity: 0.7;            /* slight transparency for subtlety */
+  pointer-events: none;
+  box-shadow: none;        /* no glow */
+  transition: none;
+}
+
+
+body {
+  font-family: 'Press Start 2P', monospace;
+}
+
+
+body.dark-mode {
+  background-color: #000000;
+  color: #ffcc00;
+}
+
+
+.dark-mode .track-list,
+.dark-mode .queue-list,
+.dark-mode .poll {
+  background-color: #222222;
+  border-color: #ffcc00;
+}
+
+/* Dark mode overrides for music player */
+body.dark-mode .music-player {
+  background: #222211; /* darker background for dark mode */
+  border: 3px double #ffcc00;
+}
+
+body.dark-mode .left-section img.album-cover,
+body.dark-mode .right-section img {
+  border: 2px dashed #00ffcc;
+  border-color: #00ffcc; /* tweak border in dark mode if you want */
+}
+
+body.dark-mode .progress-container {
+  background-color: #111122;
+  border: 1px solid #00ffaa; 
+}
+
+body.dark-mode .track {
+  border-bottom: 1px dashed #00ffcc;
+}
+
+body.dark-mode .progress-bar {
+  background: #00ffaa;
+
+}
+
+body.dark-mode .player-controls button,
+body.dark-mode .player-controls input[type="range"] {
+  background: #111122;
+  border-color: #00ffaa;
+  color: #00ffaa;
+}
+/* Dark mode: override colors & gradient */
+body.dark-mode .player-controls .tip-btn {
+  background: #00ffcc;
+  border: 1px solid #181800;
+  color: #181800;
+}
+
+body.dark-mode .player-controls .tip-btn:hover {
+  background: linear-gradient(135deg, #181800 0%, #000000 100%);
+  color: #00ffcc;
+}
+
+body.dark-mode .poll .question{
+    border-bottom: 1px dashed #00ffaa;
+  }
+
+body.dark-mode .player-controls button:disabled {
+  background: linear-gradient(135deg, #4d4d1a 0%, #666622 100%); /* muted olive yellow gradient */
+  border-color: #999977;   /* soft pale yellow border */
+  color: #cccc99;          /* pale creamy yellow text */
+  cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none;
+  box-shadow: none;
+  transition: none;
+}
+
+
+body.dark-mode .selector-btn {
+  background: #00ffcc; /* yellow-gold like old terminal highlights */
+  color: #000;
+  border: 2px solid #00ffcc; /* match your frame border color */
+
+}
+
+body.dark-mode .selector-btn.active {
+  background: #ffcc00;
+  border: 2px solid #ffcc00; /* match your frame border color */
+  color: #000;
+}
+
+body.dark-mode .selector-btn:hover {
+  background: #ff00ff; /* magenta hover like old ANSI art */
+  color: #000;
+}
+
+body.dark-mode .sub-tab {
+  background: #ddaa11; /* retro blue */
+  color: #fcf2c3;
+  border: 2px solid #ddaa11;
+  
+}
+
+body.dark-mode .sub-tab:hover {
+  background: #ffcc00;
+  color: #000;
+}
+
+
+.queue-item.dragging {
+  opacity: 0.5;
+}
+
+
+/* Default spinner color */
+#loading-spinner {
+  display: none;
+  text-align: center;
+  font-size: 14px;
+  color: #ff66cc; /* Light mode color */
+  margin-bottom: 5px;
+}
+
+/* Spinner color when dark mode is active */
+.dark-mode #loading-spinner {
+  color: #ffb3ff; /* Dark mode color (lighter pink for visibility) */
+}
+
+
+/* Small screens: 3rd element below full width */
+@media (max-width: 900px) {
+  .track-list {
+    flex: 0 0 calc(54% - 10px); /* subtract gap for accuracy */
+  }
+
+  .queue-list {
+    flex: 0 0 calc(46% - 10px); /* fills the rest of the first row */
+  }
+
+  .poll {
+    flex: 0 0 100%; /* full width below */
+  }
+}
+
+/* Phones: keep track + queue side-by-side (shrink if needed), poll full width below */
+@media (max-width: 600px) {
+  .lists-container {
+    /* keep normal flex behavior but allow wrapping so .poll can go below */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* optional, smaller gap on phones */
+  }
+
+  /* Keep track and queue on one row by giving them basis percentages
+     but allow shrinking (flex-shrink: 1). min-width:0 fixes flex overflow issues. */
+  .track-list {
+    flex: 1 1 54%;   /* grow 1, shrink 1, basis 54% */
+    min-width: 0;    /* important to allow content to shrink */
+    order: 1;
+  }
+
+  .queue-list {
+    flex: 1 1 46%;   /* grow 1, shrink 1, basis 46% */
+    min-width: 0;
+    order: 1;
+  }
+
+  /* Force poll onto its own row, full width */
+  .poll {
+    flex: 0 0 100%;
+    order: 2;
+  }
+}
+
+
+/* Responsive stacking */
+@media (max-width: 800px) {
+  .music-player {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .left-section {
+    display: flex;
+    justify-content: center;
+  }
+
+  .controls-section {
+    order: 2; /* keep controls above GIF */
+  }
+
+  .right-section {
+    order: 3;
+    justify-content: center;
+  }
+
+  .player-controls {
+    justify-content: center;
+  }
+}
+
+/* small screens: tabs wrap */
+@media (max-width: 480px) {
+  .track-list .track-controls {
+    display: block;
+    margin-top: 6px;
+  }
+  .track-list h2 { display:block; }
+}
+    </style>
     
   </head>
 <body>
