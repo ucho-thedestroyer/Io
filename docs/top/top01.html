@@ -6,7 +6,196 @@
     <link rel="stylesheet" type="text/css" href="https://bafybeiarnkdxyefzobci5i6yafh2tr2d3qt7tshyfocomth3ucyyymzpnu.ipfs.w3s.link/top.css" />
     <meta name="description" content="make some noise" />
     <meta name="author" content="easterntraveler" />
-   
+   <style>
+     /* ==================== VOLUME SLIDER STYLING ==================== */
+
+/* Remove default styling */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* LIGHT MODE - Track (the background bar) */
+.volume-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  background: #181800; /* matches light mode button background */
+  border: 1px solid #ffcc00; /* matches light mode border */
+  border-radius: 2px; /* retro sharp corners */
+  cursor: pointer;
+}
+
+.volume-slider::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  background: #181800;
+  border: 1px solid #ffcc00;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* LIGHT MODE - Thumb (the draggable knob) */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #ffcc00; /* bright yellow */
+  border: 2px solid #ffcc00;
+  border-radius: 0; /* square for retro look */
+  cursor: pointer;
+  position: relative;
+  top: -5px; /* center it on the track */
+  box-shadow: 0 0 4px rgba(255, 204, 0, 0.5);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #ffcc00;
+  border: 2px solid #ffcc00;
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(255, 204, 0, 0.5);
+}
+
+/* LIGHT MODE - Hover effects */
+.volume-slider:hover::-webkit-slider-thumb {
+  background: #ffaa00; /* slightly darker yellow on hover */
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+}
+
+.volume-slider:hover::-moz-range-thumb {
+  background: #ffaa00;
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+}
+
+/* LIGHT MODE - Active/Dragging state */
+.volume-slider:active::-webkit-slider-thumb {
+  background: #ff00cc; /* hot magenta when dragging */
+  border-color: #ff00cc;
+  box-shadow: 0 0 12px rgba(255, 0, 204, 0.9);
+}
+
+.volume-slider:active::-moz-range-thumb {
+  background: #ff00cc;
+  border-color: #ff00cc;
+  box-shadow: 0 0 12px rgba(255, 0, 204, 0.9);
+}
+
+
+/* ==================== DARK MODE OVERRIDES ==================== */
+
+/* DARK MODE - Track */
+body.dark-mode .volume-slider::-webkit-slider-runnable-track {
+  background: #111122; /* matches dark mode button background */
+  border-color: #00ffaa; /* matches dark mode accent */
+}
+
+body.dark-mode .volume-slider::-moz-range-track {
+  background: #111122;
+  border-color: #00ffaa;
+}
+
+/* DARK MODE - Thumb */
+body.dark-mode .volume-slider::-webkit-slider-thumb {
+  background: #00ffcc; /* cyan/aqua for dark mode */
+  border-color: #00ffaa;
+  box-shadow: 0 0 4px rgba(0, 255, 204, 0.5);
+}
+
+body.dark-mode .volume-slider::-moz-range-thumb {
+  background: #00ffcc;
+  border-color: #00ffaa;
+  box-shadow: 0 0 4px rgba(0, 255, 204, 0.5);
+}
+
+/* DARK MODE - Hover effects */
+body.dark-mode .volume-slider:hover::-webkit-slider-thumb {
+  background: #00ffaa; /* brighter cyan on hover */
+  box-shadow: 0 0 8px rgba(0, 255, 170, 0.8);
+}
+
+body.dark-mode .volume-slider:hover::-moz-range-thumb {
+  background: #00ffaa;
+  box-shadow: 0 0 8px rgba(0, 255, 170, 0.8);
+}
+
+/* DARK MODE - Active/Dragging state */
+body.dark-mode .volume-slider:active::-webkit-slider-thumb {
+  background: #3399ff; /* electric blue when dragging */
+  border-color: #3399ff;
+  box-shadow: 0 0 12px rgba(51, 153, 255, 0.9);
+}
+
+body.dark-mode .volume-slider:active::-moz-range-thumb {
+  background: #3399ff;
+  border-color: #3399ff;
+  box-shadow: 0 0 12px rgba(51, 153, 255, 0.9);
+}
+
+
+/* ==================== OPTIONAL ENHANCEMENTS ==================== */
+
+/* Add a subtle glow to the track when hovering over the slider */
+.volume-slider:hover::-webkit-slider-runnable-track {
+  box-shadow: inset 0 0 4px rgba(255, 204, 0, 0.3);
+}
+
+.volume-slider:hover::-moz-range-track {
+  box-shadow: inset 0 0 4px rgba(255, 204, 0, 0.3);
+}
+
+body.dark-mode .volume-slider:hover::-webkit-slider-runnable-track {
+  box-shadow: inset 0 0 4px rgba(0, 255, 170, 0.3);
+}
+
+body.dark-mode .volume-slider:hover::-moz-range-track {
+  box-shadow: inset 0 0 4px rgba(0, 255, 170, 0.3);
+}
+
+/* Smooth transition for visual feedback */
+.volume-slider::-webkit-slider-thumb {
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.volume-slider::-moz-range-thumb {
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* ==================== FILLED TRACK EFFECT (OPTIONAL BONUS) ==================== */
+/* This creates a "filled" effect showing volume level visually */
+/* Note: This requires a small JS update - see comment below */
+
+.volume-slider {
+  background: linear-gradient(to right, 
+    #ffcc00 0%, 
+    #ffcc00 var(--volume-percent, 100%), 
+    #181800 var(--volume-percent, 100%), 
+    #181800 100%
+  );
+  background-clip: content-box;
+}
+
+body.dark-mode .volume-slider {
+  background: linear-gradient(to right, 
+    #00ffaa 0%, 
+    #00ffaa var(--volume-percent, 100%), 
+    #111122 var(--volume-percent, 100%), 
+    #111122 100%
+  );
+  background-clip: content-box;
+}
+
+
+   </style>
   </head>
 <body>
   Personal Computer DOS - Ver.1.0.x (c)Monochrome 1983
@@ -140,6 +329,21 @@
   <script src="https://bafybeiccyo3bpolrxcr6ufc5kw7awna4qwlu3fw7nrqo23t5ow63k6y3am.ipfs.w3s.link/tracks-config.js"></script>
 <script src="https://bafybeiccyo3bpolrxcr6ufc5kw7awna4qwlu3fw7nrqo23t5ow63k6y3am.ipfs.w3s.link/player-core.min.js"></script>
   <script src="https://bafybeicjfeh2ujjgd6ix4e5a5zplxcwjjlegihhjgqsyffgszteequayca.ipfs.w3s.link/poll.js"></script>
- 
+ <script>
+  
+
+if (volumeSlider && audioPlayer) {
+  volumeSlider.value = Math.round((audioPlayer.volume || 1) * 100);
+  
+  // Update CSS variable for visual fill
+  volumeSlider.style.setProperty('--volume-percent', volumeSlider.value + '%');
+  
+  volumeSlider.addEventListener("input", () => {
+    audioPlayer.volume = Math.max(0, Math.min(1, volumeSlider.value / 100));
+    // Update the fill percentage
+    volumeSlider.style.setProperty('--volume-percent', volumeSlider.value + '%');
+  });
+}
+ </script>
 </body>
 </html>
