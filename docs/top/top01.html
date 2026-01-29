@@ -6,6 +6,42 @@
     <link rel="stylesheet" type="text/css" href="https://bafybeif7mj27d3ca6icba274swkepsf3jd32jutg4jees74zqrm3db5inm.ipfs.w3s.link/top2.css" />
     <meta name="description" content="make some noise" />
     <meta name="author" content="easterntraveler" />
+    <style>
+      /* Player controls container */
+.player-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Download button forces new row */
+.player-controls .download-btn {
+  flex-basis: calc(100% + 10px); /* Full width + gap */
+  margin-left: calc(-100% - 10px); /* Pull back */
+  width: fit-content; /* Only take what you need */
+}
+
+.player-controls .tip-link {
+  display: inline-flex;
+}
+
+/* Player control buttons */
+.player-controls button {
+  font-family: 'Press Start 2P', monospace;
+  padding: 8px 12px;
+  background: #181800;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  cursor: pointer;
+  font-size: 12px;
+  height: 32px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+    </style>
   </head>
 <body>
   Personal Computer DOS - Ver.1.0.x (c)Monochrome 1983
