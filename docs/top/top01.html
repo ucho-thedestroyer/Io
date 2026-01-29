@@ -33,16 +33,15 @@
       <button onclick="playPause()">▶</button>
       <button onclick="nextTrack()">&rarr;</button>
       <input type="range" min="0" max="100" value="50" class="volume-slider" />
-      <br>
-            <button onclick="toggleDarkMode()">dark_mode</button>
+      <button onclick="toggleDarkMode()">dark_mode</button>
       <button onclick="shareCurrentTrack()">share</button>
-      <button id="download-btn" onclick="downloadCurrentTrack()">download</button>
-      <button id="video-btn" onclick="toggleVideo()">video</button>
+      <button onclick="toggleVideo()">video</button>
+      <button id="download-btn" class="download-btn" onclick="downloadCurrentTrack()">download</button>
       <a href="lightning:easterntraveler@coinos.io" target="_blank" title="Tip with Lightning ⚡" class="tip-link">
         <button class="tip-btn">tip SATS</button>
       </a>
-
-      </div>
+    </div>
+      
     </div>
     <div class="right-section">
       <div class="gif-placeholder">
