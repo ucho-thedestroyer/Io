@@ -3,9 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <title>top hits from the abyss</title>
-    <link rel="stylesheet" type="text/css" href="https://bafybeihumbbw7sglpjjkh6znf3ovyrhuime27ngfiz5f7ev5kwdsjdqzm4.ipfs.w3s.link/top.css" />
+    <link rel="stylesheet" type="text/css" href="https://bafybeic7djtxvt5uqhczjczgl6opnkhvttc7677tnebc24urda5blwgpm4.ipfs.w3s.link/top.css" />
     <meta name="description" content="make some noise" />
     <meta name="author" content="easterntraveler" />
+    <style>
+      /* Volume slider - MATCH BUTTON HEIGHT */
+.player-controls input[type="range"] {
+  flex: 1;
+  vertical-align: middle;
+  min-width: 120px;
+}
+
+    </style>
   </head>
 <body>
   Personal Computer DOS - Ver.1.0.x (c)Monochrome 1983
@@ -29,9 +38,9 @@
     </div>
     
     <div class="player-controls">
-      <button onclick="prevTrack()">&larr;</button>
-      <button onclick="playPause()">▶</button>
-      <button onclick="nextTrack()">&rarr;</button>
+      <button onclick="prevTrack()">&#60;&#60;</button>
+      <button onclick="playPause()">&#62;</button>
+      <button onclick="nextTrack()">&#62;&#62;</button>
       <input type="range" min="0" max="100" value="50" class="volume-slider" />
       <br>
             <button onclick="toggleDarkMode()">dark_mode</button>
