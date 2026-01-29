@@ -37,20 +37,24 @@
     </div>
     
     <div class="player-controls">
-      <button onclick="prevTrack()">&larr;</button>
-      <button onclick="playPause()">▶</button>
-      <button onclick="nextTrack()">&rarr;</button>
-      <input type="range" min="0" max="100" value="50" class="volume-slider" />
-      <button onclick="toggleDarkMode()">dark_mode</button>
-      <button onclick="shareCurrentTrack()">share</button>
-      <button onclick="toggleVideo()">video</button>
-      <button id="download-btn" class="download-btn" onclick="downloadCurrentTrack()">download</button>
-      <a href="lightning:easterntraveler@coinos.io" target="_blank" title="Tip with Lightning ⚡" class="tip-link">
-        <button class="tip-btn">tip SATS</button>
-      </a>
-    </div>
-      
-    </div>
+  <div class="controls-row primary">
+    <button onclick="prevTrack()">&larr;</button>
+    <button onclick="playPause()">▶</button>
+    <button onclick="nextTrack()">&rarr;</button>
+    <input type="range" min="0" max="100" value="50" class="volume-slider" />
+    <button onclick="toggleDarkMode()">dark_mode</button>
+    <button onclick="shareCurrentTrack()">share</button>
+    <button onclick="toggleVideo()">video</button>
+  </div>
+
+  <div class="controls-row secondary">
+    <button id="download-btn" class="download-btn">download</button>
+    <a href="lightning:" class="tip-link">
+      <button class="tip-btn">tip SATS</button>
+    </a>
+  </div>
+</div>
+
     <div class="right-section">
       <div class="gif-placeholder">
         <div class="tip-container">
