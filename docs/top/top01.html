@@ -7,6 +7,34 @@
     <meta name="description" content="make some noise" />
     <meta name="author" content="easterntraveler" />
     <style>
+
+      .log-btn {
+  padding: 5px 8px;
+  background: #181800;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Press Start 2P', monospace;
+  margin-left: 10px;
+  vertical-align: baseline;
+}
+
+.log-btn:hover {
+  background: #ffcc00;
+  color: #181800;
+}
+
+body.dark-mode .log-btn {
+  background: #111122;
+  border-color: #00ffaa;
+  color: #00ffaa;
+}
+
+body.dark-mode .log-btn:hover {
+  background: #00ffaa;
+  color: #111122;
+}
       /* Volume slider - MATCH BUTTON HEIGHT */
 .player-controls input[type="range"] {
   flex: 1;
