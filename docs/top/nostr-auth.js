@@ -146,4 +146,3 @@ async function zapTrack(trackTitle, amountSats = 21) {
 window.loginWithNostr = loginWithNostr;
 window.logout = logout;
 window.zapTrack = zapTrack;
-window.currentUser = currentUser; // For access in other files
