@@ -47,7 +47,7 @@ body.dark-mode .log-btn:hover {
     </style>
   </head>
 <body>
-  Personal Computer DOS - Ver.1.0.x (c)Monochrome 1983<button class="log-btn">log in</button>
+  Personal Computer DOS - Ver.1.0.x (c)Monochrome 1983<button class="log-btn" onclick="loginWithNostr()">log in</button>
   <div class="music-player">
     <div class="left-section">
       <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/tracks/covers/et_blank.jpeg" alt="Album Cover" class="album-cover" />
@@ -77,6 +77,12 @@ body.dark-mode .log-btn:hover {
       <button id="video-btn" onclick="toggleVideo()">video</button>
       <button onclick="shareCurrentTrack()">share</button>
       <button id="download-btn" onclick="downloadCurrentTrack()">download</button>
+      <!-- Add after your player controls -->
+<div id="zap-section" class="hidden" style="margin-top: 10px;">
+  <button onclick="zapTrack(queue[currentTrackIndex], 21)" class="player-controls button">
+    ⚡ Zap 21 sats
+  </button>
+</div>
       <a href="lightning:easterntraveler@coinos.io" target="_blank" title="Tip with Lightning ⚡" class="tip-link">
         <button class="tip-btn">tip SATS</button>
       </a>
@@ -107,6 +113,12 @@ body.dark-mode .log-btn:hover {
     </div>
     <div class="queue-list">
       <h2>Queue</h2>
+      
+<div id="playlist-section" class="hidden" style="margin-top: 10px;">
+  <button onclick="saveCurrentQueue()">💾 Save Queue as Playlist</button>
+  <button onclick="loadPlaylistMenu()">📂 Load Playlist</button>
+</div>
+
       <ul id="queue" class="queue-container"></ul>
     </div>
     <div class="poll">
@@ -135,9 +147,17 @@ body.dark-mode .log-btn:hover {
       home
     </a>
   </td>
+      <td>
+<div id="submit-track-section" class="hidden" style="margin-top: 10px;">
+  <button onclick="openSubmitTrackForm()">🎵 Submit Track</button>
+</div>
+      </td>
     </tr>
  <tr><td align="center">easterntraveler, A. Letsin & L. Gless, All Rights Reserved &copy; 1983-2026</td></tr>
 </table>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="top/nostr-auth.js"></script>
+<script src="top/supabase-client.js"></script>
   <script src="https://bafybeiap3cva3qgil2c56su3e4pdzw6zqqbsglq6xkyasqlel6jpgj6zi4.ipfs.w3s.link/tracks-config.js"></script>
 <script src="https://bafybeigcb2zz7hqlotqew5xvsprcyzc56ofg7io7f7zby4maav5voalahe.ipfs.w3s.link/player-core.min3.js"></script>
   <script src="https://bafybeicjfeh2ujjgd6ix4e5a5zplxcwjjlegihhjgqsyffgszteequayca.ipfs.w3s.link/poll.js"></script>
