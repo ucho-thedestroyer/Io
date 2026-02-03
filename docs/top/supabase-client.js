@@ -1,15 +1,35 @@
 // supabase-client.js
-import { createClient } from '@supabase/supabase-js';
+let supabase = null;
 
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Fetch config from serverless function
+async function initSupabase() {
+  if (supabase) return supabase;
+  
+  try {
+    const response = await fetch('/api/supabase-config');
+    const config = await response.json();
+    
+    const { createClient } = window.supabase;
+    supabase = createClient(config.url, config.key);
+    
+    return supabase;
+  } catch (error) {
+    console.error('Failed to initialize Supabase:', error);
+    return null;
+  }
+}
 
-// Save playlist
+// Update all your functions to use await initSupabase()
 async function savePlaylist(name, tracks) {
   if (!currentUser) return;
+  
+  const client = await initSupabase();
+  if (!client) {
+    alert('Database connection failed');
+    return;
+  }
 
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from('playlists')
     .insert([
       {
@@ -27,11 +47,13 @@ async function savePlaylist(name, tracks) {
   }
 }
 
-// Load user playlists
 async function loadPlaylists() {
   if (!currentUser) return [];
 
-  const { data, error } = await supabase
+  const client = await initSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
     .from('playlists')
     .select('*')
     .eq('nostr_pubkey', currentUser.pubkey);
@@ -39,11 +61,16 @@ async function loadPlaylists() {
   return data || [];
 }
 
-// Submit track
 async function submitTrack(trackData) {
   if (!currentUser) return;
 
-  const { data, error } = await supabase
+  const client = await initSupabase();
+  if (!client) {
+    alert('Database connection failed');
+    return;
+  }
+
+  const { data, error } = await client
     .from('submitted_tracks')
     .insert([
       {
@@ -59,3 +86,8 @@ async function submitTrack(trackData) {
     alert('Track submitted for approval!');
   }
 }
+
+// Make sure to export for global access
+window.savePlaylist = savePlaylist;
+window.loadPlaylists = loadPlaylists;
+window.submitTrack = submitTrack;
