@@ -1,1 +1,274 @@
-h
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <title>deathlessness, by fire</title>
+    <link rel="icon" type="image/svg+xml" href="https://bafkreih6ja56gitjboxnz2xfseumwlygmnopjuh4ytvxce2tdodtrqf3pm.ipfs.w3s.link/">
+    <meta name="description" content="burn the shackles, you'll die soon" />
+    <meta name="author" content="easterntraveler" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>FIAT BITFIRE ARCADE 🔥</title>
+
+<style>
+  
+/* press-start-2p-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/press-start-2p-v16-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('fonts/press-start-2p-v16-latin-regular.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #0a0a0f;
+  touch-action: none;
+  cursor: none;
+  font-family: 'Press Start 2P', monospace;
+}
+
+#gameCanvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; display: block;
+}
+
+/* HUD */
+#hud {
+  position: fixed; top: 0; left: 0; right: 0;
+  pointer-events: none; z-index: 100;
+  padding: 12px 16px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.hud-block { display: flex; flex-direction: column; gap: 4px; }
+.hud-label { font-size: 7px; color: #ff6600; letter-spacing: 2px; text-shadow: 0 0 8px #ff6600; opacity: 0.8; }
+.hud-value { font-size: clamp(14px, 3vw, 22px); color: #fff; text-shadow: 0 0 12px #ff4400, 0 0 24px #ff2200, 2px 2px 0 #880000; letter-spacing: 3px; }
+.hud-right { align-items: flex-end; }
+
+/* Corner links */
+.corner-link {
+  position: fixed; z-index: 200;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(10,10,15,0.85);
+  border: 2px solid #ff4400;
+  box-shadow: 0 0 12px rgba(255,68,0,0.5), inset 0 0 8px rgba(255,68,0,0.1);
+  text-decoration: none;
+  transition: all 0.2s; cursor: pointer;
+}
+.corner-link:hover {
+  background: rgba(255,68,0,0.25);
+  box-shadow: 0 0 24px rgba(255,68,0,0.9), inset 0 0 16px rgba(255,68,0,0.2);
+  transform: scale(1.1);
+}
+.corner-link svg { width: 22px; height: 22px; }
+#homeLink { bottom: 16px; left: 16px; }
+#btcLink  { bottom: 16px; right: 16px; }
+
+/* Scanlines */
+#scanlines {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 90;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+}
+/* Vignette */
+#vignette {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 91;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.55) 100%);
+}
+
+/* Cursor */
+#cursor {
+  position: fixed; pointer-events: none; z-index: 200;
+  transform: translate(-50%, -50%); font-size: 22px;
+  filter: drop-shadow(0 0 8px #ff6600);
+}
+
+/* Combo */
+#combo {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(12px, 3vw, 20px); color: #ffcc00;
+  text-shadow: 0 0 20px #ff8800, 2px 2px 0 #aa4400;
+  pointer-events: none; z-index: 150; opacity: 0;
+  letter-spacing: 3px; text-align: center;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Instructions */
+#instructions {
+  position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%);
+  font-size: 7px; color: rgba(255,100,0,0.45); letter-spacing: 2px;
+  pointer-events: none; z-index: 100; text-align: center;
+  animation: blink 2s step-end infinite; white-space: nowrap;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── BOSS WARNING ── */
+#bossWarning {
+  position: fixed; inset: 0; z-index: 400;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 20px;
+  pointer-events: none; opacity: 0;
+  transition: opacity 0.2s;
+}
+.warn-stripes {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 20px,
+    rgba(255,0,0,0.06) 20px, rgba(255,0,0,0.06) 40px);
+  animation: stripeMove 0.4s linear infinite;
+}
+@keyframes stripeMove { to { background-position: 56px 0; } }
+.warn-text {
+  font-size: clamp(18px, 5vw, 42px);
+  letter-spacing: 6px; text-align: center; color: #ff0000;
+  text-shadow: 0 0 30px #ff0000, 0 0 60px #ff0000, 4px 4px 0 #660000;
+  animation: warnFlicker 0.12s step-end infinite;
+  position: relative; z-index: 1;
+}
+.warn-sub {
+  font-size: clamp(9px, 2vw, 16px);
+  letter-spacing: 4px; color: #ffaa00;
+  text-shadow: 0 0 16px #ff8800, 2px 2px 0 #883300;
+  animation: warnFlicker 0.17s step-end infinite reverse;
+  position: relative; z-index: 1;
+}
+@keyframes warnFlicker { 0%,49% { opacity: 1; } 50%,100% { opacity: 0.05; } }
+
+/* ── VICTORY SCREEN ── */
+#victory {
+  position: fixed; inset: 0; z-index: 500;
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: #000; cursor: default; overflow: hidden;
+}
+#victory.show { display: flex; }
+.victory-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 60%, #1a0040 0%, #000 70%);
+}
+.victory-stars { position: absolute; inset: 0; overflow: hidden; }
+.vstar {
+  position: absolute; background: #fff; border-radius: 50%;
+  animation: twinkle 1.5s step-end infinite;
+}
+@keyframes twinkle { 0%,100% { opacity: 1; } 50% { opacity: 0.1; } }
+.victory-content {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 24px; padding: 20px; text-align: center;
+}
+.victory-title {
+  font-size: clamp(16px, 4vw, 36px); color: #ffdd00;
+  text-shadow: 0 0 20px #ffaa00, 0 0 40px #ff6600, 4px 4px 0 #aa6600;
+  letter-spacing: 4px;
+  animation: victoryGlow 1.2s ease-in-out infinite alternate;
+}
+@keyframes victoryGlow {
+  from { text-shadow: 0 0 20px #ffaa00, 0 0 40px #ff6600, 4px 4px 0 #aa6600; }
+  to   { text-shadow: 0 0 40px #fff,    0 0 80px #ffdd00, 4px 4px 0 #aa6600; }
+}
+.victory-icons { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.vic-icon {
+  font-size: clamp(28px, 6vw, 46px);
+  animation: iconBounce 0.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 12px gold);
+}
+.vic-icon:nth-child(2) { animation-delay: 0.1s; }
+.vic-icon:nth-child(3) { animation-delay: 0.2s; }
+.vic-icon:nth-child(4) { animation-delay: 0.3s; }
+.vic-icon:nth-child(5) { animation-delay: 0.4s; }
+@keyframes iconBounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+.victory-score-label { font-size: 9px; color: #ff8800; letter-spacing: 3px; text-shadow: 0 0 8px #ff6600; }
+.victory-score { font-size: clamp(26px, 6vw, 52px); color: #fff; text-shadow: 0 0 20px #ffcc00, 2px 2px 0 #886600; letter-spacing: 6px; }
+.victory-hi { font-size: 9px; letter-spacing: 3px; }
+.victory-btn {
+  margin-top: 10px; font-family: 'Press Start 2P', monospace;
+  font-size: clamp(9px, 2vw, 13px); color: #000; background: #ffdd00;
+  border: none; padding: 14px 28px; cursor: pointer; letter-spacing: 3px;
+  box-shadow: 4px 4px 0 #886600; transition: all 0.1s;
+  animation: btnBlink 1.5s step-end infinite;
+}
+.victory-btn:hover { transform: translate(2px,2px); box-shadow: 2px 2px 0 #886600; }
+@keyframes btnBlink { 50% { background: #ff8800; color: #fff; } }
+
+/* Pixel burst particles */
+.px-burst {
+  position: fixed; pointer-events: none; z-index: 450;
+  animation: burstFly var(--dur) ease-out forwards;
+}
+@keyframes burstFly {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx),var(--ty)) scale(0); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="gameCanvas"></canvas>
+<div id="scanlines"></div>
+<div id="vignette"></div>
+
+<div id="hud">
+  <div class="hud-block">
+    <span class="hud-label">SCORE</span>
+    <span class="hud-value" id="scoreDisplay">000000</span>
+  </div>
+  <div class="hud-block hud-right">
+    <span class="hud-label">HIGH</span>
+    <span class="hud-value" id="highDisplay">000000</span>
+  </div>
+</div>
+
+<!-- Corner links — replace href values with your URLs -->
+<a id="homeLink" class="corner-link" href="YOUR_HOMEPAGE_URL" aria-label="Home">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+</a>
+<a id="btcLink" class="corner-link" href="YOUR_BTC_URL" aria-label="Bitcoin">
+  <svg viewBox="0 0 24 24" fill="#ff6600" xmlns="http://www.w3.org/2000/svg">
+    <path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.975.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314.015.02-.96-.24-.96-.24l-.66 1.51 1.71.426.93.242-.54 2.19 1.32.327.54-2.17c.36.1.705.19 1.05.273l-.51 2.154 1.32.33.545-2.19c2.24.427 3.93.257 4.64-1.774.57-1.637-.03-2.58-1.217-3.196.854-.193 1.5-.76 1.68-1.93h.01zm-3.01 4.22c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.23 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.084v.006z"/>
+  </svg>
+</a>
+
+<div id="cursor">🔥</div>
+<div id="combo"></div>
+<div id="instructions">MOVE FINGER / MOUSE TO AIM FIRE &nbsp;·&nbsp; TORCH THE ENEMIES!</div>
+
+<!-- Boss Warning -->
+<div id="bossWarning">
+  <div class="warn-stripes"></div>
+  <div class="warn-text" id="warnText">⚠ WARNING ⚠</div>
+  <div class="warn-sub" id="warnSub">BOSS INCOMING</div>
+</div>
+
+<!-- Victory Screen -->
+<div id="victory">
+  <div class="victory-bg"></div>
+  <div class="victory-stars" id="victoryStars"></div>
+  <div class="victory-content">
+    <div class="victory-title">YOU BEAT THEM!</div>
+    <div class="victory-icons">
+      <span class="vic-icon">🏆</span>
+      <span class="vic-icon">🔥</span>
+      <span class="vic-icon">⭐</span>
+      <span class="vic-icon">🔥</span>
+      <span class="vic-icon">🏆</span>
+    </div>
+    <div class="victory-score-label">FINAL SCORE</div>
+    <div class="victory-score" id="victoryScore">000000</div>
+    <div class="victory-hi" id="victoryHi"></div>
+    <button class="victory-btn" id="playAgainBtn">▶ PLAY AGAIN</button>
+  </dv>
+</div>
+
+<script src="crt/fiat.js"></script>
+</body>
+</html>
