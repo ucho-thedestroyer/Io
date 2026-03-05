@@ -22,7 +22,10 @@ const detentAngles = [-90, -30, 30, 90];
 
 // autoplay safety
 video.muted = true;
-video.play().catch(() => {});
+video.setAttribute('muted', ''); // set as HTML attribute too
+video.addEventListener('canplay', () => {
+  video.play().catch(() => {});
+}, { once: true });
 
 muteBtn.addEventListener('click', () => {
   video.muted = !video.muted;
@@ -83,7 +86,7 @@ document.getElementById("hotspot-power").addEventListener("click", ()=>{
   tvOffOverlay.style.opacity=1;
   tvOffOverlay.style.transition='opacity 900ms linear';
   runFlicker(700);
-  setTimeout(()=>{ window.location.href="http://www.thesenoises.online"; },950);
+  setTimeout(()=>{ window.location.href="https://thesenoises.online"; },950);
 });
 
 function randomFlicker(){
