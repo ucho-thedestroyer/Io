@@ -22,10 +22,16 @@ const detentAngles = [-90, -30, 30, 90];
 
 // autoplay safety
 video.muted = true;
-video.setAttribute('muted', ''); // set as HTML attribute too
-video.addEventListener('canplay', () => {
+video.setAttribute('muted', '');
+
+if (video.readyState >= 2) {
+  // canplay already fired, play immediately
   video.play().catch(() => {});
-}, { once: true });
+} else {
+  video.addEventListener('canplay', () => {
+    video.play().catch(() => {});
+  }, { once: true });
+}
 
 muteBtn.addEventListener('click', () => {
   video.muted = !video.muted;
