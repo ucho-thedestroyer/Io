@@ -24,13 +24,18 @@ const detentAngles = [-90, -30, 30, 90];
 video.muted = true;
 video.setAttribute('muted', '');
 
+const tryPlay = () => {
+  video.play().then(() => {
+    console.log('✅ playing, muted:', video.muted, 'readyState:', video.readyState);
+  }).catch((err) => {
+    console.error('❌ play failed:', err.name, err.message);
+  });
+};
+
 if (video.readyState >= 2) {
-  // canplay already fired, play immediately
-  video.play().catch(() => {});
+  tryPlay();
 } else {
-  video.addEventListener('canplay', () => {
-    video.play().catch(() => {});
-  }, { once: true });
+  video.addEventListener('canplay', tryPlay, { once: true });
 }
 
 muteBtn.addEventListener('click', () => {
