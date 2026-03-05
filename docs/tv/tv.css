@@ -1,0 +1,396 @@
+
+/* -------------------------
+   CORE RESET / LAYOUT
+   ------------------------- */
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: "Josefin sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+/* Center container */
+.outer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+/* Infinite mirror tunnel effect */
+.outer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/tv/tv-1920.jpg');
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: repeat-y;
+  transform: translateZ(-500px) scale(1.5);
+  opacity: 0.6;
+  filter: blur(1px);
+}
+
+.outer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/tv/tv-1920.jpg');
+  background-size: 80% auto;
+  background-position: center;
+  background-repeat: repeat-y;
+  transform: translateZ(-1000px) scale(2);
+  opacity: 0.3;
+  filter: blur(2px);
+}
+
+
+/* ***************
+   PHOTO-FRAME (FIXED)
+   *************** */
+.photo-frame {
+  position: relative;
+  aspect-ratio: 1920 / 1440;
+  width: min(100vw, calc(100vh * (1920 / 1440)));
+  height: auto;
+
+  /* MULTI-BACKGROUND: image + color layer */
+  background-image: 
+    url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/tv/tv-1920.jpg'),
+    linear-gradient(rgba(0,0,0,0.07), rgba(0,0,0,0.07));
+
+  background-blend-mode: color-burn;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%; /* identical to what you had */
+
+  overflow: visible;
+}
+
+
+/* ------------------------
+   CRT WRAPPER (keeps exact locked position)
+   ------------------------
+   IMPORTANT PATTERN:
+   - .crt-wrap is the absolute-positioned box anchored with exact % values
+   - .crt-inner is full-size inside it and *scaled* by 1.018 (1.8%)
+   - Because the wrapper stays at the original percentages, the alignment to the JPG remains exact
+*/
+.crt-wrap {
+  position: absolute;
+
+  /* original locked percentages (from your coordinates) */
+  left: 15.62%; /* slight rounded; keep your exact values if you prefer */
+  top: 16.27%;
+width: 55.114%;  /* +0.5% from previous */
+  height: 58.672%; /* +0.5% from previous */
+
+  pointer-events: auto; /* wrappers themselves shouldn't intercept input */
+  z-index: 9;
+}
+
+/* .crt-inner is the scaled visual; keeps everything (video, overlays) aligned */
+.crt-inner {
+  position: absolute;
+  inset: 0;
+  transform-origin: center center;
+  /* SCALE: 1.018 => +1.8% */
+  transform: scale(1.018);
+  /* keep wobble centered on scaled element */
+  animation: verticalWobble 5s ease-in-out infinite;
+}
+
+/* visual CRT surface (borders, background) */
+.crt-inner .crt-tv-surface {
+  width: 100%;
+  height: 100%;
+  border-radius: 2%;
+  overflow: hidden;
+  border: 1.4% solid #222;
+  background: #111;
+  box-shadow: 0 0 40px rgba(0,0,0,0.8);
+  position: relative;
+}
+
+/* Video layer */
+#myVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+  filter: saturate(1.5) contrast(1.4) brightness(1.1);
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* NOISE / FLICKER overlay — FIXED: full-size image that always covers video */
+#noiseOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* ensures the gif fills the area */
+  pointer-events: none;
+  z-index: 24;
+  opacity: 0.35;
+  transition: opacity 0.12s linear;
+  mix-blend-mode: screen;
+  display: block;
+}
+
+/* Scanlines (CSS) — sits on top of noise so you still get lines */
+#scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 1px,
+    rgba(0,0,0,0.06) 2px
+  );
+  opacity: 0.28;
+}
+
+/* Screen glass */
+.crt-inner .crt-tv-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.18) 80%);
+  z-index: 20;
+  pointer-events: none;
+}
+.crt-inner .crt-tv-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 40%, transparent 60%);
+  z-index: 21;
+  pointer-events: none;
+}
+#hotspot-power {
+  position: absolute;
+  left: 74.75%;
+  top: 71.42%;
+  width: 6.51%;
+  height: 2.63%;
+  z-index: 100;        /* above frame */
+  cursor: pointer;
+  
+  color: #FFEC60;
+  background-color: rgba(255,255,255,0.1);
+  cursor: pointer;
+
+  border: 1px solid rgba(255,236,96,0.3);
+
+  border-radius: 4px;
+}
+
+
+#controlsWrapper {
+  position: absolute;
+  top: 38%;
+  left: 73.66%;
+  display: flex;
+  flex-direction: column;
+  
+  /* Responsive sizing using viewport units - smaller text */
+  font-size: clamp(7px, 0.65vw, 10px);
+  gap: clamp(4px, 0.4vw, 6px);
+  padding: clamp(4px, 0.4vw, 6px) clamp(6px, 0.6vw, 8px);
+  
+  background: rgba(255,255,255,0.1);
+  border-radius: clamp(4px, 0.5vw, 8px);
+  border: 1px solid rgba(255,236,96,0.3);
+  z-index: 30;
+  color: #FFEC60;
+  
+  width: 9.11%;
+  height: 10.15%;
+  
+  box-sizing: border-box;
+}
+
+/* Labels */
+#controlsWrapper label {
+  font-size: clamp(7px, 0.65vw, 10px);
+  color: #FFEC60;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+/* Custom Slider Styling */
+#controlsWrapper input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid rgba(255, 236, 96, 0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 4px;
+}
+
+/* Hover effect on track */
+#controlsWrapper input[type="range"]:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 236, 96, 0.4);
+}
+
+/* Webkit (Chrome, Safari, Edge) - Thumb */
+#controlsWrapper input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #FFEC60;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 4px rgba(255, 236, 96, 0.5);
+  transition: all 0.2s;
+}
+
+#controlsWrapper input[type="range"]::-webkit-slider-thumb:hover {
+  background: #fff;
+  transform: scale(1.15);
+  box-shadow: 0 0 8px rgba(255, 236, 96, 0.8);
+}
+
+/* Firefox - Thumb */
+#controlsWrapper input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #FFEC60;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 4px rgba(255, 236, 96, 0.5);
+  transition: all 0.2s;
+}
+
+#controlsWrapper input[type="range"]::-moz-range-thumb:hover {
+  background: #fff;
+  transform: scale(1.15);
+  box-shadow: 0 0 8px rgba(255, 236, 96, 0.8);
+}
+
+/* Firefox - Track */
+#controlsWrapper input[type="range"]::-moz-range-track {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  border: 1px solid rgba(255, 236, 96, 0.2);
+}
+.b {
+  position: absolute;
+  top: 51.56%;
+  left: 73.79%;
+  display: flex;
+  flex-direction: column;
+  
+  /* Responsive sizing - smaller text */
+  font-size: clamp(7px, 0.65vw, 10px);
+  gap: clamp(4px, 0.4vw, 6px);
+  padding: clamp(4px, 0.4vw, 6px) clamp(6px, 0.6vw, 8px);
+  
+  z-index: 101;
+  
+  /* Maintain aspect ratio */
+  width: 8.11%;
+  height: 12.15%;
+  
+  box-sizing: border-box;
+}
+
+.b button {
+  color: #FFEC60;
+  background-color: rgba(255,255,255,0.1);
+  cursor: pointer;
+  
+  /* Responsive button text - smaller */
+  font-size: clamp(8px, 0.75vw, 11px);
+  font-weight: bold;
+  
+  border: 1px solid rgba(255,236,96,0.3);
+  padding: clamp(4px, 0.4vw, 6px) clamp(6px, 0.6vw, 8px);
+  border-radius: clamp(3px, 0.3vw, 4px);
+  transition: all 0.2s;
+}
+
+.b button:hover {
+  background-color: rgb(255, 255, 7);
+  color: #000;
+}
+
+
+/* Channel knob (unchanged) */
+#channelButtonWrapper {
+  position: absolute;
+  top: 65.93%;
+  left: 78.05%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 40;
+  user-select: none;
+  touch-action: none;
+}
+#channelKnob {
+  width: clamp(48px, 7.5vw, 64px);
+  height: clamp(48px, 7.5vw, 64px);
+  display: block;
+  transform-origin: 50% 50%;
+  transition: transform 300ms cubic-bezier(.2,.9,.3,1);
+  cursor: grab;
+  border-radius: 50%;
+  /* PLACEHOLDER: Replace 'knob.svg' or 'knob.png' with your actual file */
+  background-image: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/tv/Untitled.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid #444;
+}
+#channelKnob.grabbing { cursor: grabbing !important; }
+#channelLabel { margin-top: clamp(4px, 0.8vh, 8px); font-size: clamp(7px, 0.65vw, 10px); color:#FFEC60; text-transform: lowercase; }
+#channelNumber { margin-top: clamp(2px, 0.4vh, 4px); font-size: clamp(7px, 0.65vw, 10px); color:#FFEC60; font-weight: bold; letter-spacing: 1px; }
+
+/* TV off overlay (unchanged) */
+#tvOffOverlay {
+  position: absolute;
+  inset: 0;
+  z-index:80;
+  pointer-events:none;
+  opacity:0;
+  background:black;
+}
+@keyframes crt-collapse {
+  0% { transform: scale(1, 1); opacity: 1; filter: none;  }
+  /* optional: pass through the classic CRT horizontal line */
+  50% { transform: scale(1, 0.05); opacity: 1; filter: contrast(0.9) saturate(0.6) blur(1px);  }
+  /* collapse into a dot in the center */
+  100% { transform: scale(0, 0); opacity: 0; filter: blur(6px) brightness(0.2);  }
+}
+  
+
+
+/* small screens keep it centered */
+@media (max-width:480px){
+  .photo-frame { width: min(100vw, calc(100vh * (1920 / 1440))); }
+}
