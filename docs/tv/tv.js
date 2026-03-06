@@ -47,7 +47,7 @@ let currentChannel = 1;
 
 const channels = [
   "https://bafybeidkkrpovww5chuu3qd53njgfujg2hkibzbceeyeac4dkgbb3ggvgq.ipfs.w3s.link/Freak%20Analog%20Textures3%20by%20easterntraveler.mp4",
-  "https://example.com/video2.mp4",    // ch 2  ← roll effect
+  "https://bafybeiewkgcxkndufmh2g4yft5qhc6ztr3qh6yovhffbcnmm23iur3btvq.ipfs.w3s.link/Under%20the%20sun--%20culture%20and%20kindred%20pt.%20III%20-.mp4",    // ch 2  ← roll effect
   "https://example.com/video3.mp4",    // ch 3
   "https://example.com/video4.mp4",    // ch 4
   "",                                   // ch 5  ← roll effect + white noise
