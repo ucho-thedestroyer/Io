@@ -215,8 +215,6 @@ width: 55.114%;  /* +0.5% from previous */
   padding: clamp(4px, 0.4vw, 6px) clamp(6px, 0.6vw, 8px);
   
   background: rgba(255,255,255,0.1);
-  border-radius: clamp(4px, 0.5vw, 8px);
-  border: 1px solid rgba(255,236,96,0.3);
   z-index: 30;
   color: #FFEC60;
   
