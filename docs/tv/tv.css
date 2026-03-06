@@ -1,5 +1,4 @@
-
-/* -------------------------
+   /* -------------------------
    CORE RESET / LAYOUT
    ------------------------- */
 html, body {
@@ -204,29 +203,30 @@ width: 55.114%;  /* +0.5% from previous */
 
 #controlsWrapper {
   position: absolute;
-  top: 38%;
+  top: 34.5%;
   left: 73.66%;
   display: flex;
   flex-direction: column;
-  
-  /* Responsive sizing using viewport units - smaller text */
+
   font-size: clamp(7px, 0.65vw, 10px);
   gap: clamp(4px, 0.4vw, 6px);
   padding: clamp(4px, 0.4vw, 6px) clamp(6px, 0.6vw, 8px);
-  
+
   background: rgba(255,255,255,0.1);
+  border-radius: 0;
+  border: none;
   z-index: 30;
   color: #FFEC60;
-  
+
   width: 9.11%;
-  height: 10.15%;
-  
+  height: 13.65%;
+
   box-sizing: border-box;
 }
 
 /* Labels */
 #controlsWrapper label {
-  font-size: clamp(7px, 0.65vw, 10px);
+  font-size: clamp(8px, 0.8vw, 12px);
   color: #FFEC60;
   font-weight: 500;
   margin-bottom: 2px;
