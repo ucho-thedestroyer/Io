@@ -12,7 +12,7 @@ const turnOffLink  = document.getElementById('turnOffLink');
    Replace the src with your actual .mp3 path.
    The Audio element is created in JS so there's
    no extra HTML needed.                         */
-const whiteNoise = new Audio('docs/tv/whitenoise.mp3');
+const whiteNoise = new Audio('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/tv/whitenoise.mp3');
 whiteNoise.loop  = true;
 whiteNoise.volume = 0.4;   // tweak to taste
 
