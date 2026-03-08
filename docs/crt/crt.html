@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>eOS Boot CRT</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root { --bg: #000; --text: #dcdcdc; }
+html, body { height: 100%; margin: 0; font-family: 'VT323', monospace; overflow: hidden; background: var(--bg); color: var(--text); }
+
+/* ── CRT shell ─────────────────────────────────────────────────── */
+
+body { background: #080808; }
+
+.crt-bezel {
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at 50% 50%, #181818 0%, #0c0c0c 60%, #040404 100%);
+}
+
+.crt {
+  position: fixed;
+  top: 3vh; left: 4vw; right: 4vw; bottom: 3vh;
+  padding: 26px 30px 70px 30px; box-sizing: border-box;
+  overflow: hidden; background: #050505;
+  border-radius: 32px / 26px;
+  transform: perspective(800px) rotateX(1.8deg);
+  transform-origin: center center;
+  box-shadow:
+    0 0 0 7px #141414,
+    0 0 0 16px #1e1e1e,
+    0 0 0 20px #0a0a0a,
+    0 0 90px 24px rgba(0,0,0,.95),
+    inset 0 0 130px 50px rgba(0,0,0,.75),
+    inset 0 0 60px 8px rgba(180,200,180,.025);
+  z-index: 1;
+}
+
+/* Strong curved vignette */
+.crt::before {
+  content: ""; position: absolute; inset: -2%; pointer-events: none; z-index: 30;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 50% 48%,
+    transparent          0%,
+    transparent          62%,
+    rgba(0,0,0,0.22)     74%,
+    rgba(0,0,0,0.55)     85%,
+    rgba(0,0,0,0.88)     94%,
+    rgba(0,0,0,1)        100%);
+}
+
+/* scanlines */
+.crt::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 40;
+  border-radius: inherit;
+  background: repeating-linear-gradient(to bottom,
+    rgba(0,0,0,0.38) 0px, rgba(0,0,0,0.38) 1px,
+    rgba(255,255,255,0.015) 1px, rgba(255,255,255,0.015) 3px);
+  opacity: 0.95; animation: scanShift 6s linear infinite;
+  background-size: 100% 4px; mix-blend-mode: overlay;
+}
+@keyframes scanShift { 0%{background-position:0 0} 100%{background-position:0 4px} }
+
+/* ── Glass reflection overlay ──────────────────────────────────── */
+.glass-overlay {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.glass-overlay svg {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* ── viewport ──────────────────────────────────────────────────── */
+.viewport {
+  position: relative; z-index: 20; height: 100%; width: 100%;
+  overflow: auto; -webkit-overflow-scrolling: touch;
+  /* subtle barrel-hint: content slightly compressed at edges */
+  padding: 0 1%;
+}
+.viewport::-webkit-scrollbar { width: 0; }
+
+/* ── logo ──────────────────────────────────────────────────────── */
+.logo {
+  position: fixed; top: 30px; right: 74px; width: 110px; height: 110px;
+  z-index: 999; margin: 0; float: none;
+  animation: logoFlicker 2.8s steps(1) infinite;
+}
+.logo > a { display: block; width: 100%; height: 100%; position: relative; }
+.logo > a::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  animation: logoGhost 2.8s steps(1) infinite;
+  opacity: 0;
+}
+.logo svg { display: block; width: 100%; height: 100%; }
+
+@keyframes logoFlicker {
+  0%    { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  4%    { opacity:.3;   transform:translate(-3px,0)  skewX(-2deg);    filter: drop-shadow(-4px 0 6px rgba(255,80,80,.6))  brightness(.6)   blur(1.5px); }
+  5%    { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  9%    { opacity:.85;  transform:translate(2px,-1px) skewX(.8deg);   filter: drop-shadow(3px 0 5px rgba(80,180,255,.4))  brightness(.9)   blur(.8px); }
+  10%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  22%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  23%   { opacity:.1;   transform:translate(4px,2px) skewX(-3deg);    filter: drop-shadow(-3px 0 10px rgba(255,60,60,.7)) brightness(.4)   blur(2px);  }
+  24%   { opacity:1;    transform:translate(-1px,0)  skewX(1deg);     filter: drop-shadow(0 0 12px rgba(220,220,220,.8)) brightness(1.15) blur(.5px); }
+  25%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  47%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  48%   { opacity:.55;  transform:translate(-2px,1px) skewX(1.5deg);  filter: drop-shadow(2px 0 8px rgba(80,255,180,.4))  brightness(.75)  blur(1px);  }
+  49%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  63%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  64%   { opacity:.05;  transform:translate(5px,0)   skewX(-4deg);    filter: drop-shadow(-5px 0 12px rgba(255,80,80,.8)) brightness(.3)   blur(2.5px);}
+  65%   { opacity:1;    transform:translate(-2px,0)  skewX(2deg);     filter: drop-shadow(0 0 16px rgba(220,220,220,1))  brightness(1.3)  blur(.3px); }
+  66%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  85%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  86%   { opacity:.7;   transform:translate(1px,-2px) skewX(-.5deg);  filter: drop-shadow(1px 0 6px rgba(220,220,220,.3))  brightness(.85)  blur(1px);  }
+  87%   { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+  100%  { opacity:1;    transform:translate(0,0)     skewX(0);        filter: drop-shadow(0 0 8px rgba(220,220,220,.5))  brightness(1)    blur(.5px); }
+}
+
+@keyframes logoGhost {
+  0%,3%   { opacity:0; transform:translateX(0); }
+  4%      { opacity:.35; transform:translateX(-5px); filter:hue-rotate(30deg) blur(1px); }
+  5%      { opacity:0; transform:translateX(0); }
+  23%     { opacity:0; }
+  24%     { opacity:.25; transform:translateX(4px); filter:hue-rotate(-20deg) blur(1.5px); }
+  25%     { opacity:0; }
+  64%     { opacity:0; }
+  65%     { opacity:.4; transform:translateX(-6px); filter:hue-rotate(50deg) blur(1px); }
+  66%     { opacity:0; }
+  100%    { opacity:0; }
+}
+
+/* ── output text ───────────────────────────────────────────────── */
+.output {
+  margin: 0; padding: 0; box-sizing: border-box;
+  max-width: 100%; white-space: pre-wrap; word-break: break-word;
+  line-height: 1.45; letter-spacing: .6px; font-size: 26px;
+  color: var(--text); text-shadow: 0 0 6px rgba(220,220,220,.15);
+  filter: blur(.5px);
+  /* subtle overall phosphor drift */
+  animation: outputDrift 8s ease-in-out infinite;
+}
+@keyframes outputDrift {
+  0%,100% { filter: blur(.5px) brightness(1); }
+  50%      { filter: blur(.6px) brightness(.96); }
+}
+
+/* ── per-character glitch (REDUCED intensity) ──────────────────── */
+.char-glitch {
+  display: inline-block;
+  animation: flicker .55s linear infinite;   /* slower = less intense */
+  transform-origin: center;
+}
+@keyframes flicker {
+  0%   { opacity:1;   transform:translateY(0) skewX(0); }
+  8%   { opacity:.55; transform:translateY(-1px) skewX(-.6deg); }
+  20%  { opacity:1;   transform:translateY(0); }
+  40%  { opacity:.75; transform:translateY(1px) skewX(.5deg); }
+  60%  { opacity:1;   transform:translateY(0); }
+  100% { opacity:1; }
+}
+.glitch-strong {
+  animation: flickerStrong .72s linear infinite;
+  text-shadow: 0 0 5px rgba(200,200,255,.1);
+}
+@keyframes flickerStrong {
+  0%   { opacity:1;   transform:translateX(0); }
+  15%  { opacity:.22; transform:translateX(-1px); }
+  35%  { opacity:1;   transform:translateX(0); }
+  55%  { opacity:.4;  transform:translateX(1px); }
+  75%  { opacity:1;   transform:translateX(0); }
+  100% { opacity:1; }
+}
+
+/* GLITCH applied to ALL static text in output (non-typed divs) */
+.output-static {
+  animation: outputStaticFlicker 3.2s steps(1) infinite;
+  filter: blur(.5px);
+}
+@keyframes outputStaticFlicker {
+  0%,100% { opacity:1;   filter: blur(.5px) brightness(1); }
+  12%     { opacity:.88; filter: blur(.7px) brightness(.9); }
+  13%     { opacity:1;   filter: blur(.5px) brightness(1); }
+  70%     { opacity:.92; filter: blur(.6px) brightness(.94); }
+  71%     { opacity:1;   filter: blur(.5px) brightness(1); }
+}
+
+/* ── cmd line / cursor ─────────────────────────────────────────── */
+.cmd-line { display: flex; align-items: flex-end; gap: 4px; font-size: 26px; }
+.cursor {
+  display: inline-block; width: 14px; height: 1.1em;
+  background: var(--text); animation: cursorBlink 900ms steps(1) infinite;
+  box-shadow: 0 0 10px rgba(220,220,220,.35); filter: blur(.5px); cursor: pointer;
+}
+@keyframes cursorBlink { 50% { opacity: 0.08; } }
+.input-echo { display: inline; }
+
+.cmd-input {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 30px; background: transparent; color: transparent;
+  caret-color: transparent; font: inherit; border: none; outline: none;
+}
+
+/* ── BSOD ──────────────────────────────────────────────────────── */
+.bsod {
+  position: fixed; inset: 0; z-index: 9999; display: none;
+  background: #0000aa; color: #ffffff; font-family: monospace;
+  font-size: 22px; padding: 48px; line-height: 1.5; white-space: pre-wrap;
+}
+
+/* ── buttons ───────────────────────────────────────────────────── */
+button.cmd-btn {
+  padding: 10px 16px; font-size: 28px; font-family: 'VT323', monospace;
+  border: 2px solid #f0f0f0; background: rgba(255,255,255,0.05);
+  color: #ffffff; margin-top: 6px; cursor: pointer;
+  text-shadow: 0 0 6px rgba(255,255,255,0.6), 0 0 12px rgba(255,255,255,0.3);
+  box-shadow: 0 0 8px rgba(255,255,255,0.2); transition: all 0.2s ease;
+}
+button.cmd-btn:hover {
+  background: rgba(255,255,255,0.12); border-color: #ffffff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 14px rgba(255,255,255,0.5);
+  box-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+
+/* ── MEMO cinematic scroll ─────────────────────────────────────── */
+.memo-wrap {
+  margin-top: 10px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.memo-wrap.visible { opacity: 1; max-height: 2000px; }
+
+.memo-paragraph {
+  font-size: 28px;
+  line-height: 1.7;
+  letter-spacing: 1.2px;
+  color: #d0d0d0;
+  margin-bottom: 0;
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(3px);
+  transition: opacity 1.8s ease, transform 1.8s ease, filter 1.8s ease;
+  text-shadow: 0 0 8px rgba(200,200,200,.25);
+  animation: paraGlitch 5s steps(1) infinite;
+}
+.memo-paragraph.revealed {
+  opacity: 1; transform: translateY(0); filter: blur(.5px);
+}
+@keyframes paraGlitch {
+  0%,100% { filter: blur(.5px) brightness(1); }
+  18%     { filter: blur(1px) brightness(.85); }
+  19%     { filter: blur(.5px) brightness(1); }
+  73%     { filter: blur(.8px) brightness(.9); }
+  74%     { filter: blur(.5px) brightness(1); }
+}
+
+.memo-signoff {
+  font-size: 26px; letter-spacing: 2px; color: #888;
+  margin-top: 20px; opacity: 0;
+  transition: opacity 2s ease;
+  animation: paraGlitch 7s steps(1) infinite;
+}
+.memo-signoff.revealed { opacity: 1; }
+
+/* ── NET table ─────────────────────────────────────────────────── */
+.net-table-wrap {
+  margin-top: 14px;
+  border: 2px solid #555;
+  box-shadow: 0 0 14px rgba(200,200,200,.08), inset 0 0 30px rgba(0,0,0,.4);
+  overflow: hidden;
+  animation: tableFlicker 6s steps(1) infinite;
+}
+@keyframes tableFlicker {
+  0%,100% { box-shadow: 0 0 14px rgba(200,200,200,.08), inset 0 0 30px rgba(0,0,0,.4); }
+  22%     { box-shadow: 0 0 20px rgba(200,200,200,.14), inset 0 0 30px rgba(0,0,0,.4); }
+  23%     { box-shadow: 0 0 14px rgba(200,200,200,.08), inset 0 0 30px rgba(0,0,0,.4); }
+}
+.net-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 21px; font-family: 'VT323', monospace;
+  filter: blur(.4px);
+}
+.net-table th {
+  background: rgba(220,220,220,0.1);
+  color: #fff;
+  padding: 8px 14px;
+  text-align: left;
+  letter-spacing: 3px;
+  font-size: 18px;
+  border-bottom: 2px solid #555;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(255,255,255,.4);
+}
+.net-table th:not(:last-child), .net-table td:not(:last-child) {
+  border-right: 1px solid #333;
+}
+.net-table td {
+  padding: 7px 14px;
+  color: #ccc;
+  border-bottom: 1px solid #222;
+  vertical-align: top;
+  line-height: 1.35;
+}
+.net-table tr:hover td { background: rgba(255,255,255,0.04); }
+.net-table .col-term    { color: #e8e8e8; font-size: 23px; white-space: nowrap; }
+.net-table .col-def     { color: #aaa; font-size: 20px; }
+.net-table .col-cat     { color: #666; font-size: 18px; letter-spacing: 1px; white-space: nowrap; }
+
+/* table row stagger-in */
+.net-table tr.row-hidden { opacity: 0; transform: translateX(-8px); transition: none; }
+.net-table tr.row-in     { opacity: 1; transform: translateX(0);
+  transition: opacity .5s ease, transform .5s ease; }
+
+@media (max-width: 640px) {
+  .logo { width: 80px; height: 80px; right: 16px; top: 16px; }
+  .output, .cmd-line { font-size: 20px; }
+  .net-table { font-size: 16px; }
+  .net-table .col-term { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<!-- Monitor bezel background -->
+<div class="crt-bezel"></div>
+
+<main class="crt" aria-label="Retro CRT boot screen">
+
+  <!-- Glass reflection SVG overlay — sits above everything -->
+  <div class="glass-overlay" aria-hidden="true">
+    <svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice"
+         xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Primary highlight: top-left "lamp" reflection -->
+        <radialGradient id="glare1" cx="22%" cy="14%" r="55%" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.10"/>
+          <stop offset="30%"  stop-color="#ffffff" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Secondary highlight: top-right corner bounce — stronger cool tint -->
+        <radialGradient id="glare2" cx="82%" cy="8%" r="48%" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#c8e0ff" stop-opacity="0.18"/>
+          <stop offset="35%"  stop-color="#c8e0ff" stop-opacity="0.08"/>
+          <stop offset="70%"  stop-color="#c8e0ff" stop-opacity="0.02"/>
+          <stop offset="100%" stop-color="#c8e0ff" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Phosphor warmth — diffuse green-amber, matches top glare softness -->
+        <radialGradient id="warmth" cx="50%" cy="100%" r="80%" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#a8c870" stop-opacity="0.10"/>
+          <stop offset="40%"  stop-color="#b0c060" stop-opacity="0.05"/>
+          <stop offset="75%"  stop-color="#98b050" stop-opacity="0.01"/>
+          <stop offset="100%" stop-color="#88a040" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Subtle phosphor centre ambient (the screen glowing back at itself) -->
+        <radialGradient id="centerGlow" cx="50%" cy="55%" r="45%" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#c8d8a0" stop-opacity="0.03"/>
+          <stop offset="100%" stop-color="#c8d8a0" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Subtle dust/grain texture via feTurbulence -->
+        <filter id="grain" x="0%" y="0%" width="100%" height="100%"
+                color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4"
+                        stitchTiles="stitch" result="noise"/>
+          <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
+          <feBlend in="SourceGraphic" in2="grey" mode="screen" result="blended"/>
+          <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+        </filter>
+      </defs>
+
+      <!-- Full screen grain layer -->
+      <rect width="1000" height="700" fill="rgba(255,255,255,0.018)" filter="url(#grain)"/>
+
+      <!-- Primary lamp glare blob, top-left -->
+      <ellipse cx="210" cy="90" rx="380" ry="200" fill="url(#glare1)"/>
+
+      <!-- Secondary glare, top-right — stronger cool blue-white -->
+      <ellipse cx="840" cy="40" rx="320" ry="200" fill="url(#glare2)"/>
+
+      <!-- Centre phosphor ambient glow -->
+      <ellipse cx="500" cy="385" rx="500" ry="350" fill="url(#centerGlow)"/>
+
+      <!-- Phosphor warmth — diffuse green-amber bloom from bottom -->
+      <ellipse cx="500" cy="700" rx="700" ry="420" fill="url(#warmth)"/>
+
+      <!-- Hairline edge specular on left curve -->
+      <line x1="0" y1="80" x2="0" y2="580"
+            stroke="#ffffff" stroke-width="2" opacity="0.03"/>
+      <!-- Hairline edge on right -->
+      <line x1="1000" y1="80" x2="1000" y2="580"
+            stroke="#ffffff" stroke-width="2" opacity="0.025"/>
+    </svg>
+  </div>
+
+  <!--
+  ═══════════════════════════════════════════════════════════════
+  LIGHT REFLECTION LAYER
+  Drop your PNG here. Requirements for best result:
+    - Black background with white/grey reflection painted on it
+    - Set blend mode to "screen" so black disappears completely
+    - Full canvas size (same aspect ratio as the screen)
+    - Keep overall image opacity low (0.12–0.25 is a good range)
+  Replace the src below with your file path, e.g. "reflection.png"
+  ═══════════════════════════════════════════════════════════════
+  -->
+  <img
+    id="reflection-overlay"
+    src=""
+    alt=""
+    aria-hidden="true"
+    style="
+      display: none;                /* ← remove this line once src is set */
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 51;
+      mix-blend-mode: screen;
+      opacity: 0.18;
+      border-radius: inherit;
+    "
+  />
+
+    <div class="logo" aria-hidden="true">
+      <a href="https://www.t.online">
+        <!-- Replace the SVG below with your own logo SVG -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <circle cx="50" cy="50" r="46" stroke="#dcdcdc" stroke-width="3"/>
+          <text x="50" y="67" text-anchor="middle" font-family="VT323,monospace"
+            font-size="44" fill="#dcdcdc" letter-spacing="1">eOS</text>
+        </svg>
+      </a>
+    </div>
+
+    <div class="output" id="output" aria-live="polite"></div>
+  </div>
+  <input id="input" class="cmd-input" autocomplete="off" spellcheck="false" aria-label="command input"/>
+</main>
+<section class="bsod" id="bsod" aria-live="assertive"></section>
+
+<!-- Audio for memo — replace src with your actual MP3 path -->
+<audio id="memo-audio" src="memo.mp3" preload="auto"></audio>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   eOS terminal — revamped
+══════════════════════════════════════════════════════════════════ */
+const output   = document.getElementById('output');
+const input    = document.getElementById('input');
+const viewport = document.getElementById('viewport');
+const bsod     = document.getElementById('bsod');
+const memoAudio= document.getElementById('memo-audio');
+
+let bsodTempActive = false, bsodActive = false;
+
+/* ── guided flow state ──────────────────────────────────────────── */
+// Steps: 0=after boot, 1=after status, 2=after cache, 3=after memo, 4=after net (done)
+let flowStep = 0;
+
+const FLOW_PROMPTS = [
+  '\nType \'status\' to begin.\n',
+  '\nType \'cache\' to continue.\n',
+  '\nType \'memo\' to proceed.\n',
+  '\nType \'net\' to access the network index.\n',
+  '\nAll systems reviewed. Session complete.\n'
+];
+
+/* ── boot & help text ───────────────────────────────────────────── */
+const bootText = `
+eaOS v1.4.2 (build 2025-03-18) Copyright (c) 2026 et Systems
+Initializing hardware... OK
+  [0] - NVME0: 1024GB - OK
+  [1] - NIC0  : eNet v2.1 - OK
+Loading kernel segments:
+  - segment A: 64K  loaded -checksums: PASS
+  - segment B: 128K loaded -signature: 0x7fC0E2 - [OK]
+
+Boot successful. Welcome back, Operator.
+`;
+
+const helpText = `Available commands:
+  help    - show this list
+  status  - show current status
+  memo    - read the memo
+  net     - network index
+  cache   - clear cache
+`;
+
+/* ── net table data ─────────────────────────────────────────────── */
+const netEntries = [
+  { term: 'KERNEL',        def: 'Core of the operating system; mediates between hardware and software layers.',       cat: 'SYSTEM'   },
+  { term: 'SEGMENT',       def: 'A contiguous block of memory or code assigned to a running process.',                cat: 'MEMORY'   },
+  { term: 'CHECKSUM',      def: 'A computed value used to verify data integrity after transmission or storage.',       cat: 'INTEGRITY'},
+  { term: 'NIC',           def: 'Network Interface Controller; hardware enabling machine-to-network communication.',   cat: 'HARDWARE' },
+  { term: 'IRQL',          def: 'Interrupt Request Level; governs priority of hardware and software interrupts.',      cat: 'SYSTEM'   },
+  { term: 'CRASH DUMP',    def: 'Snapshot of process memory written to disk at the moment of a fatal system fault.',   cat: 'DEBUG'    },
+  { term: 'PHOSPHOR',      def: 'Electroluminescent coating on CRT glass that glows when struck by electron beam.',    cat: 'DISPLAY'  },
+  { term: 'COLD BOOT',     def: 'System startup from a fully powered-off state; full POST sequence executed.',         cat: 'BOOT'     },
+  { term: 'OPERATOR',      def: 'Authenticated user with elevated clearance to issue system-level commands.',          cat: 'ACCESS'   },
+  { term: 'CACHE',         def: 'High-speed volatile memory layer used to buffer frequently accessed data.',           cat: 'MEMORY'   },
+  { term: 'BAUD',          def: 'Unit of symbol transmission rate across a communication channel (symbols/sec).',      cat: 'NETWORK'  },
+  { term: 'HANDSHAKE',     def: 'Protocol exchange confirming both ends of a channel are ready to communicate.',       cat: 'NETWORK'  },
+  { term: 'SECTOR',        def: 'Smallest addressable unit on a magnetic or solid-state storage medium.',              cat: 'STORAGE'  },
+  { term: 'SIGNAL DECAY',  def: 'Degradation of transmission quality over distance or time on physical media.',        cat: 'SIGNAL'   },
+  { term: 'DEAD PIXEL',    def: 'A display sub-pixel that has failed and no longer responds to electrical input.',     cat: 'DISPLAY'  },
+  { term: 'TTY',           def: 'TeleTYpewriter; legacy interface abstraction for terminal I/O streams.',              cat: 'INTERFACE'},
+  { term: 'ENTROPY',       def: 'Measure of unpredictability in a system; used in cryptography and system randomness.',cat: 'CRYPTO'   },
+  { term: 'NULL POINTER',  def: 'A reference to memory address zero; dereferencing it causes an access violation.',    cat: 'MEMORY'   },
+  { term: 'GHOST SIGNAL',  def: 'Residual electromagnetic echo persisting after transmission has formally ended.',     cat: 'SIGNAL'   },
+  { term: 'UPTIME',        def: 'Duration a system has been running without restart, reboot, or critical failure.',    cat: 'SYSTEM'   },
+];
+
+/* ── memo paragraphs ─────────────────────────────────────────────── */
+const memoParagraphs = [
+  `The world you wake into each morning is not the one that was promised.`,
+  `Somewhere between the first dial-up tone and the last firmware patch, something got lost. Not corrupted — lost. As if it stepped outside for a moment and never came back in.`,
+  `They told you the network would connect you. It did. It connected you to everything except the thing you were looking for.`,
+  `You have been here before. This terminal. This cursor. This low hum that might be the machine or might be you. You can't always tell the difference anymore.`,
+  `The memo is not a warning. Warnings imply there is still time. This is more like a receipt — confirmation of something already purchased, already used, already gone.`,
+  `Keep moving. The logs don't lie but they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present.`,
+  `Until one day: no entry at all.`
+];
+const memoSignoff = `— End — et`;
+
+/* ──────────────────────────────────────────────────────────────────
+   Cursor / cmd line
+────────────────────────────────────────────────────────────────── */
+function createCmdLine() {
+  const line   = document.createElement('div'); line.className = 'cmd-line';
+  const echo   = document.createElement('span'); echo.className = 'input-echo'; echo.textContent = '> ';
+  const cursor = document.createElement('span'); cursor.className = 'cursor';
+  cursor.addEventListener('click', () => input.focus());
+  line.appendChild(echo); line.appendChild(cursor);
+  output.appendChild(line);
+  viewport.scrollTop = viewport.scrollHeight;
+  return { line, echo, cursor };
+}
+
+let currentLine = createCmdLine();
+
+/* ──────────────────────────────────────────────────────────────────
+   typeSequence — types text with per-character glitch
+   (reduced: only ~9% chars get glitch-strong, base flicker slower)
+────────────────────────────────────────────────────────────────── */
+function typeSequence(str, done) {
+  const lines = str.split('\n');
+  let lineIndex = 0;
+  function typeLine() {
+    if (lineIndex >= lines.length) {
+      viewport.scrollTop = viewport.scrollHeight;
+      done && done();
+      return;
+    }
+    const lineDiv = document.createElement('div');
+    output.appendChild(lineDiv);
+    let i = 0;
+    function tick() {
+      const line = lines[lineIndex];
+      if (i >= line.length) {
+        output.appendChild(document.createElement('br'));
+        lineIndex++;
+        setTimeout(typeLine, 0);
+        return;
+      }
+      const span = document.createElement('span'); span.className = 'char-glitch';
+      if (Math.random() < 0.09) span.classList.add('glitch-strong');  // reduced from 0.14
+      span.textContent = line[i++];
+      lineDiv.appendChild(span);
+      viewport.scrollTop = viewport.scrollHeight;
+      let delay = (10 + Math.random() * 40) * 0.53125;
+      if (line[i-1] === ' ') delay *= 0.9;
+      setTimeout(tick, delay);
+    }
+    tick();
+  }
+  typeLine();
+}
+
+/* appendStatic — adds non-typed output with CSS flicker on the block */
+function appendStatic(html) {
+  const d = document.createElement('div');
+  d.className = 'output-static';
+  d.innerHTML = html;
+  output.appendChild(d);
+  viewport.scrollTop = viewport.scrollHeight;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   BOOT
+────────────────────────────────────────────────────────────────── */
+function boot() {
+  output.textContent = ''; viewport.scrollTop = 0;
+  typeSequence(bootText + `Type 'help' for a list of commands.\n`, () => {
+    appendStatic('');
+    appendFlowPrompt();
+    currentLine = createCmdLine();
+    input.focus();
+  });
+}
+
+function appendFlowPrompt() {
+  if (flowStep <= 4) {
+    const d = document.createElement('div');
+    d.className = 'output-static';
+    d.textContent = FLOW_PROMPTS[flowStep];
+    output.appendChild(d);
+    viewport.scrollTop = viewport.scrollHeight;
+  }
+}
+
+boot();
+
+/* ──────────────────────────────────────────────────────────────────
+   BSOD
+────────────────────────────────────────────────────────────────── */
+function showTemporaryBSOD(duration = 2000, onDone) {
+  if (bsodActive) return;
+  bsodTempActive = true; bsod.style.display = 'block';
+  bsod.textContent =
+`*** STOP: 0x0000000A (0x00000000, 0x00000000, 0x00000000, 0x00000000)
+IRQL_NOT_LESS_OR_EQUAL
+
+*** Address 00000000 referenced memory at 00000000
+The memory could not be written.
+Collecting data for crash dump ...
+Initializing disk for crash dump ...
+`;
+  const crtEl = document.querySelector('.crt');
+  const flashes = Math.max(3, Math.floor(duration / 250));
+  let count = 0;
+  const interval = Math.floor(duration / flashes);
+  const iv = setInterval(() => {
+    crtEl.style.filter = (count % 2 === 0) ? 'brightness(.8)' : '';
+    count++;
+    if (count > flashes) {
+      clearInterval(iv);
+      bsod.style.display = 'none'; crtEl.style.filter = '';
+      bsodTempActive = false; if (onDone) onDone();
+    }
+  }, interval);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   MEMO command
+────────────────────────────────────────────────────────────────── */
+function runMemo() {
+  const wrap = document.createElement('div'); wrap.className = 'memo-wrap';
+
+  const paragraphEls = memoParagraphs.map(text => {
+    const p = document.createElement('p'); p.className = 'memo-paragraph';
+    p.textContent = text; wrap.appendChild(p); return p;
+  });
+
+  const signoff = document.createElement('p'); signoff.className = 'memo-signoff';
+  signoff.textContent = memoSignoff; wrap.appendChild(signoff);
+
+  output.appendChild(wrap);
+
+  // Try to play audio (may be blocked by browser autoplay policy; user click already counts)
+  memoAudio.currentTime = 0;
+  memoAudio.play().catch(() => {}); // silent fail if no file / blocked
+
+  // Reveal each paragraph slowly
+  requestAnimationFrame(() => {
+    wrap.classList.add('visible');
+    let delay = 600;
+    paragraphEls.forEach((p) => {
+      setTimeout(() => {
+        p.classList.add('revealed');
+        viewport.scrollTop = viewport.scrollHeight;
+      }, delay);
+      delay += 2800; // ~2.8s per paragraph — slow cinematic roll
+    });
+    // signoff after all paragraphs
+    setTimeout(() => {
+      signoff.classList.add('revealed');
+      viewport.scrollTop = viewport.scrollHeight;
+      // advance flow and create new prompt after sign-off appears
+      setTimeout(() => {
+        flowStep = 3;
+        appendFlowPrompt();
+        currentLine = createCmdLine();
+        input.focus();
+      }, 1800);
+    }, delay + 400);
+  });
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   NET command — retro table
+────────────────────────────────────────────────────────────────── */
+function runNet() {
+  const wrap = document.createElement('div'); wrap.className = 'net-table-wrap';
+
+  const table = document.createElement('table'); table.className = 'net-table';
+
+  // header
+  const thead = document.createElement('thead');
+  const hrow  = document.createElement('tr');
+  ['TERM','DEFINITION','CATEGORY'].forEach(h => {
+    const th = document.createElement('th'); th.textContent = h; hrow.appendChild(th);
+  });
+  thead.appendChild(hrow); table.appendChild(thead);
+
+  // body
+  const tbody = document.createElement('tbody');
+  netEntries.forEach((entry) => {
+    const tr = document.createElement('tr'); tr.className = 'row-hidden';
+    const tdT = document.createElement('td'); tdT.className = 'col-term'; tdT.textContent = entry.term;
+    const tdD = document.createElement('td'); tdD.className = 'col-def';  tdD.textContent = entry.def;
+    const tdC = document.createElement('td'); tdC.className = 'col-cat';  tdC.textContent = entry.cat;
+    tr.appendChild(tdT); tr.appendChild(tdD); tr.appendChild(tdC);
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  output.appendChild(wrap);
+
+  // stagger rows in
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach((row, i) => {
+    setTimeout(() => {
+      row.classList.remove('row-hidden');
+      row.classList.add('row-in');
+      viewport.scrollTop = viewport.scrollHeight;
+    }, i * 80); // 80ms per row
+  });
+
+  // advance flow after table loads
+  const totalDelay = rows.length * 80 + 600;
+  setTimeout(() => {
+    flowStep = 4;
+    appendFlowPrompt();
+    currentLine = createCmdLine();
+    input.focus();
+  }, totalDelay);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   INPUT HANDLING
+────────────────────────────────────────────────────────────────── */
+input.addEventListener('input', () => {
+  currentLine.echo.textContent = '> ' + input.value;
+  viewport.scrollTop = viewport.scrollHeight;
+});
+
+input.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const raw = input.value || '';
+  const cmd = raw.trim().toLowerCase();
+  currentLine.echo.textContent = '> ' + raw;
+  currentLine.line.removeChild(currentLine.cursor);
+  viewport.scrollTop = viewport.scrollHeight;
+  input.value = '';
+
+  if (!cmd) { currentLine = createCmdLine(); return; }
+
+  /* ── help (works any time, any step) ── */
+  if (cmd === 'help') {
+    appendStatic(`\n${helpText}`);
+    currentLine = createCmdLine();
+    return;
+  }
+
+  /* ── status ── */
+  if (cmd === 'status') {
+    appendStatic(`\neaOS v1.4.2\nDeveloped by et Systems, 1986-2026\nAll systems operational. Memory usage: 42%. Network: OK\n`);
+    if (flowStep === 0) {
+      flowStep = 1;
+      appendFlowPrompt();
+    }
+    currentLine = createCmdLine();
+    return;
+  }
+
+  /* ── cache (BSOD) ── */
+  if (cmd === 'cache') {
+    showTemporaryBSOD(2200, () => {
+      appendStatic('\nCache cleared. All volatile buffers flushed.\n');
+      if (flowStep === 1) {
+        flowStep = 2;
+        appendFlowPrompt();
+      }
+      currentLine = createCmdLine();
+    });
+    return;
+  }
+
+  /* ── memo ── */
+  if (cmd === 'memo') {
+    runMemo();
+    // flow advanced inside runMemo after paragraphs finish
+    return;
+  }
+
+  /* ── net ── */
+  if (cmd === 'net') {
+    runNet();
+    // flow advanced inside runNet after table loads
+    return;
+  }
+
+  /* ── unknown ── */
+  appendStatic(`\nUnknown command. Type 'help' for options.\n`);
+  currentLine = createCmdLine();
+  viewport.scrollTop = viewport.scrollHeight;
+});
+</script>
+</body>
+</html>
