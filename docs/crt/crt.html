@@ -4,8 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>eOS Boot CRT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 :root { --bg: #000; --text: #dcdcdc; }
 html, body { height: 100%; margin: 0; font-family: 'VT323', monospace; overflow: hidden; background: var(--bg); color: var(--text); }
@@ -429,6 +431,8 @@ button.cmd-btn:hover {
     "
   />
 
+  <div class="viewport" id="viewport">
+
     <div class="logo" aria-hidden="true">
       <a href="https://www.t.online">
         <!-- Replace the SVG below with your own logo SVG -->
@@ -446,8 +450,7 @@ button.cmd-btn:hover {
 </main>
 <section class="bsod" id="bsod" aria-live="assertive"></section>
 
-<!-- Audio for memo — replace src with your actual MP3 path -->
-<audio id="memo-audio" src="memo.mp3" preload="auto"></audio>
+<!-- Audio for memo loaded dynamically when memo command runs (see JS) -->
 
 <script>
 /* ══════════════════════════════════════════════════════════════════
@@ -457,7 +460,6 @@ const output   = document.getElementById('output');
 const input    = document.getElementById('input');
 const viewport = document.getElementById('viewport');
 const bsod     = document.getElementById('bsod');
-const memoAudio= document.getElementById('memo-audio');
 
 let bsodTempActive = false, bsodActive = false;
 
@@ -664,9 +666,13 @@ function runMemo() {
 
   output.appendChild(wrap);
 
-  // Try to play audio (may be blocked by browser autoplay policy; user click already counts)
-  memoAudio.currentTime = 0;
-  memoAudio.play().catch(() => {}); // silent fail if no file / blocked
+  // Audio: only attempts to load/play if memo.mp3 is present next to the HTML.
+  // Replace 'memo.mp3' with your actual file path when ready.
+  try {
+    const memoAudio = new Audio('memo.mp3');
+    memoAudio.volume = 0.85;
+    memoAudio.play().catch(() => {}); // silent fail if file missing or autoplay blocked
+  } catch(e) {}
 
   // Reveal each paragraph slowly
   requestAnimationFrame(() => {
