@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>eOS Boot CRT</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
 <style>
 
 :root { --bg: #000; --text: #dcdcdc; }
@@ -230,32 +230,82 @@ button.cmd-btn:hover {
   box-shadow: 0 0 12px rgba(255,255,255,0.4);
 }
 
-/* ── MEMO cinematic scroll ─────────────────────────────────────── */
-.memo-wrap {
-  margin-top: 10px;
+/* ── MEMO fullscreen crawl overlay ────────────────────────────── */
+.memo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.96);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;   /* anchor to bottom */
   overflow: hidden;
-  max-height: 0;
   opacity: 0;
-  transition: opacity 1.2s ease;
+  transition: opacity 1.4s ease;
+  pointer-events: none;
 }
-.memo-wrap.visible { opacity: 1; max-height: 2000px; }
+.memo-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
 
-.memo-paragraph {
-  font-size: 28px;
-  line-height: 1.7;
-  letter-spacing: 1.2px;
+/* The scroll track — all paragraphs stacked, starts below screen */
+.memo-crawl {
+  width: min(680px, 88vw);
+  padding-bottom: 100vh;       /* pushes first paragraph to start off-screen bottom */
+  text-align: center;
+  animation: crawlScroll linear forwards;
+  animation-play-state: paused; /* JS starts it */
+}
+.memo-crawl.rolling {
+  animation-play-state: running;
+}
+
+@keyframes crawlScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+.memo-p {
+  font-family: 'VT323', monospace;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.85;
+  letter-spacing: 1.4px;
   color: #d0d0d0;
-  margin-bottom: 0;
-  opacity: 0;
-  transform: translateY(18px);
-  filter: blur(3px);
-  transition: opacity 1.8s ease, transform 1.8s ease, filter 1.8s ease;
-  text-shadow: 0 0 8px rgba(200,200,200,.25);
+  margin: 0 0 3.2em 0;
+  text-shadow: 0 0 10px rgba(200,200,200,.2);
   animation: paraGlitch 5s steps(1) infinite;
 }
-.memo-paragraph.revealed {
-  opacity: 1; transform: translateY(0); filter: blur(.5px);
+
+.memo-signoff-crawl {
+  font-family: 'VT323', monospace;
+  font-size: clamp(18px, 1.8vw, 24px);
+  letter-spacing: 3px;
+  color: #666;
+  margin: 0 0 2em 0;
+  animation: paraGlitch 7s steps(1) infinite;
 }
+
+/* top and bottom fade masks so text dissolves in/out at edges */
+.memo-overlay::before,
+.memo-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 22vh;
+  pointer-events: none;
+  z-index: 10;
+}
+.memo-overlay::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+}
+.memo-overlay::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+}
+
 @keyframes paraGlitch {
   0%,100% { filter: blur(.5px) brightness(1); }
   18%     { filter: blur(1px) brightness(.85); }
@@ -263,14 +313,6 @@ button.cmd-btn:hover {
   73%     { filter: blur(.8px) brightness(.9); }
   74%     { filter: blur(.5px) brightness(1); }
 }
-
-.memo-signoff {
-  font-size: 26px; letter-spacing: 2px; color: #888;
-  margin-top: 20px; opacity: 0;
-  transition: opacity 2s ease;
-  animation: paraGlitch 7s steps(1) infinite;
-}
-.memo-signoff.revealed { opacity: 1; }
 
 /* ── NET table ─────────────────────────────────────────────────── */
 .net-table-wrap {
@@ -651,52 +693,70 @@ Initializing disk for crash dump ...
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   MEMO command
+   MEMO command — fullscreen cinematic crawl
 ────────────────────────────────────────────────────────────────── */
 function runMemo() {
-  const wrap = document.createElement('div'); wrap.className = 'memo-wrap';
+  // Build overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'memo-overlay';
 
-  const paragraphEls = memoParagraphs.map(text => {
-    const p = document.createElement('p'); p.className = 'memo-paragraph';
-    p.textContent = text; wrap.appendChild(p); return p;
+  const crawl = document.createElement('div');
+  crawl.className = 'memo-crawl';
+
+  memoParagraphs.forEach(text => {
+    const p = document.createElement('p');
+    p.className = 'memo-p';
+    p.textContent = text;
+    crawl.appendChild(p);
   });
 
-  const signoff = document.createElement('p'); signoff.className = 'memo-signoff';
-  signoff.textContent = memoSignoff; wrap.appendChild(signoff);
+  const signoff = document.createElement('p');
+  signoff.className = 'memo-signoff-crawl';
+  signoff.textContent = memoSignoff;
+  crawl.appendChild(signoff);
 
-  output.appendChild(wrap);
+  overlay.appendChild(crawl);
+  document.body.appendChild(overlay);
 
-  // Audio: only attempts to load/play if memo.mp3 is present next to the HTML.
-  // Replace 'memo.mp3' with your actual file path when ready.
-  try {
-    const memoAudio = new Audio('memo.mp3');
-    memoAudio.volume = 0.85;
-    memoAudio.play().catch(() => {}); // silent fail if file missing or autoplay blocked
-  } catch(e) {}
-
-  // Reveal each paragraph slowly
+  // Calculate scroll duration based on content height.
+  // We want roughly 90px per second — slow and cinematic.
+  // We measure after a frame so the DOM has rendered.
   requestAnimationFrame(() => {
-    wrap.classList.add('visible');
-    let delay = 600;
-    paragraphEls.forEach((p) => {
+    requestAnimationFrame(() => {
+      const contentHeight = crawl.scrollHeight;
+      const speed = 62; // px per second — adjust to taste
+      const duration = Math.round(contentHeight / speed);
+
+      crawl.style.animationDuration = duration + 's';
+
+      // Fade overlay in, then start rolling
+      requestAnimationFrame(() => {
+        overlay.classList.add('active');
+        setTimeout(() => {
+          crawl.classList.add('rolling');
+        }, 1400); // wait for fade-in before moving
+      });
+
+      // Audio
+      try {
+        const memoAudio = new Audio('memo.mp3');
+        memoAudio.volume = 0.85;
+        memoAudio.play().catch(() => {});
+      } catch(e) {}
+
+      // When crawl finishes: fade out overlay, restore terminal, advance flow
       setTimeout(() => {
-        p.classList.add('revealed');
-        viewport.scrollTop = viewport.scrollHeight;
-      }, delay);
-      delay += 2800; // ~2.8s per paragraph — slow cinematic roll
+        overlay.style.transition = 'opacity 1.8s ease';
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.remove();
+          flowStep = 3;
+          appendFlowPrompt();
+          currentLine = createCmdLine();
+          input.focus();
+        }, 1800);
+      }, (duration + 1.4) * 1000); // crawl duration + the initial delay
     });
-    // signoff after all paragraphs
-    setTimeout(() => {
-      signoff.classList.add('revealed');
-      viewport.scrollTop = viewport.scrollHeight;
-      // advance flow and create new prompt after sign-off appears
-      setTimeout(() => {
-        flowStep = 3;
-        appendFlowPrompt();
-        currentLine = createCmdLine();
-        input.focus();
-      }, 1800);
-    }, delay + 400);
   });
 }
 
