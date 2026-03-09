@@ -4,10 +4,15 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>eOS Boot CRT</title>
-
-
-
 <style>
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/vt323-v18-latin-regular.woff2') format('woff2'),
+       url('fonts/vt323-v18-latin-regular.ttf') format('truetype');
+}
 
 :root { --bg: #000; --text: #dcdcdc; }
 html, body { height: 100%; margin: 0; font-family: 'VT323', monospace; overflow: hidden; background: var(--bg); color: var(--text); }
