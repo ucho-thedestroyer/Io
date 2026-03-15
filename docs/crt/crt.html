@@ -10,8 +10,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/fonts/vt323-v18-latin-regular.woff2') format('woff2'),
-       url('https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/fonts/vt323-v18-latin-regular.ttf') format('truetype');
+  src: url('fonts/vt323-v18-latin-regular.woff2') format('woff2'),
+       url('fonts/vt323-v18-latin-regular.ttf') format('truetype');
 }
 
 :root { --bg: #000; --text: #dcdcdc; }
@@ -148,55 +148,18 @@ body { background: #080808; }
   margin: 0; padding: 0; box-sizing: border-box;
   max-width: 100%; white-space: pre-wrap; word-break: break-word;
   line-height: 1.45; letter-spacing: .6px; font-size: 26px;
-  color: var(--text); text-shadow: 0 0 6px rgba(220,220,220,.15);
+  color: var(--text); text-shadow: 0 0 6px rgba(220,220,220,.12);
   filter: blur(.5px);
-  /* subtle overall phosphor drift */
-  animation: outputDrift 8s ease-in-out infinite;
-}
-@keyframes outputDrift {
-  0%,100% { filter: blur(.5px) brightness(1); }
-  50%      { filter: blur(.6px) brightness(.96); }
 }
 
-/* ── per-character glitch (REDUCED intensity) ──────────────────── */
-.char-glitch {
-  display: inline-block;
-  animation: flicker .55s linear infinite;   /* slower = less intense */
-  transform-origin: center;
-}
-@keyframes flicker {
-  0%   { opacity:1;   transform:translateY(0) skewX(0); }
-  8%   { opacity:.55; transform:translateY(-1px) skewX(-.6deg); }
-  20%  { opacity:1;   transform:translateY(0); }
-  40%  { opacity:.75; transform:translateY(1px) skewX(.5deg); }
-  60%  { opacity:1;   transform:translateY(0); }
-  100% { opacity:1; }
-}
-.glitch-strong {
-  animation: flickerStrong .72s linear infinite;
-  text-shadow: 0 0 5px rgba(200,200,255,.1);
-}
-@keyframes flickerStrong {
-  0%   { opacity:1;   transform:translateX(0); }
-  15%  { opacity:.22; transform:translateX(-1px); }
-  35%  { opacity:1;   transform:translateX(0); }
-  55%  { opacity:.4;  transform:translateX(1px); }
-  75%  { opacity:1;   transform:translateX(0); }
-  100% { opacity:1; }
-}
-
-/* GLITCH applied to ALL static text in output (non-typed divs) */
+/* static output blocks — no flicker, just the phosphor blur */
 .output-static {
-  animation: outputStaticFlicker 3.2s steps(1) infinite;
   filter: blur(.5px);
 }
-@keyframes outputStaticFlicker {
-  0%,100% { opacity:1;   filter: blur(.5px) brightness(1); }
-  12%     { opacity:.88; filter: blur(.7px) brightness(.9); }
-  13%     { opacity:1;   filter: blur(.5px) brightness(1); }
-  70%     { opacity:.92; filter: blur(.6px) brightness(.94); }
-  71%     { opacity:1;   filter: blur(.5px) brightness(1); }
-}
+
+/* typed chars — plain, no per-character animation */
+.char-glitch  { display: inline-block; }
+.glitch-strong { display: inline-block; }
 
 /* ── cmd line / cursor ─────────────────────────────────────────── */
 .cmd-line { display: flex; align-items: flex-end; gap: 4px; font-size: 26px; }
@@ -280,7 +243,6 @@ button.cmd-btn:hover {
   color: #d0d0d0;
   margin: 0 0 3.2em 0;
   text-shadow: 0 0 10px rgba(200,200,200,.2);
-  animation: paraGlitch 5s steps(1) infinite;
 }
 
 .memo-signoff-crawl {
@@ -289,7 +251,6 @@ button.cmd-btn:hover {
   letter-spacing: 3px;
   color: #666;
   margin: 0 0 2em 0;
-  animation: paraGlitch 7s steps(1) infinite;
 }
 
 /* top and bottom fade masks so text dissolves in/out at edges */
@@ -309,14 +270,6 @@ button.cmd-btn:hover {
 .memo-overlay::after {
   bottom: 0;
   background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-}
-
-@keyframes paraGlitch {
-  0%,100% { filter: blur(.5px) brightness(1); }
-  18%     { filter: blur(1px) brightness(.85); }
-  19%     { filter: blur(.5px) brightness(1); }
-  73%     { filter: blur(.8px) brightness(.9); }
-  74%     { filter: blur(.5px) brightness(1); }
 }
 
 /* ── NET table ─────────────────────────────────────────────────── */
@@ -510,18 +463,6 @@ const bsod     = document.getElementById('bsod');
 
 let bsodTempActive = false, bsodActive = false;
 
-/* ── guided flow state ──────────────────────────────────────────── */
-// Steps: 0=after boot, 1=after status, 2=after cache, 3=after memo, 4=after net (done)
-let flowStep = 0;
-
-const FLOW_PROMPTS = [
-  '\nType \'status\' to begin.\n',
-  '\nType \'cache\' to continue.\n',
-  '\nType \'memo\' to proceed.\n',
-  '\nType \'net\' to access the network index.\n',
-  '\nAll systems reviewed. Session complete.\n'
-];
-
 /* ── boot & help text ───────────────────────────────────────────── */
 const bootText = `
 eaOS v1.4.2 (build 2025-03-18) Copyright (c) 2026 et Systems
@@ -643,26 +584,21 @@ function appendStatic(html) {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   BOOT
+   BOOT — intro types, then memo crawl auto-fires, then menu appears
 ────────────────────────────────────────────────────────────────── */
 function boot() {
   output.textContent = ''; viewport.scrollTop = 0;
-  typeSequence(bootText + `Type 'help' for a list of commands.\n`, () => {
-    appendStatic('');
-    appendFlowPrompt();
-    currentLine = createCmdLine();
-    input.focus();
+  typeSequence(bootText, () => {
+    // Short pause after boot text, then auto-launch the memo crawl
+    setTimeout(() => {
+      runMemo(() => {
+        // After crawl finishes, show help and open the terminal
+        appendStatic(helpText + '\n');
+        currentLine = createCmdLine();
+        input.focus();
+      });
+    }, 800);
   });
-}
-
-function appendFlowPrompt() {
-  if (flowStep <= 4) {
-    const d = document.createElement('div');
-    d.className = 'output-static';
-    d.textContent = FLOW_PROMPTS[flowStep];
-    output.appendChild(d);
-    viewport.scrollTop = viewport.scrollHeight;
-  }
 }
 
 boot();
@@ -698,10 +634,9 @@ Initializing disk for crash dump ...
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   MEMO command — fullscreen cinematic crawl
+   MEMO — fullscreen cinematic crawl, calls done() when finished
 ────────────────────────────────────────────────────────────────── */
-function runMemo() {
-  // Build overlay
+function runMemo(done) {
   const overlay = document.createElement('div');
   overlay.className = 'memo-overlay';
 
@@ -723,24 +658,18 @@ function runMemo() {
   overlay.appendChild(crawl);
   document.body.appendChild(overlay);
 
-  // Calculate scroll duration based on content height.
-  // We want roughly 90px per second — slow and cinematic.
-  // We measure after a frame so the DOM has rendered.
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       const contentHeight = crawl.scrollHeight;
-      const speed = 62; // px per second — adjust to taste
+      const speed = 62; // px per second
       const duration = Math.round(contentHeight / speed);
 
       crawl.style.animationDuration = duration + 's';
 
-      // Fade overlay in, then start rolling
-      requestAnimationFrame(() => {
-        overlay.classList.add('active');
-        setTimeout(() => {
-          crawl.classList.add('rolling');
-        }, 1400); // wait for fade-in before moving
-      });
+      overlay.classList.add('active');
+      setTimeout(() => {
+        crawl.classList.add('rolling');
+      }, 1400);
 
       // Audio
       try {
@@ -749,18 +678,15 @@ function runMemo() {
         memoAudio.play().catch(() => {});
       } catch(e) {}
 
-      // When crawl finishes: fade out overlay, restore terminal, advance flow
+      // Fade out and call done
       setTimeout(() => {
         overlay.style.transition = 'opacity 1.8s ease';
         overlay.style.opacity = '0';
         setTimeout(() => {
           overlay.remove();
-          flowStep = 3;
-          appendFlowPrompt();
-          currentLine = createCmdLine();
-          input.focus();
+          if (done) done();
         }, 1800);
-      }, (duration + 1.4) * 1000); // crawl duration + the initial delay
+      }, (duration + 1.4) * 1000);
     });
   });
 }
@@ -805,19 +731,21 @@ function runNet() {
     }, i * 80); // 80ms per row
   });
 
-  // advance flow after table loads
+  // show cursor after table loads
   const totalDelay = rows.length * 80 + 600;
   setTimeout(() => {
-    flowStep = 4;
-    appendFlowPrompt();
     currentLine = createCmdLine();
     input.focus();
   }, totalDelay);
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   INPUT HANDLING
+   INPUT HANDLING — free commands, original behaviour
 ────────────────────────────────────────────────────────────────── */
+const responses = {
+  status: `\neaOS v1.4.2\nDeveloped by et Systems, 1986-2026\nAll systems operational. Memory usage: 42%. Network: OK\n`
+};
+
 input.addEventListener('input', () => {
   currentLine.echo.textContent = '> ' + input.value;
   viewport.scrollTop = viewport.scrollHeight;
@@ -835,52 +763,33 @@ input.addEventListener('keydown', (e) => {
 
   if (!cmd) { currentLine = createCmdLine(); return; }
 
-  /* ── help (works any time, any step) ── */
   if (cmd === 'help') {
-    appendStatic(`\n${helpText}`);
+    appendStatic(helpText);
     currentLine = createCmdLine();
     return;
   }
 
-  /* ── status ── */
-  if (cmd === 'status') {
-    appendStatic(`\neaOS v1.4.2\nDeveloped by et Systems, 1986-2026\nAll systems operational. Memory usage: 42%. Network: OK\n`);
-    if (flowStep === 0) {
-      flowStep = 1;
-      appendFlowPrompt();
-    }
-    currentLine = createCmdLine();
-    return;
-  }
-
-  /* ── cache (BSOD) ── */
   if (cmd === 'cache') {
-    showTemporaryBSOD(2200, () => {
-      appendStatic('\nCache cleared. All volatile buffers flushed.\n');
-      if (flowStep === 1) {
-        flowStep = 2;
-        appendFlowPrompt();
-      }
-      currentLine = createCmdLine();
-    });
+    showTemporaryBSOD(2200, () => { currentLine = createCmdLine(); });
     return;
   }
 
-  /* ── memo ── */
   if (cmd === 'memo') {
-    runMemo();
-    // flow advanced inside runMemo after paragraphs finish
+    runMemo(() => { currentLine = createCmdLine(); input.focus(); });
     return;
   }
 
-  /* ── net ── */
   if (cmd === 'net') {
     runNet();
-    // flow advanced inside runNet after table loads
     return;
   }
 
-  /* ── unknown ── */
+  if (responses[cmd]) {
+    appendStatic(responses[cmd]);
+    currentLine = createCmdLine();
+    return;
+  }
+
   appendStatic(`\nUnknown command. Type 'help' for options.\n`);
   currentLine = createCmdLine();
   viewport.scrollTop = viewport.scrollHeight;
