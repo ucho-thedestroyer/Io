@@ -534,7 +534,7 @@ function createCmdLine() {
   return { line, echo, cursor };
 }
 
-let currentLine = createCmdLine();
+let currentLine = null;
 
 /* ──────────────────────────────────────────────────────────────────
    typeSequence — types text with per-character glitch
@@ -587,12 +587,12 @@ function appendStatic(html) {
    BOOT — intro types, then memo crawl auto-fires, then menu appears
 ────────────────────────────────────────────────────────────────── */
 function boot() {
-  output.textContent = ''; viewport.scrollTop = 0;
+  output.textContent = '';
+  viewport.scrollTop = 0;
+  currentLine = null; // cleared with output
   typeSequence(bootText, () => {
-    // Short pause after boot text, then auto-launch the memo crawl
     setTimeout(() => {
       runMemo(() => {
-        // After crawl finishes, show help and open the terminal
         appendStatic(helpText + '\n');
         currentLine = createCmdLine();
         input.focus();
@@ -658,37 +658,41 @@ function runMemo(done) {
   overlay.appendChild(crawl);
   document.body.appendChild(overlay);
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const contentHeight = crawl.scrollHeight;
-      const speed = 62; // px per second
-      const duration = Math.round(contentHeight / speed);
+  // Make overlay visible first so the browser paints and scrollHeight is real
+  overlay.classList.add('active');
 
-      crawl.style.animationDuration = duration + 's';
+  // Wait one paint cycle for layout to settle, then measure and start rolling
+  setTimeout(() => {
+    const contentHeight = crawl.scrollHeight || 800; // fallback so duration is never 0
+    const speed = 62; // px per second — lower = slower crawl
+    const duration = Math.max(20, Math.round(contentHeight / speed));
 
-      overlay.classList.add('active');
+    crawl.style.animationDuration = duration + 's';
+
+    // Small extra pause before rolling starts (lets the fade-in complete)
+    setTimeout(() => {
+      crawl.classList.add('rolling');
+    }, 1400);
+
+    // Audio
+    try {
+      const memoAudio = new Audio('memo.mp3');
+      memoAudio.volume = 0.85;
+      memoAudio.play().catch(() => {});
+    } catch(e) {}
+
+    // Fade out overlay after crawl completes, then call done
+    const totalMs = (duration + 1.4) * 1000; // crawl time + pre-roll delay
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 1.8s ease';
+      overlay.style.opacity = '0';
       setTimeout(() => {
-        crawl.classList.add('rolling');
-      }, 1400);
+        overlay.remove();
+        if (done) done();
+      }, 1800);
+    }, totalMs);
 
-      // Audio
-      try {
-        const memoAudio = new Audio('memo.mp3');
-        memoAudio.volume = 0.85;
-        memoAudio.play().catch(() => {});
-      } catch(e) {}
-
-      // Fade out and call done
-      setTimeout(() => {
-        overlay.style.transition = 'opacity 1.8s ease';
-        overlay.style.opacity = '0';
-        setTimeout(() => {
-          overlay.remove();
-          if (done) done();
-        }, 1800);
-      }, (duration + 1.4) * 1000);
-    });
-  });
+  }, 100); // 100ms is enough for one paint after appendChild
 }
 
 /* ──────────────────────────────────────────────────────────────────
