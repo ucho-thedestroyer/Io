@@ -431,25 +431,6 @@ const bsod     = document.getElementById('bsod');
 
 let bsodTempActive = false, bsodActive = false;
 
-/* ── audio source — swap in any URL or local path ───────────────── */
-const MEMO_AUDIO_SRC = 'https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/crt/memo.mp3'; // ← replace with full URL or keep as local file
-
-/* ── audio unlock ───────────────────────────────────────────────────
-   Browsers block audio that isn't triggered by a user gesture.
-   We silently unlock on the first click/keydown so memo audio plays
-   automatically when the crawl starts, even with no further input.
-────────────────────────────────────────────────────────────────── */
-let audioUnlocked = false;
-function unlockAudio() {
-  if (audioUnlocked) return;
-  audioUnlocked = true;
-  const silentBuf = new Audio();
-  silentBuf.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
-  silentBuf.play().catch(() => {});
-}
-document.addEventListener('click',   unlockAudio, { once: false });
-document.addEventListener('keydown', unlockAudio, { once: false });
-
 /* ── boot & help text ───────────────────────────────────────────── */
 const bootText = `
 eaOS v1.4.2 (build 2025-03-18) Copyright (c) 2026 et Systems
@@ -621,8 +602,12 @@ Initializing disk for crash dump ...
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   MEMO — fullscreen cinematic crawl, calls done() when finished
+   MEMO — fullscreen cinematic crawl
+   Adjust CRAWL_SPEED to taste: lower = slower, higher = faster.
+   Unit is pixels per second.
 ────────────────────────────────────────────────────────────────── */
+const CRAWL_SPEED = 55; // ← tweak this
+
 function runMemo(done) {
   const overlay = document.createElement('div');
   overlay.className = 'memo-overlay';
@@ -644,58 +629,24 @@ function runMemo(done) {
 
   overlay.appendChild(crawl);
   document.body.appendChild(overlay);
-
-  // Fade overlay in
   overlay.classList.add('active');
 
-  // Known audio duration in seconds — set this to your file length so the
-  // crawl always works even if the audio is slow to load from IPFS.
-  // Update this number whenever you swap in a new recording.
-  const KNOWN_DURATION_S = 110; // ← your file is 1:50 = 110 seconds
+  setTimeout(() => {
+    const totalPx  = (overlay.offsetHeight || window.innerHeight) + (crawl.scrollHeight || 900);
+    const pxPerMs  = CRAWL_SPEED / 1000;
+    let travelled  = 0;
 
-  // Audio
-  const memoAudio = new Audio();
-  memoAudio.crossOrigin = 'anonymous'; // required for some CORS gateways
-  memoAudio.volume = 0.85;
-  memoAudio.preload = 'auto';
-
-  let crawlStarted = false;
-
-  const startCrawl = (crawlDurationMs) => {
-    if (crawlStarted) return; // guard against double-fire
-    crawlStarted = true;
-    setTimeout(() => {
-      const totalPx = (overlay.offsetHeight || window.innerHeight) + (crawl.scrollHeight || 900);
-      const pxPerMs = totalPx / crawlDurationMs;
-      let travelled = 0;
-      const iv = setInterval(() => {
-        travelled += pxPerMs * 16;
-        crawl.style.transform = `translateX(-50%) translateY(-${travelled}px)`;
-        if (travelled >= totalPx) {
-          clearInterval(iv);
-          overlay.style.transition = 'opacity 1.8s ease';
-          overlay.style.opacity = '0';
-          setTimeout(() => { overlay.remove(); if (done) done(); }, 1800);
-        }
-      }, 16);
-    }, 1400);
-  };
-
-  // Start crawl immediately using known duration — don't wait for audio to load
-  const crawlMs = Math.max(5000, KNOWN_DURATION_S * 1000 - 1400);
-  startCrawl(crawlMs);
-
-  // Load and play audio in parallel — if it arrives late that's fine,
-  // it just won't be perfectly synced from the first second
-  memoAudio.src = MEMO_AUDIO_SRC;
-
-  // Wait until the user has interacted (unlockAudio sets audioUnlocked),
-  // then play. Retries every 200ms until it succeeds or audio ends.
-  const tryPlay = () => {
-    if (!audioUnlocked) { setTimeout(tryPlay, 200); return; }
-    memoAudio.play().catch(() => setTimeout(tryPlay, 200));
-  };
-  tryPlay();
+    const iv = setInterval(() => {
+      travelled += pxPerMs * 16;
+      crawl.style.transform = `translateX(-50%) translateY(-${travelled}px)`;
+      if (travelled >= totalPx) {
+        clearInterval(iv);
+        overlay.style.transition = 'opacity 1.8s ease';
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.remove(); if (done) done(); }, 1800);
+      }
+    }, 16);
+  }, 1400);
 }
 
 /* ──────────────────────────────────────────────────────────────────
