@@ -431,6 +431,9 @@ const bsod     = document.getElementById('bsod');
 
 let bsodTempActive = false, bsodActive = false;
 
+/* ── audio source — swap in any URL or local path ───────────────── */
+const MEMO_AUDIO_SRC = 'https://bafybeifuqwffehqb42kaodhervjfjebewyduyfiqgylrm7l3soomwn2xki.ipfs.w3s.link/memo.mp3'; // ← replace with full URL or keep as local file
+
 /* ── boot & help text ───────────────────────────────────────────── */
 const bootText = `
 eaOS v1.4.2 (build 2025-03-18) Copyright (c) 2026 et Systems
@@ -630,7 +633,7 @@ function runMemo(done) {
   overlay.classList.add('active');
 
   // Audio — load first so we can read its duration and match the crawl speed to it
-  const memoAudio = new Audio('memo.mp3');
+  const memoAudio = new Audio(MEMO_AUDIO_SRC);
   memoAudio.volume = 0.85;
 
   const startCrawl = (crawlDurationMs) => {
