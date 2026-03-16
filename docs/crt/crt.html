@@ -629,41 +629,42 @@ function runMemo(done) {
   // Fade overlay in
   overlay.classList.add('active');
 
-  // Audio
-  try {
-    const memoAudio = new Audio('memo.mp3');
-    memoAudio.volume = 0.85;
+  // Audio — load first so we can read its duration and match the crawl speed to it
+  const memoAudio = new Audio('memo.mp3');
+  memoAudio.volume = 0.85;
+
+  const startCrawl = (crawlDurationMs) => {
+    // Wait for overlay fade-in, then scroll exactly fast enough to finish with the audio
+    setTimeout(() => {
+      const totalPx = (overlay.offsetHeight || window.innerHeight) + (crawl.scrollHeight || 900);
+      const pxPerMs = totalPx / crawlDurationMs;
+      let travelled = 0;
+
+      const iv = setInterval(() => {
+        travelled += pxPerMs * 16;
+        crawl.style.transform = `translateX(-50%) translateY(-${travelled}px)`;
+        if (travelled >= totalPx) {
+          clearInterval(iv);
+          overlay.style.transition = 'opacity 1.8s ease';
+          overlay.style.opacity = '0';
+          setTimeout(() => { overlay.remove(); if (done) done(); }, 1800);
+        }
+      }, 16);
+    }, 1400);
+  };
+
+  memoAudio.addEventListener('loadedmetadata', () => {
+    // Crawl duration = audio duration minus the 1.4s pre-roll pause, minimum 5s
+    const crawlMs = Math.max(5000, memoAudio.duration * 1000 - 1400);
     memoAudio.play().catch(() => {});
-  } catch(e) {}
+    startCrawl(crawlMs);
+  });
 
-  // Wait for fade-in, then start scrolling
-  setTimeout(() => {
-    // crawl starts at top:100% (below screen), we scroll it upward
-    // by decrementing a px offset every tick
-    const overlayH  = overlay.offsetHeight || window.innerHeight;
-    const contentH  = crawl.scrollHeight   || 900;
-    const totalPx   = overlayH + contentH;  // distance to travel
-    const speed     = 0.9;                  // px per 16ms tick (~56px/s) — tweak this
-    let travelled   = 0;
-
-    const iv = setInterval(() => {
-      travelled += speed;
-      // top starts at 100vh, moves up: translate from 0 → -(totalPx)
-      crawl.style.transform = `translateX(-50%) translateY(-${travelled}px)`;
-
-      if (travelled >= totalPx) {
-        clearInterval(iv);
-        // Fade out overlay then call done
-        overlay.style.transition = 'opacity 1.8s ease';
-        overlay.style.opacity = '0';
-        setTimeout(() => {
-          overlay.remove();
-          if (done) done();
-        }, 1800);
-      }
-    }, 16); // ~60fps
-
-  }, 1400); // wait for fade-in
+  memoAudio.addEventListener('error', () => {
+    // No audio file present — fall back to 62px/s
+    const totalPx = (overlay.offsetHeight || window.innerHeight) + (crawl.scrollHeight || 900);
+    startCrawl(Math.round(totalPx / 0.062));
+  });
 }
 
 /* ──────────────────────────────────────────────────────────────────
