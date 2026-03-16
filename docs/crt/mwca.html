@@ -155,6 +155,24 @@ button.cmd-btn:hover {
   text-shadow: 0 0 8px rgba(200,200,200,.5);
   box-shadow: 0 0 12px rgba(200,200,200,.2);
 }
+/* ── logo ──────────────────────────────────────────────────────── */
+.logo {
+  position: fixed; top: 30px; right: 74px;
+  width: 110px; height: 110px;
+  overflow: hidden;
+  z-index: 999;
+  filter: blur(.6px) brightness(.55) drop-shadow(0 0 6px rgba(160,160,160,.2)) grayscale(.4);
+  opacity: 0.75;
+}
+.logo > a { display: block; width: 100%; height: 100%; }
+.logo svg {
+  display: block;
+  width: 110px !important;
+  height: 110px !important;
+  max-width: 110px !important;
+  max-height: 110px !important;
+}
+
 .cursor {
   display: inline-block; width: 14px; height: 1.1em;
   background: var(--text); animation: cursorBlink 900ms steps(1) infinite;
@@ -167,10 +185,10 @@ button.cmd-btn:hover {
 <body>
 <div class="crt-bezel"></div>
 
-<main class="crt" aria-label="eOS memo terminal">
+<main class="crt" aria-label="easterntravelerOS memo terminal">
 
   <!-- Glass reflection SVG overlay -->
-  <div class="glass-overlay" aria-hidden="true">
+  <div class="glass-overlay" aria-hidden="true">    
      <svg width="110" height="110" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
         <defs>
           <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#cfcfcf"/><stop offset="1" stop-color="#f3f3f3"/></linearGradient>
@@ -348,7 +366,7 @@ function boot() {
             // ── gif ───────────────────────────────────────────────
             const gif = document.createElement('img');
             gif.id = 'boot-gif';
-           gif.src = 'https://bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika.ipfs.w3s.link/';
+            gif.src = 'https://bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika.ipfs.w3s.link/';
             gif.width  = 564;
             gif.height = 43;
             gif.style.cssText = 'margin:24px 0; display:block;';
@@ -368,3 +386,4 @@ boot();
 </script>
 </body>
 </html>
+           
