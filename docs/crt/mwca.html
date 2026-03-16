@@ -167,12 +167,11 @@ button.cmd-btn:hover {
 <body>
 <div class="crt-bezel"></div>
 
-<main class="crt" aria-label="easterntravelerOS terminal-MWCA">
+<main class="crt" aria-label="eOS memo terminal">
 
   <!-- Glass reflection SVG overlay -->
   <div class="glass-overlay" aria-hidden="true">
-     <a href="https://www.thesenoises.online"> <!-- Replace with your URL -->
-     <svg width="100%" height="100%" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+     <svg width="110" height="110" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
         <defs>
           <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#cfcfcf"/><stop offset="1" stop-color="#f3f3f3"/></linearGradient>
           <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -207,7 +206,6 @@ button.cmd-btn:hover {
         <path d="M184.217,691.249L301.875,554.354" style="fill:none;"/>
     </g>
       </svg>
-         </a>
   </div>
 
   <!-- PNG reflection placeholder (see terminal.html for instructions) -->
@@ -232,7 +230,7 @@ const viewport = document.getElementById('viewport');
 
 /* ── content ────────────────────────────────────────────────────── */
 const introText =
-`\neasterntravelerOS v1.4.2\nDeveloped by et Systems, 1986-2026\nWelcome back Operator.\n
+`eaOS v1.4.2 — Boot successful. Welcome back, Operator.
 `;
 
 const memoParagraphs = [
@@ -350,7 +348,7 @@ function boot() {
             // ── gif ───────────────────────────────────────────────
             const gif = document.createElement('img');
             gif.id = 'boot-gif';
-            gif.src = 'https://bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika.ipfs.w3s.link/';
+           gif.src = 'https://bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika.ipfs.w3s.link/';
             gif.width  = 564;
             gif.height = 43;
             gif.style.cssText = 'margin:24px 0; display:block;';
