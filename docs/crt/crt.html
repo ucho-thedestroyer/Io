@@ -533,7 +533,7 @@ function typeSequence(str, done) {
       span.textContent = line[i++];
       lineDiv.appendChild(span);
       viewport.scrollTop = viewport.scrollHeight;
-      let delay = (10 + Math.random() * 40) * 0.53125;
+      let delay = (10 + Math.random() * 40) * 0.451562;  // ~15% faster
       if (line[i-1] === ' ') delay *= 0.9;
       setTimeout(tick, delay);
     }
