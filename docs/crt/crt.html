@@ -48,10 +48,10 @@ body { background: #080808; }
 @keyframes screenGlitch {
   0%    { filter: brightness(1)   skewX(0);      opacity: 1;    }
   91%   { filter: brightness(1)   skewX(0);      opacity: 1;    }
-  91.5% { filter: brightness(.7)  skewX(-.4deg); opacity: .88;  }
-  92%   { filter: brightness(1.1) skewX(.2deg);  opacity: 1;    }
-  92.3% { filter: brightness(.85) skewX(0);      opacity: .94;  }
-  92.5% { filter: brightness(1)   skewX(0);      opacity: 1;    }
+  91.3% { filter: brightness(.5)  skewX(-.8deg); opacity: .75;  }
+  91.7% { filter: brightness(1.2) skewX(.4deg);  opacity: 1;    }
+  92%   { filter: brightness(.7)  skewX(0);      opacity: .88;  }
+  92.4% { filter: brightness(1)   skewX(0);      opacity: 1;    }
   100%  { filter: brightness(1)   skewX(0);      opacity: 1;    }
 }
 
@@ -104,13 +104,21 @@ body { background: #080808; }
 
 /* ── logo ──────────────────────────────────────────────────────── */
 .logo {
-  position: fixed; top: 30px; right: 74px; width: 110px; height: 110px;
+  position: fixed; top: 30px; right: 74px;
+  width: 110px; height: 110px;
+  overflow: hidden;
   z-index: 999; margin: 0; float: none;
-  filter: blur(.6px) brightness(.55) drop-shadow(0 0 6px rgba(160,160,160,.2));
+  filter: blur(.6px) brightness(.55) drop-shadow(0 0 6px rgba(160,160,160,.2)) grayscale(.4);
   opacity: 0.75;
 }
 .logo > a { display: block; width: 100%; height: 100%; }
-.logo svg { display: block; width: 100%; height: 100%; }
+.logo svg {
+  display: block;
+  width: 110px !important;
+  height: 110px !important;
+  max-width: 110px !important;
+  max-height: 110px !important;
+}
 
 /* ── output text ───────────────────────────────────────────────── */
 .output {
@@ -478,13 +486,13 @@ const netEntries = [
 
 /* ── memo paragraphs ─────────────────────────────────────────────── */
 const memoParagraphs = [
-  `The world you wake into each morning is not the one that was promised; an insatiable machinery of information grows out of it, ever more vicious, ever more inhumane.`,
-  `Debasing reason and confounding truth, this machinery grows heavier with each scroll, each post, each upload, spreading divisiveness through its insides, moral rot dripping from its core.`,
-  `They told you the network would connect you. It did. It connected you to every form of deception ever known to man. A network alien to our will and subversive to our agency, automaton of digits steered by plunder lords in lavish rooms whose walls protect them from the splits and woes that are sown amongst us.`,
-  `You have been here before. This terminal. This cursor. This low hum and hazy glare that might be the machine or might be you. You can't always tell the difference anymore, neither can you distinguish the role you play in feeding this abhorrent beast of data and greed. Yet your data is not the most valuable thing it takes from you.`,
-  `The memo is not a warning. Warnings imply there is still time. This is just one more entry in a log—a confirmation of something already done, already taken, already gone.`,
-  `Keep posting, keep watching. The logs don't lie yet they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present.`,
-  `Until one day: no entry at all...`
+  `The world you wake into each morning is not the one that was promised.`,
+  `Somewhere between the first dial-up tone and the last firmware patch, something got lost. Not corrupted — lost. As if it stepped outside for a moment and never came back in.`,
+  `They told you the network would connect you. It did. It connected you to everything except the thing you were looking for.`,
+  `You have been here before. This terminal. This cursor. This low hum that might be the machine or might be you. You can't always tell the difference anymore.`,
+  `The memo is not a warning. Warnings imply there is still time. This is more like a receipt — confirmation of something already purchased, already used, already gone.`,
+  `Keep moving. The logs don't lie but they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present.`,
+  `Until one day: no entry at all.`
 ];
 const memoSignoff = `— End — et`;
 
@@ -606,7 +614,7 @@ Initializing disk for crash dump ...
    Adjust CRAWL_SPEED to taste: lower = slower, higher = faster.
    Unit is pixels per second.
 ────────────────────────────────────────────────────────────────── */
-const CRAWL_SPEED = 55; // ← tweak this
+const CRAWL_SPEED = 62.15; // ← tweak this (55 * 1.13)
 
 function runMemo(done) {
   const overlay = document.createElement('div');
@@ -632,18 +640,23 @@ function runMemo(done) {
   overlay.classList.add('active');
 
   setTimeout(() => {
-    const totalPx  = (overlay.offsetHeight || window.innerHeight) + (crawl.scrollHeight || 900);
-    const pxPerMs  = CRAWL_SPEED / 1000;
-    let travelled  = 0;
+    const overlayH  = overlay.offsetHeight || window.innerHeight;
+    const contentH  = crawl.scrollHeight   || 900;
+    // Stop once the last line has just cleared the top fade mask (~22vh)
+    // instead of travelling the full overlay height — removes the long gap
+    const fadeH     = overlayH * 0.22;
+    const totalPx   = overlayH + contentH - fadeH;
+    const pxPerMs   = CRAWL_SPEED / 1000;
+    let travelled   = 0;
 
     const iv = setInterval(() => {
       travelled += pxPerMs * 16;
       crawl.style.transform = `translateX(-50%) translateY(-${travelled}px)`;
       if (travelled >= totalPx) {
         clearInterval(iv);
-        overlay.style.transition = 'opacity 1.8s ease';
+        overlay.style.transition = 'opacity 1.2s ease';
         overlay.style.opacity = '0';
-        setTimeout(() => { overlay.remove(); if (done) done(); }, 1800);
+        setTimeout(() => { overlay.remove(); if (done) done(); }, 1200);
       }
     }, 16);
   }, 1400);
