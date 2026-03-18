@@ -391,6 +391,8 @@ button.cmd-btn:hover {
 <!-- Audio for memo loaded dynamically when memo command runs (see JS) -->
 
 <script>
+
+
 /* ══════════════════════════════════════════════════════════════════
    eOS terminal — revamped
 ══════════════════════════════════════════════════════════════════ */
@@ -467,7 +469,8 @@ let currentLine = null;
    typeSequence — types text with per-character glitch
    (reduced: only ~9% chars get glitch-strong, base flicker slower)
 ────────────────────────────────────────────────────────────────── */
-function typeSequence(str, done) {
+function typeSequence(str, done, speed) {
+  const mult = speed !== undefined ? speed : 0.451562;
   const lines = str.split('\n');
   let lineIndex = 0;
   function typeLine() {
@@ -488,11 +491,11 @@ function typeSequence(str, done) {
         return;
       }
       const span = document.createElement('span'); span.className = 'char-glitch';
-      if (Math.random() < 0.09) span.classList.add('glitch-strong');  // reduced from 0.14
+      if (Math.random() < 0.09) span.classList.add('glitch-strong');
       span.textContent = line[i++];
       lineDiv.appendChild(span);
       viewport.scrollTop = viewport.scrollHeight;
-      let delay = (10 + Math.random() * 40) * 0.351562;  // ~15% faster
+      let delay = (10 + Math.random() * 40) * mult;
       if (line[i-1] === ' ') delay *= 0.9;
       setTimeout(tick, delay);
     }
@@ -583,7 +586,7 @@ Initializing disk for crash dump ...
 ────────────────────────────────────────────────────────────────── */
 function runMemo(done) {
   const fullText = '\n' + memoParagraphs.join('\n\n') + '\n\n' + memoSignoff + '\n';
-  typeSequence(fullText, done);
+  typeSequence(fullText, done, 0.351562); // faster than intro — tweak this independently
 }
 
 /* ──────────────────────────────────────────────────────────────────
@@ -640,7 +643,7 @@ function runNet() {
 const responses = {
   status:`\neasterntravelerOS v1.4.2\nDeveloped by easterntraveler Systems, 1986-2026\nAll systems operational. Memory usage: 42%. Network: OK\n`
 };
-
+  
 input.addEventListener('input', () => {
   currentLine.echo.textContent = '> ' + input.value;
   viewport.scrollTop = viewport.scrollHeight;
