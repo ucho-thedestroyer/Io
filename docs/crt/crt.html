@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -237,13 +238,6 @@ button.cmd-btn:hover {
   .net-table .col-term { font-size: 18px; }
 }
 </style>
-
-
-
-
-
-
-  
 </head>
 <body>
 <!-- Monitor bezel background -->
@@ -350,7 +344,7 @@ button.cmd-btn:hover {
   <div class="viewport" id="viewport">
 
     <div class="logo" aria-hidden="true">
-    <a href="https://www.thesenoises.online"> <!-- Replace with your URL -->
+      <a href="https://www.thesenoises.online"> <!-- Replace with your URL -->
     <svg width="100%" height="100%" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
         <defs>
           <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#cfcfcf"/><stop offset="1" stop-color="#f3f3f3"/></linearGradient>
@@ -474,13 +468,11 @@ let currentLine = null;
    typeSequence — types text with per-character glitch
    (reduced: only ~9% chars get glitch-strong, base flicker slower)
 ────────────────────────────────────────────────────────────────── */
-function typeSequence(str, done, speed) {
-  const mult = speed !== undefined ? speed : 0.451562;
-  // Below ~0.2 the 4ms browser minimum clamps all delays to the same value.
-  // Instead we calculate how many chars to drop per 16ms rAF frame.
-  const useRAF = mult < 0.2;
-  const charsPerFrame = useRAF ? Math.max(1, Math.round(0.2 / mult)) : 1;
-
+function typeSequence(str, done, speed, charsPerTick) {
+  // speed = milliseconds between ticks. Default 9ms.
+  // charsPerTick = characters dropped per tick. Default 1.
+  const msPerTick  = speed        !== undefined ? speed        : 9;
+  const charsBatch = charsPerTick !== undefined ? charsPerTick : 1;
   const lines = str.split('\n');
   let lineIndex = 0;
 
@@ -496,8 +488,13 @@ function typeSequence(str, done, speed) {
 
     function tick() {
       const line = lines[lineIndex];
-      // Drop charsPerFrame characters per tick
-      for (let c = 0; c < charsPerFrame; c++) {
+      if (i >= line.length) {
+        output.appendChild(document.createElement('br'));
+        lineIndex++;
+        setTimeout(typeLine, 0);
+        return;
+      }
+      for (let c = 0; c < charsBatch; c++) {
         if (i >= line.length) break;
         const span = document.createElement('span'); span.className = 'char-glitch';
         if (Math.random() < 0.09) span.classList.add('glitch-strong');
@@ -505,25 +502,9 @@ function typeSequence(str, done, speed) {
         lineDiv.appendChild(span);
       }
       viewport.scrollTop = viewport.scrollHeight;
-
-      if (i >= line.length) {
-        output.appendChild(document.createElement('br'));
-        lineIndex++;
-        if (useRAF) requestAnimationFrame(typeLine);
-        else setTimeout(typeLine, 0);
-        return;
-      }
-
-      if (useRAF) requestAnimationFrame(tick);
-      else {
-        let delay = (10 + Math.random() * 40) * mult;
-        if (line[i - 1] === ' ') delay *= 0.9;
-        setTimeout(tick, delay);
-      }
+      setTimeout(tick, msPerTick);
     }
-
-    if (useRAF) requestAnimationFrame(tick);
-    else tick();
+    tick();
   }
   typeLine();
 }
@@ -587,7 +568,7 @@ function boot() {
     document.addEventListener('keydown',    onAnyInput);
     document.addEventListener('click',      onAnyInput);
     document.addEventListener('touchstart', onAnyInput);
-  }, 0.138671); // intro speed: 0.451562 * 0.75 = ~25% faster
+  }, 6, 1); // intro: 6ms per tick, 1 char per tick
 }
 
 boot();
@@ -627,7 +608,7 @@ Initializing disk for crash dump ...
 ────────────────────────────────────────────────────────────────── */
 function runMemo(done) {
   const fullText = '\n' + memoParagraphs.join('\n\n') + '\n\n' + memoSignoff + '\n';
-  typeSequence(fullText, done, 0.06); // memo speed — tweak independently
+  typeSequence(fullText, done, 4, 3); // memo: 4ms per tick, 3 chars per tick
 }
 
 /* ──────────────────────────────────────────────────────────────────
