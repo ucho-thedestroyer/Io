@@ -469,8 +469,14 @@ let currentLine = null;
 ────────────────────────────────────────────────────────────────── */
 function typeSequence(str, done, speed) {
   const mult = speed !== undefined ? speed : 0.451562;
+  // Below ~0.2 the 4ms browser minimum clamps all delays to the same value.
+  // Instead we calculate how many chars to drop per 16ms rAF frame.
+  const useRAF = mult < 0.2;
+  const charsPerFrame = useRAF ? Math.max(1, Math.round(0.2 / mult)) : 1;
+
   const lines = str.split('\n');
   let lineIndex = 0;
+
   function typeLine() {
     if (lineIndex >= lines.length) {
       viewport.scrollTop = viewport.scrollHeight;
@@ -480,24 +486,37 @@ function typeSequence(str, done, speed) {
     const lineDiv = document.createElement('div');
     output.appendChild(lineDiv);
     let i = 0;
+
     function tick() {
       const line = lines[lineIndex];
+      // Drop charsPerFrame characters per tick
+      for (let c = 0; c < charsPerFrame; c++) {
+        if (i >= line.length) break;
+        const span = document.createElement('span'); span.className = 'char-glitch';
+        if (Math.random() < 0.09) span.classList.add('glitch-strong');
+        span.textContent = line[i++];
+        lineDiv.appendChild(span);
+      }
+      viewport.scrollTop = viewport.scrollHeight;
+
       if (i >= line.length) {
         output.appendChild(document.createElement('br'));
         lineIndex++;
-        setTimeout(typeLine, 0);
+        if (useRAF) requestAnimationFrame(typeLine);
+        else setTimeout(typeLine, 0);
         return;
       }
-      const span = document.createElement('span'); span.className = 'char-glitch';
-      if (Math.random() < 0.09) span.classList.add('glitch-strong');
-      span.textContent = line[i++];
-      lineDiv.appendChild(span);
-      viewport.scrollTop = viewport.scrollHeight;
-      let delay = (10 + Math.random() * 40) * mult;
-      if (line[i-1] === ' ') delay *= 0.9;
-      setTimeout(tick, delay);
+
+      if (useRAF) requestAnimationFrame(tick);
+      else {
+        let delay = (10 + Math.random() * 40) * mult;
+        if (line[i - 1] === ' ') delay *= 0.9;
+        setTimeout(tick, delay);
+      }
     }
-    tick();
+
+    if (useRAF) requestAnimationFrame(tick);
+    else tick();
   }
   typeLine();
 }
@@ -561,7 +580,7 @@ function boot() {
     document.addEventListener('keydown',    onAnyInput);
     document.addEventListener('click',      onAnyInput);
     document.addEventListener('touchstart', onAnyInput);
-  }, 0.118671); // intro speed: 0.451562 * 0.75 = ~25% faster
+  }, 0.338671); // intro speed: 0.451562 * 0.75 = ~25% faster
 }
 
 boot();
@@ -601,7 +620,7 @@ Initializing disk for crash dump ...
 ────────────────────────────────────────────────────────────────── */
 function runMemo(done) {
   const fullText = '\n' + memoParagraphs.join('\n\n') + '\n\n' + memoSignoff + '\n';
-  typeSequence(fullText, done, 0.04); // memo speed — tweak independently
+  typeSequence(fullText, done, 0.16); // memo speed — tweak independently
 }
 
 /* ──────────────────────────────────────────────────────────────────
