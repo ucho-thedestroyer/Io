@@ -242,7 +242,7 @@ button.cmd-btn:hover {
 <!-- Monitor bezel background -->
 <div class="crt-bezel"></div>
 
-<main class="crt" aria-label="Retro CRT boot screen">
+<main class="crt" aria-label="easterntraveler CRT boot screen">
 
   <!-- Glass reflection SVG overlay — sits above everything -->
   <div class="glass-overlay" aria-hidden="true">
@@ -343,8 +343,8 @@ button.cmd-btn:hover {
   <div class="viewport" id="viewport">
 
     <div class="logo" aria-hidden="true">
-      <a href="https://www.thesenoises.online"> <!-- Replace with your URL -->
-     <svg width="100%" height="100%" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <a href="https://www.thesenoises.online"> <!-- Replace with your URL -->
+    <svg width="100%" height="100%" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
         <defs>
           <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#cfcfcf"/><stop offset="1" stop-color="#f3f3f3"/></linearGradient>
           <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -391,8 +391,6 @@ button.cmd-btn:hover {
 <!-- Audio for memo loaded dynamically when memo command runs (see JS) -->
 
 <script>
-
-
 /* ══════════════════════════════════════════════════════════════════
    eOS terminal — revamped
 ══════════════════════════════════════════════════════════════════ */
@@ -517,8 +515,19 @@ function appendStatic(html) {
    BOOT — intro types → waiting prompt → any input → memo types →
           command menu
 ────────────────────────────────────────────────────────────────── */
-const waitPrompt =
-`\nPress any key or tap to continue...\n`;
+
+// Typewriter SFX — plays for 100ms at memo fire-up.
+// Replace 'typewriter.mp3' with your actual file path/URL.
+const TYPEWRITER_SFX = 'typewriter.mp3';
+
+function playTypewriterSFX() {
+  try {
+    const sfx = new Audio(TYPEWRITER_SFX);
+    sfx.volume = 0.7;
+    sfx.play().catch(() => {});
+    setTimeout(() => { sfx.pause(); sfx.currentTime = 0; }, 100);
+  } catch(e) {}
+}
 
 function boot() {
   output.textContent = '';
@@ -526,17 +535,23 @@ function boot() {
   currentLine = null;
 
   typeSequence(bootText, () => {
-    // Show the waiting prompt
-    appendStatic(waitPrompt);
+    // Show waiting prompt with a blinking block cursor instead of ellipsis
+    const promptDiv = document.createElement('div');
+    promptDiv.className = 'output-static';
+    promptDiv.innerHTML = '\nPress any key or tap to continue\u00a0<span class="cursor"></span>\n';
+    output.appendChild(promptDiv);
+    viewport.scrollTop = viewport.scrollHeight;
 
-    // Gate: wait for any click, keydown, or touch
     let triggered = false;
     function onAnyInput() {
       if (triggered) return;
       triggered = true;
-      document.removeEventListener('keydown', onAnyInput);
-      document.removeEventListener('click',   onAnyInput);
+      document.removeEventListener('keydown',    onAnyInput);
+      document.removeEventListener('click',      onAnyInput);
       document.removeEventListener('touchstart', onAnyInput);
+      // Remove the waiting prompt cursor cleanly
+      promptDiv.remove();
+      playTypewriterSFX();
       runMemo(() => {
         appendStatic(helpText + '\n');
         currentLine = createCmdLine();
@@ -546,7 +561,7 @@ function boot() {
     document.addEventListener('keydown',    onAnyInput);
     document.addEventListener('click',      onAnyInput);
     document.addEventListener('touchstart', onAnyInput);
-  });
+  }, 0.338671); // intro speed: 0.451562 * 0.75 = ~25% faster
 }
 
 boot();
@@ -586,7 +601,7 @@ Initializing disk for crash dump ...
 ────────────────────────────────────────────────────────────────── */
 function runMemo(done) {
   const fullText = '\n' + memoParagraphs.join('\n\n') + '\n\n' + memoSignoff + '\n';
-  typeSequence(fullText, done, 0.351562); // faster than intro — tweak this independently
+  typeSequence(fullText, done, 0.16); // memo speed — tweak independently
 }
 
 /* ──────────────────────────────────────────────────────────────────
@@ -643,7 +658,7 @@ function runNet() {
 const responses = {
   status:`\neasterntravelerOS v1.4.2\nDeveloped by easterntraveler Systems, 1986-2026\nAll systems operational. Memory usage: 42%. Network: OK\n`
 };
-  
+
 input.addEventListener('input', () => {
   currentLine.echo.textContent = '> ' + input.value;
   viewport.scrollTop = viewport.scrollHeight;
