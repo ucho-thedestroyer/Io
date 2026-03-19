@@ -256,7 +256,7 @@ button.cmd-btn:hover {
   <div class="viewport" id="viewport">
     <!-- Logo floated top-right, sits within content flow -->
     <div class="logo">
-        <a href="https://www.thesenoises.online">
+      <a href="https://www.thesenoises.online">
         <svg width="110" height="110" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
         <defs>
           <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#cfcfcf"/><stop offset="1" stop-color="#f3f3f3"/></linearGradient>
@@ -324,7 +324,9 @@ const memoParagraphs = [
 const memoSignoff = `— end of memo — easterntraveler`;
 
 /* ── typing engine ──────────────────────────────────────────────── */
-function typeInto(container, str, done) {
+function typeInto(container, str, done, speed, charsPerTick) {
+  const msPerTick  = speed        !== undefined ? speed        : 9;
+  const charsBatch = charsPerTick !== undefined ? charsPerTick : 1;
   const lines = str.split('\n');
   let li = 0;
   function nextLine() {
@@ -338,15 +340,16 @@ function typeInto(container, str, done) {
         container.appendChild(document.createElement('br'));
         li++; setTimeout(nextLine, 0); return;
       }
-      const span = document.createElement('span');
-      span.className = 'char-glitch';
-      if (Math.random() < 0.09) span.classList.add('glitch-strong');
-      span.textContent = line[ci++];
-      div.appendChild(span);
+      for (let c = 0; c < charsBatch; c++) {
+        if (ci >= line.length) break;
+        const span = document.createElement('span');
+        span.className = 'char-glitch';
+        if (Math.random() < 0.09) span.classList.add('glitch-strong');
+        span.textContent = line[ci++];
+        div.appendChild(span);
+      }
       viewport.scrollTop = viewport.scrollHeight;
-      let delay = (10 + Math.random() * 40) * 0.496718;  // ~10% slower
-      if (line[ci - 1] === ' ') delay *= 0.9;
-      setTimeout(tick, delay);
+      setTimeout(tick, msPerTick);
     }
     tick();
   }
@@ -358,12 +361,11 @@ function typeMemo(paragraphs, signoff, done) {
   let i = 0;
   function next() {
     if (i >= paragraphs.length) {
-      // signoff
       setTimeout(() => {
         const block = document.createElement('p');
         block.className = 'memo-signoff';
         output.appendChild(block);
-        typeInto(block, signoff, done);
+        typeInto(block, signoff, done, 4, 3); // signoff speed
       }, 600);
       return;
     }
@@ -371,8 +373,8 @@ function typeMemo(paragraphs, signoff, done) {
       const block = document.createElement('p');
       block.className = 'memo-block';
       output.appendChild(block);
-      typeInto(block, paragraphs[i++], next);
-    }, i === 0 ? 0 : 900); // 900ms breath between paragraphs
+      typeInto(block, paragraphs[i++], next, 4, 3); // memo speed: 4ms, 3 chars/tick
+    }, i === 0 ? 0 : 900);
   }
   next();
 }
@@ -438,10 +440,10 @@ function boot() {
       }, 500);
 
     }, 500);
-  });
+  }, 6, 1); // intro: 6ms per tick, 1 char per tick
 }
 
 boot();
 </script>
 </body>
-</html> 
+</html>
