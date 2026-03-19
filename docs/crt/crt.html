@@ -525,7 +525,7 @@ function appendStatic(html) {
 
 // Typewriter SFX — plays for 100ms at memo fire-up.
 // Replace 'typewriter.mp3' with your actual file path/URL.
-const TYPEWRITER_SFX = 'typewriter.mp3';
+const TYPEWRITER_SFX = 'memo.mp3';
 
 function playTypewriterSFX() {
   try {
@@ -568,7 +568,7 @@ function boot() {
     document.addEventListener('keydown',    onAnyInput);
     document.addEventListener('click',      onAnyInput);
     document.addEventListener('touchstart', onAnyInput);
-  }, 6, 1); // intro: 6ms per tick, 1 char per tick
+  }, 4, 3); // intro: 6ms per tick, 1 char per tick
 }
 
 boot();
@@ -608,7 +608,7 @@ Initializing disk for crash dump ...
 ────────────────────────────────────────────────────────────────── */
 function runMemo(done) {
   const fullText = '\n' + memoParagraphs.join('\n\n') + '\n\n' + memoSignoff + '\n';
-  typeSequence(fullText, done, 4, 3); // memo: 4ms per tick, 3 chars per tick
+  typeSequence(fullText, done, 3, 3); // memo: 4ms per tick, 3 chars per tick
 }
 
 /* ──────────────────────────────────────────────────────────────────
