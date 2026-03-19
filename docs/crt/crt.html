@@ -568,7 +568,7 @@ function boot() {
     document.addEventListener('keydown',    onAnyInput);
     document.addEventListener('click',      onAnyInput);
     document.addEventListener('touchstart', onAnyInput);
-  }, 4, 3); // intro: 6ms per tick, 1 char per tick
+  }, 6, 2); // intro: 6ms per tick, 1 char per tick
 }
 
 boot();
@@ -608,7 +608,7 @@ Initializing disk for crash dump ...
 ────────────────────────────────────────────────────────────────── */
 function runMemo(done) {
   const fullText = '\n' + memoParagraphs.join('\n\n') + '\n\n' + memoSignoff + '\n';
-  typeSequence(fullText, done, 3, 3); // memo: 4ms per tick, 3 chars per tick
+  typeSequence(fullText, done, 4, 3); // memo: 4ms per tick, 3 chars per tick
 }
 
 /* ──────────────────────────────────────────────────────────────────
