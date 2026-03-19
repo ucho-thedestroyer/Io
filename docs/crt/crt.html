@@ -607,7 +607,7 @@ Initializing disk for crash dump ...
 ────────────────────────────────────────────────────────────────── */
 function runMemo(done) {
   const fullText = '\n' + memoParagraphs.join('\n\n') + '\n\n' + memoSignoff + '\n';
-  typeSequence(fullText, done, 4, 3); // memo: 4ms per tick, 3 chars per tick
+  typeSequence(fullText, done, 4, 2); // memo: 4ms per tick, 3 chars per tick
 }
 
 /* ──────────────────────────────────────────────────────────────────
