@@ -469,7 +469,7 @@ let currentLine = null;
 function typeSequence(str, done, speed, charsPerTick) {
   // speed = milliseconds between ticks. Default 9ms.
   // charsPerTick = characters dropped per tick. Default 1.
-  const msPerTick  = speed        !== undefined ? speed        : 6;
+  const msPerTick  = speed        !== undefined ? speed        : 5;
   const charsBatch = charsPerTick !== undefined ? charsPerTick : 1;
   const lines = str.split('\n');
   let lineIndex = 0;
@@ -566,7 +566,7 @@ function boot() {
     document.addEventListener('keydown',    onAnyInput);
     document.addEventListener('click',      onAnyInput);
     document.addEventListener('touchstart', onAnyInput);
-  }, 3, 2); // intro: 6ms per tick, 1 char per tick
+  }, 3, 1); // intro: 6ms per tick, 1 char per tick
 }
 
 boot();
