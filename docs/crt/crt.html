@@ -469,7 +469,7 @@ let currentLine = null;
 function typeSequence(str, done, speed, charsPerTick) {
   // speed = milliseconds between ticks. Default 9ms.
   // charsPerTick = characters dropped per tick. Default 1.
-  const msPerTick  = speed        !== undefined ? speed        : 7;
+  const msPerTick  = speed        !== undefined ? speed        : 6;
   const charsBatch = charsPerTick !== undefined ? charsPerTick : 1;
   const lines = str.split('\n');
   let lineIndex = 0;
