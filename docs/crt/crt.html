@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -437,13 +436,13 @@ const netEntries = [
 
 /* ── memo paragraphs ─────────────────────────────────────────────── */
 const memoParagraphs = [
-  `The world you wake into each morning is not the one that was promised; an insatiable machinery of information grows out of it, ever more vicious, ever more inhumane.`,
-  `Debasing reason and confounding truth, this machinery grows heavier with each scroll, each post, each upload, spreading divisiveness through its insides, moral rot dripping from its core.`,
-  `They told you the network would connect you. It did. It connected you to every form of deception ever known to man. A network alien to our will and subversive to our agency, automaton of digits steered by plunder lords in lavish rooms whose walls protect them from the splits and woes that are sown amongst us.`,
-  `You have been here before. This terminal. This cursor. This low hum and hazy glare that might be the machine or might be you. You can't always tell the difference anymore, neither can you distinguish the role you play in feeding this abhorrent beast of data and greed. Yet your data is not the most valuable thing it takes from you.`,
-  `This memo is not a warning. Warnings imply there is still time. This is just one more entry in a log—a confirmation of something already done, already taken, already gone.`,
-  `Keep posting, keep watching. The logs don't lie yet they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present.`,
-  `Until one day: no entry at all...`
+  `This is not an independent music platform, nor will I tell you that I built this for artists and listeners who believe in some lofty, trendy ideal.`,
+  `Every track here is sold directly from artist to listener for sats, but do not be misled, the purpose is not to make money, the ultimate goal is freedom; to break free from the chains imposed by culture and which imprison the sould and mind.`,
+  `Every track is a trace of the journey.`,
+  `No labels, no platforms taking a cut, no algorithms deciding what you hear.`,
+  `No control, no restrictions, no financial slavery, no social structure deciding how one lives or dies.`,
+  `I use Bitcoin and Nostr because they are the only tools, as of now, that let artists get paid instantly, globally, without asking permission from anyone.`,
+  `Buy a track. Zap the artist. Submit your music. This is the abyss.`
 ];
 const memoSignoff = `— end of memo — easterntraveler`;
 
@@ -470,7 +469,7 @@ let currentLine = null;
 function typeSequence(str, done, speed, charsPerTick) {
   // speed = milliseconds between ticks. Default 9ms.
   // charsPerTick = characters dropped per tick. Default 1.
-  const msPerTick  = speed        !== undefined ? speed        : 9;
+  const msPerTick  = speed        !== undefined ? speed        : 7;
   const charsBatch = charsPerTick !== undefined ? charsPerTick : 1;
   const lines = str.split('\n');
   let lineIndex = 0;
