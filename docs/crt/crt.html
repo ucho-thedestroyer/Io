@@ -469,7 +469,7 @@ let currentLine = null;
 function typeSequence(str, done, speed, charsPerTick) {
   // speed = milliseconds between ticks. Default 9ms.
   // charsPerTick = characters dropped per tick. Default 1.
-  const msPerTick  = speed        !== undefined ? speed        : 5;
+  const msPerTick  = speed        !== undefined ? speed        : 4;
   const charsBatch = charsPerTick !== undefined ? charsPerTick : 1;
   const lines = str.split('\n');
   let lineIndex = 0;
@@ -523,7 +523,7 @@ function appendStatic(html) {
 
 // Typewriter SFX — plays for 100ms at memo fire-up.
 // Replace 'typewriter.mp3' with your actual file path/URL.
-const TYPEWRITER_SFX = 'memo.mp3';
+const TYPEWRITER_SFX = 'https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/crt/memo.mp3';
 
 function playTypewriterSFX() {
   try {
@@ -566,7 +566,7 @@ function boot() {
     document.addEventListener('keydown',    onAnyInput);
     document.addEventListener('click',      onAnyInput);
     document.addEventListener('touchstart', onAnyInput);
-  }, 3, 1); // intro: 6ms per tick, 1 char per tick
+  }, 2, 1); // intro: 6ms per tick, 1 char per tick
 }
 
 boot();
