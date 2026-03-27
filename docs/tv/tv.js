@@ -55,7 +55,7 @@ const channels = [
 ];
 
 /* Channels that get the roll effect (1-based) */
-const ROLL_CHANNELS = [1, 2, 5];
+const ROLL_CHANNELS = [2, 5];
 
 const detentAngles = [-90, -54, -18, 18, 54, 90];
 
