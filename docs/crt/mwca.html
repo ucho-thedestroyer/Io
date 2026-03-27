@@ -316,10 +316,9 @@ const memoParagraphs = [
   `The world you wake into each morning is not the one that was promised; an insatiable machinery of information grows out of it, ever more vicious, ever more inhumane.`,
   `Debasing reason and confounding truth, this machinery grows heavier with each scroll, each post, each upload, spreading divisiveness through its insides, moral rot dripping from its core.`,
   `They told you the network would connect you. It did. It connected you to every form of deception ever known to man. A network alien to our will and subversive to our agency, automaton of digits steered by plunder lords in lavish rooms whose walls protect them from the splits and woes that are sown amongst us.`,
-  `You have been here before. This terminal. This cursor. This low hum and hazy glare that might be the machine or might be you. You can't always tell the difference anymore, neither can you distinguish the role you play in feeding this abhorrent beast of data and greed. Yet your data is not the most valuable thing it takes from you.`,
+  `You have been here before. This terminal. This cursor. This low hum and hazy glare that might be the machine or might be you. You can't always tell the difference anymore, neither can you distinguish the role you play in the feeding of this abhorrent beast of data and greed—data, is not the most valuable thing it takes from you.`,
   `This memo is not a warning. Warnings imply there is still time. This is just one more entry in a log—a confirmation of something already done, already taken, already gone.`,
-  `Keep posting, keep watching. The logs don't lie yet they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present.`,
-  `Until one day: no entry at all...`
+  `Keep posting, keep watching. The logs don't lie yet they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present... Until one day: no entry at all.`
 ];
 const memoSignoff = `— end of memo — easterntraveler`;
 
@@ -373,7 +372,7 @@ function typeMemo(paragraphs, signoff, done) {
       const block = document.createElement('p');
       block.className = 'memo-block';
       output.appendChild(block);
-      typeInto(block, paragraphs[i++], next, 4, 3); // memo speed: 4ms, 3 chars/tick
+      typeInto(block, paragraphs[i++], next, 4, 2); // memo speed: 4ms, 3 chars/tick
     }, i === 0 ? 0 : 900);
   }
   next();
