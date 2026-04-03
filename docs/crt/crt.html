@@ -524,13 +524,19 @@ function appendStatic(html) {
 // Typewriter SFX — plays for 100ms at memo fire-up.
 // Replace 'typewriter.mp3' with your actual file path/URL.
 const TYPEWRITER_SFX = 'https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/crt/memo.mp3';
+const _sfxAudio = new Audio(TYPEWRITER_SFX);
+_sfxAudio.preload = 'auto';
+_sfxAudio.volume  = 0.7;
 
 function playTypewriterSFX() {
   try {
-    const sfx = new Audio(TYPEWRITER_SFX);
-    sfx.volume = 0.7;
-    sfx.play().catch(() => {});
-    setTimeout(() => { sfx.pause(); sfx.currentTime = 0; }, 100);
+    _sfxAudio.currentTime = 0;
+    const playPromise = _sfxAudio.play();
+    if (playPromise) {
+      playPromise
+        .then(() => { setTimeout(() => { _sfxAudio.pause(); }, 100); })
+        .catch(() => {});
+    }
   } catch(e) {}
 }
 
