@@ -372,7 +372,7 @@ function typeMemo(paragraphs, signoff, done) {
       const block = document.createElement('p');
       block.className = 'memo-block';
       output.appendChild(block);
-      typeInto(block, paragraphs[i++], next, 6, 2); // memo speed: 4ms, 3 chars/tick
+      typeInto(block, paragraphs[i++], next, 8, 2); // memo speed: 4ms, 3 chars/tick
     }, i === 0 ? 0 : 900);
   }
   next();
