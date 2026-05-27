@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skilled Reader — Flow Analysis Training</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg:     #0a0b0e;
+  --bg2:    #101216;
+  --bg3:    #161920;
+  --bg4:    #1c2028;
+  --border: #1e222a;
+  --border2:#272d38;
+  --text:   #dde1e8;
+  --text2:  #7d8693;
+  --text3:  #444c58;
+  --green:  #27c98a;
+  --green2: rgba(39,201,138,.08);
+  --red:    #e05555;
+  --red2:   rgba(224,85,85,.08);
+  --amber:  #e6a832;
+  --amber2: rgba(230,168,50,.08);
+  --blue:   #4b9eff;
+  --blue2:  rgba(75,158,255,.08);
+  --purple: #a78bfa;
+  --purple2:rgba(167,139,250,.08);
+  --price:  #27c98a;
+  --cvd:    #e6a832;
+  --oi:     #4b9eff;
+  --vwap:   #a78bfa;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;overflow-x:hidden;}
+
+/* ── LAYOUT ── */
+.app{display:flex;height:100vh;overflow:hidden;}
+
+.sidebar{width:230px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;}
+
+.logo{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid var(--border);}
+.logo-title{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text);}
+.logo-sub{font-size:10px;color:var(--text3);margin-top:3px;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+
+.progress-bar{height:2px;background:var(--border);margin:0;position:relative;}
+.progress-fill{height:100%;background:var(--green);transition:width .4s ease;}
+
+.nav-section{padding:.75rem 0;}
+.nav-section-label{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);padding:.25rem 1.25rem .4rem;}
+
+.nav-item{display:flex;align-items:center;gap:9px;padding:.5rem 1.25rem;cursor:pointer;color:var(--text3);font-size:12.5px;font-weight:500;border-left:2px solid transparent;transition:all .12s;user-select:none;position:relative;}
+.nav-item:hover{color:var(--text2);background:rgba(255,255,255,.02);}
+.nav-item.active{color:var(--text);border-left-color:var(--green);background:rgba(39,201,138,.05);}
+.nav-item.locked{opacity:.35;cursor:not-allowed;}
+.nav-num{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);min-width:18px;}
+.nav-item.active .nav-num{color:var(--green);}
+.nav-done{width:14px;height:14px;border-radius:50%;background:var(--green2);border:1px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--green);margin-left:auto;flex-shrink:0;}
+
+.main{flex:1;overflow-y:auto;padding:2rem 2.5rem 4rem;}
+.main-inner{max-width:780px;}
+
+/* ── MODULE HEADER ── */
+.mod{display:none;}.mod.active{display:block;}
+
+.mod-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.4rem;}
+.mod-title{font-size:26px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:.6rem;}
+.mod-intro{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:680px;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);}
+.mod-intro b{color:var(--text);font-weight:600;}
+
+/* ── CARDS & BLOCKS ── */
+.block{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem;}
+.block-title{font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.85rem;}
+
+.callout{border-left:3px solid var(--border2);padding:.7rem 1rem;background:var(--bg3);border-radius:0 8px 8px 0;font-size:13px;color:var(--text2);line-height:1.7;margin:.75rem 0;}
+.callout b{color:var(--text);font-weight:600;}
+.callout.green{border-left-color:var(--green);background:var(--green2);}
+.callout.red{border-left-color:var(--red);background:var(--red2);}
+.callout.amber{border-left-color:var(--amber);background:var(--amber2);}
+.callout.blue{border-left-color:var(--blue);background:var(--blue2);}
+.callout.purple{border-left-color:var(--purple);background:var(--purple2);}
+
+hr{border:none;border-top:1px solid var(--border);margin:1.1rem 0;}
+
+/* ── STEPS ── */
+.step{display:flex;gap:10px;align-items:flex-start;margin-bottom:.6rem;}
+.sn{min-width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);font-size:10px;font-weight:500;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;color:var(--text3);flex-shrink:0;margin-top:1px;}
+.st{font-size:13px;color:var(--text2);line-height:1.65;}.st b{color:var(--text);font-weight:600;}
+
+/* ── TAGS ── */
+.tag{display:inline-block;font-size:9px;font-weight:600;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:3px;margin-left:5px;vertical-align:middle;letter-spacing:.04em;}
+.tg{background:rgba(39,201,138,.15);color:var(--green);}
+.tr{background:rgba(224,85,85,.15);color:var(--red);}
+.ta{background:rgba(230,168,50,.15);color:var(--amber);}
+.tb{background:rgba(75,158,255,.15);color:var(--blue);}
+.tp{background:rgba(167,139,250,.15);color:var(--purple);}
+
+/* ── CHART ── */
+.chart-wrap{position:relative;height:200px;width:100%;margin-top:.5rem;}
+.chart-legend{display:flex;gap:16px;margin-bottom:.5rem;flex-wrap:wrap;}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);}
+.leg-line{width:16px;height:2px;border-radius:1px;flex-shrink:0;}
+.leg-dash{width:16px;border-top:2px dashed;flex-shrink:0;}
+.leg-dot{width:16px;border-top:2px dotted;flex-shrink:0;}
+
+.scen-btns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.7rem;}
+.sbtn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:var(--text3);cursor:pointer;letter-spacing:.03em;transition:all .1s;}
+.sbtn:hover{color:var(--text2);background:var(--bg3);}
+.sbtn.active{border-color:var(--green);color:var(--green);background:var(--green2);}
+.sbtn.red-active{border-color:var(--red);color:var(--red);background:var(--red2);}
+.sbtn.amber-active{border-color:var(--amber);color:var(--amber);background:var(--amber2);}
+
+/* ── MATRIX GRID ── */
+.matrix{display:grid;gap:6px;margin:.75rem 0;}
+.matrix-2{grid-template-columns:1fr 1fr;}
+.matrix-3{grid-template-columns:1fr 1fr 1fr;}
+.matrix-auto{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));}
+.mc{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.65rem .85rem;}
+.mc-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-bottom:4px;letter-spacing:.03em;}
+.mc-val{font-size:13px;font-weight:600;color:var(--text);}
+.mc-sub{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.mc.highlight-g{border-color:rgba(39,201,138,.3);background:var(--green2);}
+.mc.highlight-r{border-color:rgba(224,85,85,.3);background:var(--red2);}
+.mc.highlight-a{border-color:rgba(230,168,50,.3);background:var(--amber2);}
+
+/* ── SIGNAL HIERARCHY TREE ── */
+.tree{display:flex;flex-direction:column;gap:8px;margin:.75rem 0;}
+.tree-level{display:flex;align-items:center;gap:10px;padding:.65rem 1rem;border-radius:8px;border:1px solid var(--border);}
+.tree-rank{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:500;color:var(--text3);min-width:30px;}
+.tree-info{flex:1;}
+.tree-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.tree-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+.tree-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;border-radius:4px;flex-shrink:0;letter-spacing:.05em;}
+
+/* ── QUIZ / DRILL ── */
+.drill-scenario{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:1.25rem;margin-bottom:.75rem;}
+.drill-q{font-size:14px;font-weight:600;color:var(--text);margin-bottom:.6rem;line-height:1.5;}
+.drill-sub{font-size:12.5px;color:var(--text2);margin-bottom:1rem;line-height:1.6;}
+.drill-opts{display:flex;flex-direction:column;gap:6px;margin-bottom:.75rem;}
+.drill-opt{display:flex;align-items:flex-start;gap:10px;padding:.6rem .85rem;border:1px solid var(--border2);border-radius:7px;cursor:pointer;font-size:13px;color:var(--text2);background:var(--bg4);transition:all .12s;text-align:left;}
+.drill-opt:hover{border-color:var(--border2);background:var(--bg3);color:var(--text);}
+.drill-opt.correct{border-color:var(--green);background:var(--green2);color:var(--text);}
+.drill-opt.wrong{border-color:var(--red);background:var(--red2);color:var(--text2);}
+.drill-opt.revealed{border-color:var(--green);background:var(--green2);color:var(--text);}
+.drill-opt-key{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);min-width:18px;margin-top:1px;}
+.drill-explain{font-size:12.5px;color:var(--text2);line-height:1.65;padding:.65rem .85rem;background:var(--bg3);border-radius:6px;border-left:3px solid var(--green);display:none;}
+.drill-explain.show{display:block;}
+.drill-explain b{color:var(--text);font-weight:600;}
+
+/* ── SCORE ── */
+.score-row{display:flex;gap:10px;margin-bottom:1rem;flex-wrap:wrap;}
+.score-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.6rem 1rem;min-width:100px;}
+.score-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-bottom:3px;}
+.score-val{font-size:20px;font-weight:700;color:var(--text);}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:.75rem 0;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem .85rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;cursor:pointer;transition:border-color .1s;}
+.check-item:hover{border-color:var(--border2);}
+.check-item.checked{border-color:rgba(39,201,138,.25);background:var(--green2);}
+.check-box{width:16px;height:16px;border:1.5px solid var(--border2);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;color:var(--green);transition:all .1s;}
+.check-item.checked .check-box{background:var(--green);border-color:var(--green);color:#000;}
+.check-text{font-size:12.5px;color:var(--text2);line-height:1.55;}.check-item.checked .check-text{color:var(--text);}
+
+/* ── NAV FOOTER ── */
+.mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--border);}
+.nav-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 16px;border:1px solid var(--border2);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;letter-spacing:.04em;transition:all .12s;}
+.nav-btn:hover{border-color:var(--green);color:var(--green);}
+.nav-btn:disabled{opacity:.25;cursor:default;}
+.nav-btn:disabled:hover{border-color:var(--border2);color:var(--text2);}
+.nav-btn.primary{background:var(--green);border-color:var(--green);color:#000;font-weight:600;}
+.nav-btn.primary:hover{background:#1fa872;border-color:#1fa872;color:#000;}
+.nav-progress{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);}
+
+/* ── CONFLICT TABLE ── */
+.conflict-table{width:100%;border-collapse:collapse;font-size:12.5px;margin:.75rem 0;}
+.conflict-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:.5rem .75rem;border-bottom:1px solid var(--border);text-align:left;font-weight:500;}
+.conflict-table td{padding:.55rem .75rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.55;}
+.conflict-table td:first-child{color:var(--text);font-weight:500;}
+.conflict-table tr:last-child td{border-bottom:none;}
+.conflict-table tr:hover td{background:rgba(255,255,255,.015);}
+
+/* ── OI STATE CARD ── */
+.oi-states{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:.75rem 0;}
+.oi-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.85rem 1rem;}
+.oi-card-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:.3rem;}
+.oi-card-sub{font-size:11.5px;color:var(--text2);line-height:1.55;}
+.oi-card-verdict{font-size:10px;font-family:'JetBrains Mono',monospace;margin-top:.5rem;padding:2px 8px;border-radius:3px;display:inline-block;}
+
+/* ── VWAP ZONES ── */
+.vwap-map{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.25rem;position:relative;margin:.75rem 0;overflow:hidden;}
+.vwap-zone{display:flex;align-items:center;gap:12px;padding:.5rem .75rem;border-radius:6px;margin-bottom:5px;font-size:12.5px;}
+.vwap-zone-label{min-width:120px;font-weight:600;color:var(--text);}
+.vwap-zone-desc{color:var(--text2);line-height:1.5;flex:1;}
+.vwap-line{height:2px;background:var(--vwap);margin:.4rem 0;position:relative;}
+.vwap-line::after{content:'VWAP';position:absolute;right:0;top:-10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--vwap);letter-spacing:.08em;}
+
+/* ── CONFLUENCE METER ── */
+.confluence-meter{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin:.75rem 0;}
+.cf-row{display:flex;align-items:center;gap:12px;margin-bottom:.6rem;}
+.cf-label{font-size:12px;color:var(--text2);min-width:180px;}
+.cf-bar-wrap{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.cf-bar{height:100%;border-radius:3px;transition:width .5s ease;}
+.cf-verdict{font-family:'JetBrains Mono',monospace;font-size:10px;min-width:70px;text-align:right;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-title">Skilled Reader</div>
+    <div class="logo-sub">Flow Analysis · 8 Modules</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:12.5%"></div></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Foundation</div>
+    <div class="nav-item active" onclick="goto(0,this)" id="nav-0"><span class="nav-num">01</span>Signal Hierarchy</div>
+    <div class="nav-item" onclick="goto(1,this)" id="nav-1"><span class="nav-num">02</span>OI + CVD States</div>
+    <div class="nav-item" onclick="goto(2,this)" id="nav-2"><span class="nav-num">03</span>VWAP Context</div>
+    <div class="nav-item" onclick="goto(3,this)" id="nav-3"><span class="nav-num">04</span>Volume Profile</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Applied</div>
+    <div class="nav-item" onclick="goto(4,this)" id="nav-4"><span class="nav-num">05</span>Confluence Reads</div>
+    <div class="nav-item" onclick="goto(5,this)" id="nav-5"><span class="nav-num">06</span>Pattern Drills</div>
+    <div class="nav-item" onclick="goto(6,this)" id="nav-6"><span class="nav-num">07</span>The Hard Cases</div>
+    <div class="nav-item" onclick="goto(7,this)" id="nav-7"><span class="nav-num">08</span>Your Framework</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main" id="main-scroll">
+<div class="main-inner">
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 1 — SIGNAL HIERARCHY
+═══════════════════════════════════════════════════════ -->
+<div class="mod active" id="mod-0">
+  <div class="mod-eyebrow">Module 01 · Foundation</div>
+  <div class="mod-title">Signal Hierarchy</div>
+  <div class="mod-intro">The first skill a skilled reader develops is knowing <b>which signal wins when they conflict</b>. Without a hierarchy you react to whichever line moves last. With one, conflicts become information — they tell you the market is at a decision point, not that your setup is broken.</div>
+
+  <div class="block">
+    <div class="block-title">The hierarchy — ranked by information quality</div>
+    <div class="tree">
+      <div class="tree-level" style="border-color:rgba(39,201,138,.25);background:rgba(39,201,138,.04)">
+        <div class="tree-rank" style="color:var(--green)">1</div>
+        <div class="tree-info">
+          <div class="tree-name">Volume Profile (structural context)</div>
+          <div class="tree-desc">High-volume nodes represent where large two-sided institutional business was done. These levels are anchors — they don't move. Price respects them because real players defend positions built there. This is your map before anything else.</div>
+        </div>
+        <div class="tree-badge" style="background:var(--green2);color:var(--green)">HIGHEST</div>
+      </div>
+      <div class="tree-level" style="border-color:rgba(75,158,255,.2);background:rgba(75,158,255,.03)">
+        <div class="tree-rank" style="color:var(--blue)">2</div>
+        <div class="tree-info">
+          <div class="tree-name">Aggregated OI (positioning context)</div>
+          <div class="tree-desc">OI tells you whether new money is entering or existing money is exiting. It transforms CVD from a directional read into a positioning read. A CVD spike without OI context is half a sentence.</div>
+        </div>
+        <div class="tree-badge" style="background:var(--blue2);color:var(--blue)">HIGH</div>
+      </div>
+      <div class="tree-level" style="border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.03)">
+        <div class="tree-rank" style="color:var(--purple)">3</div>
+        <div class="tree-info">
+          <div class="tree-name">VWAP (institutional reference)</div>
+          <div class="tree-desc">The benchmark execution desks are measured against. Not a support/resistance level in the technical analysis sense — a dynamic fair value reference. Price behavior at VWAP tells you whether institutional flow is net buying or selling the current price.</div>
+        </div>
+        <div class="tree-badge" style="background:var(--purple2);color:var(--purple)">MEDIUM-HIGH</div>
+      </div>
+      <div class="tree-level" style="border-color:rgba(230,168,50,.2);background:rgba(230,168,50,.03)">
+        <div class="tree-rank" style="color:var(--amber)">4</div>
+        <div class="tree-info">
+          <div class="tree-name">Aggregated CVD (flow direction)</div>
+          <div class="tree-desc">The most reactive signal — tells you who is being aggressive right now. Highest temporal resolution but lowest structural reliability. CVD is the last signal you confirm, not the first you act on. Its job is to time entries within a context already established by 1–3.</div>
+        </div>
+        <div class="tree-badge" style="background:var(--amber2);color:var(--amber)">TIMING</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout amber"><b>The core rule:</b> Higher-ranked signals define the context. Lower-ranked signals time the entry. Never let a CVD spike override a volume profile level. Never let VWAP override OI trend. Context always outranks recency.</div>
+
+  <hr>
+  <div class="block">
+    <div class="block-title">When signals conflict — the decision rules</div>
+    <table class="conflict-table">
+      <thead><tr><th>Conflict</th><th>Which wins</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>CVD bullish, OI falling</td><td>OI wins</td><td>Short covering — move has a ceiling, not a trend</td></tr>
+        <tr><td>CVD bearish, price at HVN</td><td>Volume profile wins</td><td>HVN is likely to absorb. Fade the CVD, expect a bounce</td></tr>
+        <tr><td>VWAP rejected, CVD positive</td><td>VWAP wins</td><td>Institutional selling into retail buying. Distribution at fair value</td></tr>
+        <tr><td>OI rising, CVD flat</td><td>Both matter</td><td>New money entering passively — iceberg accumulation likely. Watch for CVD acceleration</td></tr>
+        <tr><td>Price at LVN, CVD negative</td><td>Volume profile wins</td><td>Price travels fast through LVNs. Don't fade the CVD here — it's likely to be self-fulfilling</td></tr>
+        <tr><td>All 4 aligned</td><td>N/A</td><td>Highest-confidence setup. Size accordingly.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout blue"><b>The professional edge isn't a better signal — it's a better hierarchy.</b> Retail traders add more signals hoping one will be the answer. Skilled readers use fewer signals with clear rules for which one leads.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 2 — OI + CVD STATES
+═══════════════════════════════════════════════════════ -->
+<div class="mod" id="mod-1">
+  <div class="mod-eyebrow">Module 02 · Foundation</div>
+  <div class="mod-title">OI + CVD — The 6 States</div>
+  <div class="mod-intro">CVD alone tells you direction of aggression. OI alone tells you whether contracts are being created or closed. Together they tell you <b>who is doing what and with how much conviction</b>. There are exactly 6 meaningful states. Learn to identify them on sight.</div>
+
+  <div class="block">
+    <div class="block-title">Live scenario — select a state</div>
+    <div class="scen-btns" id="oi-btns">
+      <button class="sbtn active" onclick="setOI(0,this)">State 1</button>
+      <button class="sbtn" onclick="setOI(1,this)">State 2</button>
+      <button class="sbtn" onclick="setOI(2,this)">State 3</button>
+      <button class="sbtn" onclick="setOI(3,this)">State 4</button>
+      <button class="sbtn" onclick="setOI(4,this)">State 5</button>
+      <button class="sbtn" onclick="setOI(5,this)">State 6</button>
+    </div>
+    <div class="chart-legend">
+      <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+      <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+      <div class="leg"><div class="leg-dot" style="border-color:var(--oi)"></div>OI</div>
+    </div>
+    <div class="chart-wrap"><canvas id="cv-oi"></canvas></div>
+  </div>
+
+  <div class="matrix matrix-auto" id="oi-matrix">
+    <div class="mc"><div class="mc-label">CVD</div><div class="mc-val" id="oi-cvd">Rising</div></div>
+    <div class="mc"><div class="mc-label">OI</div><div class="mc-val" id="oi-oi">Rising</div></div>
+    <div class="mc"><div class="mc-label">Price</div><div class="mc-val" id="oi-px">Rising</div></div>
+  </div>
+  <div class="callout green" id="oi-note"><b>State 1 — Trend Initiation:</b> New longs entering aggressively. Both CVD and OI confirm. This is real buying with conviction — not a squeeze, not a fade. The move has structural backing.</div>
+
+  <hr>
+  <div class="block">
+    <div class="block-title">The 6 OI + CVD states — master reference</div>
+    <div class="oi-states">
+      <div class="oi-card" style="border-color:rgba(39,201,138,.25)">
+        <div class="oi-card-title">State 1 — Trend initiation</div>
+        <div class="oi-card-sub">CVD ↑ · OI ↑ · Price ↑<br>New longs entering. Real conviction. Highest quality long signal.</div>
+        <div class="oi-card-verdict" style="background:var(--green2);color:var(--green)">FOLLOW LONG</div>
+      </div>
+      <div class="oi-card" style="border-color:rgba(224,85,85,.25)">
+        <div class="oi-card-title">State 2 — Short covering</div>
+        <div class="oi-card-sub">CVD ↑ · OI ↓ · Price ↑<br>Shorts closing, not longs entering. Move has a ceiling — exhausts when shorts are cleaned.</div>
+        <div class="oi-card-verdict" style="background:var(--amber2);color:var(--amber)">FADE NEAR LEVELS</div>
+      </div>
+      <div class="oi-card" style="border-color:rgba(224,85,85,.25)">
+        <div class="oi-card-title">State 3 — Trend breakdown</div>
+        <div class="oi-card-sub">CVD ↓ · OI ↑ · Price ↓<br>New shorts entering aggressively. Mirror of State 1. Real conviction short.</div>
+        <div class="oi-card-verdict" style="background:var(--red2);color:var(--red)">FOLLOW SHORT</div>
+      </div>
+      <div class="oi-card" style="border-color:rgba(230,168,50,.25)">
+        <div class="oi-card-title">State 4 — Long liquidation</div>
+        <div class="oi-card-sub">CVD ↓ · OI ↓ · Price ↓<br>Longs closing/stopped out. Exhausts when longs are cleaned. Watch for reversal once OI stabilises.</div>
+        <div class="oi-card-verdict" style="background:var(--amber2);color:var(--amber)">BUY THE FLUSH</div>
+      </div>
+      <div class="oi-card" style="border-color:rgba(75,158,255,.25)">
+        <div class="oi-card-title">State 5 — Passive accumulation</div>
+        <div class="oi-card-sub">CVD flat · OI ↑ · Price stable<br>New money entering quietly. No aggression visible. Iceberg or passive build. Precedes large moves.</div>
+        <div class="oi-card-verdict" style="background:var(--blue2);color:var(--blue)">WATCH + PREPARE</div>
+      </div>
+      <div class="oi-card" style="border-color:rgba(167,139,250,.25)">
+        <div class="oi-card-title">State 6 — Absorption / distribution</div>
+        <div class="oi-card-sub">CVD ↑ · OI flat · Price flat/↓<br>Aggressive buying absorbed passively. Classic distribution. CVD is being manufactured against you.</div>
+        <div class="oi-card-verdict" style="background:var(--red2);color:var(--red)">FADE CVD</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout amber"><b>The critical question on every CVD move:</b> Is OI rising or falling? If it's falling, the move is positional unwinding — it will end when the trapped side is cleaned out. If it's rising, it's new conviction — trend continuation is likely.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 3 — VWAP CONTEXT
+═══════════════════════════════════════════════════════ -->
+<div class="mod" id="mod-2">
+  <div class="mod-eyebrow">Module 03 · Foundation</div>
+  <div class="mod-title">VWAP as Institutional Context</div>
+  <div class="mod-intro">VWAP is not a support/resistance level. It is a <b>dynamic fair value benchmark</b> that institutional execution desks are measured against. Price behavior at VWAP doesn't reflect retail technical analysis — it reflects the real-time decision-making of desks that have to justify their fills.</div>
+
+  <div class="block">
+    <div class="block-title">The 5 VWAP behavioral zones</div>
+    <div class="vwap-map">
+      <div class="vwap-zone" style="background:rgba(224,85,85,.06);border:1px solid rgba(224,85,85,.15);margin-bottom:5px;">
+        <div class="vwap-zone-label" style="color:var(--red)">Extended above</div>
+        <div class="vwap-zone-desc">Price is statistically expensive. Institutions with VWAP mandates stop buying. Distribution becomes more likely. CVD rallies here are suspect — they're likely retail chasing.</div>
+      </div>
+      <div class="vwap-zone" style="background:rgba(230,168,50,.06);border:1px solid rgba(230,168,50,.15);margin-bottom:5px;">
+        <div class="vwap-zone-label" style="color:var(--amber)">First std dev above</div>
+        <div class="vwap-zone-desc">Trend is intact but momentum is waning. Watch OI here — if it starts falling while CVD still rises, distribution beginning.</div>
+      </div>
+      <div class="vwap-line"></div>
+      <div class="vwap-zone" style="background:rgba(39,201,138,.06);border:1px solid rgba(39,201,138,.15);margin-top:5px;margin-bottom:5px;">
+        <div class="vwap-zone-label" style="color:var(--green)">At VWAP ± noise</div>
+        <div class="vwap-zone-desc">The decision zone. Two-sided institutional activity. CVD will oscillate — don't trade the oscillation. Wait for a clean break with OI confirmation.</div>
+      </div>
+      <div class="vwap-zone" style="background:rgba(230,168,50,.06);border:1px solid rgba(230,168,50,.15);margin-bottom:5px;">
+        <div class="vwap-zone-label" style="color:var(--amber)">First std dev below</div>
+        <div class="vwap-zone-desc">Statistically cheap. Institutions with VWAP mandates may begin accumulating. CVD selling here is suspect — watch for absorption (CVD down, price not following).</div>
+      </div>
+      <div class="vwap-zone" style="background:rgba(75,158,255,.06);border:1px solid rgba(75,158,255,.15)">
+        <div class="vwap-zone-label" style="color:var(--blue)">Extended below</div>
+        <div class="vwap-zone-desc">Statistically cheap relative to the day's business. Strong accumulation signal if OI is rising quietly. The best long entries of the session often come from here with CVD divergence.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="block">
+    <div class="block-title">VWAP + CVD interaction scenarios</div>
+    <div class="scen-btns">
+      <button class="sbtn active" onclick="setVWAP(0,this)">Rejection at VWAP</button>
+      <button class="sbtn" onclick="setVWAP(1,this)">Reclaim VWAP</button>
+      <button class="sbtn" onclick="setVWAP(2,this)">Walk above VWAP</button>
+    </div>
+    <div class="chart-legend">
+      <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+      <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+      <div class="leg"><div class="leg-line" style="background:var(--vwap)"></div>VWAP</div>
+    </div>
+    <div class="chart-wrap"><canvas id="cv-vwap"></canvas></div>
+    <div class="callout" id="vwap-note" style="border-left-color:var(--red);background:var(--red2);margin-top:.75rem"><b>VWAP Rejection:</b> Price rises to VWAP on positive CVD but fails to hold. Institutional sellers step in at fair value. CVD was retail momentum — VWAP was the institutional ceiling. This is a short setup, not a breakout failure.</div>
+  </div>
+
+  <hr>
+  <div class="block-title" style="margin-bottom:.75rem">VWAP rules for a skilled reader</div>
+  <div class="step"><div class="sn">1</div><div class="st"><b>Never trade a CVD breakout signal that is first contact with VWAP from below.</b> First contact gets rejected 60–70% of sessions. Wait for reclaim — a second test that holds.</div></div>
+  <div class="step"><div class="sn">2</div><div class="st"><b>A reclaim of VWAP with OI rising is one of the cleanest long setups in the framework.</b> Institutions that were selling at VWAP have been absorbed. New buyers are entering above fair value.</div></div>
+  <div class="step"><div class="sn">3</div><div class="st"><b>Price walking above VWAP on low CVD is more bullish than a CVD spike at VWAP.</b> Low CVD above VWAP means sellers can't push it back — passive accumulation. A CVD spike at VWAP is just retail reacting to a level.</div></div>
+  <div class="step"><div class="sn">4</div><div class="st"><b>VWAP loses meaning after major news events</b> within the same session. A post-news VWAP is anchored to pre-news price distribution — it's no longer a relevant fair value reference. Switch to a post-event anchored VWAP.</div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 4 — VOLUME PROFILE
+═══════════════════════════════════════════════════════ -->
+<div class="mod" id="mod-3">
+  <div class="mod-eyebrow">Module 04 · Foundation</div>
+  <div class="mod-title">Volume Profile — Reading the Battlefield</div>
+  <div class="mod-intro">Volume profile is the only tool in your setup that tells you <b>where institutional business was done historically</b>. High Volume Nodes (HVN) are where two-sided business resolved. Low Volume Nodes (LVN) are where price moved quickly because one side dominated. Knowing which you're approaching before price arrives is the closest thing to an edge that doesn't decay.</div>
+
+  <div class="block">
+    <div class="block-title">HVN vs LVN — what each means for your other signals</div>
+    <div class="matrix matrix-2">
+      <div class="mc highlight-g">
+        <div class="mc-label">High Volume Node (HVN)</div>
+        <div class="mc-val">Attraction + Rejection</div>
+        <div class="mc-sub">Price is drawn to HVNs and tends to consolidate there. CVD signals generated at HVNs are lower reliability — both sides are active. Don't chase a CVD spike into an HVN.</div>
+      </div>
+      <div class="mc highlight-r">
+        <div class="mc-label">Low Volume Node (LVN)</div>
+        <div class="mc-val">Fast transit zone</div>
+        <div class="mc-sub">Price moves through LVNs quickly. CVD signals generated at LVNs are higher reliability — one side is already dominant. CVD in the direction of the LVN breach tends to follow through.</div>
+      </div>
+      <div class="mc highlight-a">
+        <div class="mc-label">Point of Control (POC)</div>
+        <div class="mc-val">Session anchor</div>
+        <div class="mc-sub">The price where the most volume traded. Acts like a gravitational center. CVD divergence at the POC is a high-value signal — it means one side is defending their average position.</div>
+      </div>
+      <div class="mc" style="border-color:rgba(167,139,250,.25);background:var(--purple2)">
+        <div class="mc-label">Value Area (VA)</div>
+        <div class="mc-val">70% of session volume</div>
+        <div class="mc-sub">VA High and VA Low are the softest S/R levels in your toolkit — they're not magnetic like POC, but they represent where fair value ended. Breaks of VAH/VAL with OI rising are significant.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="block">
+    <div class="block-title">Profile + CVD interaction — select scenario</div>
+    <div class="scen-btns">
+      <button class="sbtn active" onclick="setVP(0,this)">CVD into HVN</button>
+      <button class="sbtn" onclick="setVP(1,this)">CVD through LVN</button>
+      <button class="sbtn" onclick="setVP(2,this)">POC defence</button>
+    </div>
+    <div class="chart-legend">
+      <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+      <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+    </div>
+    <div class="chart-wrap"><canvas id="cv-vp"></canvas></div>
+    <div class="callout" id="vp-note" style="border-left-color:var(--amber);background:var(--amber2);margin-top:.75rem"><b>CVD into HVN:</b> Strong positive CVD drives price into a high volume node. CVD stalls — both sides activate at the HVN. The aggressive buying is absorbed by the passive supply sitting at this level. Don't read the CVD spike as a breakout.</div>
+  </div>
+
+  <hr>
+  <div class="block-title" style="margin-bottom:.75rem">The volume profile checklist before any trade</div>
+  <div class="step"><div class="sn">1</div><div class="st"><b>Identify the nearest HVN above and below current price.</b> These are your real targets and real resistances — not arbitrary round numbers.</div></div>
+  <div class="step"><div class="sn">2</div><div class="st"><b>Check whether price is inside or outside the Value Area.</b> Inside = two-sided, expect chop. Outside = one side is dominant, CVD is more reliable.</div></div>
+  <div class="step"><div class="sn">3</div><div class="st"><b>If price is between two LVNs, it's in a fast-transit zone.</b> CVD and momentum will follow through more reliably here than anywhere else on the profile.</div></div>
+  <div class="step"><div class="sn">4</div><div class="st"><b>Note if current price is near the POC.</b> CVD divergence at POC = high probability the dominant side is defending. This is where the clearest absorption signals appear.</div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 5 — CONFLUENCE
+═══════════════════════════════════════════════════════ -->
+<div class="mod" id="mod-4">
+  <div class="mod-eyebrow">Module 05 · Applied</div>
+  <div class="mod-title">Confluence — When Signals Agree</div>
+  <div class="mod-intro">Confluence is not about having more signals confirm a trade. It's about understanding <b>what each signal is independently measuring</b> and recognising when they're all measuring the same underlying event from different angles. That's when a setup becomes a trade.</div>
+
+  <div class="block">
+    <div class="block-title">Confluence meter — sample setup builder</div>
+    <div class="scen-btns">
+      <button class="sbtn active" onclick="setCF(0,this)">High confluence long</button>
+      <button class="sbtn" onclick="setCF(1,this)">Medium confluence</button>
+      <button class="sbtn" onclick="setCF(2,this)">False confluence</button>
+    </div>
+    <div class="confluence-meter" id="cf-meter">
+      <div class="cf-row"><div class="cf-label">Volume profile (at HVN / LVN context)</div><div class="cf-bar-wrap"><div class="cf-bar" id="cf-b1" style="width:90%;background:var(--green)"></div></div><div class="cf-verdict" id="cf-v1" style="color:var(--green)">HVN support</div></div>
+      <div class="cf-row"><div class="cf-label">OI (rising / falling / flat)</div><div class="cf-bar-wrap"><div class="cf-bar" id="cf-b2" style="width:85%;background:var(--green)"></div></div><div class="cf-verdict" id="cf-v2" style="color:var(--green)">Rising ✓</div></div>
+      <div class="cf-row"><div class="cf-label">VWAP position & behavior</div><div class="cf-bar-wrap"><div class="cf-bar" id="cf-b3" style="width:80%;background:var(--green)"></div></div><div class="cf-verdict" id="cf-v3" style="color:var(--green)">Reclaimed ✓</div></div>
+      <div class="cf-row"><div class="cf-label">Aggregated CVD direction</div><div class="cf-bar-wrap"><div class="cf-bar" id="cf-b4" style="width:75%;background:var(--green)"></div></div><div class="cf-verdict" id="cf-v4" style="color:var(--green)">Diverging ↑</div></div>
+    </div>
+    <div class="callout green" id="cf-note"><b>High confluence long:</b> Volume profile provides structural support (HVN). OI is rising — new longs entering. VWAP has been reclaimed — institutional fair value is now below price. CVD divergence suggests passive accumulation complete. All four signals describe the same event from different angles. This is a trade, not a setup.</div>
+  </div>
+
+  <hr>
+  <div class="block">
+    <div class="block-title">The false confluence trap</div>
+    <div class="step"><div class="sn">!</div><div class="st"><b>Signals can be correlated without being independent.</b> If price rises, CVD rises (almost tautologically), volume spikes, and VWAP pulls upward — these aren't 4 confirmations, they're 1 event seen 4 ways. True confluence requires signals that are measuring structurally different things.</div></div>
+    <div class="step"><div class="sn">!</div><div class="st"><b>The independence test:</b> Could each signal be telling you the same thing even if the others were removed? Volume profile level — yes, it's historical and static. OI state — yes, it's a positioning read. VWAP position — yes, it's a benchmark reference. CVD — yes, it's real-time aggression. These are genuinely independent measurements.</div></div>
+    <div class="step"><div class="sn">!</div><div class="st"><b>Momentum cascade is the most common false confluence.</b> Price breaks out → CVD spikes → VWAP goes from resistance to support → volume spikes at the break. This looks like 4 signals confirming. It's 1 event causing 4 lagging reflections of itself.</div></div>
+  </div>
+
+  <div class="callout red"><b>The skilled reader's test:</b> Before acting on confluence, ask — "Was each signal already telling me this before the last candle?" If the confluence only appeared in the last candle, it's a momentum cascade. If three of four signals were already aligned and the fourth just confirmed, that's real confluence.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 6 — PATTERN DRILLS
+═══════════════════════════════════════════════════════ -->
+<div class="mod" id="mod-5">
+  <div class="mod-eyebrow">Module 06 · Applied</div>
+  <div class="mod-title">Pattern Drills</div>
+  <div class="mod-intro">Reading signals under time pressure is a different skill from understanding them conceptually. These drills give you a situation and force a read. <b>The answer matters less than your reasoning process</b> — after each answer, the explanation tells you what a skilled reader looks at first.</div>
+
+  <div class="score-row">
+    <div class="score-card"><div class="score-label">Score</div><div class="score-val" id="drill-score">0 / 0</div></div>
+    <div class="score-card"><div class="score-label">Correct</div><div class="score-val" id="drill-correct" style="color:var(--green)">0</div></div>
+    <div class="score-card"><div class="score-label">Wrong</div><div class="score-val" id="drill-wrong" style="color:var(--red)">0</div></div>
+  </div>
+
+  <!-- DRILL 1 -->
+  <div class="drill-scenario">
+    <div class="drill-q">Drill 1 — Price is 1.2% below VWAP, approaching a known HVN. Aggregated CVD has been negative for 2 hours. OI is falling.</div>
+    <div class="drill-sub">The last 3 candles show accelerating CVD to the downside. A retail trader sees a short setup. What does a skilled reader see?</div>
+    <div class="drill-opts" id="d1-opts">
+      <button class="drill-opt" onclick="answer(1,'A')"><span class="drill-opt-key">A</span>Confirmed short — CVD and VWAP location agree, follow the momentum</button>
+      <button class="drill-opt" onclick="answer(1,'B')"><span class="drill-opt-key">B</span>Long setup building — OI falling means long liquidation, HVN is structural support below, the move is nearly exhausted</button>
+      <button class="drill-opt" onclick="answer(1,'C')"><span class="drill-opt-key">C</span>No trade — signals are mixed, wait for clarity</button>
+      <button class="drill-opt" onclick="answer(1,'D')"><span class="drill-opt-key">D</span>Short, but only until the HVN — then flip long</button>
+    </div>
+    <div class="drill-explain" id="d1-exp"><b>Correct answer: B.</b> OI falling while CVD is negative = long liquidation (State 4 from Module 2), not new shorts entering. Long liquidations exhaust when longs are cleaned out — the signal is near its end, not its beginning. HVN below is a structural magnet that will absorb remaining sell pressure. The skilled reader is preparing a long, not entering a short. The retail trader sees momentum and chases it at exactly the wrong time.</div>
+  </div>
+
+  <!-- DRILL 2 -->
+  <div class="drill-scenario">
+    <div class="drill-q">Drill 2 — Price has been walking above VWAP for 90 minutes on very low CVD. No significant positive or negative delta. OI is rising slowly.</div>
+    <div class="drill-sub">A retail trader sees no signal — low CVD means no conviction. What does a skilled reader see?</div>
+    <div class="drill-opts" id="d2-opts">
+      <button class="drill-opt" onclick="answer(2,'A')"><span class="drill-opt-key">A</span>Agree with retail — no CVD means no trade</button>
+      <button class="drill-opt" onclick="answer(2,'B')"><span class="drill-opt-key">B</span>Bearish — if no one is buying aggressively, the move is unsustainable</button>
+      <button class="drill-opt" onclick="answer(2,'C')"><span class="drill-opt-key">C</span>Bullish and highly significant — passive accumulation above VWAP with rising OI is one of the strongest setups in the framework</button>
+      <button class="drill-opt" onclick="answer(2,'D')"><span class="drill-opt-key">D</span>Neutral — wait for CVD to confirm before reading direction</button>
+    </div>
+    <div class="drill-explain" id="d2-exp"><b>Correct answer: C.</b> Low CVD above VWAP with rising OI is State 5 — passive accumulation. Someone is building a position without showing aggression, using limit orders (icebergs) that don't register in CVD. The market walking above VWAP means sellers cannot push it back to fair value despite the absence of aggressive buyers. This is institutional accumulation. The CVD confirmation the retail trader is waiting for will arrive after the move has already started.</div>
+  </div>
+
+  <!-- DRILL 3 -->
+  <div class="drill-scenario">
+    <div class="drill-q">Drill 3 — Price hits a LVN with a sharp CVD spike. OI rises sharply. Price is above VWAP. Volume profile shows the next HVN is 1.8% higher.</div>
+    <div class="drill-sub">All signals align. This looks like a textbook entry. What is the one check a skilled reader does before sizing up?</div>
+    <div class="drill-opts" id="d3-opts">
+      <button class="drill-opt" onclick="answer(3,'A')"><span class="drill-opt-key">A</span>Checks if the CVD spike is on aggregated or single-exchange data</button>
+      <button class="drill-opt" onclick="answer(3,'B')"><span class="drill-opt-key">B</span>Checks when this CVD spike appeared relative to the OI rise — did OI lead or lag?</button>
+      <button class="drill-opt" onclick="answer(3,'C')"><span class="drill-opt-key">C</span>Checks the funding rate on perpetual swaps to confirm no squeeze distortion</button>
+      <button class="drill-opt" onclick="answer(3,'D')"><span class="drill-opt-key">D</span>All of the above are valid — but B is the primary check</button>
+    </div>
+    <div class="drill-explain" id="d3-exp"><b>Correct answer: D, with B as primary.</b> When all signals align, the primary question is whether OI led or lagged the CVD spike. If OI started rising 1–2 candles before the CVD spike, new money entered before the aggression — that's institutional positioning followed by retail confirmation. Strong. If OI only rose after the CVD spike, the OI increase may just be new retail longs chasing — weaker signal. A and C are legitimate secondary checks for crypto markets specifically, but B is the causal timing question that separates real confluence from momentum cascade.</div>
+  </div>
+
+  <!-- DRILL 4 -->
+  <div class="drill-scenario">
+    <div class="drill-q">Drill 4 — Strong positive CVD at a key level. But it happened on one exchange only — not reflected in aggregated CVD. OI is flat. Price moves up 0.4% then stalls.</div>
+    <div class="drill-sub">What happened and what is the correct read?</div>
+    <div class="drill-opts" id="d4-opts">
+      <button class="drill-opt" onclick="answer(4,'A')"><span class="drill-opt-key">A</span>Genuine buying — one exchange leads price discovery, the others will follow</button>
+      <button class="drill-opt" onclick="answer(4,'B')"><span class="drill-opt-key">B</span>Likely spoofing or a large single order on one venue — aggregated CVD not confirming means cross-venue flow isn't supporting it. Fade the move.</button>
+      <button class="drill-opt" onclick="answer(4,'C')"><span class="drill-opt-key">C</span>Arbitrage opportunity — buy the lagging exchanges</button>
+      <button class="drill-opt" onclick="answer(4,'D')"><span class="drill-opt-key">D</span>Inconclusive — wait for aggregated CVD to confirm</button>
+    </div>
+    <div class="drill-explain" id="d4-exp"><b>Correct answer: B.</b> Aggregated CVD is your primary signal precisely for this scenario. A real institutional order that intends to move price will be executed across multiple venues to minimise market impact — and the cross-venue flow will show up in aggregated CVD. A spike on one exchange only, with flat OI and no price follow-through, is the fingerprint of either a spoof, an arbitrage desk closing a spread, or a single large retail market order. None of these are signals to trade directionally. D is the conservative version of the right answer but misses the key insight — the lack of aggregated confirmation is itself the signal to fade.</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 7 — HARD CASES
+═══════════════════════════════════════════════════════ -->
+<div class="mod" id="mod-6">
+  <div class="mod-eyebrow">Module 07 · Applied</div>
+  <div class="mod-title">The Hard Cases</div>
+  <div class="mod-intro">Every framework has setups that look clean but aren't. These are the patterns that separate traders who understand the framework from those who memorised it. <b>Each case below is a deliberate trap.</b> The signals look like they're from the playbook. They're not.</div>
+
+  <div class="block">
+    <div class="block-title">Hard Case 1 — The perfect long that isn't</div>
+    <div class="callout blue">
+      <b>Setup:</b> Price at HVN. OI rising. CVD turning positive. Price just reclaimed VWAP. Textbook confluence long.<br><br>
+      <b>The hidden problem:</b> It's 14:45 in a US equity session. The HVN is from yesterday's session, not today's. Today's POC is 1.2% lower. VWAP is being reclaimed for the third time today — each prior reclaim failed.<br><br>
+      <b>What a skilled reader sees:</b> Repeated VWAP reclaim attempts that fail are not support building — they're a pattern of failed auctions. The institutional sellers are not running out of supply. The rising OI is new retail longs entering on each reclaim attempt. The HVN from yesterday is a significantly weaker reference than today's developing POC. This is a short setup disguised as a long setup. The CVD turn is the bait.
+    </div>
+    <div class="step"><div class="sn">!</div><div class="st"><b>The lesson:</b> Session age and recency of volume nodes matters. A VWAP reclaim on attempt 3 is weaker than attempt 1. A yesterday HVN is weaker than a today HVN. Always ask: how fresh is this level?</div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Hard Case 2 — The OI trap</div>
+    <div class="callout amber">
+      <b>Setup:</b> CVD positive and accelerating. OI rising sharply. Price above VWAP. Looks like State 1 — trend initiation.<br><br>
+      <b>The hidden problem:</b> Funding rate (crypto) or basis (futures) is deeply negative. The OI rise is coming from new shorts entering because the funding rate arbitrage is attractive — they're not bearish, they're harvesting the rate. CVD is rising because longs are also entering to receive the positive funding. Both sides are increasing OI for non-directional reasons.<br><br>
+      <b>What a skilled reader sees:</b> In crypto perpetuals, when funding is extreme, OI rises for structural reasons unrelated to directional conviction. The State 1 read is wrong. This is a funding-rate-driven OI increase, not a trend initiation. Price will oscillate until the rate normalises.
+    </div>
+    <div class="step"><div class="sn">!</div><div class="st"><b>The lesson:</b> In crypto perps, always check funding rate before interpreting OI. If funding is >0.05% per 8h in either direction, OI changes are partially contaminated by arbitrage flow. In traditional futures, check the roll basis for the same reason.</div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Hard Case 3 — The CVD that's right for the wrong reason</div>
+    <div class="callout red">
+      <b>Setup:</b> Massive negative CVD. OI falling. Price dropping through an LVN. All signals align short.<br><br>
+      <b>The hidden problem:</b> A large institutional investor is executing a pre-planned rebalance — selling a fixed dollar amount regardless of price. Their algo is dumping market orders systematically. The CVD is real, the OI is falling because longs are being stopped out by the move they're causing, but the seller will be done in 20 minutes and the entire move will reverse.<br><br>
+      <b>What a skilled reader sees:</b> Mechanical large order flow is identifiable by its rhythm — consistent CVD increments, no reaction to price levels that would normally cause pauses, selling through HVNs without slowing. When you see this pattern, you're not trading a signal — you're trading someone else's execution. Wait for the flow to stop, watch OI stabilise, then trade the reversal.
+    </div>
+    <div class="step"><div class="sn">!</div><div class="st"><b>The lesson:</b> Not all CVD is directional conviction. Mechanical execution (rebalances, redemptions, hedges) produces real CVD that reverses entirely when the order is done. The tell is rhythmic, level-insensitive flow — it doesn't slow at HVNs, doesn't accelerate at LVNs, and produces unusually consistent CVD increments.</div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Hard Case 4 — The news-event VWAP distortion</div>
+    <div class="callout purple">
+      <b>Setup:</b> Post-major-news price stabilises above VWAP. CVD positive. OI rising. Normal long setup.<br><br>
+      <b>The hidden problem:</b> VWAP is anchored to the pre-news session open. The entire pre-news volume distribution is now irrelevant — the market has re-priced. "Above VWAP" means above the average of a distribution that no longer represents fair value. You're using a ruler that was calibrated in a different market.<br><br>
+      <b>What a skilled reader sees:</b> After a significant news event, immediately switch to a post-event anchored VWAP (anchored to the candle after the news). The old VWAP is noise. Volume profile also needs to be treated differently — pre-news HVNs lose much of their magnetic quality.
+    </div>
+    <div class="step"><div class="sn">!</div><div class="st"><b>The lesson:</b> Every significant news event resets your reference anchors. VWAP, volume profile context, and even OI trends established before the event should be treated as a new session. The framework still works — your anchors just need to be re-set to the post-event world.</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 8 — YOUR FRAMEWORK
+═══════════════════════════════════════════════════════ -->
+<div class="mod" id="mod-7">
+  <div class="mod-eyebrow">Module 08 · Synthesis</div>
+  <div class="mod-title">Your Personal Framework</div>
+  <div class="mod-intro">A framework you were given is weaker than one you built. This module gives you the scaffold — a real-time decision checklist that enforces the hierarchy and catches the hard-case traps. <b>Work through each item before every trade. Check them off as you build the habit.</b> The goal is to make this process unconscious.</div>
+
+  <div class="block">
+    <div class="block-title">Pre-trade checklist — context layer</div>
+    <div class="checklist" id="ctx-list">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>Volume profile:</b> I know the nearest HVN above and below. I know if I'm inside or outside the Value Area. I know where today's POC is.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>VWAP:</b> I know price's position relative to VWAP. If we're at VWAP, I know how many times it's been tested today. I've checked if there was a news event requiring a re-anchor.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>OI baseline:</b> I know if OI has been rising, falling, or flat for the last hour. I know if funding/basis is distorting OI interpretation.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>Session context:</b> I know what time it is relative to key session events (open, close, options expiry, major macro). I'm not taking a signal in the 10 minutes before a known catalyst.</div></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Pre-trade checklist — signal layer</div>
+    <div class="checklist" id="sig-list">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>OI state identification:</b> I've identified which of the 6 OI+CVD states I'm in (Module 2). If it's State 2 or 4, I know the move is unwinding — I'm not trading it as a trend.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>CVD is aggregated:</b> My CVD is cross-venue aggregated, not single-exchange. A CVD spike on one exchange without aggregated confirmation is not a signal.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>OI led CVD:</b> I've checked if OI started rising/falling before the CVD signal. If OI lagged, the signal quality is lower — retail chasing, not institutional conviction.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>Volume profile alignment:</b> My trade direction is consistent with the nearest volume profile context (not fighting into an HVN, exploiting an LVN break or POC defence).</div></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Pre-trade checklist — deception filter</div>
+    <div class="checklist" id="dec-list">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>VWAP test count:</b> If price is at VWAP, this is not the first test today. Multiple tests = diminishing probability of sustained break. I'm sizing down accordingly.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>CVD rhythm check:</b> The CVD I'm acting on is not mechanical (consistent increments, level-insensitive). If it looks like a rebalance flow, I wait for it to end and trade the reversal.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>Confluence independence:</b> At least 3 of my 4 signals were already aligned before the last candle. If confluence only appeared in the last candle, it's a momentum cascade — I'm not trading it.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><b>The hard case check:</b> I've mentally checked this setup against the 4 hard cases in Module 7. Does it match any of them? If yes, I've adjusted my thesis accordingly.</div></div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="callout purple"><b>The difference between a retail trader and a skilled reader is not the signals they use.</b> It's the questions they ask before acting on them. The checklist above is not a mechanical system — it's a set of questions that force you to think about what each signal is actually measuring before you assign it meaning. Do this 500 times and it becomes automatic. That's when you become the skilled reader the framework promises.</div>
+
+  <div class="block" style="margin-top:1rem">
+    <div class="block-title">Progress through all modules</div>
+    <div class="matrix matrix-auto">
+      <div class="mc"><div class="mc-label">01</div><div class="mc-val" style="font-size:12px">Signal Hierarchy</div><div class="mc-sub">Which signal wins when they conflict</div></div>
+      <div class="mc"><div class="mc-label">02</div><div class="mc-val" style="font-size:12px">OI + CVD States</div><div class="mc-sub">6 states and what each demands</div></div>
+      <div class="mc"><div class="mc-label">03</div><div class="mc-val" style="font-size:12px">VWAP Context</div><div class="mc-sub">Institutional fair value reference</div></div>
+      <div class="mc"><div class="mc-label">04</div><div class="mc-val" style="font-size:12px">Volume Profile</div><div class="mc-sub">Reading the battlefield before price arrives</div></div>
+      <div class="mc"><div class="mc-label">05</div><div class="mc-val" style="font-size:12px">Confluence</div><div class="mc-sub">Real confluence vs momentum cascade</div></div>
+      <div class="mc"><div class="mc-label">06</div><div class="mc-val" style="font-size:12px">Pattern Drills</div><div class="mc-sub">Forced reads under pressure</div></div>
+      <div class="mc"><div class="mc-label">07</div><div class="mc-val" style="font-size:12px">Hard Cases</div><div class="mc-sub">Setups designed to trap the framework reader</div></div>
+      <div class="mc"><div class="mc-label">08</div><div class="mc-val" style="font-size:12px">Your Framework</div><div class="mc-sub">The checklist you now own</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV FOOTER -->
+<div class="mod-nav">
+  <button class="nav-btn" id="btn-prev" onclick="step(-1)" disabled>← Prev</button>
+  <span class="nav-progress" id="nav-prog">1 / 8</span>
+  <button class="nav-btn primary" id="btn-next" onclick="step(1)">Next →</button>
+</div>
+
+</div><!-- main-inner -->
+</div><!-- main -->
+</div><!-- app -->
+
+<script src="skilled.js"></script>
+</body>
+</html>
