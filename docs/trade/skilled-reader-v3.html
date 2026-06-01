@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skilled Reader v2 — Sequence, Context, Reality</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"><\/script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+:root{
+  --bg:#08090c;--bg2:#0e1017;--bg3:#141720;--bg4:#1a1e28;
+  --border:#1d2230;--border2:#252c3a;
+  --text:#cdd3de;--text2:#6e7a8a;--text3:#3d4757;
+  --green:#22c57a;--red:#d95f5f;--amber:#d4963a;--blue:#4a8fd4;--purple:#8b7fd4;
+  --g2:rgba(34,197,122,.07);--r2:rgba(217,95,95,.07);--a2:rgba(212,150,58,.07);--b2:rgba(74,143,212,.07);
+  --price:#22c57a;--cvd:#d4963a;--oi:#4a8fd4;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.65;}
+.app{display:flex;height:100vh;}
+.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;}
+.logo{padding:1.25rem 1rem .9rem;border-bottom:1px solid var(--border);}
+.logo-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text);}
+.logo-sub{font-size:10px;color:var(--text3);margin-top:4px;line-height:1.4;}
+.prog-bar{height:1px;background:var(--border);}
+.prog-fill{height:100%;background:var(--green);transition:width .35s;}
+.nav-group{padding:.6rem 0;}
+.nav-group-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.2rem 1rem .35rem;}
+.ni{display:flex;align-items:flex-start;gap:8px;padding:.45rem 1rem;cursor:pointer;color:var(--text3);font-size:12px;border-left:2px solid transparent;transition:all .12s;line-height:1.4;}
+.ni:hover{color:var(--text2);background:rgba(255,255,255,.02);}
+.ni.active{color:var(--text);border-left-color:var(--green);background:rgba(34,197,122,.04);}
+.ni-num{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);min-width:16px;margin-top:2px;}
+.ni.active .ni-num{color:var(--green);}
+.main{flex:1;overflow-y:auto;padding:2rem 2.5rem 5rem;}
+.main-inner{max-width:800px;}
+.mod{display:none;}.mod.active{display:block;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.4rem;}
+.mod-title{font-size:24px;font-weight:600;color:var(--text);line-height:1.2;margin-bottom:.7rem;}
+.mod-intro{font-size:13px;color:var(--text2);line-height:1.8;max-width:700px;padding-bottom:1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;}
+.mod-intro b{color:var(--text);font-weight:500;}
+.prose{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:.9rem;}
+.prose b{color:var(--text);font-weight:500;}
+hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
+.slabel{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.75rem;}
+.callout{border-left:2px solid var(--border2);padding:.7rem 1rem;background:var(--bg3);border-radius:0 6px 6px 0;font-size:12.5px;color:var(--text2);line-height:1.75;margin:.75rem 0;}
+.callout b{color:var(--text);font-weight:500;}
+.callout.g{border-left-color:var(--green);background:var(--g2);}
+.callout.r{border-left-color:var(--red);background:var(--r2);}
+.callout.a{border-left-color:var(--amber);background:var(--a2);}
+.callout.b{border-left-color:var(--blue);background:var(--b2);}
+.qblock{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;margin:.75rem 0;}
+.qblock-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;}
+.qblock-q{font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:.5rem;line-height:1.5;}
+.qblock-body{font-size:12.5px;color:var(--text2);line-height:1.75;}
+.qblock-body b{color:var(--text);font-weight:500;}
+.anchor-table{width:100%;border-collapse:collapse;font-size:12px;margin:.75rem 0;}
+.anchor-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:.5rem .75rem;border-bottom:1px solid var(--border);text-align:left;}
+.anchor-table td{padding:.6rem .75rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.65;}
+.anchor-table tr:last-child td{border-bottom:none;}
+.anchor-table .sc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);white-space:nowrap;min-width:80px;}
+.anchor-table .qc{color:var(--amber);font-size:12px;}
+.anchor-table .wc{color:var(--text2);font-size:12px;}
+.reality-table{width:100%;border-collapse:collapse;font-size:12px;margin:.75rem 0;}
+.reality-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .75rem;border-bottom:1px solid var(--border);text-align:left;}
+.reality-table th:nth-child(1){color:var(--text3);}
+.reality-table th:nth-child(2){color:var(--red);}
+.reality-table th:nth-child(3){color:var(--green);}
+.reality-table td{padding:.6rem .75rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;}
+.reality-table tr:last-child td{border-bottom:none;}
+.reality-table td:nth-child(1){color:var(--text);font-weight:500;font-size:11.5px;}
+.reality-table td:nth-child(2){color:rgba(217,95,95,.8);font-size:12px;}
+.reality-table td:nth-child(3){color:rgba(34,197,122,.85);font-size:12px;}
+.reality-table tr:hover td{background:rgba(255,255,255,.01);}
+.framework{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:1.1rem 1.25rem;margin:.75rem 0;}
+.framework-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--amber);margin-bottom:.75rem;}
+.fw-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:.55rem;}
+.fw-arrow{color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:11px;min-width:22px;margin-top:2px;}
+.fw-q{font-size:13px;font-weight:500;color:var(--text);line-height:1.5;}
+.fw-sub{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.6;}
+.hyp{background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:1rem 1.2rem;margin:.65rem 0;}
+.hyp-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.hyp-body{font-size:12.5px;color:var(--text2);line-height:1.75;}
+.hyp-body b{color:var(--text);font-weight:500;}
+.hyp-if{color:rgba(34,197,122,.85);font-size:12px;margin-top:.5rem;}
+.hyp-else{color:rgba(217,95,95,.75);font-size:12px;margin-top:.25rem;}
+.chart-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.1rem;margin:.75rem 0;}
+.chart-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem;}
+.chart-lbl{font-size:11px;color:var(--text3);}
+.chart-legend{display:flex;gap:14px;}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);}
+.leg-line{width:14px;height:2px;border-radius:1px;}
+.leg-dash{width:14px;border-top:1.5px dashed;display:inline-block;}
+.leg-dot{width:14px;border-top:1.5px dotted;display:inline-block;}
+.chart-area{position:relative;height:185px;width:100%;}
+.scen-btns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.6rem;}
+.sbtn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--text3);cursor:pointer;transition:all .1s;}
+.sbtn:hover{color:var(--text2);background:var(--bg3);}
+.sbtn.on{border-color:var(--green);color:var(--green);background:var(--g2);}
+.chart-note{font-size:12px;color:var(--text2);line-height:1.7;margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--border);}
+.chart-note b{color:var(--text);font-weight:500;}
+.mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--border);}
+.nav-btn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:6px 14px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:var(--text2);cursor:pointer;letter-spacing:.04em;transition:all .12s;}
+.nav-btn:hover{border-color:var(--green);color:var(--green);}
+.nav-btn:disabled{opacity:.2;cursor:default;}
+.nav-btn:disabled:hover{border-color:var(--border2);color:var(--text2);}
+.nav-prog{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="sidebar">
+  <div class="logo"><div class="logo-title">Skilled Reader</div><div class="logo-sub">Cont/Kukanov · Kyle · Hasbrouck · AMT</div></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog" style="width:12.5%"></div></div>
+  <div class="nav-group">
+    <div class="nav-group-label">Foundation</div>
+    <div class="ni active" onclick="go(0,this)" id="n0"><span class="ni-num">01</span>Context before signal</div>
+    <div class="ni" onclick="go(1,this)" id="n1"><span class="ni-num">02</span>OI as question</div>
+    <div class="ni" onclick="go(2,this)" id="n2"><span class="ni-num">03</span>CVD ambiguity</div>
+    <div class="ni" onclick="go(3,this)" id="n3"><span class="ni-num">04</span>VWAP honest limits</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">Applied</div>
+    <div class="ni" onclick="go(4,this)" id="n4"><span class="ni-num">05</span>Volume profile real read</div>
+    <div class="ni" onclick="go(5,this)" id="n5"><span class="ni-num">06</span>Sequence reading</div>
+    <div class="ni" onclick="go(6,this)" id="n6"><span class="ni-num">07</span>When not to trade</div>
+    <div class="ni" onclick="go(7,this)" id="n7"><span class="ni-num">08</span>The live process</div>
+  </div>
+</nav>
+<div class="main" id="ms">
+<div class="main-inner">
+
+<div class="mod active" id="m0">
+  <div class="eyebrow">Module 01 · Foundation</div>
+  <div class="mod-title">Context before signal</div>
+  <div class="mod-intro">Every signal in your toolkit is structurally incomplete without the sequence that preceded it. The same pattern means different things in different locations. <b>The retail error is to read the current candle. The skilled read begins several candles earlier.</b><br><br>The foundational basis: Cont, Kukanov &amp; Stoikov (Journal of Financial Econometrics, 2014) demonstrated using NYSE TAQ data for 50 stocks that price changes over short intervals are primarily driven by order flow imbalance — the imbalance between supply and demand at the best bid and ask. The slope of this relationship is inversely proportional to market depth. This means the same OFI produces different price impact depending on where it occurs. Location is not a discretionary preference — it is mathematically embedded in how price responds to flow.</div>
+
+  <div class="slabel">The interpretation hierarchy — this sequence, every time</div>
+  <table class="anchor-table">
+    <thead><tr><th>Step</th><th>The question</th><th>Why it comes first</th></tr></thead>
+    <tbody>
+      <tr><td class="sc">01 · Prior structure</td><td class="qc">Where has price been? What was OI doing for the last several candles? Was this a trending or balanced market?</td><td class="wc">The same bearish candle means opposite things after 8 hours of selling into an HVN versus after a break of a 6-hour balance area. Without this you are reading a word without its sentence.</td></tr>
+      <tr><td class="sc">02 · Location</td><td class="qc">Is price moving into liquidity or away from it? Approaching HVN, VWAP, weekly level, prior POC?</td><td class="wc">Location determines who is likely on the other side. New shorts below an HVN face a completely different absorption environment than new shorts entering open space below a broken balance area.</td></tr>
+      <tr><td class="sc">03 · During candle</td><td class="qc">Did CVD confirm or diverge from price? Did OI expand or contract? High or low volume relative to recent bars?</td><td class="wc">Only after establishing prior context does behavior during the candle become interpretable. Rising OI on a bearish candle means something specific only when you know what preceded it.</td></tr>
+      <tr><td class="sc">04 · Next candle</td><td class="qc">Did price accept or reject the move? Did OI continue? Did CVD sustain or reverse?</td><td class="wc">The candle you are analyzing is a hypothesis. The next candle is the first evidence that confirms or denies it. Most retail analysis stops at step 3 and never reaches step 4.</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <div class="slabel">Same OI pattern — two completely different markets</div>
+  <div class="chart-block">
+    <div class="chart-top">
+      <div class="chart-lbl" id="c1-lbl">Scenario A — selling into HVN (exhaustion)</div>
+      <div class="chart-legend">
+        <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+        <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+        <div class="leg"><div class="leg-dot" style="border-color:var(--oi)"></div>OI</div>
+      </div>
+    </div>
+    <div class="scen-btns">
+      <button class="sbtn on" onclick="s1(0,this)">A — into HVN</button>
+      <button class="sbtn" onclick="s1(1,this)">B — breaks acceptance</button>
+    </div>
+    <div class="chart-area"><canvas id="cv1"></canvas></div>
+    <div class="chart-note" id="c1-note"><b>Scenario A:</b> Price selling into a known HVN. Rising OI on bearish candles = late shorts piling in at a structural level. OI peaks and begins falling as those shorts exit. CVD bottoms before price reverses. The HVN absorbed. Prior context — extended selling into liquidity — determined the entire read before the final bearish candle printed.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">The cleaner framework — questions, not labels</div>
+  <div class="framework">
+    <div class="framework-title">Replace "bearish candle + rising OI = bearish" with this</div>
+    <div class="fw-step"><div class="fw-arrow">→</div><div><div class="fw-q">New positioning entered during downward movement.</div><div class="fw-sub">That is all OI tells you. Now ask the questions before assigning direction.</div></div></div>
+    <div class="fw-step"><div class="fw-arrow">01</div><div><div class="fw-q">Was price moving into liquidity or away from it?</div><div class="fw-sub">Into = absorption likely. Away from = continuation more likely.</div></div></div>
+    <div class="fw-step"><div class="fw-arrow">02</div><div><div class="fw-q">Did CVD confirm or diverge?</div><div class="fw-sub">Strongly negative CVD at a structural level is different from weakly negative CVD in open space.</div></div></div>
+    <div class="fw-step"><div class="fw-arrow">03</div><div><div class="fw-q">Did price gain acceptance lower?</div><div class="fw-sub">Acceptance = more candles, more volume, more time at lower prices. Rejection = fast return.</div></div></div>
+    <div class="fw-step"><div class="fw-arrow">04</div><div><div class="fw-q">Did OI continue expanding on subsequent candles?</div><div class="fw-sub">Continued expansion = fresh initiative. Contraction = position unwinding, move on borrowed time.</div></div></div>
+    <div class="fw-step"><div class="fw-arrow">05</div><div><div class="fw-q">Did the next candles sponsor continuation?</div><div class="fw-sub">This is the confirmation step. Everything above is a hypothesis. This is the evidence.</div></div></div>
+  </div>
+
+  <hr>
+  <div class="slabel">Institutional reality vs retail interpretation</div>
+  <table class="reality-table">
+    <thead><tr><th>Pattern</th><th>Retail interpretation</th><th>Institutional reality</th></tr></thead>
+    <tbody>
+      <tr><td>Sharp red candle + rising OI</td><td>Smart money shorting</td><td>Kyle (1985) showed informed traders restrict quantity to reduce impact — they do not blast market orders at obvious levels. Large visible CVD at obvious levels is more consistent with reactive or stop-driven flow than with informed initiative</td></tr>
+      <tr><td>Doji + falling OI after bearish candle</td><td>Consolidation before continuation</td><td>Structurally ambiguous — four distinct events produce identical falling OI. Prior context and next candle are the only resolution. Treating this as continuation without that context is a category error</td></tr>
+      <tr><td>Rising OI on bullish candle</td><td>Strong buying, trend confirmed</td><td>Kyle: market makers observe only total order flow, not whether it is informed or noise. Rising OI with rising CVD could be initiative longs, shorts absorbing, or market makers hedging delta. Context determines which.</td></tr>
+      <tr><td>Falling OI on any candle</td><td>Weak move, no conviction</td><td>Could be the dominant side taking profit at target — confirming the original thesis. Could be the losing side capitulating. Directional meaning requires knowing who held the position being closed.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout a"><b>The habit this module builds:</b> Before reading any signal, you have already established what preceded it, where price is structurally, and what location means for who is likely on the other side. The signal becomes a conditional question, not a conclusion.</div>
+</div>
+
+<div class="mod" id="m1">
+  <div class="eyebrow">Module 02 · Foundation</div>
+  <div class="mod-title">OI as question, not answer</div>
+  <div class="mod-intro">Open interest tells you that new contracts entered the market. It does not tell you which side initiated, whether they were right, or whether the move will continue. <b>Every OI interpretation is a hypothesis about who opened — which prior context must either support or undermine.</b><br><br>The theoretical basis: Kyle's 1985 model (Econometrica) established that market makers observe only total order flow — they cannot distinguish informed from uninformed orders. This is the same problem you face reading OI. The model showed informed traders deliberately restrict trade size to camouflage their information. Visible, aggressive, large-OI moves are therefore less likely to be informed than passive, gradual, low-visibility accumulation.</div>
+
+  <div class="slabel">What rising and falling OI actually tell you</div>
+  <div class="qblock">
+    <div class="qblock-label">Rising OI — the complete informational content</div>
+    <div class="qblock-q">New contracts entered the market during this candle.</div>
+    <div class="qblock-body">Four structurally different events produce identical rising OI:<br><br>
+    <b>1. Aggressive shorts entered</b> — initiative sellers driving price lower with conviction<br>
+    <b>2. Longs absorbed</b> — passive buyers accepting the other side of those shorts<br>
+    <b>3. Market makers hedged</b> — delta-neutral positioning, no directional intent<br>
+    <b>4. Both sides expanded</b> — balance auction, neither side dominant<br><br>
+    Prior context, location, and CVD narrow down which is most probable. They never eliminate the ambiguity entirely.</div>
+  </div>
+  <div class="qblock">
+    <div class="qblock-label">Falling OI — the complete informational content</div>
+    <div class="qblock-q">Existing contracts closed during this candle.</div>
+    <div class="qblock-body">Four structurally different events produce identical falling OI:<br><br>
+    <b>1. Trapped shorts took profit</b> — bullish for the move that trapped them<br>
+    <b>2. Trapped longs closed</b> — bearish, capitulation, downward move had legs<br>
+    <b>3. Passive absorption unwound</b> — the absorbing side exited after completing their position<br>
+    <b>4. Participation decay</b> — both sides reducing, no strong conviction either way<br><br>
+    A doji with falling OI after a bearish impulse is the canonical ambiguous case. All four readings are possible. Prior context and next candle are what resolve it.<br><br><b>Empirical note on hidden positioning:</b> Bessembinder et al. found iceberg orders account for approximately 44% of order volume on major exchanges. Frey &amp; Sandås (2009) showed iceberg orders on Xetra are on average 12–20× larger than visible limit orders. This means a significant fraction of the "passive absorption" case — longs absorbed on the other side of aggressive selling — is structurally invisible to OI until the position is complete. Falling OI on the doji may therefore reflect the absorbing side exiting after completing an invisible accumulation, not weakness.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">The two-scenario example — identical OI pattern, opposite reads</div>
+  <div class="chart-block">
+    <div class="chart-top">
+      <div class="chart-lbl" id="c2-lbl">Scenario A — exhaustion into HVN</div>
+      <div class="chart-legend">
+        <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+        <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+        <div class="leg"><div class="leg-dot" style="border-color:var(--oi)"></div>OI</div>
+      </div>
+    </div>
+    <div class="scen-btns">
+      <button class="sbtn on" onclick="s2(0,this)">A — exhaustion</button>
+      <button class="sbtn" onclick="s2(1,this)">B — continuation</button>
+    </div>
+    <div class="chart-area"><canvas id="cv2"></canvas></div>
+    <div class="chart-note" id="c2-note"><b>Scenario A — exhaustion:</b> Bearish impulse 104→102k. High volume, OI +12k, strongly negative CVD. Into HVN. Doji: medium volume, OI -6k, flat CVD. Recovery: volume rising, OI flat, CVD positive. Shorts entered aggressively then reduced. Downside lost sponsorship. The doji with falling OI was the clue — the recovery candle was the confirmation.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">What determines the OI read — prior context, location, next candle</div>
+  <table class="anchor-table">
+    <thead><tr><th>Step</th><th>The question</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="sc">Prior OI trend</td><td class="qc">Was OI already rising into this candle, or did it spike suddenly?</td><td class="wc">Gradual OI rise = systematic positioning. Sudden spike = reactive. Reactive positioning at structural levels is the most common exhaustion signature.</td></tr>
+      <tr><td class="sc">CVD character</td><td class="qc">Was CVD strongly aligned or neutral?</td><td class="wc">Rising OI with strongly negative CVD = aggressive side is sellers. Neutral CVD = both sides expanding, no dominant initiator. CVD identifies who was aggressive; OI tells you the size of the bet.</td></tr>
+      <tr><td class="sc">Location</td><td class="qc">Entering a high-volume area or leaving one?</td><td class="wc">OI rising into an HVN is structurally suspect — absorption has structural support. OI rising as price leaves an HVN into open space has a cleaner continuation read.</td></tr>
+      <tr><td class="sc">Next candle OI</td><td class="qc">Does OI continue rising, flatten, or fall?</td><td class="wc">Continued expansion = fresh conviction. Flattening or falling immediately = reactive positioning already being unwound. This is your confirmation step.</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <div class="slabel">Institutional reality vs retail interpretation</div>
+  <table class="reality-table">
+    <thead><tr><th>OI behavior</th><th>Retail interpretation</th><th>Institutional reality</th></tr></thead>
+    <tbody>
+      <tr><td>Rising OI on bearish candle</td><td>Bearish continuation confirmed</td><td>Ambiguous until location and CVD assessed. Below obvious lows, into HVNs — often the opposite: late shorts entering into absorption</td></tr>
+      <tr><td>Falling OI on doji</td><td>Consolidation, directionless</td><td>Often the clearest signal in the sequence — who is reducing tells you whose thesis is failing. Requires CVD and next candle to identify which side</td></tr>
+      <tr><td>OI flat during strong CVD move</td><td>Weak move, no institutional interest</td><td>Passive absorption — a large player taking the other side with limit orders. Often precedes sharp reversal</td></tr>
+      <tr><td>Steadily rising OI, flat price</td><td>No signal, ignore</td><td>Both sides building, coiled. The break when it comes will have real fuel. One of the strongest pre-move signatures.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout a"><b>The habit this module builds:</b> When you see any OI reading, your first internal statement is "new contracts entered" or "contracts closed" — and nothing more. The interpretation is built from prior context, location, and CVD. The OI reading opens the question. It never closes it.</div>
+  <div class="callout" style="border-left-color:var(--red);background:var(--r2);margin-top:.6rem"><b>On flow toxicity metrics (VPIN):</b> Easley, López de Prado &amp; O'Hara developed VPIN at Tudor Investment Corp as a real-time measure of order flow toxicity — distinguishing informed from uninformed flow using volume-synchronized buy/sell imbalance. However, subsequent independent research found VPIN's predictive power for short-run volatility is contested, and critics argue its apparent predictive content is partly mechanical. The underlying concept — that order flow imbalance contains information about who is trading — is empirically grounded. The specific implementation remains disputed. Use the concept; be skeptical of any single metric that claims to resolve the ambiguity mechanically.</div>
+</div>
+
+<div class="mod" id="m2">
+  <div class="eyebrow">Module 03 · Foundation</div>
+  <div class="mod-title">CVD ambiguity</div>
+  <div class="mod-intro">CVD measures which side was aggressive — who crossed the spread. It does not measure who was right, who was institutional, or whether the move will continue. <b>CVD is the most reactive signal in your toolkit, which makes it the most susceptible to misreading under time pressure.</b><br><br>What the research confirms: Cont et al. (2014) established a linear relationship between order flow imbalance and price changes, with the slope inversely proportional to market depth. This means CVD has genuine short-horizon predictive content — but only when market depth is consistent and the flow is not contaminated by spoofing, stops, or arbitrage. The five events below all produce identical CVD. Only one of them has continuation implications.</div>
+
+  <div class="slabel">Five events that produce identical positive CVD</div>
+  <div class="qblock">
+    <div class="qblock-label">CVD positive — the complete informational content</div>
+    <div class="qblock-q">More contracts traded at the ask than at the bid during this period.</div>
+    <div class="qblock-body">
+    <b>1. Initiative longs entering</b> — genuine directional conviction, new money, trend fuel<br>
+    <b>2. Short covering</b> — not bullish conviction, positional unwinding with a ceiling<br>
+    <b>3. Stop-driven buying</b> — shorts stopped out, mechanical flow that exhausts when stops clear<br>
+    <b>4. Spoof-induced buying</b> — retail reacting to a manufactured DOM signal. Legally documented: the CFTC's enforcement action against Navinder Singh Sarao established that his layering algorithm placed large visible sell orders into the E-mini S&amp;P order book, induced reactive buying from other participants, then cancelled before fill. The resulting CVD was entirely real — it came from genuinely executed market orders. The intent was manufactured.<br>
+    <b>5. Arbitrage execution</b> — cross-venue or cross-instrument flow, no directional intent<br><br>
+    Cases 1 and 2 produce opposite implications for continuation. Cases 3–5 reverse entirely when the trigger exhausts. CVD alone cannot distinguish between them.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">When CVD carries signal — and when it is noise</div>
+  <table class="anchor-table">
+    <thead><tr><th>Condition</th><th>CVD reliability</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="sc">CVD + OI both rising</td><td class="qc">Higher — new money entering aggressively</td><td class="wc">Suggests initiative positioning, not unwinding. Still requires location check — initiative into an HVN is a different bet than into open space.</td></tr>
+      <tr><td class="sc">CVD rising + OI falling</td><td class="qc">Lower — short covering</td><td class="wc">Aggression from a side closing, not opening. Move exhausts when short inventory clears.</td></tr>
+      <tr><td class="sc">CVD spike at structural level</td><td class="qc">Low — suspect until next candle</td><td class="wc">Structural levels concentrate stops and reactive orders. A CVD spike at a key level is as likely stop-driven as initiative. Always wait for next candle.</td></tr>
+      <tr><td class="sc">CVD diverging from price</td><td class="qc">High — the most informative state</td><td class="wc">Price moving without CVD confirmation means one side is dominant passively. The real institutional footprint shows in what CVD is NOT doing relative to price.</td></tr>
+      <tr><td class="sc">Single exchange CVD spike</td><td class="qc">Very low</td><td class="wc">Real institutional flow distributes across venues. Spike on one exchange with no aggregated confirmation is venue-specific — arb, spoof, or single large retail order.</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <div class="slabel">CVD divergence — where the real signal lives</div>
+  <div class="chart-block">
+    <div class="chart-top">
+      <div class="chart-lbl" id="c3-lbl">Hidden selling — price rising, CVD failing to confirm</div>
+      <div class="chart-legend">
+        <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+        <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+      </div>
+    </div>
+    <div class="scen-btns">
+      <button class="sbtn on" onclick="s3(0,this)">Hidden selling</button>
+      <button class="sbtn" onclick="s3(1,this)">Mechanical flow</button>
+      <button class="sbtn" onclick="s3(2,this)">Stop-driven spike</button>
+    </div>
+    <div class="chart-area"><canvas id="cv3"></canvas></div>
+    <div class="chart-note" id="c3-note"><b>Hidden selling:</b> Price makes higher highs. CVD gains less ground on each push — confirming less of each price advance. Passive sellers absorb every aggressive buy. The retail read is "positive CVD, bullish." The skilled read is "CVD is diverging from price — the move is running on diminishing fuel." When aggressive buyers exhaust, the passive sellers hold inventory and control the next move.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">Institutional reality vs retail interpretation</div>
+  <table class="reality-table">
+    <thead><tr><th>CVD pattern</th><th>Retail interpretation</th><th>Institutional reality</th></tr></thead>
+    <tbody>
+      <tr><td>Large CVD spike in direction of move</td><td>Institutional conviction, follow it</td><td>Often the most dangerous moment — stop-driven or reactive flow at peak emotion. The spike is real; the continuation implication usually is not</td></tr>
+      <tr><td>CVD flat during price move</td><td>Weak move, no conviction, ignore</td><td>Passive accumulation or distribution. Someone moving price without aggression has inventory and patience — far more dangerous than an aggressive spike</td></tr>
+      <tr><td>Strong negative CVD at obvious level</td><td>Breakdown confirmed</td><td>Highest probability of stop-triggering and short-trap. The more obvious the level, the more suspect the CVD</td></tr>
+      <tr><td>CVD diverging from price over multiple candles</td><td>Mixed signals, confusing</td><td>The most informative CVD state. One side is building passively. The divergence is the signal, not the noise.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout a"><b>The habit this module builds:</b> You read CVD against price direction, not with it. Your first question is not "is CVD going up or down" but "is CVD doing what price says it should, and if not, what does that discrepancy mean about who is absorbing whom."</div>
+</div>
+
+<div class="mod" id="m3">
+  <div class="eyebrow">Module 04 · Foundation</div>
+  <div class="mod-title">VWAP — honest limits</div>
+  <div class="mod-intro">VWAP is a volume-weighted average price. It is the benchmark many institutional execution algorithms are measured against. That creates real behavioral consequences around it. But those consequences are <b>regime-dependent, session-dependent, and event-dependent</b> — and they break down completely in conditions you will regularly encounter.</div>
+
+  <div class="slabel">Where VWAP has genuine meaning — and where it doesn't</div>
+  <div class="qblock">
+    <div class="qblock-label">The institutional basis — what makes VWAP real</div>
+    <div class="qblock-q">Execution desks with VWAP mandates are measured on fill quality relative to session VWAP.</div>
+    <div class="qblock-body">This creates real buy pressure below VWAP and sell pressure above it from this specific participant class. FINRA Rule 5310 requires broker-dealers to demonstrate best execution, and VWAP gives firms a concrete benchmark for regulatory compliance. Busseti &amp; Boyd (Stanford, 2015) modelled optimal VWAP execution as a mean-variance minimisation problem — these algorithms are real, they dominate large-cap institutional order flow, and their benchmark creates measurable behavioral consequences around VWAP throughout the session.<br><br>The behavioral consequences are most reliable in <b>liquid, high-volume, non-trending sessions</b> with strong institutional participation. The key word is mandate — not all institutional flow has VWAP mandates. Prop desks, HFTs, and hedge funds will buy well above and sell well below VWAP when their thesis requires it.</div>
+  </div>
+
+  <div class="qblock">
+    <div class="qblock-label">Regime 1 — strong trend sessions</div>
+    <div class="qblock-q">Price walks away from VWAP and does not return.</div>
+    <div class="qblock-body">In a strong trend, VWAP becomes progressively less relevant. Price extended above VWAP in a bull trend is not "expensive" — it is where the market is going. Trading reversions to VWAP in a trending session means fading the dominant directional flow. The tell: VWAP slope is steep and price has not tested it in several hours.</div>
+  </div>
+
+  <div class="qblock">
+    <div class="qblock-label">Regime 2 — post-news event</div>
+    <div class="qblock-q">The session VWAP is anchored to a pre-news distribution that no longer exists.</div>
+    <div class="qblock-body">After a significant news event reprices the market, the session VWAP reflects the average of two different markets. Price "returning to VWAP" post-news is returning to an artifact. Switch immediately to a post-event anchored VWAP from the candle after the reprice.</div>
+  </div>
+
+  <div class="qblock">
+    <div class="qblock-label">Regime 3 — repeated VWAP tests</div>
+    <div class="qblock-q">Each successive failed test changes the meaning of the next one.</div>
+    <div class="qblock-body">First test — genuine decision point, two-sided. Second test — the defenders are still there, first-test buyers are underwater, probability of hold increases. Third test — the market is demonstrating that VWAP is a ceiling, not a fair value reference. Each failed test is not "building support" — it is evidence that one side is consistently winning. The fourth test often produces capitulation flush, not another rejection.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">Institutional reality vs retail interpretation</div>
+  <table class="reality-table">
+    <thead><tr><th>VWAP behavior</th><th>Retail interpretation</th><th>Institutional reality</th></tr></thead>
+    <tbody>
+      <tr><td>Price at VWAP</td><td>Support/resistance level — trade the bounce</td><td>A reference point for some participants. Behavior depends entirely on who is present and what regime the session is in. Not a rule.</td></tr>
+      <tr><td>Third VWAP rejection</td><td>Strong resistance confirmed — short it</td><td>Sellers are consistently winning here — but the buyers below VWAP are accumulating a losing position. Watch for sudden capitulation flush, not just another rejection</td></tr>
+      <tr><td>Price extended above VWAP</td><td>Overbought, mean reversion due</td><td>In a trending session this is where price is going. Extension is only meaningful in non-trending sessions — which requires independent assessment</td></tr>
+      <tr><td>VWAP reclaim after news</td><td>Bullish recovery</td><td>VWAP is anchored to pre-news distribution. The reclaim is meaningless unless re-anchored to post-event price action</td></tr>
+    </tbody>
+  </table>
+  <div class="callout a"><b>The habit this module builds:</b> Before using VWAP as a reference, you identify the session regime — trending, ranging, or post-event. You note how many times VWAP has been tested and what each test produced. You verify the anchor is valid. Only then does VWAP enter your read.</div>
+</div>
+
+<div class="mod" id="m4">
+  <div class="eyebrow">Module 05 · Applied</div>
+  <div class="mod-title">Volume profile — the real read</div>
+  <div class="mod-intro">Volume profile tells you where two-sided business was done and where one side dominated. HVNs and LVNs are not support and resistance — they are <b>descriptions of past auction behavior that create probabilistic tendencies, not certainties</b>. Understanding what they describe changes how you use them.</div>
+
+  <div class="prose">The foundational source: J. Peter Steidlmayer developed Market Profile at the Chicago Board of Trade in the 1980s, formalising observations from his time as a pit trader. The core principle — that price is an advertising mechanism that moves to find the other side, and that time/volume at a level measures acceptance — is practitioner theory from the exchange floor, later documented in <em>Markets and Market Logic</em> (1986) and expanded by James Dalton in <em>Mind Over Markets</em> (1993). Volume Profile is the electronic-era evolution of this framework, replacing time-at-price with contracts-transacted-at-price.</div>
+  <div class="prose">An HVN exists because buyers and sellers agreed to do large business at that price — a resolved disagreement where both sides transacted heavily. The probabilistic tendency: price returns to HVNs because both sides have inventory there and will defend or offload it when price revisits. An LVN exists because one side dominated completely — an unresolved auction where price moved through quickly because there was no opposing interest. Price moves through LVNs fast because there is no inventory to absorb momentum. These are tendencies, not rules — and they depend critically on whether the original participants who created those nodes are still present. A same-session HVN has live defenders. A 3-week-old HVN may be an empty shell.</div>
+
+  <hr>
+  <div class="slabel">Profile behavior at nodes — what CVD and OI tell you about what is happening</div>
+  <div class="chart-block">
+    <div class="chart-top">
+      <div class="chart-lbl" id="c4-lbl">Price approaches HVN — absorption vs break</div>
+      <div class="chart-legend">
+        <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+        <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+        <div class="leg"><div class="leg-dot" style="border-color:var(--oi)"></div>OI</div>
+      </div>
+    </div>
+    <div class="scen-btns">
+      <button class="sbtn on" onclick="s4(0,this)">Approach + absorption</button>
+      <button class="sbtn" onclick="s4(1,this)">Approach + break through</button>
+    </div>
+    <div class="chart-area"><canvas id="cv4"></canvas></div>
+    <div class="chart-note" id="c4-note"><b>Approach + absorption:</b> Positive CVD drives price into a known HVN. At the node, CVD stalls — each aggressive buy is absorbed. OI rises as new shorts enter to defend. Price stops despite continued buy flow. The profile said the HVN was there. OI and CVD at the node confirmed absorption. The trade is not to follow CVD into the node — it is to read what happens when the node is tested.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">Reading the profile in real time — the questions</div>
+  <table class="anchor-table">
+    <thead><tr><th>Step</th><th>The question</th><th>What it narrows</th></tr></thead>
+    <tbody>
+      <tr><td class="sc">Before arrival</td><td class="qc">Is the nearest node from current session or prior session?</td><td class="wc">Same-session nodes have participants with live positions. Prior-session nodes may be empty shells. Adjust probability accordingly.</td></tr>
+      <tr><td class="sc">On approach</td><td class="qc">Is OI rising, flat, or falling on the approach?</td><td class="wc">Rising OI on approach = someone positioning for the node. Flat = momentum carry. Falling = approach is a squeeze, not a genuine test.</td></tr>
+      <tr><td class="sc">At the node</td><td class="qc">Does CVD stall, reverse, or accelerate?</td><td class="wc">Stalling CVD = absorption active. Accelerating through = defending side absent, genuine break. Price slowing at LVN without CVD reversal = exhaustion, not accumulation.</td></tr>
+      <tr><td class="sc">After the test</td><td class="qc">Does price accept or reject? Does OI continue or reverse?</td><td class="wc">Acceptance = more candles, more volume at node level. OI continuing to rise after test = fresh positioning created. OI falling = test consumed positioning, move losing fuel.</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <div class="slabel">Institutional reality vs retail interpretation</div>
+  <table class="reality-table">
+    <thead><tr><th>Profile behavior</th><th>Retail interpretation</th><th>Institutional reality</th></tr></thead>
+    <tbody>
+      <tr><td>Price at HVN</td><td>Strong support/resistance — trade the bounce</td><td>Two-sided activity likely — but which side wins depends on who has fresher positioning and whether current move has initiative backing. The HVN is the arena, not the outcome.</td></tr>
+      <tr><td>Price through LVN quickly</td><td>Momentum confirmed — follow it</td><td>LVN breaks fueled by short covering (OI falling) exhaust quickly. LVN breaks fueled by new initiative (OI rising) continue. Break character determines the trade.</td></tr>
+      <tr><td>Price returns to prior HVN</td><td>Re-test of support, buy opportunity</td><td>Depends entirely on whether original participants are still there. Check OI behavior on revisit — is there defensive positioning or none?</td></tr>
+      <tr><td>POC far from current price</td><td>Mean reversion due</td><td>Only in balanced sessions. In trending sessions the POC migrates with price. Distance from POC in a trend describes how strong the trend is, not a reversion signal.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout a"><b>The habit this module builds:</b> You use volume profile to know the terrain before price arrives. The profile raises the question. OI and CVD behavior at the test answers it.</div>
+</div>
+
+<div class="mod" id="m5">
+  <div class="eyebrow">Module 06 · Applied</div>
+  <div class="mod-title">Sequence reading</div>
+  <div class="mod-intro">Sequence reading is the integration of all four tools across multiple candles simultaneously — not the identification of a pattern, but the construction of <b>a conditional hypothesis with explicit invalidation conditions</b>. A trade only exists when a hypothesis has been formed and the market has begun confirming it.</div>
+
+  <div class="slabel">The canonical sequence — bearish impulse, doji, resolution</div>
+  <div class="chart-block">
+    <div class="chart-top">
+      <div class="chart-lbl" id="c5-lbl">Exhaustion sequence — prior context determines the entire read</div>
+      <div class="chart-legend">
+        <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+        <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+        <div class="leg"><div class="leg-dot" style="border-color:var(--oi)"></div>OI</div>
+      </div>
+    </div>
+    <div class="scen-btns">
+      <button class="sbtn on" onclick="s5(0,this)">A — exhaustion confirmed</button>
+      <button class="sbtn" onclick="s5(1,this)">B — hypothesis invalidated</button>
+    </div>
+    <div class="chart-area"><canvas id="cv5"></canvas></div>
+    <div class="chart-note" id="c5-note"><b>Exhaustion sequence:</b> Prior context: 6 candles of selling from above VWAP into a known HVN. OI rising on sell candles — reactive, not initiative. Bearish impulse: high volume, OI +12k, negative CVD — into the HVN. Hypothesis: late shorts at a structural level. Doji: OI -6k, CVD flat — shorts reducing. Recovery candle: positive CVD, flat OI, rising volume — confirmation. Invalidation condition was OI re-expanding on next bearish candle. It did not. Hypothesis held.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">Building a conditional hypothesis — the structure</div>
+  <div class="hyp">
+    <div class="hyp-label">Hypothesis format — the internal monologue</div>
+    <div class="hyp-body"><b>Prior context establishes the frame:</b> "Price has been selling for 6 candles into a known HVN. OI rising on sell candles — reactive positioning entering a structural level, not initiative selling below it."<br><br>
+    <b>Current candle raises the question:</b> "Bearish impulse with high volume and negative CVD. Rising OI. Is this initiative selling or late shorts at the structural level where longs have inventory?"<br><br>
+    <b>Location narrows it:</b> "We are at the HVN. Absorption is the competing hypothesis and it has structural support. The prior context — selling into the level — supports exhaustion over continuation."<br><br>
+    <b>The hypothesis:</b> "This is likely late shorts entering into absorption. The doji and next candle will confirm or deny."</div>
+    <div class="hyp-if">Confirmation: doji with falling OI, then recovery with positive CVD and no new OI expansion. Thesis holds. Entry after recovery candle closes.</div>
+    <div class="hyp-else">Invalidation: next candle bearish with OI re-expanding and CVD strongly negative again. Initiative sellers are present at this level. Abandon the long hypothesis immediately.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">The four tools read simultaneously — what each contributes</div>
+  <table class="anchor-table">
+    <thead><tr><th>Tool</th><th>What you're reading</th><th>The question it raises</th></tr></thead>
+    <tbody>
+      <tr><td class="sc">Volume profile</td><td class="qc">Where is price relative to known auction history?</td><td class="wc">Sets the terrain. Tells you whether absorption, defense, or fast transit is most probable. Does not tell you which is happening — only which is likely given location.</td></tr>
+      <tr><td class="sc">OI slope</td><td class="qc">Is the rate of new positioning accelerating, decelerating, or reversing?</td><td class="wc">Slope change is more informative than level. Cont et al.'s finding that price impact slope is inversely proportional to market depth means a decelerating OI slope at a high-volume area indicates the defending side is absorbing flow — the slope is telling you about depth, not just positioning. The inflection is the signal, not the level.</td></tr>
+      <tr><td class="sc">VWAP position</td><td class="qc">Is the current move accepting or rejecting institutional fair value?</td><td class="wc">In valid VWAP conditions, tells you whether execution-mandate flow is with or against the current move. First verify the session regime is one where VWAP is meaningful.</td></tr>
+      <tr><td class="sc">Aggregated CVD</td><td class="qc">Is the aggression consistent with what price and OI are saying — or diverging?</td><td class="wc">Last read. If it confirms what the other three already suggest, the signal is coherent. If it contradicts, the contradiction is the signal — something is being absorbed that CVD alone cannot explain.</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <div class="slabel">Institutional reality vs retail interpretation</div>
+  <table class="reality-table">
+    <thead><tr><th>Sequence pattern</th><th>Retail interpretation</th><th>Institutional reality</th></tr></thead>
+    <tbody>
+      <tr><td>All tools align in one candle</td><td>Maximum confluence — size up</td><td>Most dangerous moment for a momentum cascade. Ask: were 3 of 4 already aligned before this candle? If not, one event is generating four simultaneous lagging reflections.</td></tr>
+      <tr><td>Conflicting signals across tools</td><td>No trade — signals mixed</td><td>Often the most information-rich state. Tools disagreeing means a genuine decision point. Map the disagreement: which tool has the higher claim in this context?</td></tr>
+      <tr><td>OI inflection before price move</td><td>Usually not noticed</td><td>The lead signal. Positioning changes before price reflects it. OI slope change 1–2 candles before the price move is the lead, not the lag.</td></tr>
+      <tr><td>High volume, no price movement</td><td>Random noise</td><td>Two-sided business resolving. Price will move sharply when one side exhausts. OI and CVD during this period identify which side is building.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout a"><b>The habit this module builds:</b> You never say "this is a long signal." You say "my hypothesis is X, which requires Y to happen next to confirm, and if Z happens instead I am wrong and the thesis is abandoned." The hypothesis and its invalidation condition exist simultaneously before you act.</div>
+</div>
+
+<div class="mod" id="m6">
+  <div class="eyebrow">Module 07 · Applied</div>
+  <div class="mod-title">When not to trade</div>
+  <div class="mod-intro">The skilled reader's most important ability is recognizing when available information is <b>structurally insufficient to form a high-probability hypothesis</b>. Most frameworks teach entry. This module is about the conditions under which no framework produces reliable signal.</div>
+
+  <div class="qblock">
+    <div class="qblock-label">Condition 1 — Mechanical execution flow</div>
+    <div class="qblock-q">Rhythmic, level-insensitive CVD with consistent increments regardless of structure.</div>
+    <div class="qblock-body">A large institution executing a systematic order — rebalance, redemption, index reconstitution — produces CVD that does not respond to HVNs, VWAP, or structural levels. It sells through support at a consistent pace. Research basis: Harvey, Mazzoleni &amp; Melone (NBER Working Paper 2025) on "The Unintended Consequences of Rebalancing" documented that mechanical rebalancing flows create predictable, level-insensitive order flow. The tell: consistent CVD increment size across multiple candles regardless of price level. No acceleration at LVNs, no deceleration at HVNs. This is not a directional trade — it is someone else's execution order. Wait for it to end, then trade the reversal.</div>
+  </div>
+  <div class="qblock">
+    <div class="qblock-label">Condition 2 — Pre-event window</div>
+    <div class="qblock-q">Any signal in the 15–30 minutes before a known macro catalyst.</div>
+    <div class="qblock-body">Order flow before a major event reflects positioning and hedging about the event — not the market's current fair value assessment. OI rising before a Fed announcement is not initiative positioning in the current market. After the event: re-anchor VWAP, re-assess the profile, wait for the first post-event OI reading to show where new initiative positioning is coming from.</div>
+  </div>
+  <div class="qblock">
+    <div class="qblock-label">Condition 3 — Genuine balance area</div>
+    <div class="qblock-q">Price oscillating with two-sided OI, flat CVD, no structural bias.</div>
+    <div class="qblock-body">In genuine balance, both sides are active and neither is dominant. Every signal your framework generates will be a false one. The setup is not inside the balance — it is the break from it. Watch for OI rising on one side of the range with CVD confirming, VWAP being abandoned in one direction, profile developing a skewed distribution. These precede the break. Trade the break, not the oscillation.</div>
+  </div>
+  <div class="qblock">
+    <div class="qblock-label">Condition 4 — Thin or illiquid conditions</div>
+    <div class="qblock-q">OI and CVD signals on materially lower volume than the reference session.</div>
+    <div class="qblock-body">In thin conditions, small orders move OI and CVD disproportionately. The institutional behavior that gives these signals meaning — VWAP mandates, structural HVN defense, systematic hedging — is largely absent. If current volume is below 30% of the reference session average, treat all OI and CVD signals as structurally unreliable until volume normalizes.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">Setups that look clean and aren't</div>
+  <table class="reality-table">
+    <thead><tr><th>Pattern</th><th>Why it looks like a trade</th><th>Why it often isn't</th></tr></thead>
+    <tbody>
+      <tr><td>Multiple VWAP rejections</td><td>Three rejections — resistance confirmed</td><td>Buyers below VWAP are accumulating a losing position. The next break may be a capitulation flush, not another rejection. Both are structurally plausible — you cannot know which without OI behavior at the fourth test</td></tr>
+      <tr><td>Perfect confluence at an obvious level</td><td>Textbook setup, high probability</td><td>The cleanest setups at the most obvious levels attract the most reactive flow. Stops, breakout orders, and retail concentrate there. The cleaner the level, the more likely it is being used as a liquidity extraction point</td></tr>
+      <tr><td>Doji at HVN with falling OI</td><td>Accumulation / reversal incoming</td><td>Structurally ambiguous — could be exhaustion, could be a pause before continuation. Without the next candle you have a question, not a signal. Trading the doji is trading before the evidence exists</td></tr>
+      <tr><td>Post-liquidation bounce with positive CVD</td><td>Recovery confirmed, long</td><td>Post-liquidation bounces are short covering — OI falling. They exhaust when short inventory clears. CVD is real; continuation implication is not. Check OI during the bounce.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout a"><b>The habit this module builds:</b> Before forming a hypothesis, you first ask whether the conditions exist for reliable signal formation. If you are in a pre-event window, thin session, mechanical flow environment, or genuine balance area — you are not looking for a trade. You are watching and waiting for the conditions that allow your framework to function.</div>
+</div>
+
+<div class="mod" id="m7">
+  <div class="eyebrow">Module 08 · Synthesis</div>
+  <div class="mod-title">The live process</div>
+  <div class="mod-intro">What follows is not a checklist. It is a description of the internal process of a skilled reader in a live market — the actual sequence of questions, the conditional structure of the reasoning, and where a setup becomes a trade or doesn't. <b>The goal is to make this process automatic through repetition, not to execute it consciously.</b></div>
+
+  <div class="slabel">The internal process — before the session, early session, setup, confirmation</div>
+
+  <div class="hyp">
+    <div class="hyp-label">Before the session</div>
+    <div class="hyp-body">Where did the prior session close relative to its POC and value area? Is overnight inventory net long or short relative to where fair value was established? What are the key structural levels price will encounter in the first hour? Where does this session open relative to VWAP, and what does that mean for the first directional test?<br><br>
+    <b>This is map-making, not signal-reading.</b> The terrain is established before the first candle prints.</div>
+  </div>
+
+  <div class="hyp">
+    <div class="hyp-label">First 30 minutes</div>
+    <div class="hyp-body">Is price accepting or rejecting the overnight range? Is OI expanding or contracting on early moves — initiative or responsive? Is CVD consistent with a directional bias or oscillating? Is the session trending, balanced, or reacting to an event?<br><br>
+    <b>No trades in most sessions until character is established.</b> Trading before character means trading without context.</div>
+    <div class="hyp-if">OI rising consistently in one direction with CVD confirming and price accepting: session is trending. Hypothesis formation adjusts — VWAP is less relevant, profile LVN breaks are more reliable.</div>
+    <div class="hyp-else">OI oscillating with two-sided CVD: session is balanced. No directional trades until the balance resolves and the break is confirmed.</div>
+  </div>
+
+  <div class="hyp">
+    <div class="hyp-label">When a potential setup appears</div>
+    <div class="hyp-body">The first question is not "what is this signal." The first question is "what preceded this, and where is price?"<br><br>
+    Prior context first — what has OI been doing for the last 3–6 candles? Was the move into this level initiative or reactive? Does the current location change the meaning of the current signal?<br><br>
+    Then the signal — what is OI doing? What is CVD doing relative to price? Are they telling the same story? If different, which has the higher claim in this context?<br><br>
+    Then the hypothesis — what would have to be true for this signal to mean what it appears to mean? What do the next 1–2 candles need to do to confirm? What would invalidate it?</div>
+    <div class="hyp-if">Hypothesis has a clean confirmation condition and prior context supports it: the setup exists. Wait for confirmation before entry.</div>
+    <div class="hyp-else">Prior context is ambiguous, location is an obvious retail level, or signals require too many favorable assumptions: no trade. The setup does not exist yet.</div>
+  </div>
+
+  <div class="hyp">
+    <div class="hyp-label">At the confirmation candle</div>
+    <div class="hyp-body">The confirmation candle answers the hypothesis. For an exhaustion read: does price recover, does OI stay flat or fall, does CVD turn positive? For continuation: does OI re-expand, does CVD sustain, does price accept the next level?<br><br>
+    <b>The confirmation candle is not the entry candle.</b> It is the evidence candle. Entering during confirmation means entering before the evidence is complete. Entry is after confirmation — which gives up some of the move in exchange for probability. That is the correct trade.</div>
+    <div class="hyp-if">Confirmation complete: entry. Stop defined by the invalidation condition — the price or OI/CVD behavior that means the hypothesis is wrong.</div>
+    <div class="hyp-else">Partial or ambiguous confirmation: no entry. Reformulate with the new information. The market gave you more data — update the read, do not force the original thesis.</div>
+  </div>
+
+  <hr>
+  <div class="slabel">The three anchors — running through every read, every session</div>
+
+  <div class="framework">
+    <div class="framework-title">Anchor 1 — The interpretation structure</div>
+    <div class="fw-step"><div class="fw-arrow">→</div><div><div class="fw-q">Prior context → location → behavior during → next candle. Always in that order.</div><div class="fw-sub">Skipping prior context to read the current signal is the primary source of false reads. Every time you are tempted to act on a signal, ask first: what preceded this, and where is price? The answer to those two questions determines whether the signal means anything.</div></div></div>
+  </div>
+
+  <div class="framework">
+    <div class="framework-title">Anchor 2 — The cleaner framework</div>
+    <div class="fw-step"><div class="fw-arrow">→</div><div><div class="fw-q">New positioning entered. Now ask five questions before assigning direction.</div><div class="fw-sub">Was price moving into liquidity or away from it? Did CVD confirm or diverge? Did price gain acceptance? Did OI continue expanding? Did subsequent candles sponsor continuation? Without all five, the read is structurally incomplete. A label without answers to these questions is a retail shorthand, not an analysis.</div></div></div>
+  </div>
+
+  <div class="framework">
+    <div class="framework-title">Anchor 3 — Institutional reality</div>
+    <div class="fw-step"><div class="fw-arrow">→</div><div><div class="fw-q">Before acting on any pattern, state what it most commonly represents in institutional terms — not what it looks like.</div><div class="fw-sub">Sharp red candle + rising OI at an obvious level is most commonly late breakout shorts entering into liquidity — not smart money shorting. Doji + falling OI after that is most commonly short covering after liquidity extraction — not consolidation. The retail reading and the institutional reality are structurally opposed at exactly the locations where retail concentrates. That opposition is not accidental.</div></div></div>
+  </div>
+
+  <hr>
+  <div class="slabel">The complete picture — institutional reality across all patterns</div>
+  <table class="reality-table">
+    <thead><tr><th>What you see</th><th>Retail interpretation</th><th>Institutional reality</th></tr></thead>
+    <tbody>
+      <tr><td>Clean setup at obvious level</td><td>High probability — level confirmed</td><td>The more obvious the level, the more retail is positioned there, the more useful it is as a liquidity source. Obvious levels are extraction points, not trade locations.</td></tr>
+      <tr><td>All signals align suddenly</td><td>Maximum confluence — enter now</td><td>Ask whether 3 of 4 were already aligned before the last candle. If not, you are watching one event generate four simultaneous lagging reflections — momentum cascade, not independent confirmation.</td></tr>
+      <tr><td>Conflicting, ambiguous signals</td><td>No setup, move on</td><td>Conflicting signals at a structural level mean a genuine decision point. The highest-quality setups form here — but they require waiting for resolution, not acting on the conflict.</td></tr>
+      <tr><td>Long period of low CVD, flat OI</td><td>Dead market, nothing happening</td><td>Passive accumulation or distribution in progress. The absence of aggression at a structural level is itself a signal. When the passive positioning completes, the move will be large and fast.</td></tr>
+      <tr><td>OI slope change before price moves</td><td>Usually not noticed</td><td>The lead signal. Positioning changes before price reflects it. A skilled reader watches OI slope for inflection — not waiting for price to move and then reading OI to confirm it.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout g" style="margin-top:1.25rem"><b>What separates the skilled reader:</b> The framework reader identifies patterns and acts on them. The skilled reader builds conditional hypotheses from prior context, assigns explicit invalidation conditions, and acts only after the first candle of confirmation — then adjusts or abandons the hypothesis as new information arrives. The three anchors are the scaffold. Conditional reasoning is the structure. Screen time, records, and losses are what make it automatic.</div>
+  <div class="callout" style="border-left-color:var(--text3);background:var(--bg3);margin-top:.65rem"><b>What this framework is and is not:</b> The OFI-price relationship (Cont et al.), the informed/uninformed trading problem (Kyle, Hasbrouck), the mechanics of spoofing (CFTC enforcement record), iceberg prevalence (Bessembinder, Frey &amp; Sandås), and VWAP as execution benchmark (Busseti &amp; Boyd, FINRA) are all empirically grounded. The interpretation hierarchy, the specific sequence logic for the doji + OI pattern, and the conditional hypothesis structure are practitioner reasoning consistent with that evidence — but not directly derivable from any single paper. The distinction matters: the foundational claims are verified. The framework built on top of them is a coherent inference, not a proven system. It requires your own screen time and records to calibrate against real markets.</div>
+</div>
+
+<div class="mod-nav">
+  <button class="nav-btn" id="bp" onclick="step(-1)" disabled>← prev</button>
+  <span class="nav-prog" id="np">01 / 08</span>
+  <button class="nav-btn" id="bn" onclick="step(1)">next →</button>
+</div>
+</div></div></div>
+
+<script src="skilled-reader-logic.js"></script>
+</body>
+</html>
