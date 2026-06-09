@@ -6,6 +6,8 @@
 <title>Skilled Reader v2 — Sequence, Context, Reality</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
+@font-face{font-family:'AppMono';src:local('JetBrains Mono'),local('Courier New');font-weight:400 600;}
+@font-face{font-family:'AppSans';src:local('Inter'),local('SF Pro Text'),local('-apple-system'),local('Segoe UI'),local('Helvetica Neue'),local('Arial');font-weight:300 600;}
 :root{
   --bg:#08090c;--bg2:#0e1017;--bg3:#141720;--bg4:#1a1e28;
   --border:#1d2230;--border2:#252c3a;
@@ -16,32 +18,32 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.65;}
+body{font-family:'AppSans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.65;}
 .app{display:flex;height:100vh;}
 .sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;}
 .logo{padding:1.25rem 1rem .9rem;border-bottom:1px solid var(--border);}
-.logo-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text);}
+.logo-title{font-family:'AppMono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text);}
 .logo-sub{font-size:10px;color:var(--text3);margin-top:4px;line-height:1.4;}
 .prog-bar{height:1px;background:var(--border);}
 .prog-fill{height:100%;background:var(--green);transition:width .35s;}
 .nav-group{padding:.6rem 0;}
-.nav-group-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.2rem 1rem .35rem;}
+.nav-group-label{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.2rem 1rem .35rem;}
 .ni{display:flex;align-items:flex-start;gap:8px;padding:.45rem 1rem;cursor:pointer;color:var(--text3);font-size:12px;border-left:2px solid transparent;transition:all .12s;line-height:1.4;}
 .ni:hover{color:var(--text2);background:rgba(255,255,255,.02);}
 .ni.active{color:var(--text);border-left-color:var(--green);background:rgba(34,197,122,.04);}
-.ni-num{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);min-width:16px;margin-top:2px;}
+.ni-num{font-family:'AppMono',monospace;font-size:9px;color:var(--text3);min-width:16px;margin-top:2px;}
 .ni.active .ni-num{color:var(--green);}
 .main{flex:1;overflow-y:auto;padding:2rem 2.5rem 5rem;}
 .main-inner{max-width:800px;}
 .mod{display:none;}.mod.active{display:block;}
-.eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.4rem;}
+.eyebrow{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.4rem;}
 .mod-title{font-size:24px;font-weight:600;color:var(--text);line-height:1.2;margin-bottom:.7rem;}
 .mod-intro{font-size:13px;color:var(--text2);line-height:1.8;max-width:700px;padding-bottom:1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;}
 .mod-intro b{color:var(--text);font-weight:500;}
 .prose{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:.9rem;}
 .prose b{color:var(--text);font-weight:500;}
 hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
-.slabel{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.75rem;}
+.slabel{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.75rem;}
 .callout{border-left:2px solid var(--border2);padding:.7rem 1rem;background:var(--bg3);border-radius:0 6px 6px 0;font-size:12.5px;color:var(--text2);line-height:1.75;margin:.75rem 0;}
 .callout b{color:var(--text);font-weight:500;}
 .callout.g{border-left-color:var(--green);background:var(--g2);}
@@ -49,19 +51,19 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
 .callout.a{border-left-color:var(--amber);background:var(--a2);}
 .callout.b{border-left-color:var(--blue);background:var(--b2);}
 .qblock{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;margin:.75rem 0;}
-.qblock-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;}
+.qblock-label{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;}
 .qblock-q{font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:.5rem;line-height:1.5;}
 .qblock-body{font-size:12.5px;color:var(--text2);line-height:1.75;}
 .qblock-body b{color:var(--text);font-weight:500;}
 .anchor-table{width:100%;border-collapse:collapse;font-size:12px;margin:.75rem 0;}
-.anchor-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:.5rem .75rem;border-bottom:1px solid var(--border);text-align:left;}
+.anchor-table th{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:.5rem .75rem;border-bottom:1px solid var(--border);text-align:left;}
 .anchor-table td{padding:.6rem .75rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.65;}
 .anchor-table tr:last-child td{border-bottom:none;}
-.anchor-table .sc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);white-space:nowrap;min-width:80px;}
+.anchor-table .sc{font-family:'AppMono',monospace;font-size:10px;color:var(--text3);white-space:nowrap;min-width:80px;}
 .anchor-table .qc{color:var(--amber);font-size:12px;}
 .anchor-table .wc{color:var(--text2);font-size:12px;}
 .reality-table{width:100%;border-collapse:collapse;font-size:12px;margin:.75rem 0;}
-.reality-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .75rem;border-bottom:1px solid var(--border);text-align:left;}
+.reality-table th{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .75rem;border-bottom:1px solid var(--border);text-align:left;}
 .reality-table th:nth-child(1){color:var(--text3);}
 .reality-table th:nth-child(2){color:var(--red);}
 .reality-table th:nth-child(3){color:var(--green);}
@@ -72,13 +74,13 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
 .reality-table td:nth-child(3){color:rgba(34,197,122,.85);font-size:12px;}
 .reality-table tr:hover td{background:rgba(255,255,255,.01);}
 .framework{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:1.1rem 1.25rem;margin:.75rem 0;}
-.framework-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--amber);margin-bottom:.75rem;}
+.framework-title{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--amber);margin-bottom:.75rem;}
 .fw-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:.55rem;}
-.fw-arrow{color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:11px;min-width:22px;margin-top:2px;}
+.fw-arrow{color:var(--text3);font-family:'AppMono',monospace;font-size:11px;min-width:22px;margin-top:2px;}
 .fw-q{font-size:13px;font-weight:500;color:var(--text);line-height:1.5;}
 .fw-sub{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.6;}
 .hyp{background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:1rem 1.2rem;margin:.65rem 0;}
-.hyp-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.hyp-label{font-family:'AppMono',monospace;font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
 .hyp-body{font-size:12.5px;color:var(--text2);line-height:1.75;}
 .hyp-body b{color:var(--text);font-weight:500;}
 .hyp-if{color:rgba(34,197,122,.85);font-size:12px;margin-top:.5rem;}
@@ -93,20 +95,28 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
 .leg-dot{width:14px;border-top:1.5px dotted;display:inline-block;}
 .chart-area{position:relative;height:185px;width:100%;}
 .scen-btns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.6rem;}
-.sbtn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--text3);cursor:pointer;transition:all .1s;}
+.sbtn{font-family:'AppMono',monospace;font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--text3);cursor:pointer;transition:all .1s;}
 .sbtn:hover{color:var(--text2);background:var(--bg3);}
 .sbtn.on{border-color:var(--green);color:var(--green);background:var(--g2);}
 .chart-note{font-size:12px;color:var(--text2);line-height:1.7;margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--border);}
 .chart-note b{color:var(--text);font-weight:500;}
 .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--border);}
-.nav-btn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:6px 14px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:var(--text2);cursor:pointer;letter-spacing:.04em;transition:all .12s;}
+.nav-btn{font-family:'AppMono',monospace;font-size:10px;padding:6px 14px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:var(--text2);cursor:pointer;letter-spacing:.04em;transition:all .12s;}
 .nav-btn:hover{border-color:var(--green);color:var(--green);}
 .nav-btn:disabled{opacity:.2;cursor:default;}
 .nav-btn:disabled:hover{border-color:var(--border2);color:var(--text2);}
-.nav-prog{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);}
+.nav-prog{font-family:'AppMono',monospace;font-size:9px;color:var(--text3);}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+
+/* ── MINI CANDLE GRID ── */
+.oi-cases{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:.75rem 0;}
+.oi-case{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.75rem;}
+.oi-case-label{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem;}
+.oi-case-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:.4rem;line-height:1.4;}
+.oi-case-desc{font-size:11px;color:var(--text2);line-height:1.55;margin-top:.35rem;}
+.oi-case-chart{position:relative;height:90px;width:100%;}
 </style>
 </head>
 <body>
@@ -222,6 +232,61 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
     <b>3. Passive absorption unwound</b> — the absorbing side exited after completing their position<br>
     <b>4. Participation decay</b> — both sides reducing, no strong conviction either way<br><br>
     A doji with falling OI after a bearish impulse is the canonical ambiguous case. All four readings are possible. Prior context and next candle are what resolve it.<br><br><b>Empirical note on hidden positioning:</b> Bessembinder et al. found iceberg orders account for approximately 44% of order volume on major exchanges. Frey &amp; Sandås (2009) showed iceberg orders on Xetra are on average 12–20× larger than visible limit orders. This means a significant fraction of the "passive absorption" case — longs absorbed on the other side of aggressive selling — is structurally invisible to OI until the position is complete. Falling OI on the doji may therefore reflect the absorbing side exiting after completing an invisible accumulation, not weakness.</div>
+
+  <div class="slabel" style="margin-top:1.1rem">What "new contracts entered" can mean — 4 candle sketches</div>
+  <div class="oi-cases">
+    <div class="oi-case">
+      <div class="oi-case-label">Rising OI · Case 1</div>
+      <div class="oi-case-title">Aggressive shorts entered</div>
+      <div class="oi-case-chart"><canvas id="mc1"></canvas></div>
+      <div class="oi-case-desc">Price falls sharply. CVD strongly negative. OI rising. New sellers are crossing the spread — initiative selling with conviction. The most straightforward read, but also the most commonly assumed without verification.</div>
+    </div>
+    <div class="oi-case">
+      <div class="oi-case-label">Rising OI · Case 2</div>
+      <div class="oi-case-title">Longs absorbed passively</div>
+      <div class="oi-case-chart"><canvas id="mc2"></canvas></div>
+      <div class="oi-case-desc">Price falls but CVD is neutral or mildly negative. OI rises. A passive buyer is on the other side of those shorts — accepting fills at the bid without aggression. Identical OI to Case 1. Opposite implication.</div>
+    </div>
+    <div class="oi-case">
+      <div class="oi-case-label">Rising OI · Case 3</div>
+      <div class="oi-case-title">Market makers hedged</div>
+      <div class="oi-case-chart"><canvas id="mc3"></canvas></div>
+      <div class="oi-case-desc">Price moves modestly. CVD mixed. OI rises in small increments consistently. Delta-neutral hedging — a market maker or options dealer creating offsetting inventory. No directional intent. OI reading is noise for directional analysis.</div>
+    </div>
+    <div class="oi-case">
+      <div class="oi-case-label">Rising OI · Case 4</div>
+      <div class="oi-case-title">Both sides expanded</div>
+      <div class="oi-case-chart"><canvas id="mc4"></canvas></div>
+      <div class="oi-case-desc">Price barely moves. CVD oscillates around zero. OI rises steadily. Both sides are building positions simultaneously — a coiling balance auction. This is the pre-move state. Neither side is dominant yet.</div>
+    </div>
+  </div>
+
+  <div class="slabel" style="margin-top:1rem">What "existing contracts closed" can mean — 4 candle sketches</div>
+  <div class="oi-cases">
+    <div class="oi-case">
+      <div class="oi-case-label">Falling OI · Case 1</div>
+      <div class="oi-case-title">Trapped shorts took profit</div>
+      <div class="oi-case-chart"><canvas id="mc5"></canvas></div>
+      <div class="oi-case-desc">Price rises on a doji or small candle. CVD turns mildly positive. OI falls. Shorts that were trapped by a prior move up are buying back their positions. Bullish for the move that trapped them — not for new longs entering.</div>
+    </div>
+    <div class="oi-case">
+      <div class="oi-case-label">Falling OI · Case 2</div>
+      <div class="oi-case-title">Trapped longs closed</div>
+      <div class="oi-case-chart"><canvas id="mc6"></canvas></div>
+      <div class="oi-case-desc">Price drops on a doji after a bearish impulse. CVD mildly negative. OI falls. Longs that were caught by the impulse are cutting their positions. Bearish confirmation — the downward move had enough force to capitulate the buyers.</div>
+    </div>
+    <div class="oi-case">
+      <div class="oi-case-label">Falling OI · Case 3</div>
+      <div class="oi-case-title">Passive absorption unwound</div>
+      <div class="oi-case-chart"><canvas id="mc7"></canvas></div>
+      <div class="oi-case-desc">Price stabilises. CVD flat. OI drops sharply after a period of rising OI with flat price. The absorbing side has completed their position and removed their passive orders. Often immediately precedes a directional move.</div>
+    </div>
+    <div class="oi-case">
+      <div class="oi-case-label">Falling OI · Case 4</div>
+      <div class="oi-case-title">Participation decay</div>
+      <div class="oi-case-chart"><canvas id="mc8"></canvas></div>
+      <div class="oi-case-desc">Price drifts. CVD near zero. OI falls slowly across multiple candles. Both sides are reducing — no conviction in either direction. The market is losing interest. Not a signal. A condition that requires waiting for new initiative.</div>
+    </div>
   </div>
 
   <hr>
