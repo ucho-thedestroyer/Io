@@ -116,7 +116,7 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
 .oi-case-label{font-family:'AppMono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem;}
 .oi-case-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:.4rem;line-height:1.4;}
 .oi-case-desc{font-size:11px;color:var(--text2);line-height:1.55;margin-top:.35rem;}
-.oi-case-chart{position:relative;height:90px;width:100%;}
+.oi-case-chart{position:relative;height:110px;width:100%;margin-top:.3rem;}
 </style>
 </head>
 <body>
@@ -233,56 +233,66 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
     <b>4. Participation decay</b> — both sides reducing, no strong conviction either way<br><br>
     A doji with falling OI after a bearish impulse is the canonical ambiguous case. All four readings are possible. Prior context and next candle are what resolve it.<br><br><b>Empirical note on hidden positioning:</b> Bessembinder et al. found iceberg orders account for approximately 44% of order volume on major exchanges. Frey &amp; Sandås (2009) showed iceberg orders on Xetra are on average 12–20× larger than visible limit orders. This means a significant fraction of the "passive absorption" case — longs absorbed on the other side of aggressive selling — is structurally invisible to OI until the position is complete. Falling OI on the doji may therefore reflect the absorbing side exiting after completing an invisible accumulation, not weakness.</div>
 
-  <div class="slabel" style="margin-top:1.1rem">What "new contracts entered" can mean — 4 candle sketches</div>
+  <div class="slabel" style="margin-top:1.1rem">What "new contracts entered" can mean — 4 sketches</div>
+  <div class="chart-legend" style="margin-bottom:.4rem">
+    <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+    <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+    <div class="leg"><div class="leg-dot" style="border-color:var(--oi)"></div>OI</div>
+  </div>
   <div class="oi-cases">
     <div class="oi-case">
-      <div class="oi-case-label">Rising OI · Case 1</div>
+      <div class="oi-case-label">Rising OI — Case 1</div>
       <div class="oi-case-title">Aggressive shorts entered</div>
       <div class="oi-case-chart"><canvas id="mc1"></canvas></div>
       <div class="oi-case-desc">Price falls sharply. CVD strongly negative. OI rising. New sellers are crossing the spread — initiative selling with conviction. The most straightforward read, but also the most commonly assumed without verification.</div>
     </div>
     <div class="oi-case">
-      <div class="oi-case-label">Rising OI · Case 2</div>
+      <div class="oi-case-label">Rising OI — Case 2</div>
       <div class="oi-case-title">Longs absorbed passively</div>
       <div class="oi-case-chart"><canvas id="mc2"></canvas></div>
       <div class="oi-case-desc">Price falls but CVD is neutral or mildly negative. OI rises. A passive buyer is on the other side of those shorts — accepting fills at the bid without aggression. Identical OI to Case 1. Opposite implication.</div>
     </div>
     <div class="oi-case">
-      <div class="oi-case-label">Rising OI · Case 3</div>
+      <div class="oi-case-label">Rising OI — Case 3</div>
       <div class="oi-case-title">Market makers hedged</div>
       <div class="oi-case-chart"><canvas id="mc3"></canvas></div>
       <div class="oi-case-desc">Price moves modestly. CVD mixed. OI rises in small increments consistently. Delta-neutral hedging — a market maker or options dealer creating offsetting inventory. No directional intent. OI reading is noise for directional analysis.</div>
     </div>
     <div class="oi-case">
-      <div class="oi-case-label">Rising OI · Case 4</div>
+      <div class="oi-case-label">Rising OI — Case 4</div>
       <div class="oi-case-title">Both sides expanded</div>
       <div class="oi-case-chart"><canvas id="mc4"></canvas></div>
       <div class="oi-case-desc">Price barely moves. CVD oscillates around zero. OI rises steadily. Both sides are building positions simultaneously — a coiling balance auction. This is the pre-move state. Neither side is dominant yet.</div>
     </div>
   </div>
 
-  <div class="slabel" style="margin-top:1rem">What "existing contracts closed" can mean — 4 candle sketches</div>
+  <div class="slabel" style="margin-top:1rem">What "existing contracts closed" can mean — 4 sketches</div>
+  <div class="chart-legend" style="margin-bottom:.4rem">
+    <div class="leg"><div class="leg-line" style="background:var(--price)"></div>Price</div>
+    <div class="leg"><div class="leg-dash" style="border-color:var(--cvd)"></div>CVD</div>
+    <div class="leg"><div class="leg-dot" style="border-color:var(--oi)"></div>OI</div>
+  </div>
   <div class="oi-cases">
     <div class="oi-case">
-      <div class="oi-case-label">Falling OI · Case 1</div>
+      <div class="oi-case-label">Falling OI — Case 1</div>
       <div class="oi-case-title">Trapped shorts took profit</div>
       <div class="oi-case-chart"><canvas id="mc5"></canvas></div>
       <div class="oi-case-desc">Price rises on a doji or small candle. CVD turns mildly positive. OI falls. Shorts that were trapped by a prior move up are buying back their positions. Bullish for the move that trapped them — not for new longs entering.</div>
     </div>
     <div class="oi-case">
-      <div class="oi-case-label">Falling OI · Case 2</div>
+      <div class="oi-case-label">Falling OI — Case 2</div>
       <div class="oi-case-title">Trapped longs closed</div>
       <div class="oi-case-chart"><canvas id="mc6"></canvas></div>
       <div class="oi-case-desc">Price drops on a doji after a bearish impulse. CVD mildly negative. OI falls. Longs that were caught by the impulse are cutting their positions. Bearish confirmation — the downward move had enough force to capitulate the buyers.</div>
     </div>
     <div class="oi-case">
-      <div class="oi-case-label">Falling OI · Case 3</div>
+      <div class="oi-case-label">Falling OI — Case 3</div>
       <div class="oi-case-title">Passive absorption unwound</div>
       <div class="oi-case-chart"><canvas id="mc7"></canvas></div>
       <div class="oi-case-desc">Price stabilises. CVD flat. OI drops sharply after a period of rising OI with flat price. The absorbing side has completed their position and removed their passive orders. Often immediately precedes a directional move.</div>
     </div>
     <div class="oi-case">
-      <div class="oi-case-label">Falling OI · Case 4</div>
+      <div class="oi-case-label">Falling OI — Case 4</div>
       <div class="oi-case-title">Participation decay</div>
       <div class="oi-case-chart"><canvas id="mc8"></canvas></div>
       <div class="oi-case-desc">Price drifts. CVD near zero. OI falls slowly across multiple candles. Both sides are reducing — no conviction in either direction. The market is losing interest. Not a signal. A condition that requires waiting for new initiative.</div>
