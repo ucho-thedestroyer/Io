@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTC PERPS // COINALYZE TERMINAL</title>
+
+<!--
+  PRIVACY NOTE: Chart.js is loaded from Cloudflare CDN below.
+  Cloudflare logs your IP and timestamp on each page load.
+  To run fully offline/private: download chart.umd.min.js and replace
+  the src with ./chart.umd.min.js
+  Download from: https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+  /*
+    LOCAL FONT: Press Start 2P
+    Expected at: ./PressStart2P.ttf  (same folder as this HTML)
+    Change the path below to wherever your file lives.
+    Examples: './PressStart2P.ttf' | './fonts/PressStart2P.ttf' | '../fonts/PressStart2P.ttf'
+  */
+  @font-face {
+    font-family: 'PressStart';
+    src: url('REPLACE_WITH_YOUR_FONT_PATH/PressStart2P.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --bg:       #050a0e;
+    --bg2:      #090f15;
+    --bg3:      #0d1820;
+    --bd:       #162333;
+    --bd-hi:    #25415e;
+    --accent:   #00e5ff;
+    --bull:     #00ff88;
+    --bear:     #ff3060;
+    --neutral:  #ffb800;
+    --vwap:     #c084fc;
+    --text:     #b8d4e0;
+    --dim:      #3a5a70;
+    --hi:       #e8f6ff;
+    --font:     'PressStart', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 9px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);
+    pointer-events: none; z-index: 9998;
+  }
+
+  /* HEADER */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 18px; border-bottom: 1px solid var(--bd);
+    background: var(--bg2); position: sticky; top: 0; z-index: 100;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .logo      { font-size: 11px; color: var(--accent); text-shadow: 0 0 18px rgba(0,229,255,0.45); letter-spacing: 0.05em; }
+  .logo-sub  { font-size: 6px; color: var(--dim); margin-top: 4px; letter-spacing: 0.08em; }
+  .hdr-right { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .badge     { font-size: 7px; padding: 3px 8px; border: 1px solid var(--bd-hi); color: var(--accent); background: var(--bg3); }
+  #clk       { font-size: 7px; color: var(--dim); }
+
+  /* CONFIG */
+  .cfg {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    padding: 9px 18px; background: var(--bg2); border-bottom: 1px solid var(--bd);
+  }
+  .cfg-lbl { font-size: 7px; color: var(--dim); letter-spacing: 0.1em; }
+  .cfg input, .cfg select {
+    background: var(--bg3); border: 1px solid var(--bd); color: var(--text);
+    font-family: var(--font); font-size: 8px; padding: 5px 9px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .cfg input { width: 220px; }
+  .cfg input:focus, .cfg select:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0,229,255,0.12); }
+
+  .btn {
+    background: var(--accent); color: #000; border: none;
+    font-family: var(--font); font-size: 8px; padding: 6px 14px;
+    cursor: pointer; letter-spacing: 0.06em; transition: all 0.15s;
+  }
+  .btn:hover { background: #33f0ff; box-shadow: 0 0 14px rgba(0,229,255,0.4); }
+  .btn:active { transform: scale(0.97); }
+  .btn.ghost { background: transparent; border: 1px solid var(--bd-hi); color: var(--text); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); background: transparent; box-shadow: none; }
+
+  /* NOTICE */
+  .notice {
+    padding: 7px 18px; background: rgba(255,184,0,0.04);
+    border-bottom: 1px solid rgba(255,184,0,0.15);
+    font-size: 7px; color: var(--neutral); line-height: 1.9;
+  }
+  .notice strong { color: #ffd040; }
+  .notice code { background: rgba(255,184,0,0.1); padding: 1px 4px; border: 1px solid rgba(255,184,0,0.2); }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bd); }
+  .panel { background: var(--bg2); padding: 14px; position: relative; min-width: 0; }
+  .full  { grid-column: 1 / -1; }
+
+  .ph {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--bd);
+  }
+  .pt { font-size: 8px; color: var(--hi); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .pill { font-size: 7px; padding: 2px 7px; border: 1px solid var(--bd-hi); color: var(--dim); letter-spacing: 0.06em; }
+  .pill.bull    { border-color: var(--bull);    color: var(--bull); }
+  .pill.bear    { border-color: var(--bear);    color: var(--bear); }
+  .pill.neutral { border-color: var(--neutral); color: var(--neutral); }
+  .pill.vwap    { border-color: var(--vwap);    color: var(--vwap); }
+
+  /* STATS */
+  .stats { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .stat  { flex: 1; min-width: 70px; background: var(--bg3); border: 1px solid var(--bd); padding: 7px 9px; }
+  .slbl  { font-size: 6px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .sval  { font-size: 11px; color: var(--hi); line-height: 1; }
+  .sval.bull    { color: var(--bull); }
+  .sval.bear    { color: var(--bear); }
+  .sval.neutral { color: var(--neutral); }
+  .sval.vwap    { color: var(--vwap); }
+
+  canvas { width: 100% !important; }
+
+  /* OVERLAY */
+  .ov { position: absolute; inset: 0; background: rgba(5,10,14,0.88); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; z-index: 10; }
+  .ov.hidden { display: none; }
+  .sp { width: 22px; height: 22px; border: 2px solid var(--bd); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.65s linear infinite; }
+  .sp-txt { font-size: 7px; color: var(--accent); letter-spacing: 0.1em; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* SIGNAL */
+  .sig-wrap { display: grid; grid-template-columns: 230px 1fr; gap: 16px; align-items: start; }
+  .sig-card { border: 1px solid var(--bd-hi); background: var(--bg3); padding: 14px; position: relative; overflow: hidden; }
+  .sig-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--neutral); }
+  .sig-card.bull::before   { background: var(--bull);    box-shadow: 0 0 10px var(--bull); }
+  .sig-card.bear::before   { background: var(--bear);    box-shadow: 0 0 10px var(--bear); }
+  .sig-card.neutral::before{ background: var(--neutral); box-shadow: 0 0 10px var(--neutral); }
+  .sig-lbl { font-size: 6px; color: var(--dim); letter-spacing: 0.1em; margin-bottom: 8px; }
+  .sig-hl  { font-size: 12px; line-height: 1.4; color: var(--neutral); text-shadow: 0 0 14px rgba(255,184,0,0.3); margin-bottom: 4px; }
+  .sig-hl.bull { color: var(--bull);  text-shadow: 0 0 18px rgba(0,255,136,0.35); }
+  .sig-hl.bear { color: var(--bear);  text-shadow: 0 0 18px rgba(255,48,96,0.35); }
+  .sig-sub { font-size: 7px; color: var(--dim); line-height: 1.7; margin-bottom: 10px; }
+  .sig-rs  { display: flex; flex-direction: column; gap: 5px; }
+  .sig-r   { display: flex; align-items: flex-start; gap: 7px; font-size: 7px; color: var(--text); line-height: 1.5; }
+  .sig-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+
+  /* SCORE BARS */
+  .sc-sec  { display: flex; flex-direction: column; gap: 9px; }
+  .sc-head { font-size: 6px; color: var(--dim); letter-spacing: 0.1em; padding-bottom: 6px; border-bottom: 1px solid var(--bd); }
+  .sc-row  { display: flex; align-items: center; gap: 8px; }
+  .sc-lbl  {
+    width: 112px; font-size: 6px; color: var(--dim); letter-spacing: 0.07em;
+    flex-shrink: 0; text-transform: uppercase; cursor: help; position: relative;
+  }
+  .sc-lbl[data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute; bottom: 130%; left: 0;
+    background: var(--bg3); border: 1px solid var(--bd-hi);
+    color: var(--text); font-size: 7px; padding: 5px 8px;
+    white-space: nowrap; z-index: 200; line-height: 1.6;
+    max-width: 260px; white-space: normal;
+  }
+  .sc-track { flex: 1; height: 4px; background: var(--bg3); border: 1px solid var(--bd); position: relative; overflow: hidden; }
+  .sc-fill  { height: 100%; position: absolute; left: 0; top: 0; transition: width 0.9s ease, background 0.4s; }
+  .sc-val   { width: 44px; text-align: right; font-size: 8px; color: var(--text); }
+  .comp-row { border-top: 1px solid var(--bd); padding-top: 8px; margin-top: 2px; }
+  .comp-row .sc-lbl   { color: var(--hi); }
+  .comp-row .sc-track { height: 6px; }
+  .comp-row .sc-val   { color: var(--hi); font-size: 9px; }
+
+  /* METHOD */
+  .method { margin-top: 12px; border-top: 1px solid var(--bd); padding-top: 10px; font-size: 7px; color: var(--dim); line-height: 1.9; }
+  .method strong { color: var(--accent); letter-spacing: 0.08em; }
+
+  /* LOG */
+  .log-box { background: var(--bg); border: 1px solid var(--bd); padding: 8px 10px; font-size: 8px; line-height: 1.8; max-height: 130px; overflow-y: auto; }
+  .log-box::-webkit-scrollbar { width: 4px; }
+  .log-box::-webkit-scrollbar-track { background: var(--bg); }
+  .log-box::-webkit-scrollbar-thumb { background: var(--bd-hi); }
+  .ll { display: flex; gap: 8px; }
+  .lt { color: var(--dim); flex-shrink: 0; }
+  .lok  { color: var(--bull); }
+  .lerr { color: var(--bear); }
+  .linf { color: var(--accent); }
+  .lwrn { color: var(--neutral); }
+
+  /* STATUS */
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .dot.live  { background: var(--bull); box-shadow: 0 0 8px var(--bull); animation: pulse 1.4s infinite; }
+  .dot.idle  { background: var(--dim); }
+  .dot.error { background: var(--bear); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+  @media (max-width: 680px) {
+    .grid { grid-template-columns: 1fr; }
+    .full { grid-column: 1; }
+    .sig-wrap { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">PERPS // TERMINAL</div>
+    <div class="logo-sub">BTC PERPETUALS · COINALYZE AGGREGATED · MARKET STRUCTURE SIGNALS</div>
+  </div>
+  <div class="hdr-right">
+    <div class="badge">BTCUSDT_PERP.A</div>
+    <div><span class="dot idle" id="sdot"></span><span id="stxt" style="font-size:7px;color:var(--dim)">IDLE</span></div>
+    <div id="clk">--:--:-- UTC</div>
+  </div>
+</header>
+
+<div class="cfg">
+  <span class="cfg-lbl">API KEY</span>
+  <input type="password" id="api-key" placeholder="Coinalyze free tier API key…" />
+  <span class="cfg-lbl">INTERVAL</span>
+  <select id="interval">
+    <option value="60">1m</option>
+    <option value="300">5m</option>
+    <option value="900" selected>15m</option>
+    <option value="3600">1h</option>
+    <option value="14400">4h</option>
+    <option value="86400">1D</option>
+  </select>
+  <span class="cfg-lbl">BARS</span>
+  <select id="limit">
+    <option value="50">50</option>
+    <option value="100" selected>100</option>
+    <option value="200">200</option>
+  </select>
+  <button class="btn" onclick="fetchAll()">▶ FETCH</button>
+  <button class="btn ghost" onclick="clearAll()">RESET</button>
+</div>
+
+<div class="notice">
+  ⚠ <strong>Coinalyze free tier</strong> · Get key at <strong>coinalyze.net → Account → API Keys</strong> ·
+  Symbol: <code>BTCUSDT_PERP.A</code> (aggregated cross-exchange) ·
+  Endpoints: <code>open-interest-history</code> <code>funding-rate-history</code> <code>long-short-ratio-history</code> <code>buy-sell-volume-history</code> <code>candlestick-history</code> ·
+  <strong style="color:var(--bear)">PRIVACY:</strong> Chart.js via Cloudflare CDN — swap src for local <code>./chart.umd.min.js</code> to prevent IP logging.
+</div>
+
+<div class="grid">
+
+  <!-- ── OI ─────────────────────────────────────────────────────────── -->
+  <div class="panel">
+    <div class="ov hidden" id="oi-ov"><div class="sp"></div><div class="sp-txt">LOADING OI…</div></div>
+    <div class="ph"><div class="pt">Aggregated Open Interest</div><div class="pill" id="oi-pill">–</div></div>
+    <div class="stats">
+      <div class="stat"><div class="slbl">Current OI</div><div class="sval" id="oi-cur">–</div></div>
+      <div class="stat"><div class="slbl">Δ Period</div><div class="sval" id="oi-d">–</div></div>
+      <div class="stat"><div class="slbl">OI Signal</div><div class="sval" id="oi-read">–</div></div>
+    </div>
+    <canvas id="oi-chart" height="130"></canvas>
+  </div>
+
+  <!-- ── FUNDING ────────────────────────────────────────────────────── -->
+  <div class="panel">
+    <div class="ov hidden" id="fr-ov"><div class="sp"></div><div class="sp-txt">LOADING FUNDING…</div></div>
+    <div class="ph"><div class="pt">Funding Rate · Carry Cost</div><div class="pill" id="fr-pill">–</div></div>
+    <div class="stats">
+      <div class="stat"><div class="slbl">Latest Rate</div><div class="sval" id="fr-cur">–</div></div>
+      <div class="stat"><div class="slbl">8-Bar Avg</div><div class="sval" id="fr-avg">–</div></div>
+      <div class="stat"><div class="slbl">Funding Signal</div><div class="sval" id="fr-read">–</div></div>
+    </div>
+    <canvas id="fr-chart" height="130"></canvas>
+  </div>
+
+  <!-- ── L/S ────────────────────────────────────────────────────────── -->
+  <div class="panel">
+    <div class="ov hidden" id="ls-ov"><div class="sp"></div><div class="sp-txt">LOADING L/S…</div></div>
+    <div class="ph"><div class="pt">Long / Short Positioning</div><div class="pill" id="ls-pill">–</div></div>
+    <div class="stats">
+      <div class="stat"><div class="slbl">L/S Ratio</div><div class="sval" id="ls-cur">–</div></div>
+      <div class="stat"><div class="slbl">Longs %</div><div class="sval bull" id="ls-l">–</div></div>
+      <div class="stat"><div class="slbl">Shorts %</div><div class="sval bear" id="ls-s">–</div></div>
+      <div class="stat"><div class="slbl">Retail Skew</div><div class="sval" id="ls-read">–</div></div>
+    </div>
+    <canvas id="ls-chart" height="130"></canvas>
+  </div>
+
+  <!-- ── CVD ────────────────────────────────────────────────────────── -->
+  <div class="panel">
+    <div class="ov hidden" id="cvd-ov"><div class="sp"></div><div class="sp-txt">LOADING VOLUME…</div></div>
+    <div class="ph"><div class="pt">Order Flow · CVD</div><div class="pill" id="cvd-pill">–</div></div>
+    <div class="stats">
+      <div class="stat"><div class="slbl">Buy Volume</div><div class="sval bull" id="cvd-b">–</div></div>
+      <div class="stat"><div class="slbl">Sell Volume</div><div class="sval bear" id="cvd-s">–</div></div>
+      <div class="stat"><div class="slbl">CVD Slope</div><div class="sval" id="cvd-read">–</div></div>
+    </div>
+    <canvas id="cvd-chart" height="130"></canvas>
+  </div>
+
+  <!-- ── VWAP ───────────────────────────────────────────────────────── -->
+  <div class="panel full">
+    <div class="ov hidden" id="vwap-ov"><div class="sp"></div><div class="sp-txt">COMPUTING VWAP…</div></div>
+    <div class="ph"><div class="pt">OI vs Vol-Weighted VWAP Proxy · Free Tier Estimate</div><div class="pill vwap" id="vwap-pill">–</div></div>
+    <div class="stats">
+      <div class="stat"><div class="slbl">Last Price</div><div class="sval" id="vwap-price">–</div></div>
+      <div class="stat"><div class="slbl">VWAP</div><div class="sval vwap" id="vwap-val">–</div></div>
+      <div class="stat"><div class="slbl">Deviation</div><div class="sval" id="vwap-dev">–</div></div>
+      <div class="stat"><div class="slbl">Proxy Signal</div><div class="sval" id="vwap-read">–</div></div>
+    </div>
+    <canvas id="vwap-chart" height="150"></canvas>
+  </div>
+
+  <!-- ── SIGNAL ─────────────────────────────────────────────────────── -->
+  <div class="panel full">
+    <div class="ph">
+      <div class="pt">⚡ Composite Read · Market Structure Signals</div>
+      <div style="font-size:6px;color:var(--dim);letter-spacing:0.07em">NOT FINANCIAL ADVICE · SIGNALS ARE AMBIGUOUS BY NATURE</div>
+    </div>
+    <div class="sig-wrap">
+
+      <div class="sig-card neutral" id="sig-card">
+        <div class="sig-lbl">COMPOSITE MARKET STRUCTURE READ</div>
+        <div class="sig-hl neutral" id="sig-hl">AWAITING DATA</div>
+        <div class="sig-sub" id="sig-sub">Fetch data to generate signal.</div>
+        <div class="sig-rs" id="sig-rs"></div>
+      </div>
+
+      <div class="sc-sec">
+        <div class="sc-head">INDICATOR SCORES ── –1.0 ─── 0 NEUTRAL ─── +1.0 · HOVER LABELS FOR LIMITATIONS</div>
+
+        <div class="sc-row">
+          <div class="sc-lbl" data-tip="Rising OI = net new contracts opened. Does NOT reveal direction, who is long vs short, or hedging vs speculation. Falling OI = contracts closed. That is the full extent of what this number can honestly tell you.">NET OI CHANGE</div>
+          <div class="sc-track"><div class="sc-fill" id="bar-oi" style="width:50%;background:var(--neutral)"></div></div>
+          <div class="sc-val" id="val-oi">–</div>
+        </div>
+        <div class="sc-row">
+          <div class="sc-lbl" data-tip="Funding = rate paid by longs to shorts (positive) or shorts to longs (negative). High positive does NOT mean crowded retail longs — basis traders actively harvest high positive funding by holding long spot / short perp. Negative funding does NOT guarantee a squeeze — it may just mean hedgers are paying to stay short.">FUNDING RATE</div>
+          <div class="sc-track"><div class="sc-fill" id="bar-fr" style="width:50%;background:var(--neutral)"></div></div>
+          <div class="sc-val" id="val-fr">–</div>
+        </div>
+        <div class="sc-row">
+          <div class="sc-lbl" data-tip="Exchange L/S ratios skew heavily toward retail accounts. OTC, prime brokerage and structured positions are largely invisible here. Use as a rough retail sentiment proxy only — it tells you little about large player positioning.">RETAIL L/S SKEW</div>
+          <div class="sc-track"><div class="sc-fill" id="bar-ls" style="width:50%;background:var(--neutral)"></div></div>
+          <div class="sc-val" id="val-ls">–</div>
+        </div>
+        <div class="sc-row">
+          <div class="sc-lbl" data-tip="CVD = cumulative (buy volume minus sell volume). It only captures the aggressive side — who is hitting bids or lifting offers. It tells you nothing about who is on the passive side. Rising CVD could mean retail aggressively buying while a large player passively distributes into them. Treat as directional pressure only, not as confirmation of who is behind it.">CVD · AGGRESSIVE SIDE</div>
+          <div class="sc-track"><div class="sc-fill" id="bar-cvd" style="width:50%;background:var(--neutral)"></div></div>
+          <div class="sc-val" id="val-cvd">–</div>
+        </div>
+        <div class="sc-row">
+          <div class="sc-lbl" data-tip="FREE TIER PROXY: No OHLCV available. OI is used as a price-level proxy, weighted by buy+sell volume. Measures whether OI sits above/below its volume-weighted mean. Deviation direction may be informative; magnitude is an estimate only.">OI/VOL VWAP PROXY</div>
+          <div class="sc-track"><div class="sc-fill" id="bar-vwap" style="width:50%;background:var(--neutral)"></div></div>
+          <div class="sc-val" id="val-vwap">–</div>
+        </div>
+
+        <div class="sc-row comp-row">
+          <div class="sc-lbl">COMPOSITE</div>
+          <div class="sc-track"><div class="sc-fill" id="bar-comp" style="width:50%;background:var(--neutral)"></div></div>
+          <div class="sc-val" id="val-comp">–</div>
+        </div>
+
+        <div class="method">
+          <strong>WHAT THIS IS</strong><br>
+          A composite of 5 perp market structure metrics, each scored –1 to +1. Equal-weighted average. Threshold ±0.30 for directional read.<br><br>
+          <strong>WHAT IT IS NOT</strong><br>
+          This is not an institutional signal. It cannot distinguish institutional from retail flow, hedging from speculation, or accumulation from distribution. Each metric has hard limits on what it can reveal — read the tooltips.<br><br>
+          <strong>OI:</strong> Net contract creation/destruction only. Direction and composition unknown.<br>
+          <strong>FUNDING:</strong> Cost of holding leveraged long via perp. High funding supports basis trades, not just crowding.<br>
+          <strong>L/S RATIO:</strong> Retail-skewed exchange data. Large player positioning not captured.<br>
+          <strong>CVD:</strong> Aggressive order flow direction only. Passive counterparty composition unknown — could be absorption.<br>
+          <strong>VWAP PROXY:</strong> OI × volume estimate. No true price data on free tier. Direction indicative, magnitude approximate.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LOG ────────────────────────────────────────────────────────── -->
+  <div class="panel full">
+    <div class="ph">
+      <div class="pt">CONSOLE</div>
+      <button class="btn ghost" onclick="clearLog()" style="font-size:7px;padding:3px 8px">CLR</button>
+    </div>
+    <div class="log-box" id="log">
+      <div class="ll"><span class="lt">--:--:--</span><span class="linf">INFO</span><span>Terminal ready. Enter API key and press FETCH.</span></div>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+<script>
+
+</script>
+</body>
+</html>
