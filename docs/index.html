@@ -20,26 +20,79 @@
       </h4>
       <p>
       You can click on stuff you see in the picture below to:
-        <br>-flip through the latest art zine (and buy a painting in SATS!—using your nostr wallet)
-        <br>-turn on the tape recorder and radio (play music, buy physical TAPES, CDs, and more!), or turn the T.V. set on to watch some trippy cable tv
+        <br>-turn on the tape recorder and radio (play music, buy physical TAPES, CDs, and more!)
+        <br>-flip through the latest art zine
+        <br>-turn the T.V. set on to watch some trippy cable tv
         <br>-log into the computer and find what's new on the <u>interweb3</u> a.k.a. the Blockchain World Wide Web. 
         <br>Oh, and don't forget to say hi to our furry friend Pipi, he has always got something encouraging to say!
     </p>
       <p></p>
 
-      <div class="map">
-                
-          <img src="https://amethyst-advanced-leopon-155.mypinata.cloud/ipfs/bafybeiaxwsyrsmmq4zirso5oq6su55cmsbffdjwe7pgl3wgq5r3yvginqi" alt="Home Image" usemap="#homegif">
-        
+      <!--
+        RESPONSIVE IMAGE MAP
+        =====================
+        This replaces the old <img usemap> + <map>/<area> combo. The <area>
+        coords never scaled with the image, which is why your hotspots lined
+        up on desktop but drifted on mobile.
+
+        Fix: the polygons live in an SVG layered exactly on top of the image.
+        SVG coordinates are defined in a "viewBox" — a virtual coordinate
+        space that gets stretched/squeezed to fit whatever size the SVG is
+        actually rendered at. Because both the <img> and the <svg> sit in the
+        same wrapper and both scale to 100% of it, the polygons track the
+        image at every screen size automatically. No JS, no resize listeners.
+
+        IMPORTANT: viewBox="0 0 909 808" assumes your homegif's native pixel
+        size is 909x808 (that's what your CSS max-width/max-height implied).
+        If the real file is a different size, change ONLY the two numbers
+        after "0 0" in the viewBox below to your image's actual native
+        width and height, in that order. Everything else keeps working.
+
+        Each hotspot below is commented with which original <area> it came
+        from and its original href, so you can drop your real links back in
+        (I've placeholder'd them as "#").
+      -->
+      <div class="imgmap-wrap">
+        <img src="https://amethyst-advanced-leopon-155.mypinata.cloud/ipfs/bafybeiaxwsyrsmmq4zirso5oq6su55cmsbffdjwe7pgl3wgq5r3yvginqi" alt="Home Image" class="imgmap-img">
+        <svg class="imgmap-svg" viewBox="0 0 909 808" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- area 1 (original href="") -->
+          <a href="#" xlink:href="#" class="hotspot" aria-label="Hotspot 1">
+            <polygon points="245,641 479,624 567,630 646,711 518,763 297,750" />
+          </a>
+          <!-- area 2 (original href="") -->
+          <a href="#" xlink:href="#" class="hotspot" aria-label="Hotspot 2">
+            <polygon points="675,704 675,737 644,751 644,788 810,778 810,755 770,737 711,705" />
+          </a>
+          <!-- area 3 (original href="...html") -->
+          <a href="#" xlink:href="#" class="hotspot" aria-label="Hotspot 3">
+            <polygon points="25,203 263,203 263,401 257,415 256,462 222,462 209,454 175,455 145,458 104,461 25,465 25,230" />
+          </a>
+          <!-- area 4 (original href="...html") -->
+          <a href="#" xlink:href="#" class="hotspot" aria-label="Hotspot 4">
+            <polygon points="142,477 142,507 140,521 142,550 125,583 140,588 156,582 172,587 193,586 196,578 193,552 192,524 198,507 200,483 195,468 177,466" />
+          </a>
+          <!-- area 5 (original href="") -->
+          <a href="https://top-hits.thesenoises.online/" xlink:href="https://top-hits.thesenoises.online/" class="hotspot" aria-label="Hotspot 5">
+            <polygon points="628,107 821,107 810,392 710,392 688,443 623,443 621,302 621,199" />
+          </a>
+          <!-- area 6 (original href="", target="_blank") -->
+          <a href="#" xlink:href="#" target="_blank" class="hotspot" aria-label="Hotspot 6">
+            <polygon points="93,619 205,606 228,697 106,713" />
+          </a>
+          <!-- area 7 (original href="...html") -->
+          <a href="#" xlink:href="#" class="hotspot" aria-label="Hotspot 7">
+            <polygon points="714,400 794,397 879,422 879,724 843,755 591,645 640,615 644,585 686,573 686,560 665,546 682,492" />
+          </a>
+        </svg>
       </div>
-      
+
       <br />
       <div>
         <table>
           <tr>
             <td>
               <img src="https://raw.githubusercontent.com/ucho-thedestroyer/Io/Backup/docs/realplayer.gif" alt="RealPlayer GIF">
-              
+
             <td>
               <a href="bio/vid.html">
               Video welcome</a> from <br />
@@ -58,27 +111,108 @@
       <p></p>
     </div>
 
-  
-    <p></p> 
-    <div class="sitemap">
-       <p style="text-align: center">
-      Sitemap<br /> 
-    <ul>
-      <table width="90%">
-        <tr>
-          <td>
-            <li>
-              <p>
-                <a href="https://top-hits.thesenoises.online/"
+
+    <p></p>
+
+    <!--
+      RETRO SITE NAVIGATION
+      =====================
+      Replaces the empty <table> sitemap. No <marquee>, <blink>, or other
+      dead tags — the ticker and blinking "NEW" badges below are done with
+      CSS animation so they still run in modern browsers, but they read
+      exactly like the real thing.
+
+      Structure: swap the placeholder link text/hrefs in each .navtile for
+      your real pages. Add or remove .navtile elements freely — the grid
+      reflows on its own. Same for the ticker text and the badge row.
+    -->
+    <div class="retro-nav">
+
+      <div class="ticker-bar">
+        <div class="ticker-track">
+          <span>*** WELCOME TO THE SITE *** BEST VIEWED AT ANY SIZE, ANY DEVICE, ANY TIME ***&nbsp;</span>
+          <span>*** DROP US A LINE IN THE GUESTBOOK *** MORE UPDATES COMING SOON ***&nbsp;</span>
+          <!-- duplicate for seamless loop -->
+          <span>*** WELCOME TO THE SITE *** BEST VIEWED AT ANY SIZE, ANY DEVICE, ANY TIME ***&nbsp;</span>
+          <span>*** DROP US A LINE IN THE GUESTBOOK *** MORE UPDATES COMING SOON ***&nbsp;</span>
+        </div>
+      </div>
+
+      <h3 class="retro-heading">&raquo; Site Map &laquo;</h3>
+
+      <div class="navgrid">
+
+        <div class="navcol">
+          <h5 class="navcol-title">Explore</h5>
+          <a class="navtile" href="https://top-hits.thesenoises.online/"
                   >Computer Hits:<br />all analog bangers, burning your screen
                   <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/hot.gif"
-                /></a>
-              </p>
-            </li>
-          </td>
-          <td>
-            <li>
-              <p>
+                /></a>">
+          <a class="navtile" href="#">About Us</a>
+          <a class="navtile" href="#">Gallery</a>
+          <a class="navtile" href="#">Bio <span class="tag-new">NEW</span></a>
+        </div>
+
+        <div class="navcol">
+          <h5 class="navcol-title">Connect</h5>
+          <a class="navtile" href="#">Contact</a>
+          <a class="navtile" href="#" target="_blank">Guestbook</a>
+          <a class="navtile" href="#">Mailing List</a>
+        </div>
+
+        <div class="navcol">
+          <h5 class="navcol-title">Extras</h5>
+          <a class="navtile" href="#">Downloads</a>
+          <a class="navtile" href="#">Links Page</a>
+          <a class="navtile" href="#">Awards <span class="tag-new">NEW</span></a>
+        </div>
+
+      </div>
+
+      <div class="badge-row">
+        <div class="badge">Best viewed<br>at any size</div>
+        <div class="badge">Hits:
+          <span class="counter">
+            <span>0</span><span>0</span><span>4</span><span>2</span><span>7</span>
+          </span>
+        </div>
+        <div class="badge blink">Under construction</div>
+      </div>
+
+    </div>
+
+    <hr />
+    
+    <div style="text-align: center">
+      &copy; 1995, 1996, 2026 <a href="bio/vid.html"> Ed and Edna</a
+      ><br />
+      Designed and Maintained by
+      <a href="bio/bio.html" >A. Letsin</a><br />
+      Last updated 10/25/96<br />
+      <a href="https://damus.io/npub1ekcjrjzyw45weqhee8pst7wmzw7a4zcp7jh8hwn9excnk9094evqn7yf8j" target="_blank"
+        >DM the Webmaster</a
+      >
+
+    </div>
+    <p></p>
+    <div style="text-align: center">
+      This site is sponsored by the
+      <a href="crt/mwca.html">Mind Wars Correspondents Association</a>
+      <p>
+        <img src="https://amethyst-advanced-leopon-155.mypinata.cloud/ipfs/bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika"
+                />
+      </p>
+    </div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
                   <a href="https://store.thesenoises.online/gallery.html"
                   >Art Zine:<br />the latest art stuff & more
                   -shipping worldwide <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/this.gif"
