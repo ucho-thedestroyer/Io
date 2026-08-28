@@ -158,9 +158,6 @@ h4 {
   to   { transform: translateX(-50%); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ticker-track { animation: none; }
-}
 
 /* --- section heading --- */
 .retro-heading {
