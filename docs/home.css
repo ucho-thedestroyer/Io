@@ -20,19 +20,19 @@ body:after{
 	color: rgb(243, 241, 133);
 	text-decoration: none;
   }
-  
+
   /* visited link */
   a:visited {
 	color: rgb(151, 82, 78);
 	text-decoration: none;
   }
-  
+
   /* mouse over link */
   a:hover {
 	color: slategray;
 	text-decoration: none;
   }
-  
+
   /* selected link */
   a:active {
 	color: azure;
@@ -63,10 +63,212 @@ h4 {
   max-width: 909px;
   max-height: 808px;
 }
+
+/* =========================================================
+   RESPONSIVE IMAGE MAP
+   The wrapper is the positioning context; the img and svg are
+   both stacked to fill it at 100%, so the svg's polygons (in
+   viewBox coordinate space) always land on the same spot on
+   the image regardless of screen size.
+   ========================================================= */
+.imgmap-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 909px;
+  margin: 0 auto;
+  line-height: 0; /* kills the stray gap under inline img */
+}
+
+.imgmap-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.imgmap-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.imgmap-svg .hotspot polygon {
+  fill: rgba(255, 255, 255, 0);
+  stroke: none;
+  transition: fill 0.15s ease;
+  cursor: pointer;
+}
+
+.imgmap-svg .hotspot:hover polygon,
+.imgmap-svg .hotspot:focus polygon {
+  fill: rgba(243, 241, 133, 0.28); /* tint of your existing link-yellow */
+}
+
+.imgmap-svg .hotspot:focus {
+  outline: none;
+}
+.imgmap-svg .hotspot:focus polygon {
+  stroke: rgb(243, 241, 133);
+  stroke-width: 3;
+}
+
+/* =========================================================
+   EXPANDED PALETTE (retro nav section only)
+   Your four core colors stay exactly as they were everywhere
+   else on the site. These two additions are just tints/shades
+   pulled from the same warm-yellow / mauve pairing, plus one
+   cool accent (teal) so the retro section has the "hot pink +
+   neon cyan on black" contrast that reads as authentically 90s,
+   without introducing a color that clashes with your links.
+   ========================================================= */
+:root {
+  --panel-bg: #1e1a15;      /* lighter shade of body bg, for panels */
+  --mauve-deep: #6e2f2c;    /* darker shade of your existing mauve */
+  --yellow-bright: #fff87a; /* brighter tint of your existing yellow */
+  --teal-accent: #2ee6c9;   /* new cool accent, used sparingly */
+  --border-hard: #000;
+}
+
+/* --- scrolling ticker (CSS-animated, no <marquee>) --- */
+.ticker-bar {
+  overflow: hidden;
+  background: var(--mauve-deep);
+  border-top: 3px double var(--yellow-bright);
+  border-bottom: 3px double var(--yellow-bright);
+  padding: 6px 0;
+  margin: 2em auto 0;
+  max-width: 909px;
+}
+
+.ticker-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-scroll 22s linear infinite;
+}
+
+.ticker-track span {
+  color: var(--yellow-bright);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}
+
+/* --- section heading --- */
+.retro-heading {
+  text-align: center;
+  color: var(--yellow-bright);
+  text-shadow: 2px 2px 0 var(--mauve-deep);
+  margin-top: 1em;
+  letter-spacing: 0.15em;
+}
+
+/* --- nav grid, replaces the old <table> sitemap --- */
+.retro-nav {
+  max-width: 909px;
+  margin: 0 auto;
+  padding-bottom: 1em;
+}
+
+.navgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25em;
+  padding: 1em;
+}
+
+.navcol {
+  background: var(--panel-bg);
+  border: 2px solid var(--yellow-bright);
+  box-shadow: 4px 4px 0 var(--border-hard);
+  padding: 0.75em 1em 1em;
+}
+
+.navcol-title {
+  color: azure;
+  border-bottom: 1px dashed var(--teal-accent);
+  padding-bottom: 0.3em;
+  margin-top: 0.2em;
+}
+
+.navtile {
+  display: block;
+  padding: 0.4em 0.2em;
+  border-bottom: 1px dotted rgba(255,255,255,0.15);
+}
+
+.navtile:last-child {
+  border-bottom: none;
+}
+
+.navtile:before {
+  content: "\2022  "; /* bullet, keeps flavor without an image asset */
+  color: var(--teal-accent);
+}
+
+.tag-new {
+  display: inline-block;
+  margin-left: 0.4em;
+  padding: 0 0.4em;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: #12100d;
+  background: var(--teal-accent);
+  animation: blink-tag 1s steps(1) infinite;
+}
+
+@keyframes blink-tag {
+  50% { opacity: 0; }
+}
+
+/* --- badge row: hit counter / under-construction / best-viewed --- */
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+  padding: 0.5em 1em 1.5em;
+}
+
+.badge {
+  background: var(--panel-bg);
+  border: 2px outset var(--mauve-deep);
+  padding: 0.5em 0.9em;
+  text-align: center;
+  font-size: 0.85em;
+}
+
+.badge.blink {
+  animation: blink-tag 1s steps(1) infinite;
+  border-color: var(--yellow-bright);
+}
+
+.counter {
+  display: inline-flex;
+  gap: 2px;
+  margin-left: 0.3em;
+}
+
+.counter span {
+  background: #000;
+  color: #0f0;
+  font-family: "Courier New", monospace;
+  padding: 1px 4px;
+  border: 1px solid var(--teal-accent);
+}
+
 @media screen and (max-width: 600px) {
 /*---
 	.container {
-	
+
 		width: 500px;
 		height: 450px;
 	}
@@ -76,8 +278,8 @@ h4 {
 		height: 100%;
 		width: 95%;
 		overflow: auto;
-	
+
 	}
-	
+
 
 }
