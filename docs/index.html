@@ -28,30 +28,7 @@
     </p>
       <p></p>
 
-      <!--
-        RESPONSIVE IMAGE MAP
-        =====================
-        This replaces the old <img usemap> + <map>/<area> combo. The <area>
-        coords never scaled with the image, which is why your hotspots lined
-        up on desktop but drifted on mobile.
 
-        Fix: the polygons live in an SVG layered exactly on top of the image.
-        SVG coordinates are defined in a "viewBox" — a virtual coordinate
-        space that gets stretched/squeezed to fit whatever size the SVG is
-        actually rendered at. Because both the <img> and the <svg> sit in the
-        same wrapper and both scale to 100% of it, the polygons track the
-        image at every screen size automatically. No JS, no resize listeners.
-
-        IMPORTANT: viewBox="0 0 909 808" assumes your homegif's native pixel
-        size is 909x808 (that's what your CSS max-width/max-height implied).
-        If the real file is a different size, change ONLY the two numbers
-        after "0 0" in the viewBox below to your image's actual native
-        width and height, in that order. Everything else keeps working.
-
-        Each hotspot below is commented with which original <area> it came
-        from and its original href, so you can drop your real links back in
-        (I've placeholder'd them as "#").
-      -->
       <div class="imgmap-wrap">
         <img src="https://amethyst-advanced-leopon-155.mypinata.cloud/ipfs/bafybeih36jv2bfhpigbbsuvku7xfw7wlaenr5htqlxbtl4usrj3mx62ptu" alt="Home Image" class="imgmap-img">
         <svg class="imgmap-svg" viewBox="0 0 909 808" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,18 +91,7 @@
 
     <p></p>
 
-    <!--
-      RETRO SITE NAVIGATION
-      =====================
-      Replaces the empty <table> sitemap. No <marquee>, <blink>, or other
-      dead tags — the ticker and blinking "NEW" badges below are done with
-      CSS animation so they still run in modern browsers, but they read
-      exactly like the real thing.
-
-      Structure: swap the placeholder link text/hrefs in each .navtile for
-      your real pages. Add or remove .navtile elements freely — the grid
-      reflows on its own. Same for the ticker text and the badge row.
-    -->
+    
     <div class="retro-nav">
 
       <div class="ticker-bar">
@@ -148,9 +114,12 @@
                   >Computer Hits:<br />all analog bangers, burning your screen
                   <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/hot.gif"
                 /></a>
+          <a href="https://thesenoises.site/gallery.html"
+                  >Art Zine:<br />the latest art stuff & more
+                  -shipping worldwide <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/this.gif"
+                /></a>
           <a class="navtile" href="tv/tv.html" 
                   >T.V.:<br />just an old T.V. set.</a>
-          <a class="navtile" href="#">Gallery</a>
           <a class="navtile" href="pi/pi.html" 
                   >Doggy Life:<br />wisdom from the bone <span class="tag-new">NEW</span></a>
         </div>
@@ -165,13 +134,13 @@
       </div>
 
       <div class="badge-row">
-        <div class="badge">Best viewed<br>at any size</div>
+        <div class="badge"><img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/best.gif"
+                /></div>
         <div class="badge">Hits:
           <span class="counter">
             <span>0</span><span>0</span><span>4</span><span>2</span><span>7</span>
           </span>
         </div>
-        <div class="badge blink">Under construction</div>
       </div>
 
     </div>
@@ -179,8 +148,8 @@
     <hr />
     
     <div style="text-align: center">
-      &copy; 1995, 1996, 2026 <a href="bio/vid.html"> Ed and Edna</a
-      ><br />
+      &copy; 1995, 1996, 2026 Ed and Edna
+      <br />
       Designed and Maintained by
       <a href="bio/bio.html" >A. Letsin</a><br />
       Last updated 10/25/96<br />
@@ -208,10 +177,7 @@
 
 
 
-                  <a href="https://store.thesenoises.online/gallery.html"
-                  >Art Zine:<br />the latest art stuff & more
-                  -shipping worldwide <img src="https://github.com/ucho-thedestroyer/Io/raw/Backup/docs/this.gif"
-                /></a>
+                  
               </p>
             </li>
           </td>
