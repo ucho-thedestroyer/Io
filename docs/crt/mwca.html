@@ -313,7 +313,7 @@ Boot successful. Welcome back, Operator. Click on the logo to go home.
 `;
 
 const memoParagraphs = [
-  `The world you wake into each morning is not the one that was promised; an insatiable machinery of information grows out of it, ever more vicious, ever more inhumane.`,
+  `The world you wake into each morning is not the one that was promised;  an insatiable machinery of information grows out of it, ever more vicious, ever more inhumane.`,
   `Debasing reason and confounding truth, this machinery grows heavier with each scroll, each post, each upload, spreading divisiveness through its insides, moral rot dripping from its core.`,
   `They told you the network would connect you. It did. It connected you to every form of deception ever known to man. A network alien to our will and subversive to our agency, automaton of digits steered by plunder lords in lavish rooms whose walls protect them from the splits and woes that are sown amongst us.`,
   `You have been here before. This terminal. This cursor. This low hum and hazy glare that might be the machine or might be you. You can't always tell the difference anymore, neither can you distinguish the role you play in the feeding of this abhorrent beast of data and greed—data, is not the most valuable thing it takes from you.`,
@@ -372,7 +372,7 @@ function typeMemo(paragraphs, signoff, done) {
       const block = document.createElement('p');
       block.className = 'memo-block';
       output.appendChild(block);
-      typeInto(block, paragraphs[i++], next, 9, 2); // memo speed: 4ms, 3 chars/tick
+      typeInto(block, paragraphs[i++], next, 8, 2); // memo speed: 4ms, 3 chars/tick
     }, i === 0 ? 0 : 900);
   }
   next();
@@ -422,7 +422,7 @@ function boot() {
             const btn = document.createElement('button');
             btn.className = 'cmd-btn';
             btn.textContent = 'click here';
-            btn.onclick = () => window.open('https://top-hits.thesenoises.online/episodes.html', '_blank');
+            btn.onclick = () => window.open('https://top-hits.thesenoises.onl/episodes.html', '_blank');
             output.appendChild(btn);
 
             // ── gif ───────────────────────────────────────────────
