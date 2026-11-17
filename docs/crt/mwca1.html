@@ -75,6 +75,30 @@ html, body { height: 100%; margin: 0; font-family: 'VT323', monospace;
   100%  { -webkit-filter: brightness(1)    skewX(0);       opacity: 1;   -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(0); }
 }
 
+/* center glow — neutral grey/white phosphor light, screen-blended so it
+   brightens the middle without shifting the palette */
+.crt-glow {
+  position: absolute; inset: 0; pointer-events: none; z-index: 25;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 75% 60% at 50% 44%,
+      rgba(255,255,255,0.13) 0%,
+      rgba(235,235,235,0.07) 40%,
+      rgba(220,220,220,0.02) 65%,
+      rgba(210,210,210,0.00) 76%);
+  mix-blend-mode: screen;
+  animation: glowBreath 7s ease-in-out infinite;
+  -webkit-animation: glowBreath 7s ease-in-out infinite;
+}
+@keyframes glowBreath {
+  0%, 100% { opacity: .88; }
+  50%      { opacity: 1; }
+}
+@-webkit-keyframes glowBreath {
+  0%, 100% { opacity: .88; }
+  50%      { opacity: 1; }
+}
+
 /* vignette */
 .crt::before {
   content: ""; position: absolute; inset: -2%; pointer-events: none; z-index: 30;
@@ -118,7 +142,7 @@ html, body { height: 100%; margin: 0; font-family: 'VT323', monospace;
   margin: 0; padding: 0; box-sizing: border-box;
   max-width: 100%; white-space: pre-wrap; word-break: break-word;
   line-height: 1.45; letter-spacing: .6px; font-size: 26px;
-  color: var(--text); text-shadow: 0 0 5px rgba(160,160,160,.18);
+  color: var(--text); text-shadow: 0 0 7px rgba(190,190,190,.30);
   filter: blur(.6px); -webkit-filter: blur(.6px);
 }
 .char-glitch   { display: inline-block; filter: blur(.5px); -webkit-filter: blur(.5px); }
@@ -259,6 +283,9 @@ button.cmd-btn:hover {
 <div class="crt-bezel"></div>
 
 <main class="crt" aria-label="easterntravelerOS terminal--MWCA">
+
+  <!-- center glow: luminescent middle, neutral grey tone -->
+  <div class="crt-glow" aria-hidden="true"></div>
 
   <!-- Glass reflection SVG overlay -->
   <div class="glass-overlay" aria-hidden="true">
@@ -496,7 +523,7 @@ function boot() {
             const gif = document.createElement('img');
             gif.id = 'boot-gif';
             gif.src = 'https://amethyst-advanced-leopon-155.mypinata.cloud/ipfs/bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika';
-            gif.alt = '';
+            gif.alt = 'mwca';
             output.appendChild(gif);
 
             viewport.scrollTop = viewport.scrollHeight;
