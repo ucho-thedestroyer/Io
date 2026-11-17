@@ -17,547 +17,6 @@
        url('fonts/vt323-v18-latin-regular.ttf') format('truetype');
 }
 
-:root { --bg: #000; --text: #b4bcae; }
-html, body { height: 100%; margin: 0; font-family: 'VT323', monospace;
-  overflow: hidden; background: #080808; color: var(--text); }
-
-/* ── bezel ──────────────────────────────────────────────────────── */
-.crt-bezel {
-  position: fixed; inset: 0; z-index: 0;
-  background: radial-gradient(ellipse at 50% 50%, #181818 0%, #0c0c0c 60%, #040404 100%);
-}
-
-/* ── CRT screen ─────────────────────────────────────────────────── */
-.crt {
-  position: fixed;
-  top: 3vh; left: 4vw; right: 4vw; bottom: 3vh;
-  padding: 26px 30px 26px 30px; box-sizing: border-box;
-  overflow: hidden; background: #050505;
-  border-radius: 32px / 26px;
-  transform: perspective(800px) rotateX(1.8deg);
-  -webkit-transform: perspective(800px) rotateX(1.8deg);
-  transform-origin: center center;
-  box-shadow:
-    0 0 0 7px #141414,
-    0 0 0 16px #1e1e1e,
-    0 0 0 20px #0a0a0a,
-    0 0 90px 24px rgba(0,0,0,.95),
-    inset 0 0 110px 40px rgba(0,0,0,.55),
-    inset 0 0 60px 8px rgba(180,200,180,.04);
-  z-index: 1;
-  animation: screenGlitch 12s steps(1) infinite;
-  -webkit-animation: screenGlitch 12s steps(1) infinite;
-  will-change: transform, opacity;
-}
-/* Glitch made stronger and longer so it reads on small/high-DPI
-   screens (incl. iOS): bigger brightness swing, real displacement */
-@keyframes screenGlitch {
-  0%    { filter: brightness(1)    skewX(0);       opacity: 1;   transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  89.5% { filter: brightness(1)    skewX(0);       opacity: 1;   transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  90%   { filter: brightness(1.4)  skewX(-1.2deg); opacity: .9;  transform: perspective(800px) rotateX(1.8deg) translateX(-4px); }
-  90.5% { filter: brightness(.55)  skewX(.9deg);   opacity: 1;   transform: perspective(800px) rotateX(1.8deg) translateX(3px); }
-  91%   { filter: brightness(1.3)  skewX(-.5deg);  opacity: .93; transform: perspective(800px) rotateX(1.8deg) translateX(-2px); }
-  91.4% { filter: brightness(.8)   skewX(0);       opacity: 1;   transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  92%   { filter: brightness(1.15) skewX(.3deg);   opacity: .96; transform: perspective(800px) rotateX(1.8deg) translateX(1px); }
-  92.6% { filter: brightness(1)    skewX(0);       opacity: 1;   transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  100%  { filter: brightness(1)    skewX(0);       opacity: 1;   transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-}
-@-webkit-keyframes screenGlitch {
-  0%    { -webkit-filter: brightness(1)    skewX(0);       opacity: 1;   -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  89.5% { -webkit-filter: brightness(1)    skewX(0);       opacity: 1;   -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  90%   { -webkit-filter: brightness(1.4)  skewX(-1.2deg); opacity: .9;  -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(-4px); }
-  90.5% { -webkit-filter: brightness(.55)  skewX(.9deg);   opacity: 1;   -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(3px); }
-  91%   { -webkit-filter: brightness(1.3)  skewX(-.5deg);  opacity: .93; -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(-2px); }
-  91.4% { -webkit-filter: brightness(.8)   skewX(0);       opacity: 1;   -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  92%   { -webkit-filter: brightness(1.15) skewX(.3deg);   opacity: .96; -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(1px); }
-  92.6% { -webkit-filter: brightness(1)    skewX(0);       opacity: 1;   -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-  100%  { -webkit-filter: brightness(1)    skewX(0);       opacity: 1;   -webkit-transform: perspective(800px) rotateX(1.8deg) translateX(0); }
-}
-
-/* fluorescent backlight — bright center like a real CRT tube */
-.crt-glow {
-  position: absolute; inset: 0; pointer-events: none; z-index: 25;
-  border-radius: inherit;
-  background:
-    radial-gradient(ellipse 75% 60% at 50% 42%,
-      rgba(228,246,206,0.20) 0%,
-      rgba(205,235,182,0.10) 38%,
-      rgba(185,220,165,0.03) 62%,
-      rgba(170,210,150,0.00) 75%);
-  mix-blend-mode: screen;
-  animation: glowBreath 7s ease-in-out infinite;
-  -webkit-animation: glowBreath 7s ease-in-out infinite;
-}
-@keyframes glowBreath {
-  0%, 100% { opacity: .9; }
-  50%      { opacity: 1; }
-}
-@-webkit-keyframes glowBreath {
-  0%, 100% { opacity: .9; }
-  50%      { opacity: 1; }
-}
-
-/* vignette — only the edges stay dark now */
-.crt::before {
-  content: ""; position: absolute; inset: -2%; pointer-events: none; z-index: 30;
-  border-radius: inherit;
-  background: radial-gradient(ellipse at 50% 48%,
-    transparent       0%,   transparent       68%,
-    rgba(0,0,0,0.16)  80%,  rgba(0,0,0,0.42)  90%,
-    rgba(0,0,0,0.78)  100%);
-}
-/* scanlines — higher base alpha so they survive blend-mode quirks on iOS */
-.crt::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 40;
-  border-radius: inherit;
-  background: repeating-linear-gradient(to bottom,
-    rgba(0,0,0,0.45) 0px, rgba(0,0,0,0.45) 1px,
-    rgba(255,255,255,0.03) 1px, rgba(255,255,255,0.03) 3px);
-  opacity: 1; animation: scanShift 6s linear infinite;
-  -webkit-animation: scanShift 6s linear infinite;
-  background-size: 100% 4px; mix-blend-mode: overlay;
-}
-@keyframes scanShift { 0%{background-position:0 0} 100%{background-position:0 4px} }
-@-webkit-keyframes scanShift { 0%{background-position:0 0} 100%{background-position:0 4px} }
-
-/* ── glass overlay ──────────────────────────────────────────────── */
-.glass-overlay {
-  position: absolute; inset: 0; pointer-events: none; z-index: 50;
-  border-radius: inherit; overflow: hidden;
-}
-.glass-overlay svg { width: 100%; height: 100%; display: block; }
-
-/* ── viewport ───────────────────────────────────────────────────── */
-.viewport {
-  position: relative; z-index: 20; height: 100%; width: 100%;
-  overflow: auto; -webkit-overflow-scrolling: touch; padding: 0 1%;
-}
-.viewport::-webkit-scrollbar { width: 0; }
-
-/* ── output ─────────────────────────────────────────────────────── */
-.output {
-  margin: 0; padding: 0; box-sizing: border-box;
-  max-width: 100%; white-space: pre-wrap; word-break: break-word;
-  line-height: 1.45; letter-spacing: .6px; font-size: 26px;
-  color: var(--text); text-shadow: 0 0 6px rgba(200,210,190,.35);
-}
-.char-glitch   { display: inline-block; filter: blur(.5px); -webkit-filter: blur(.5px); }
-.glitch-strong { display: inline-block; filter: blur(.6px); -webkit-filter: blur(.6px); color: #9aa694; }
-
-/* ── memo paragraphs (typed inline) ────────────────────────────── */
-.memo-block {
-  margin-top: 1.6em;
-  font-size: 26px;
-  line-height: 1.7;
-  letter-spacing: 1px;
-  color: #aab3a0;
-  text-shadow: 0 0 8px rgba(190,205,175,.20);
-}
-.memo-signoff {
-  margin-top: 2em;
-  font-size: 22px;
-  letter-spacing: 3px;
-  color: #77806e;
-}
-
-/* ── banner ─────────────────────────────────────────────────────── */
-.banner {
-  margin: 1.4em auto;
-  font-size: 22px;
-  line-height: 1.5;
-  letter-spacing: .5px;
-  color: #8b9281;
-  white-space: pre;
-  filter: blur(.5px); -webkit-filter: blur(.5px);
-  text-shadow: 0 0 6px rgba(150,160,140,.2);
-  text-align: center;
-}
-
-/* ── button ─────────────────────────────────────────────────────── */
-button.cmd-btn {
-  display: block;
-  margin: 1.8em auto 0;
-  padding: 10px 16px;
-  font-size: 28px; font-family: 'VT323', monospace;
-  border: 2px solid #828a7a;
-  background: rgba(255,255,255,0.05);
-  color: #b4bcae;
-  cursor: pointer;
-  letter-spacing: 1px;
-  filter: blur(.5px); -webkit-filter: blur(.5px);
-  text-shadow: 0 0 6px rgba(190,200,180,.35);
-  box-shadow: 0 0 8px rgba(190,200,180,.12);
-  transition: all 0.2s ease;
-}
-button.cmd-btn:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: #b4bcae;
-  color: #d6dcc8;
-  text-shadow: 0 0 8px rgba(220,230,205,.55);
-  box-shadow: 0 0 12px rgba(220,230,205,.25);
-}
-
-/* ── gif ──────────────────────────────────────────── */
-#boot-gif {
-  display: block;
-  margin: 24px auto;
-  width: 620px;
-  max-width: 100%;
-  height: auto;
-  filter: grayscale(1) brightness(.6) blur(.4px);
-  -webkit-filter: grayscale(1) brightness(.6) blur(.4px);
-  opacity: 0.75;
-}
-
-/* ── logo — flows with content, floated top-right ───────────────── */
-.logo {
-  float: right;
-  width: 110px; height: 110px;
-  overflow: hidden;
-  margin: 0 0 12px 20px;
-  filter: blur(.6px) brightness(.55) drop-shadow(0 0 6px rgba(190,200,180,.25)) grayscale(.4);
-  -webkit-filter: blur(.6px) brightness(.55) drop-shadow(0 0 6px rgba(190,200,180,.25)) grayscale(.4);
-  opacity: 0.75;
-  position: relative;
-  z-index: 999;
-}
-.logo > a {
-  display: block; width: 100%; height: 100%;
-  pointer-events: all;
-  position: relative;
-  z-index: 999;
-  cursor: pointer;
-}
-.logo svg {
-  display: block;
-  width: 110px !important;
-  height: 110px !important;
-  max-width: 110px !important;
-  max-height: 110px !important;
-}
-
-.cursor {
-  display: inline-block; width: 14px; height: 1.1em;
-  background: var(--text); animation: cursorBlink 900ms steps(1) infinite;
-  -webkit-animation: cursorBlink 900ms steps(1) infinite;
-  box-shadow: 0 0 6px rgba(190,200,180,.3);
-  vertical-align: text-bottom;
-}
-@keyframes cursorBlink { 50% { opacity: 0.08; } }
-@-webkit-keyframes cursorBlink { 50% { opacity: 0.08; } }
-
-/* ── responsive: tablets ────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .crt { top: 2vh; left: 2.5vw; right: 2.5vw; bottom: 2vh;
-         padding: 18px 20px; border-radius: 24px / 20px; }
-  .output { font-size: 20px; letter-spacing: .4px; }
-  .memo-block { font-size: 20px; }
-  .banner { font-size: 16px; }
-  button.cmd-btn { font-size: 22px; }
-  .memo-signoff { font-size: 17px; }
-}
-
-/* ── responsive: phones ─────────────────────────────────────────── */
-@media (max-width: 480px) {
-  .crt { top: 1.2vh; left: 1.5vw; right: 1.5vw; bottom: 1.2vh;
-         padding: 12px 12px; border-radius: 16px / 13px; }
-  .output { font-size: 16px; line-height: 1.4; }
-  .memo-block { font-size: 16px; line-height: 1.6; }
-  .banner { font-size: 11px; }
-  button.cmd-btn { font-size: 18px; padding: 8px 12px; }
-  .memo-signoff { font-size: 14px; }
-  .logo { width: 64px; height: 64px; margin: 0 0 8px 12px; }
-  .logo svg { width: 64px !important; height: 64px !important;
-              max-width: 64px !important; max-height: 64px !important; }
-}
-</style>
-<base target="_blank">
-</head>
-<body>
-<div class="crt-bezel"></div>
-
-<main class="crt" aria-label="easterntravelerOS terminal--MWCA">
-
-  <!-- fluorescent backlight: bright center, sits above content but below vignette/scanlines -->
-  <div class="crt-glow" aria-hidden="true"></div>
-
-  <!-- Glass reflection SVG overlay -->
-  <div class="glass-overlay" aria-hidden="true">
-    <svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="g1" cx="22%" cy="14%" r="55%" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.10"/>
-          <stop offset="30%"  stop-color="#ffffff" stop-opacity="0.04"/>
-          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="g2" cx="82%" cy="8%" r="48%" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stop-color="#c8e0ff" stop-opacity="0.18"/>
-          <stop offset="35%"  stop-color="#c8e0ff" stop-opacity="0.08"/>
-          <stop offset="70%"  stop-color="#c8e0ff" stop-opacity="0.02"/>
-          <stop offset="100%" stop-color="#c8e0ff" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="gw" cx="50%" cy="100%" r="80%" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stop-color="#a8c870" stop-opacity="0.10"/>
-          <stop offset="40%"  stop-color="#b0c060" stop-opacity="0.05"/>
-          <stop offset="75%"  stop-color="#98b050" stop-opacity="0.01"/>
-          <stop offset="100%" stop-color="#88a040" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="gc" cx="50%" cy="55%" r="45%" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stop-color="#c8d8a0" stop-opacity="0.03"/>
-          <stop offset="100%" stop-color="#c8d8a0" stop-opacity="0"/>
-        </radialGradient>
-        <filter id="grain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" result="noise"/>
-          <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
-          <feBlend in="SourceGraphic" in2="grey" mode="screen" result="blended"/>
-          <feComposite in="blended" in2="SourceGraphic" operator="in"/>
-        </filter>
-      </defs>
-      <rect width="1000" height="700" fill="rgba(255,255,255,0.018)" filter="url(#grain)"/>
-      <ellipse cx="210" cy="90"  rx="380" ry="200" fill="url(#g1)"/>
-      <ellipse cx="840" cy="40"  rx="320" ry="200" fill="url(#g2)"/>
-      <ellipse cx="500" cy="385" rx="500" ry="350" fill="url(#gc)"/>
-      <ellipse cx="500" cy="700" rx="700" ry="420" fill="url(#gw)"/>
-    </svg>
-  </div>
-
-  <!-- PNG reflection placeholder (see terminal.html for instructions) -->
-  <img id="reflection-overlay" src="" alt="" aria-hidden="true" style="
-    display:none; position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; pointer-events:none; z-index:51;
-    mix-blend-mode:screen; opacity:0.18; border-radius:inherit;" />
-
-  <div class="viewport" id="viewport">
-    <!-- Logo floated top-right, sits within content flow -->
-    <div class="logo">
-      <a href="https://www.thesenoises.site">
-        <svg width="110" height="110" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-        <defs>
-          <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#cfcfcf"/><stop offset="1" stop-color="#f3f3f3"/></linearGradient>
-          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-    <path d="M437.553,9.619C351.256,8.291 285.432,30.611 200.816,83.703C100.102,146.895 49.055,244.728 28.907,307.711C-16.844,450.724 17.623,570.709 50.718,638.557C128.103,797.205 285.734,864.981 362.096,876.489C438.458,887.997 547.619,888.974 655.401,829.22C790.381,754.388 838.996,637.641 838.996,637.641C838.996,637.641 872.693,584.731 880.831,485.766C888.97,386.802 867.408,314.574 846.628,268.758C815.814,200.82 764.962,146.642 764.962,146.642C764.962,146.642 698.357,79.585 648.964,57.826C605.407,38.638 559.01,11.489 437.553,9.619Z" style="fill:white;stroke:black;stroke-width:1px;"/>
-    <g id="Layer1">
-        <g transform="matrix(1.03594,0,0,1.01798,-11.9558,-6.55449)">
-            <path d="M347.573,371.607L364.782,353.6L370.718,359.253L359.644,371.662L347.573,371.607Z" style="fill:rgb(69,69,69);"/>
-        </g>
-        <path d="M405.384,369.398L425.539,369.375L584.191,178.869L573.31,169.143" style="fill:rgb(69,69,69);"/>
-        <path d="M680.402,139.147L681.582,90.74L448.828,370.78L486.863,370.646" style="fill:rgb(69,69,69);"/>
-        <path d="M525.564,371.097L513.919,371.199L575.21,296.968L580.299,303.37" style="fill:rgb(69,69,69);"/>
-        <path d="M568.214,369.553L587.966,369.601L680.213,257.873L680.265,231.589L568.214,369.553Z" style="fill:rgb(69,69,69);"/>
-        <path d="M611.204,369.76L650.359,369.647L731.426,274.052L690.939,273.944L611.204,369.76Z" style="fill:rgb(69,69,69);"/>
-        <path d="M160.46,604.15L175.891,603.946L217.22,553.881L203.309,553.89L160.46,604.15Z" style="fill:rgb(69,69,69);"/>
-        <path d="M183.779,638.923L183.73,666.227L279.919,553.864L255.945,553.876L183.779,638.923Z" style="fill:rgb(69,69,69);"/>
-        <path d="M184.217,691.249L183.995,742.905L344.166,554.156L301.769,554.384" style="fill:rgb(69,69,69);"/>
-        <path d="M184.305,770.424L184.491,786.35L378.205,555.282L366.473,555.305L184.305,770.424Z" style="fill:rgb(69,69,69);"/>
-        <g>
-            <g transform="matrix(1,0,0,1,-0.13596,-0.162829)">
-                <path d="M329.468,659.371L352.505,659.288L440.82,556.253L416.558,555.998L329.468,659.371Z" style="fill:rgb(69,69,69);"/>
-            </g>
-            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
-            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
-            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
-            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
-            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
-            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
-        </g>
-        <path d="M374.786,658.969L415.779,658.953L503.467,555.851L461.326,555.497L374.786,658.969Z" style="fill:rgb(69,69,69);stroke:white;stroke-width:1px;"/>
-        <path d="M184.217,691.249L301.875,554.354" style="fill:none;"/>
-    </g>
-      </svg>
-      </a>
-    </div>
-    <div class="output" id="output"></div>
-  </div>
-
-</main>
-
-<script>
-/* ══════════════════════════════════════════════════════════════════
-   **** memo — stripped page
-   Sequence: short intro types → memo paragraphs type out → cursor
-══════════════════════════════════════════════════════════════════ */
-const output   = document.getElementById('output');
-const viewport = document.getElementById('viewport');
-
-/* ── content ────────────────────────────────────────────────────── */
-const introText =
-`easterntravelerOS v1.4.2 (build 1986-03-18) Copyright (c) 1986-2025 easterntraveler Systems
-Boot successful. Welcome back, Operator. Click on the logo to go home.
-`;
-
-const memoParagraphs = [
-  `The world you wake into each morning is not the one that was promised;  an insatiable machinery of information grows out of it, ever more vicious, ever more inhumane.`,
-  `Debasing reason and confounding truth, this machinery grows heavier with each scroll, each post, each upload, spreading divisiveness through its insides, moral rot dripping from its core.`,
-  `They told you the network would connect you. It did. It connected you to every form of deception ever known to man. A network alien to our will and subversive to our agency, automaton of digits steered by plunder lords in lavish rooms whose walls protect them from the splits and woes that are sown amongst us.`,
-  `You have been here before. This terminal. This cursor. This low hum and hazy glare that might be the machine or might be you. You can't always tell the difference anymore, neither can you distinguish the role you play in the feeding of this abhorrent beast of data and greed—data, is not the most valuable thing it takes from you.`,
-  `This memo is not a warning. Warnings imply there is still time. This is just one more entry in a log—a confirmation of something already done, already taken, already gone.`,
-  `Keep posting, keep watching. The logs don't lie yet they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present... Until one day: no entry at all.`
-];
-const memoSignoff = `— end of memo — easterntraveler`;
-
-/* ── typing engine ────────────────────────────────────────────────
-   Chars stream into the container as text nodes (cheap), with a
-   span only for the occasional glitch char. Lines break with a
-   single <br> — no per-line divs, so no invalid nesting and no
-   double line breaks. */
-function typeInto(container, str, done, speed, charsPerTick) {
-  const msPerTick  = speed        !== undefined ? speed        : 12;
-  const charsBatch = charsPerTick !== undefined ? charsPerTick : 2;
-  const lines = str.split('\n');
-  let li = 0;
-  function nextLine() {
-    if (li >= lines.length) { viewport.scrollTop = viewport.scrollHeight; done && done(); return; }
-    const line = lines[li];
-    let ci = 0;
-    let textBuf = '';
-    function flush() {
-      if (textBuf) { container.appendChild(document.createTextNode(textBuf)); textBuf = ''; }
-    }
-    function tick() {
-      if (ci >= line.length) {
-        flush();
-        container.appendChild(document.createElement('br'));
-        li++; setTimeout(nextLine, 0); return;
-      }
-      for (let c = 0; c < charsBatch; c++) {
-        if (ci >= line.length) break;
-        const ch = line[ci++];
-        if (Math.random() < 0.09) {
-          flush();
-          const span = document.createElement('span');
-          span.className = 'char-glitch glitch-strong';
-          span.textContent = ch;
-          container.appendChild(span);
-        } else {
-          textBuf += ch;
-        }
-      }
-      flush();
-      viewport.scrollTop = viewport.scrollHeight;
-      setTimeout(tick, msPerTick);
-    }
-    tick();
-  }
-  nextLine();
-}
-
-/* ── type memo paragraphs one by one with a pause between ──────── */
-function typeMemo(paragraphs, signoff, done) {
-  let i = 0;
-  function next() {
-    if (i >= paragraphs.length) {
-      setTimeout(() => {
-        const block = document.createElement('p');
-        block.className = 'memo-signoff';
-        output.appendChild(block);
-        typeInto(block, signoff, done, 10, 3); // signoff: 10ms per tick, 3 chars/tick
-      }, 600);
-      return;
-    }
-    setTimeout(() => {
-      const block = document.createElement('p');
-      block.className = 'memo-block';
-      output.appendChild(block);
-      typeInto(block, paragraphs[i++], next, 16, 2); // memo: 16ms per tick, 2 chars/tick
-    }, i === 0 ? 0 : 900);
-  }
-  next();
-}
-
-/* ── blinking cursor appended at the end ───────────────────────── */
-function appendCursor() {
-  const cur = document.createElement('span');
-  cur.className = 'cursor';
-  cur.setAttribute('aria-hidden', 'true');
-  output.appendChild(cur);
-  viewport.scrollTop = viewport.scrollHeight;
-}
-
-/* ── boot sequence ──────────────────────────────────────────────── */
-function boot() {
-  output.textContent = '';
-  viewport.scrollTop = 0;
-
-  const introBlock = document.createElement('div');
-  output.appendChild(introBlock);
-
-  typeInto(introBlock, introText, () => {
-    setTimeout(() => {
-
-      // ── banner ──────────────────────────────────────────────────
-      const banner = document.createElement('div');
-      banner.className = 'banner';
-      banner.textContent =
-`########################################################
-########################################################
-#                                                      #
-#   ░▒▓ MIND WARS CORRESPONDENTS ASSOCIATION ▓▒░   #
-#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
-#                                                     #
-#                                                      #
-########################################################
-    On the front lines, from the dark side
-########################################################`;
-      output.appendChild(banner);
-      viewport.scrollTop = viewport.scrollHeight;
-
-      setTimeout(() => {
-        typeMemo(memoParagraphs, memoSignoff, () => {
-          setTimeout(() => {
-
-            // ── button ────────────────────────────────────────────
-            const btn = document.createElement('button');
-            btn.className = 'cmd-btn';
-            btn.type = 'button';
-            btn.textContent = 'click here';
-            btn.onclick = () => window.open('https://top-hits.thesenoises.site/graphic.html', '_blank');
-            output.appendChild(btn);
-
-            // ── gif ───────────────────────────────────────────────
-            const gif = document.createElement('img');
-            gif.id = 'boot-gif';
-            gif.src = 'https://amethyst-advanced-leopon-155.mypinata.cloud/ipfs/bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika';
-            gif.alt = '';
-            output.appendChild(gif);
-
-            viewport.scrollTop = viewport.scrollHeight;
-            setTimeout(appendCursor, 400);
-          }, 400);
-        });
-      }, 500);
-
-    }, 500);
-  }, 10, 2); // intro: 10ms per tick, 2 chars per tick
-}
-
-boot();
-</script>
-</body>
-</html>
-
-
-
-
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="****" />
-<meta name="author" content="****" />  
-<title>MWCA - ****</title>
-<link rel="icon" type="image/svg+xml" href="****">
-<style>
-@font-face {
-  font-family: 'VT323';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/vt323-v18-latin-regular.woff2') format('woff2'),
-       url('fonts/vt323-v18-latin-regular.ttf') format('truetype');
-}
-
 :root { --bg: #000; --text: #a8a8a8; }
 html, body { height: 100%; margin: 0; font-family: 'VT323', monospace;
   overflow: hidden; background: #080808; color: var(--text); }
@@ -799,7 +258,7 @@ button.cmd-btn:hover {
 <body>
 <div class="crt-bezel"></div>
 
-<main class="crt" aria-label="****">
+<main class="crt" aria-label="easterntravelerOS terminal--MWCA">
 
   <!-- Glass reflection SVG overlay -->
   <div class="glass-overlay" aria-hidden="true">
@@ -852,7 +311,38 @@ button.cmd-btn:hover {
     <div class="logo">
       <a href="https://www.thesenoises.online">
         <svg width="110" height="110" viewBox="0 0 890 890" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-        <****
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#cfcfcf"/><stop offset="1" stop-color="#f3f3f3"/></linearGradient>
+          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+    <path d="M437.553,9.619C351.256,8.291 285.432,30.611 200.816,83.703C100.102,146.895 49.055,244.728 28.907,307.711C-16.844,450.724 17.623,570.709 50.718,638.557C128.103,797.205 285.734,864.981 362.096,876.489C438.458,887.997 547.619,888.974 655.401,829.22C790.381,754.388 838.996,637.641 838.996,637.641C838.996,637.641 872.693,584.731 880.831,485.766C888.97,386.802 867.408,314.574 846.628,268.758C815.814,200.82 764.962,146.642 764.962,146.642C764.962,146.642 698.357,79.585 648.964,57.826C605.407,38.638 559.01,11.489 437.553,9.619Z" style="fill:white;stroke:black;stroke-width:1px;"/>
+    <g id="Layer1">
+        <g transform="matrix(1.03594,0,0,1.01798,-11.9558,-6.55449)">
+            <path d="M347.573,371.607L364.782,353.6L370.718,359.253L359.644,371.662L347.573,371.607Z" style="fill:rgb(69,69,69);"/>
+        </g>
+        <path d="M405.384,369.398L425.539,369.375L584.191,178.869L573.31,169.143" style="fill:rgb(69,69,69);"/>
+        <path d="M680.402,139.147L681.582,90.74L448.828,370.78L486.863,370.646" style="fill:rgb(69,69,69);"/>
+        <path d="M525.564,371.097L513.919,371.199L575.21,296.968L580.299,303.37" style="fill:rgb(69,69,69);"/>
+        <path d="M568.214,369.553L587.966,369.601L680.213,257.873L680.265,231.589L568.214,369.553Z" style="fill:rgb(69,69,69);"/>
+        <path d="M611.204,369.76L650.359,369.647L731.426,274.052L690.939,273.944L611.204,369.76Z" style="fill:rgb(69,69,69);"/>
+        <path d="M160.46,604.15L175.891,603.946L217.22,553.881L203.309,553.89L160.46,604.15Z" style="fill:rgb(69,69,69);"/>
+        <path d="M183.779,638.923L183.73,666.227L279.919,553.864L255.945,553.876L183.779,638.923Z" style="fill:rgb(69,69,69);"/>
+        <path d="M184.217,691.249L183.995,742.905L344.166,554.156L301.769,554.384" style="fill:rgb(69,69,69);"/>
+        <path d="M184.305,770.424L184.491,786.35L378.205,555.282L366.473,555.305L184.305,770.424Z" style="fill:rgb(69,69,69);"/>
+        <g>
+            <g transform="matrix(1,0,0,1,-0.13596,-0.162829)">
+                <path d="M329.468,659.371L352.505,659.288L440.82,556.253L416.558,555.998L329.468,659.371Z" style="fill:rgb(69,69,69);"/>
+            </g>
+            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
+            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
+            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
+            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
+            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
+            <path d="M329.332,659.209L416.422,555.835L440.684,556.09L352.369,659.125L329.332,659.209Z" style="fill:rgb(69,69,69);"/>
+        </g>
+        <path d="M374.786,658.969L415.779,658.953L503.467,555.851L461.326,555.497L374.786,658.969Z" style="fill:rgb(69,69,69);stroke:white;stroke-width:1px;"/>
+        <path d="M184.217,691.249L301.875,554.354" style="fill:none;"/>
+    </g>
       </svg>
       </a>
     </div>
@@ -871,15 +361,19 @@ const viewport = document.getElementById('viewport');
 
 /* ── content ────────────────────────────────────────────────────── */
 const introText =
-`****
+`easterntravelerOS v1.4.2 (build 1986-03-18) Copyright (c) 1986-2025 easterntraveler Systems
+Boot successful. Welcome back, Operator. Click on the logo to go home.
 `;
 
 const memoParagraphs = [
-  `****`,
-  `****`,
-  `****`
+  `The world you wake into each morning is not the one that was promised;  an insatiable machinery of information grows out of it, ever more vicious, ever more inhumane.`,
+  `Debasing reason and confounding truth, this machinery grows heavier with each scroll, each post, each upload, spreading divisiveness through its insides, moral rot dripping from its core.`,
+  `They told you the network would connect you. It did. It connected you to every form of deception ever known to man. A network alien to our will and subversive to our agency, automaton of digits steered by plunder lords in lavish rooms whose walls protect them from the splits and woes that are sown amongst us.`,
+  `You have been here before. This terminal. This cursor. This low hum and hazy glare that might be the machine or might be you. You can't always tell the difference anymore, neither can you distinguish the role you play in the feeding of this abhorrent beast of data and greed—data, is not the most valuable thing it takes from you.`,
+  `This memo is not a warning. Warnings imply there is still time. This is just one more entry in a log—a confirmation of something already done, already taken, already gone.`,
+  `Keep posting, keep watching. The logs don't lie yet they don't explain either. They just record. Entry after entry. Operator present. Operator present. Operator present... Until one day: no entry at all.`
 ];
-const memoSignoff = `— ****`;
+const memoSignoff = `— end of memo — easterntraveler`;
 
 /* ── typing engine ────────────────────────────────────────────────
    Chars stream into the container as text nodes, with a span only
@@ -974,7 +468,14 @@ function boot() {
       banner.className = 'banner';
       banner.textContent =
 `########################################################
-****
+########################################################
+#                                                      #
+#   ░▒▓ MIND WARS CORRESPONDENTS ASSOCIATION ▓▒░   #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#                                                     #
+#                                                      #
+########################################################
+    On the front lines, from the dark side
 ########################################################`;
       output.appendChild(banner);
       viewport.scrollTop = viewport.scrollHeight;
@@ -988,13 +489,13 @@ function boot() {
             btn.className = 'cmd-btn';
             btn.type = 'button';
             btn.textContent = 'click here';
-            btn.onclick = () => window.open('****', '_blank');
+            btn.onclick = () => window.open('https://top-hits.thesenoises.site/graphic.html', '_blank');
             output.appendChild(btn);
 
             // ── gif ───────────────────────────────────────────────
             const gif = document.createElement('img');
             gif.id = 'boot-gif';
-            gif.src = '********';
+            gif.src = 'https://amethyst-advanced-leopon-155.mypinata.cloud/ipfs/bafkreidoiwqwul6xpq3opmqpdiit67ffqtyvstevdomy4p3lccx74xnika';
             gif.alt = '';
             output.appendChild(gif);
 
