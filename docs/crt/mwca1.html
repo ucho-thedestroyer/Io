@@ -386,6 +386,58 @@ button.cmd-btn:hover {
 const output   = document.getElementById('output');
 const viewport = document.getElementById('viewport');
 
+/* ── keystroke sound ──────────────────────────────────────────────
+   Starts with the memo paragraphs (right after the intro/boot text).
+   Browsers block audio until the first tap/click, so the context
+   unlocks on first interaction; until then typing continues silently.
+   Swap in your own files by editing the paths below — .mp3 works
+   identically, just point the array at your mp3s. */
+const KEYSTROKE_SOUNDS = [
+  'crt/sounds/keystroke-1.wav',
+  'crt/sounds/keystroke-2.wav',
+  'crt/sounds/keystroke-3.wav',
+  'crt/sounds/keystroke-4.wav'
+];
+let audioCtx = null;
+let keystrokeBuffers = [];
+
+function unlockAudio() {
+  if (audioCtx) {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return;
+  }
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  audioCtx = new AC();
+  keystrokeBuffers = KEYSTROKE_SOUNDS.map(url =>
+    fetch(url)
+      .then(r => (r.ok ? r.arrayBuffer() : Promise.reject()))
+      .then(ab => audioCtx.decodeAudioData(ab))
+      .catch(() => null)   // missing file → stay silent, no errors
+  );
+  document.removeEventListener('pointerdown', unlockAudio);
+  document.removeEventListener('keydown', unlockAudio);
+}
+document.addEventListener('pointerdown', unlockAudio);
+document.addEventListener('keydown', unlockAudio);
+
+function playKeystroke() {
+  if (!audioCtx || audioCtx.state !== 'running') return;
+  const p = keystrokeBuffers[Math.floor(Math.random() * keystrokeBuffers.length)];
+  if (!p) return;
+  Promise.resolve(p).then(buf => {
+    if (!buf) return;
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    src.playbackRate.value = 0.92 + Math.random() * 0.16;   // natural variation
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0.12 + Math.random() * 0.08;
+    src.connect(gain);
+    gain.connect(audioCtx.destination);
+    src.start();
+  });
+}
+
 /* ── content ────────────────────────────────────────────────────── */
 const introText =
 `easterntravelerOS v1.4.2 (build 1986-03-18) Copyright (c) 1986-2025 easterntraveler Systems
@@ -406,7 +458,7 @@ const memoSignoff = `— end of memo — easterntraveler`;
    Chars stream into the container as text nodes, with a span only
    for the occasional glitch char. Lines break with a single <br> —
    no per-line divs, so no invalid nesting and no double spacing. */
-function typeInto(container, str, done, speed, charsPerTick) {
+function typeInto(container, str, done, speed, charsPerTick, sound) {
   const msPerTick  = speed        !== undefined ? speed        : 12;
   const charsBatch = charsPerTick !== undefined ? charsPerTick : 2;
   const lines = str.split('\n');
@@ -425,6 +477,7 @@ function typeInto(container, str, done, speed, charsPerTick) {
         container.appendChild(document.createElement('br'));
         li++; setTimeout(nextLine, 0); return;
       }
+      const typedAt = ci;
       for (let c = 0; c < charsBatch; c++) {
         if (ci >= line.length) break;
         const ch = line[ci++];
@@ -439,6 +492,7 @@ function typeInto(container, str, done, speed, charsPerTick) {
         }
       }
       flush();
+      if (sound && ci > typedAt) playKeystroke();
       viewport.scrollTop = viewport.scrollHeight;
       setTimeout(tick, msPerTick);
     }
@@ -456,7 +510,7 @@ function typeMemo(paragraphs, signoff, done) {
         const block = document.createElement('p');
         block.className = 'memo-signoff';
         output.appendChild(block);
-        typeInto(block, signoff, done, 10, 3); // signoff: 10ms per tick, 3 chars/tick
+        typeInto(block, signoff, done, 9, 3, true); // signoff: 9ms per tick, 3 chars/tick, sound on
       }, 600);
       return;
     }
@@ -464,7 +518,7 @@ function typeMemo(paragraphs, signoff, done) {
       const block = document.createElement('p');
       block.className = 'memo-block';
       output.appendChild(block);
-      typeInto(block, paragraphs[i++], next, 16, 2); // memo: 16ms per tick, 2 chars/tick
+      typeInto(block, paragraphs[i++], next, 14, 2, true); // memo: 14ms per tick, 2 chars/tick, sound on
     }, i === 0 ? 0 : 900);
   }
   next();
@@ -533,7 +587,7 @@ function boot() {
       }, 500);
 
     }, 500);
-  }, 10, 2); // intro: 10ms per tick, 2 chars per tick
+  }, 9, 2); // intro: 9ms per tick, 2 chars per tick (silent)
 }
 
 boot();
